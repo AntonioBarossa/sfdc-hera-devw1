@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>1 - Avviso di servizio</fullName>
+        <default>false</default>
+        <label>1 - Avviso di servizio</label>
+    </customValue>
+    <customValue>
+        <fullName>2 - Attività</fullName>
+        <default>false</default>
+        <label>2 - Attività</label>
+    </customValue>
+    <customValue>
+        <fullName>3 - Nessuna</fullName>
+        <default>false</default>
+        <label>3 - Nessuna</label>
+    </customValue>
+    <masterLabel>Tipo Approvazione</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

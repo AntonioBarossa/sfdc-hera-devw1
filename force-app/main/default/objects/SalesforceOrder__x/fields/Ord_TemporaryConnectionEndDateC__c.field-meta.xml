@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ord_TemporaryConnectionEndDateC__c</fullName>
+    <description>Ord_TemporaryConnectionEndDateC</description>
+    <externalDeveloperName>Ord_TemporaryConnectionEndDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data fine connessione temporanea</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

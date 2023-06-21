@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_GestApp_ContactResult</fullName>
+    <active>true</active>
+    <description>In caso di sospensione di una attività di Presa appuntamento, verifica che sia stato correttamente valorizzato il campo Esito Contatto</description>
+    <errorConditionFormula>AND(ISCHANGED(wrts_prcgvr__Status__c),ISPICKVAL(wrts_prcgvr__Status__c, &apos;Sospesa&apos;),ISPICKVAL(Type__c, &apos;Presa Appuntamento&apos;),ISPICKVAL(ContactResult__c, &apos;&apos;))</errorConditionFormula>
+    <errorMessage>Attenzione! Prima di poter procedere con la sospensione occorre valorizzare il campo Esito Contatto.</errorMessage>
+</ValidationRule>

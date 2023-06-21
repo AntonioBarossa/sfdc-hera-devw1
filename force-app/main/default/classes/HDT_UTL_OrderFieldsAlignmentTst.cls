@@ -66,12 +66,20 @@ public with sharing class HDT_UTL_OrderFieldsAlignmentTst {
 
         Test.startTest();
 
-        Order ord = [SELECT Id,AccountId,Sale__c,ServicePoint__c, ServicePointCode__c,OrderReference__c,isTransition__c, SBQQ__Quote__c,SalesCompanyCode__c,SalesCompany__c,BillingProfile__c,ServicePoint__r.Vat__c
+        Order ord = [SELECT Id,AccountId,Sale__c,ServicePoint__c, ServicePointCode__c,OrderReference__c,isTransition__c, SBQQ__Quote__c,SalesCompanyCode__c,
+                     SalesCompany__c,BillingProfile__c,ServicePoint__r.Vat__c,ServicePoint__r.CommoditySector__c
                      FROM Order LIMIT 1];
-        ServicePoint__c srPoint= [SELECT Id, ServicePointCode__c
-                     FROM ServicePoint__c Where Id= :ord.ServicePoint__c LIMIT 1];
+        ServicePoint__c srPoint= [SELECT Id, ServicePointCode__c 
+                                  FROM ServicePoint__c Where Id= :ord.ServicePoint__c LIMIT 1];
         
-       	HDT_UTL_OrderFieldsAlignment.alignFields(ord);
+        HDT_UTL_Constants constants=new HDT_UTL_Constants();
+
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
+
+        System.runAs(internalUser){
+            HDT_UTL_OrderFieldsAlignment.alignFields(ord);
+        }
         
         Order ordUpdated = [SELECT Id,ServicePoint__c, ServicePointCode__c
                      FROM Order LIMIT 1];

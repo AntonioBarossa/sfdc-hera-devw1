@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 02-12-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
 
@@ -35,38 +42,58 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         return retObj;
     }
 
-    public static Object startRequestHelper(String recordId, String type) {
+    public static Object startRequestHelper(String recordId, String relatedToId, String metadataType) {
 
-        System.debug(LoggingLevel.DEBUG, '>>> recordId > ' + recordId);
+        System.debug(LoggingLevel.DEBUG, '>>> recordId > ' + recordId + ' - type: ' + metadataType + ' - relatedToId: ' + relatedToId);
 
         String httpBody = '';
 
         List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
-        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
+        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, metadataType);
 
         if(enrichmentbMetadataList.size()==0){
             throw new AuraHandledException('No enrichment Metadata!');
         }
 
-        List<Account> accList;
-        accList = HDT_QR_AccountDataEnrichment.getAccountRecords(accList, recordId);
+        Type t = Type.forName(enrichmentbMetadataList[0].ApexClass__c);
 
-        if(accList.size() == 0 || String.isEmpty(accList[0].CustomerCode__c)){
-            throw new AuraHandledException('No Customer Code!');
+        HDT_SRV_AccountDataEnrichmentSupport support = (HDT_SRV_AccountDataEnrichmentSupport)t.newInstance();
+        support.setMetadata(enrichmentbMetadataList);
+        support.setRecordIds(recordId, relatedToId);
+        support.execute();
+
+        if(!support.success){
+            throw new AuraHandledException(support.errorMessage);
         }
 
-        httpBody = '{"bp": "' + accList[0].CustomerCode__c + '"}';
+        httpBody = support.body;
+        System.debug(LoggingLevel.DEBUG, '>>> httpBody > ' + httpBody);
+
+        //List<Account> accList;
+        //accList = HDT_QR_AccountDataEnrichment.getAccountRecords(accList, recordId);
+
+        //if(accList.size() == 0 || String.isEmpty(accList[0].CustomerCode__c)){
+        //    throw new AuraHandledException('No Customer Code!');
+        //}
+
+        //httpBody = '{"bp": "' + accList[0].CustomerCode__c + '"';
+
+        //if(type.equalsIgnoreCase('bonusSocialeIdrico')){
+        //    httpBody += ', "codiceFiscaleRichiedente": "' + accList[0].FiscalCode__c + '"';
+        //}
+
+        //httpBody += '}';
 
         // Create continuation. Argument is timeout in seconds.
         Continuation con = new Continuation(40);
         // Set callback method
         con.continuationMethod = 'processResponse';
         // Set state
-        con.state = type;
+        con.state = metadataType;
         // Create callout request
         HttpRequest req = new HttpRequest();
         req.setMethod('POST');
-        req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
+        req.setEndpoint(support.endPoint);
         
         //if(!enrichmentbMetadataList[0].Credential__c.containsIgnoreCase('callout:') && !String.isEmpty(enrichmentbMetadataList[0].Authorization__c)){
         //    req.setHeader('Authorization', enrichmentbMetadataList[0].Authorization__c);
@@ -95,17 +122,41 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         return response.getBody();
     }
 
-    //public static Object processResponseHelper(List<String> labels, Object state){
-    //    HttpResponse response = Continuation.getResponse(labels[0]);
-    //    
-    //    Integer statusCode = response.getStatusCode();
-    //    if (statusCode == 200) {
-    //        return response.getBody();
-    //    } else if(statusCode >= 2000) {
-    //        throw new AuraHandledException('Continuation Error: ' + statusCode + ' - ' + response.getBody());
-    //    } else {
-    //        throw new AuraHandledException(response.getBody());
-    //    }
-    //}
+    // W2
+    public static Id getAccountId(String recordId){
+        Id myId = Id.valueOf(recordId);
+        String sObectType = String.valueOf(myId.getSobjectType());
+
+        System.debug('--> sObectType ' + sObectType);
+
+        String fieldApiName = '';
+        String queryString = '';
+        
+        switch on sObectType {
+            when 'Contract' {
+                fieldApiName = 'AccountId';
+            }	
+            when 'ServicePoint__c' {
+                fieldApiName = 'Account__c';
+            }
+            when 'Case' {
+                fieldApiName = 'AccountId';
+            }
+        }
+
+        queryString += 'SELECT Id, ' + fieldApiName + ' ';
+        queryString += 'FROM ' + sObectType + ' ';
+        queryString += 'WHERE Id = \'' + recordId + '\' LIMIT 1';
+
+        System.debug('--> sObectType ' + queryString);
+
+        List<sObject> sObjectList = new List<sObject>();
+        sObjectList = HDT_QR_AccountDataEnrichment.getRecordsList(sObjectList, queryString, sObectType);
+        sObject obj = sObjectList[0];
+
+        String returnId = (Id)obj.get(fieldApiName);
+        return returnId;
+
+    }
 
 }

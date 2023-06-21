@@ -115,8 +115,9 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         fiscalCode = fiscalCode.toUpperCase();
         String lastNameCode = fiscalCode.substring(0,3);
         String firstNameCode = fiscalCode.substring(3,6);
-        String lastNameCodeToCheck = getLastNameCode(lastName.toUpperCase().replace(' ',''));
-        String firstNameCodeToCheck = getFirstNameCode(firstName.toUpperCase());
+        // TK 983465C @enricodursontt Aggiunta gestione dell'apice nel cognome
+        String lastNameCodeToCheck = getLastNameCode(lastName.toUpperCase().replace(' ','').replace('\'', ''));
+        String firstNameCodeToCheck = getFirstNameCode(firstName.toUpperCase().deleteWhitespace());
         Boolean resultFirstName = firstNameCode.equalsIgnoreCase(firstNameCodeToCheck);
         Boolean resultLastName = lastNameCode.equalsIgnoreCase(lastNameCodeToCheck);
 

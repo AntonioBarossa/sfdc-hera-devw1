@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Amministratore</fullName>
+        <default>false</default>
+        <label>Amministratore</label>
+    </customValue>
+    <customValue>
+        <fullName>Delegato del soggetto passivo</fullName>
+        <default>false</default>
+        <label>Delegato del soggetto passivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Legale Rappresentante</fullName>
+        <default>false</default>
+        <label>Legale Rappresentante</label>
+    </customValue>
+    <customValue>
+        <fullName>Soggetto passivo</fullName>
+        <default>false</default>
+        <label>Soggetto passivo</label>
+    </customValue>
+    <masterLabel>Qualità Sottoscrittore</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <decisions>
-        <name>Show_Block_Screen</name>
-        <label>Show Block Screen?</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
-        <defaultConnector>
-            <targetReference>Screen_Documentale</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>N</defaultConnectorLabel>
-        <rules>
-            <name>Y</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Label.EnableShowFirstScreen</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Y</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Block_Screen</targetReference>
-            </connector>
-            <label>Y</label>
-        </rules>
-    </decisions>
+    <environments>Default</environments>
     <interviewLabel>Gestione Innesco Documentale - Case (Paperless) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Innesco Documentale - Case (Paperless)</label>
     <processMetadataValues>
@@ -48,29 +24,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <screens>
-        <name>Block_Screen</name>
-        <label>Block Screen</label>
-        <locationX>50</locationX>
-        <locationY>278</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Screen_Documentale</targetReference>
-        </connector>
-        <fields>
-            <name>BlockScreenText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Premendo il tasto &lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(81, 91, 231);&quot;&gt;Stampa &lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;verrà generato il PDF richiesto&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>182</locationX>
-        <locationY>494</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -91,11 +48,31 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Screen_flow</name>
+        <label>Screen_flow</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_Documentale</targetReference>
+        </connector>
+        <fields>
+            <name>Screen</name>
+            <fieldText>&lt;p&gt;Alla pressione del tasto Stampa verrà generato il PDF&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Stampa</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Show_Block_Screen</targetReference>
+            <targetReference>Screen_flow</targetReference>
         </connector>
     </start>
     <status>Active</status>

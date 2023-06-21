@@ -24,6 +24,17 @@ public inherited sharing class HDT_UTL_SecurityAccess {
         operation = operationParam;
     }
 
+    public HDT_UTL_SecurityAccess(){}
+
+    public void setObjName(String objName){
+        this.objName=objName;
+    }
+    public void setFieldNamesParam(String fieldNames){
+        this.fieldNames=fieldNames;
+    }
+    public void setOperation(String operation){
+        this.operation=operation;
+    }
     /**
      * @description Check if user has permissions to access the object
      * @return Boolean

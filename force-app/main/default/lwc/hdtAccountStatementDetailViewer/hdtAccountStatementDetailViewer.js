@@ -62,7 +62,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     getTabConfigurationData(){
-        getSecondLevelColumns({tabValue: this.tabCode})
+        getSecondLevelColumns({tabValue: this.tabCode, recordId: this.accountId})
         .then(result => {
             console.log('# getSecondLevelColumns #');
             console.log('# getSecondLevelColumns: ' + result.success + ' - ' + result.message);

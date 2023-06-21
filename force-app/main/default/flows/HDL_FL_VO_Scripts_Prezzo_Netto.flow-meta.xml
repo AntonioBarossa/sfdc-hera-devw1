@@ -5,7 +5,7 @@
         <name>AssignEle</name>
         <label>AssignEle</label>
         <locationX>490</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>isEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignEle_0</name>
         <label>AssignEle</label>
         <locationX>2290</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>isEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignExistCaldaiaSicura</name>
         <label>AssignExistCaldaiaSicura</label>
         <locationX>1214</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>AssignExistWattProblem</name>
         <label>AssignExistWattProblem</label>
         <locationX>1478</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistWatt</assignToReference>
             <operator>Assign</operator>
@@ -83,7 +83,7 @@
         <name>AssignGas</name>
         <label>AssignGas</label>
         <locationX>1370</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
         <name>AssignGas_0</name>
         <label>AssignGas</label>
         <locationX>3170</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +115,7 @@
         <name>AssignmentAnalisiConsumi</name>
         <label>AssignmentAnalisiConsumi</label>
         <locationX>818</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>AnalisiConsumi</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +131,7 @@
         <name>AssignmenteRicaricaPubblica</name>
         <label>AssignmenteRicaricaPubblica</label>
         <locationX>3062</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistPubblica</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignmentRicaricaPrivata</name>
         <label>AssignmentRicaricaPrivata</label>
         <locationX>3326</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistPrivata</assignToReference>
             <operator>Assign</operator>
@@ -163,7 +163,7 @@
         <name>AssignOrderPadreId</name>
         <label>AssignOrderPadreId</label>
         <locationX>950</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>idPadre</assignToReference>
             <operator>Add</operator>
@@ -179,7 +179,7 @@
         <name>AssignVariabiliConcatenate</name>
         <label>AssignVariabiliConcatenate</label>
         <locationX>930</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -216,7 +216,7 @@
         <name>AssignVariabiliConcatenate_Az</name>
         <label>AssignVariabiliConcatenate_Az</label>
         <locationX>2730</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -253,7 +253,7 @@
         <name>ContatoreWallBox</name>
         <label>ContatoreWallBox</label>
         <locationX>1018</locationX>
-        <locationY>4406</locationY>
+        <locationY>3938</locationY>
         <assignmentItems>
             <assignToReference>CounterWallBox</assignToReference>
             <operator>Add</operator>
@@ -269,7 +269,7 @@
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
         <locationX>1018</locationX>
-        <locationY>3398</locationY>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
             <operator>Add</operator>
@@ -285,7 +285,7 @@
         <name>InstallazioneStandardTrue</name>
         <label>InstallazioneStandardTrue</label>
         <locationX>1018</locationX>
-        <locationY>4742</locationY>
+        <locationY>4238</locationY>
         <assignmentItems>
             <assignToReference>InstallazioneStandard</assignToReference>
             <operator>Assign</operator>
@@ -301,7 +301,7 @@
         <name>InstallazioneTrue</name>
         <label>InstallazioneTrue</label>
         <locationX>1018</locationX>
-        <locationY>3734</locationY>
+        <locationY>3338</locationY>
         <assignmentItems>
             <assignToReference>InstallazioneTermostato</assignToReference>
             <operator>Assign</operator>
@@ -317,7 +317,7 @@
         <name>Kit2True</name>
         <label>Kit2True</label>
         <locationX>1018</locationX>
-        <locationY>4070</locationY>
+        <locationY>3638</locationY>
         <assignmentItems>
             <assignToReference>KitLed</assignToReference>
             <operator>Assign</operator>
@@ -333,7 +333,7 @@
         <name>LedAssignment</name>
         <label>LedAssignment</label>
         <locationX>2270</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistLed</assignToReference>
             <operator>Assign</operator>
@@ -363,7 +363,7 @@
         <name>NoProblemAcquaAssignment</name>
         <label>NoProblemAcquaAssignment</label>
         <locationX>2798</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblmeAcqua</assignToReference>
             <operator>Assign</operator>
@@ -386,7 +386,7 @@
         <name>NoProblemGasAssignment</name>
         <label>NoProblemGasAssignment</label>
         <locationX>2006</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -409,7 +409,7 @@
         <name>NoProblemLuceAssignment</name>
         <label>NoProblemLuceAssignment</label>
         <locationX>1742</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -432,7 +432,7 @@
         <name>ThermoAssignment</name>
         <label>ThermoAssignment</label>
         <locationX>2534</locationX>
-        <locationY>7190</locationY>
+        <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -462,7 +462,7 @@
         <name>VASPresenti</name>
         <label>VASPresentiAssign</label>
         <locationX>2402</locationX>
-        <locationY>6950</locationY>
+        <locationY>6206</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -478,7 +478,7 @@
         <name>BonusDecision</name>
         <label>BonusDecision</label>
         <locationX>710</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0</targetReference>
         </defaultConnector>
@@ -517,7 +517,7 @@
         <name>BonusDecision_EE_OUT_FAM</name>
         <label>BonusDecision</label>
         <locationX>270</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0</targetReference>
         </defaultConnector>
@@ -556,7 +556,7 @@
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
         <locationX>490</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -581,7 +581,7 @@
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1370</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -606,7 +606,7 @@
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2290</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_EE_0</targetReference>
         </defaultConnector>
@@ -631,7 +631,7 @@
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>3170</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_GAS_0</targetReference>
         </defaultConnector>
@@ -656,7 +656,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>666</locationX>
-        <locationY>5174</locationY>
+        <locationY>4622</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -681,7 +681,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1194</locationX>
-        <locationY>5174</locationY>
+        <locationY>4622</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -706,7 +706,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2466</locationX>
-        <locationY>3158</locationY>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_EE_0_0</targetReference>
         </defaultConnector>
@@ -731,7 +731,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2994</locationX>
-        <locationY>3158</locationY>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_GAS_0_0</targetReference>
         </defaultConnector>
@@ -756,7 +756,7 @@
         <name>Categoria_Cliente_Decision</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>1214</locationY>
+        <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
         </defaultConnector>
@@ -781,7 +781,7 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>7598</locationY>
+        <locationY>6782</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -806,7 +806,7 @@
         <name>Categoria_Cliente_Decision_2</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>6038</locationY>
+        <locationY>5390</locationY>
         <defaultConnector>
             <targetReference>DecisionServiziBuddle_0</targetReference>
         </defaultConnector>
@@ -831,7 +831,7 @@
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>686</locationX>
-        <locationY>7718</locationY>
+        <locationY>6890</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto</targetReference>
         </defaultConnector>
@@ -856,7 +856,7 @@
         <name>ChannelDecisionAziende</name>
         <label>ChannelDecisionAziende</label>
         <locationX>1214</locationX>
-        <locationY>7838</locationY>
+        <locationY>6998</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0_0_0</targetReference>
         </defaultConnector>
@@ -881,7 +881,7 @@
         <name>DecisionAnalisiConsumi</name>
         <label>DecisionAnalisiConsumi</label>
         <locationX>950</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </defaultConnector>
@@ -906,7 +906,7 @@
         <name>DecisionForInstallazione</name>
         <label>DecisionForInstallazione</label>
         <locationX>1150</locationX>
-        <locationY>3614</locationY>
+        <locationY>3230</locationY>
         <defaultConnector>
             <targetReference>DecisionForKit</targetReference>
         </defaultConnector>
@@ -931,7 +931,7 @@
         <name>DecisionForKit</name>
         <label>DecisionForKit</label>
         <locationX>1150</locationX>
-        <locationY>3950</locationY>
+        <locationY>3530</locationY>
         <defaultConnector>
             <targetReference>DecisionForWallBox</targetReference>
         </defaultConnector>
@@ -956,7 +956,7 @@
         <name>DecisionForQuantity</name>
         <label>DecisionForQuantity</label>
         <locationX>1150</locationX>
-        <locationY>3278</locationY>
+        <locationY>2930</locationY>
         <defaultConnector>
             <targetReference>DecisionForInstallazione</targetReference>
         </defaultConnector>
@@ -988,7 +988,7 @@
         <name>DecisionForWallBox</name>
         <label>DecisionForWallBox</label>
         <locationX>1150</locationX>
-        <locationY>4286</locationY>
+        <locationY>3830</locationY>
         <defaultConnector>
             <targetReference>DecisionInstallazioneStandard</targetReference>
         </defaultConnector>
@@ -1013,7 +1013,7 @@
         <name>DecisionInstallazioneStandard</name>
         <label>DecisionInstallazioneStandard</label>
         <locationX>1150</locationX>
-        <locationY>4622</locationY>
+        <locationY>4130</locationY>
         <defaultConnector>
             <targetReference>Bonus_Loop</targetReference>
         </defaultConnector>
@@ -1038,7 +1038,7 @@
         <name>DecisionServiziBuddle</name>
         <label>DecisionServiziBuddle</label>
         <locationX>730</locationX>
-        <locationY>6158</locationY>
+        <locationY>5498</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1063,7 +1063,7 @@
         <name>DecisionServiziBuddle_0</name>
         <label>DecisionServiziBuddle</label>
         <locationX>1170</locationX>
-        <locationY>6158</locationY>
+        <locationY>5498</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1088,7 +1088,7 @@
         <name>isBonus_FAM_OUT_GAS</name>
         <label>isBonus</label>
         <locationX>1150</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_Fam_Gas_Out</targetReference>
         </defaultConnector>
@@ -1127,7 +1127,7 @@
         <name>isBonus_IN_GAS</name>
         <label>isBonus</label>
         <locationX>1590</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_Gas_IN_FAM</targetReference>
         </defaultConnector>
@@ -1166,7 +1166,7 @@
         <name>isBonusINBEE</name>
         <label>isBonusINBEE</label>
         <locationX>2510</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1205,7 +1205,7 @@
         <name>isBonusINBGAS</name>
         <label>isBonusINBGAS</label>
         <locationX>3390</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1244,7 +1244,7 @@
         <name>isBonusOUTEE</name>
         <label>isBonusINBEE</label>
         <locationX>2070</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1283,7 +1283,7 @@
         <name>isBonusOUTGAS</name>
         <label>isBonusOUTGAS</label>
         <locationX>2950</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1322,7 +1322,7 @@
         <name>isPromo_0</name>
         <label>isPromo</label>
         <locationX>710</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1361,7 +1361,7 @@
         <name>isPromo_0_0_0</name>
         <label>isPromo</label>
         <locationX>270</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1400,7 +1400,7 @@
         <name>isPromo_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2510</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1439,7 +1439,7 @@
         <name>isPromo_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>3390</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1471,7 +1471,7 @@
         <name>isPromo_0_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2070</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1510,7 +1510,7 @@
         <name>isPromo_0_0_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2950</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1542,7 +1542,7 @@
         <name>isPromo_Fam_Gas_Out</name>
         <label>isPromo</label>
         <locationX>1150</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1595,7 +1595,7 @@
         <name>isPromo_Gas_IN_FAM</name>
         <label>isPromo</label>
         <locationX>1590</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1648,7 +1648,7 @@
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
         <locationX>930</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>AssignGas</targetReference>
         </defaultConnector>
@@ -1673,7 +1673,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>930</locationX>
-        <locationY>5054</locationY>
+        <locationY>4514</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1698,7 +1698,7 @@
         <name>Servizio_Decision_0_0</name>
         <label>Servizio Decision</label>
         <locationX>2730</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>AssignGas_0</targetReference>
         </defaultConnector>
@@ -1723,7 +1723,7 @@
         <name>Servizio_Decision_0_0_0</name>
         <label>Servizio Decision</label>
         <locationX>2730</locationX>
-        <locationY>3038</locationY>
+        <locationY>2714</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1748,7 +1748,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1720</locationX>
-        <locationY>6830</locationY>
+        <locationY>6098</locationY>
         <defaultConnector>
             <targetReference>VASPresenti</targetReference>
         </defaultConnector>
@@ -1773,7 +1773,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2402</locationX>
-        <locationY>7070</locationY>
+        <locationY>6314</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1954,7 +1954,7 @@
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
         <locationX>930</locationX>
-        <locationY>3158</locationY>
+        <locationY>2822</locationY>
         <collectionReference>GetOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1968,7 +1968,7 @@
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>50</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1982,7 +1982,7 @@
         <name>LoopOrdiniFigliOfferta_0</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>1850</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1996,7 +1996,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>950</locationX>
-        <locationY>6590</locationY>
+        <locationY>5882</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2029,7 +2029,7 @@
         <name>getChilds</name>
         <label>getChilds</label>
         <locationX>950</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>DecisionAnalisiConsumi</targetReference>
@@ -2064,7 +2064,7 @@
         <name>getOrderId</name>
         <label>getOrderId</label>
         <locationX>950</locationX>
-        <locationY>5798</locationY>
+        <locationY>5174</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getOrderProduct</targetReference>
@@ -2099,7 +2099,7 @@
         <name>GetOrderItems</name>
         <label>GetOrderItems</label>
         <locationX>930</locationX>
-        <locationY>3038</locationY>
+        <locationY>2714</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bonus_Loop</targetReference>
@@ -2120,7 +2120,7 @@
         <name>getOrderProduct</name>
         <label>getOrderProduct</label>
         <locationX>950</locationX>
-        <locationY>5918</locationY>
+        <locationY>5282</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Categoria_Cliente_Decision_2</targetReference>
@@ -2141,7 +2141,7 @@
         <name>getParent</name>
         <label>getParent</label>
         <locationX>950</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignOrderPadreId</targetReference>
@@ -2169,7 +2169,7 @@
         <name>Bonus_EE_AZ_IN</name>
         <label>Bonus EE AZ IN</label>
         <locationX>2378</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2205,7 +2205,7 @@
         <name>Bonus_EE_AZ_OUT</name>
         <label>Bonus EE AZ OUT</label>
         <locationX>1938</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2241,7 +2241,7 @@
         <name>Bonus_Gas_AZ_IN</name>
         <label>Bonus Gas AZ IN</label>
         <locationX>3258</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2277,7 +2277,7 @@
         <name>Bonus_Gas_AZ_OUT</name>
         <label>Bonus Gas AZ OUT</label>
         <locationX>2818</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2313,7 +2313,7 @@
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>2070</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2332,7 +2332,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo del cliente, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 55% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 45% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2347,7 +2347,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo &lt;/span&gt;sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 57% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo &lt;/span&gt;sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 43% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2389,7 +2389,7 @@
         <name>Condizioni_Economiche_Aziende_EE_0</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>2510</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2408,7 +2408,7 @@
         </fields>
         <fields>
             <name>CEG_PrezzoNettoLavoroImolaLuce</name>
-            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo del cliente, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’55% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 45% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2423,7 +2423,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_1</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 57% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 43% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2470,7 +2470,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>3390</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2494,7 +2494,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 94% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 84% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2536,7 +2536,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>2950</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2560,7 +2560,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 94% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 84% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2607,7 +2607,7 @@
         <name>Condizioni_Economiche_Bonus_EE_FAM_IN</name>
         <label>Condizioni_Economiche_Bonus_EE_FAM_IN</label>
         <locationX>578</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2648,7 +2648,7 @@
         <name>Condizioni_Economiche_Bonus_EE_OUT</name>
         <label>Condizioni_Economiche_Bonus_EE_OUT</label>
         <locationX>138</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2689,7 +2689,7 @@
         <name>Condizioni_Economiche_Bonus_FAM_OUT_GAS</name>
         <label>Condizioni Economiche Bonus FAM OUT GAS</label>
         <locationX>1018</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2730,7 +2730,7 @@
         <name>Condizioni_Economiche_Bonus_GAS_IN</name>
         <label>Condizioni_Economiche_Bonus_GAS_IN</label>
         <locationX>1458</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2771,7 +2771,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>710</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2829,7 +2829,7 @@
         </fields>
         <fields>
             <name>CGE_EE_Famiglie_InbountText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo del cliente, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2856,7 +2856,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo netto ed il contributo rappresentano circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo netto ed il contributo rappresentano circa il 58% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 42% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2929,7 +2929,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 65% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 35% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 56% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 44% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2998,7 +2998,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_0_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>270</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3007,7 +3007,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo del cliente, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3071,7 +3071,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 58% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 42% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3144,7 +3144,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 65% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 35% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 56% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 44% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3153,21 +3153,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa Imola Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_1_0</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Rimangono a carico del cliente il corrispettivo di dispacciamento compreso nella spesa per la materia energia, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, quelli compresi nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3213,7 +3198,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1590</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3242,7 +3227,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 68% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 32% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3251,36 +3236,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Condizioni_Economiche_Famiglie_GAS_Text8</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,10 € al metro cubo.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>text_3</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 95% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 5% circa della spesa annua.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3321,7 +3276,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS_0</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1150</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3370,7 +3325,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 68% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 32% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3424,7 +3379,7 @@
         <name>Condizioni_Economiche_Promo_EE_INB_AZ</name>
         <label>Condizioni Economiche Promo EE INB AZ</label>
         <locationX>2378</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3465,7 +3420,7 @@
         <name>Condizioni_Economiche_Promo_EE_OUT_AZ</name>
         <label>Condizioni Economiche Promo EE OUT AZ</label>
         <locationX>1938</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3506,7 +3461,7 @@
         <name>Condizioni_Economiche_Promo_Gas_In_Fam</name>
         <label>Condizioni Economiche Promo Gas In Fam</label>
         <locationX>1458</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3577,7 +3532,7 @@
         <name>Condizioni_Economiche_Promo_GAS_INB_AZ</name>
         <label>Condizioni Economiche Promo GAS INB AZ</label>
         <locationX>3258</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3611,7 +3566,7 @@
         <name>Condizioni_Economiche_Promo_GAS_OUT_AZ</name>
         <label>Condizioni Economiche Promo GAS OUT AZ</label>
         <locationX>2818</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3645,7 +3600,7 @@
         <name>Condizioni_Economiche_Promo_Out_EE_FAM</name>
         <label>Condizioni Economiche Promo Out EE FAM</label>
         <locationX>138</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3701,7 +3656,7 @@
         <name>Condizioni_Economiche_Promo_Out_Gas_Fam</name>
         <label>Condizioni Economiche Promo Out Gas Fam</label>
         <locationX>1018</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3772,7 +3727,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1082</locationX>
-        <locationY>7958</locationY>
+        <locationY>7106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3936,7 +3891,7 @@
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>554</locationX>
-        <locationY>7958</locationY>
+        <locationY>7106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4499,7 +4454,7 @@
         <name>Conferma_Adesione_Screen_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>818</locationX>
-        <locationY>7958</locationY>
+        <locationY>7106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5124,7 +5079,7 @@
         <name>Conferma_Adesione_Screen_0_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1346</locationX>
-        <locationY>7958</locationY>
+        <locationY>7106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5293,7 +5248,7 @@
         <name>Copy_1_of_Condizioni_Economiche_Promo_Inb_EE_Fam</name>
         <label>Condizioni Economiche Promo INB EE FAM</label>
         <locationX>578</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5349,7 +5304,7 @@
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>2598</locationX>
-        <locationY>3278</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5482,7 +5437,7 @@
         <name>Dati_Tecnici_Aziende_EE_0_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>2334</locationX>
-        <locationY>3278</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5615,7 +5570,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>3126</locationX>
-        <locationY>3278</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5760,7 +5715,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>2862</locationX>
-        <locationY>3278</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5908,7 +5863,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>798</locationX>
-        <locationY>5294</locationY>
+        <locationY>4730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6171,7 +6126,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>534</locationX>
-        <locationY>5294</locationY>
+        <locationY>4730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6304,7 +6259,7 @@
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1326</locationX>
-        <locationY>5294</locationY>
+        <locationY>4730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6567,7 +6522,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1062</locationX>
-        <locationY>5294</locationY>
+        <locationY>4730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6705,7 +6660,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>818</locationX>
-        <locationY>7838</locationY>
+        <locationY>6998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6795,7 +6750,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>1214</locationX>
-        <locationY>7718</locationY>
+        <locationY>6890</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6874,7 +6829,7 @@
         <name>Durata_Contratto_Out_Fam</name>
         <label>Durata Contratto</label>
         <locationX>554</locationX>
-        <locationY>7838</locationY>
+        <locationY>6998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6964,7 +6919,7 @@
         <name>Servizi_Bundle_Screen</name>
         <label>Servizi Bundle Screen</label>
         <locationX>598</locationX>
-        <locationY>6278</locationY>
+        <locationY>5606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7028,7 +6983,7 @@
         <name>Servizi_Bundle_Screen_0</name>
         <label>Servizi Bundle Screen</label>
         <locationX>1038</locationX>
-        <locationY>6278</locationY>
+        <locationY>5606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7055,7 +7010,7 @@
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
         <locationX>930</locationX>
-        <locationY>1454</locationY>
+        <locationY>1298</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate</targetReference>
         </connector>
@@ -7072,7 +7027,7 @@
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
         <locationX>2730</locationX>
-        <locationY>1454</locationY>
+        <locationY>1298</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate_Az</targetReference>
         </connector>
@@ -7089,7 +7044,7 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>950</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
@@ -7112,7 +7067,7 @@
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
         <locationX>950</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Categoria_Cliente_Decision</targetReference>
         </connector>
@@ -7152,7 +7107,7 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>950</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
@@ -7193,7 +7148,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1720</locationX>
-        <locationY>6710</locationY>
+        <locationY>5990</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>

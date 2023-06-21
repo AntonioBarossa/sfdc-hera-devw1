@@ -24,7 +24,7 @@ public class HDT_UTL_ServiceCatalogOrFilterProcessTst {
 
         System.runAs(internalUser){
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
             HDT_UTL_DataFactoryTst.createCase(1,true,accId,null,null,null,null);
             

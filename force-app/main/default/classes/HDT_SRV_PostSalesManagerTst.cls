@@ -1,16 +1,22 @@
 @isTest
 public class HDT_SRV_PostSalesManagerTst {
-    
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
     @TestSetup
     static void setup(){
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        String rtIdVerificheAcqua = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheAcqua').getRecordTypeId();
+        String rtIdConsAnom = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
         accList[1].Name = 'TestAccount2';
         insert accList;
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(2, false);
+        servPointList[1].RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_PACQUA;
+        servPointList[1].CommoditySector__c = 'Acqua';
+        servPointList[1].ServicePointCode__c = '00000000000';
+        insert servPointList;
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         ordList[0].ServicePoint__c = servPointList[0].Id;
         String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
@@ -34,7 +40,7 @@ public class HDT_SRV_PostSalesManagerTst {
         insert caseList;
 
         Case parentCase = [SELECT Id FROM Case WHERE Amount__c = 20.00 LIMIT 1];
-        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(5, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList2[0].ParentId  = parentCase.Id;
         caseList2[0].BillingProfile__c  = billingProfileList[0].Id;
         caseList2[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
@@ -44,17 +50,61 @@ public class HDT_SRV_PostSalesManagerTst {
         caseList2[1].Type = 'Riattivazione Fornitura';
         caseList2[1].HerokuPracticeCode__c = '';
         caseList2[1].BillingProfile__c = billingProfileList[0].Id;
+        caseList2[2].ParentId  = parentCase.Id;
+        caseList2[2].BillingProfile__c  = billingProfileList[0].Id;
+        caseList2[2].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
+        caseList2[2].Type  = 'Marcatura/Uso PdR';
+        caseList2[2].ServicePoint__c = servPointList[0].Id;
+        caseList2[3].ParentId  = parentCase.Id;
+        caseList2[3].BillingProfile__c  = billingProfileList[0].Id;
+        caseList2[3].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+        caseList2[3].Type  = 'Rettifica Consumi';
+        caseList2[3].SubProcess__c  = 'Errore Stima Consumi';
+        caseList2[3].ServicePoint__c = servPointList[0].Id;
+        caseList2[4].BillingProfile__c  = billingProfileList[0].Id;
+        caseList2[4].RecordTypeId  = rtIdConsAnom;
+        caseList2[4].Type  = 'Consumo Anomalo Idrico';
+        caseList2[4].ServicePoint__c = servPointList[1].Id;
 
         insert caseList2;
 
-        List<Case> caseList3 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        caseList3[0].ParentId  = parentCase.Id;
-        caseList3[0].BillingProfile__c  = billingProfileList[0].Id;
-        caseList3[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
-        caseList3[0].Type  = 'Marcatura/Uso PdR';
-        caseList3[0].ServicePoint__c = servPointList[0].Id;
-    
-        insert caseList3;
+        //List<Case> caseList3 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        //caseList3[0].ParentId  = parentCase.Id;
+        //caseList3[0].BillingProfile__c  = billingProfileList[0].Id;
+        //caseList3[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
+        //caseList3[0].Type  = 'Marcatura/Uso PdR';
+        //caseList3[0].ServicePoint__c = servPointList[0].Id;
+    //
+        //insert caseList3;
+        
+        //List<Case> caseList4 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        //caseList4[0].ParentId  = parentCase.Id;
+        //caseList4[0].BillingProfile__c  = billingProfileList[0].Id;
+        //caseList4[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+        //caseList4[0].Type  = 'Rettifica Consumi';
+        //caseList4[0].SubProcess__c  = 'Errore Stima Consumi';
+        //caseList4[0].ServicePoint__c = servPointList[0].Id;
+    //
+        //insert caseList4;
+
+        Case parentRettCons = [SELECT Id FROM Case WHERE Type = 'Rettifica Consumi' AND Subprocess__c = 'Errore Stima Consumi'];
+        Case parentConsAn = [SELECT Id FROM Case WHERE Type = 'Consumo Anomalo Idrico'];
+
+        List<Case> caseList5 = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList5[0].ParentId  = parentRettCons.Id;
+        caseList5[0].BillingProfile__c  = billingProfileList[0].Id;
+        caseList5[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
+        caseList5[0].Type  = 'Autolettura da cliente';
+        caseList5[0].Phase__c  = 'Validazione OK da DL';
+        caseList5[0].ServicePoint__c = servPointList[0].Id;
+        caseList5[1].ParentId  = parentConsAn.Id;
+        caseList5[1].BillingProfile__c  = billingProfileList[0].Id;
+        caseList5[1].RecordTypeId  = rtIdVerificheAcqua;
+        caseList5[1].Type  = 'Verifica Fuga Idrica';
+        caseList5[1].Phase__c  = 'Bozza';
+        caseList5[1].ServicePoint__c = servPointList[1].Id;
+        
+        insert caseList5;
         
         List<wrts_prcgvr__ActivityTemplate__c> actTempList = new List<wrts_prcgvr__ActivityTemplate__c>();
 
@@ -85,7 +135,7 @@ public class HDT_SRV_PostSalesManagerTst {
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniEle').getRecordTypeId();
         String rtNameAllineamentoAnagraf = 'HDT_RT_AllineamentoAnagrafica';
         String rtIdAllineamentoAnagraf = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
-        
+
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO definitivo', 'Bozza', rtId, rtName,'A','','','');
@@ -96,6 +146,9 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO definitivo', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO definitivo', 'Bozza', rtIdConsAnom, 'HDT_RT_ConsumoAnomaloIdrico','A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione Validata', 'Bozza', rtIdConsAnom, 'HDT_RT_ConsumoAnomaloIdrico','A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo','Documentazione Validata', rtIdConsAnom, 'HDT_RT_ConsumoAnomaloIdrico','A','','','');
 
     }
 
@@ -113,6 +166,16 @@ public class HDT_SRV_PostSalesManagerTst {
 
         Test.stopTest();
         
+    }
+
+    @IsTest
+    static void recalculateVoltureEffectiveDate(){
+        Case cas = new Case();
+        Date oggi = Date.today();
+        Date ieri = oggi.addDays(-1);
+        cas.EffectiveDate__c =ieri;
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('recalculateVoltureEffectiveDate', cas));
     }
 
     @IsTest
@@ -203,7 +266,7 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void handleVarAnagrCliModDatiContatto(){
 
-        Case currentCase = [SELECT Id, AccountId, CustomerMarking__c, SubProcess__c, ContactId, Email__c, PhoneNumber__c, Mobile__c, CertifiedEmail__c, Fax__c FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+        Case currentCase = [SELECT Id, AccountId, CustomerMarking__c, SubProcess__c, ContactId, Email__c, PhoneNumber__c, Mobile__c, CertifiedEmail__c, Fax__c, SuppliedEmail FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
 
         currentCase.SubProcess__c = 'Modifica Dati di Contatto';
         currentCase.Category__c = 'Aziende Soho';
@@ -338,6 +401,13 @@ public class HDT_SRV_PostSalesManagerTst {
     static public Boolean isWeekend(Date myDate){
         String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
         return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
+    }
+    @isTest
+    static void createActivityExternal(){
+        Test.startTest();
+        HDT_UTL_PostSalesManager psm = new HDT_UTL_PostSalesManager();
+        HDT_UTL_PostSalesManager.createActivityExternal('Sblocco Voltura');
+        Test.stopTest();
     }
 
     @IsTest
@@ -523,6 +593,27 @@ public class HDT_SRV_PostSalesManagerTst {
         Test.stopTest();
         
     }
+    @IsTest
+    static void advanceParentCasePhaseConsumoAnomalo(){
+        
+        Case currentCase = [SELECT Id, ParentId, Type, Phase__c,Commodity__c  FROM Case WHERE Type  = 'Verifica Fuga Idrica' LIMIT 1];
+        Case parentCase = [SELECT Id, Type,Commodity__c FROM Case WHERE Id =: currentCase.ParentId LIMIT 1];
+        wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
+        act.Case__c = currentCase.Id;
+        act.Type__c = 'Elaborazione Manuale';
+        act.wrts_prcgvr__Status__c = 'Chiusa';
+        act.ActivityOutcome__c = 'Positivo';
+        insert act;
+        Test.startTest();
+
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('advanceParentCasePhase', currentCase));
+        act.ActivityOutcome__c = 'Negativo';
+        update act;
+        psm.execute(setArgs('advanceParentCasePhase', currentCase));
+        Test.stopTest();
+        
+    }
 
     @IsTest
     static void advanceParentCasePhaseModTariffResidente(){
@@ -678,6 +769,28 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
         psm.execute(setArgs('setContractAccountCode', currentCase));
         
+        Test.stopTest();
+        System.assert(currentCase != null,'currentCase è null');
+        
+    }
+
+    @IsTest
+    static void handleSelfReadingsTest(){
+
+        Case currentCase = [SELECT Id, ParentId, Phase__c, Subprocess__c  FROM Case WHERE Type  = 'Autolettura da cliente' LIMIT 1];
+        Test.startTest();
+
+        //Test con Phase Validazione OK da DL
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('handleSelfReadings', currentCase));
+
+        //Test con Phase Annullato
+        currentCase.Phase__c = 'Annullato';
+        update currentCase;
+        psm.execute(setArgs('handleSelfReadings', currentCase));
+        
+
+
         Test.stopTest();
         System.assert(currentCase != null,'currentCase è null');
         

@@ -245,6 +245,14 @@
             <fullName>Storno per dati fiscali errati</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Richiesta di ricalcolo fuga acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso retroattivo importo fognatura e depurazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>BillingFrequency__c</picklist>
@@ -353,6 +361,82 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -428,6 +512,82 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Caliber__c</picklist>
@@ -501,6 +661,82 @@
         </values>
         <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -892,6 +1128,48 @@
             <fullName>Si</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClientType__c</picklist>
+		<values>
+			<fullName>Alberghi Bar Ristoranti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Bagnini</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo privato</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo pubblico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Ditte</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Enti Associazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Scuole</fullName>
+			<default>false</default>
+		</values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClientTypology__c</picklist>
+		<values>
+			<fullName>Domestico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Non Domestico</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
@@ -1979,6 +2257,30 @@
         </values>
         <values>
             <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6655,7 +6957,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7061,7 +7363,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7463,7 +7765,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7498,7 +7800,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -7568,7 +7870,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -7589,6 +7891,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7759,6 +8065,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>OperationType__c</picklist>
+		<values>
+			<fullName>Modifica dati contr. stesso Cli</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Separazione CA</fullName>
             <default>false</default>
@@ -7783,11 +8093,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7835,6 +8153,18 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -7844,6 +8174,10 @@
         </values>
         <values>
             <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autorizzata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7911,11 +8245,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esito OK da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7927,7 +8269,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Di Autorizzazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7951,6 +8301,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica Elaborata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values>
@@ -7960,6 +8314,10 @@
         </values>
         <values>
             <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7976,6 +8334,18 @@
         </values>
         <values>
             <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stornata SAP</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8260,11 +8630,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Malfunzionamento</fullName>
+            <fullName>Malfunzione Gruppo di misura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Malfunzione Gruppo di misura</fullName>
+            <fullName>Monitoraggio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8281,6 +8651,10 @@
         </values>
         <values>
             <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolo consumi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8743,6 +9117,110 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1100-ACQUA --- Non definito ---</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103-Attivita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1105-Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1106-Cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1107-Colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1108-Irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1109-Comunale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1110-Ente pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1111-Promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1112-Subfornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1113-Uso interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1114-Rete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>13A0-Usi di Abitazione BT</fullName>
             <default>false</default>
         </values>
@@ -8770,9 +9248,50 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        
-        
-        
+        <values>
+            <fullName>1401-Risc amb singoli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403-Risc Amb centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406-Acqua calda Sing unità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1407-Acqua calda Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1408-Ospedalieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1409-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1410-Solo Raffrescamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1411-Piscine e Palestre</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>
@@ -10652,6 +11171,10 @@
             <fullName>Altre Verifiche</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
@@ -10716,6 +11239,10 @@
             <fullName>Condizioni Contrattuali Errate</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Conferimento Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Consegna copia chiave GdM</fullName>
             <default>false</default>
@@ -10776,6 +11303,10 @@
             <fullName>Fiscale</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Formulari Richiesta Sconto</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
@@ -10788,6 +11319,10 @@
             <fullName>Gestione Disalimentabilità</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Gestione Rifiuti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>HVAC</fullName>
             <default>false</default>
@@ -10872,6 +11407,10 @@
             <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Paperless</fullName>
             <default>false</default>
@@ -10944,8 +11483,20 @@
             <fullName>Ricostruzione Consumi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10976,6 +11527,14 @@
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Sconti Collettivi Pap</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Segnalazioni VAS</fullName>
             <default>false</default>

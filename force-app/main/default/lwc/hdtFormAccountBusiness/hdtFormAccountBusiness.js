@@ -64,6 +64,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @track companyOptions;
     @track customerTypeOptions;
 
+    @track condominioSelected = false;
+
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
   
@@ -266,7 +268,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
-        if(this.markingValue=='Ditta individuale'){
+        if(this.markingValue.includes('Ditta individuale')){
         //    this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
@@ -277,28 +279,47 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
+            if(this.condominioSelected)
+            {
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-show');
+            }
             this.customerType='Persona fisica';
             this.makerequired= true;
             this.requiredVat=true; //HRAWRM-776 07/10/2021
-        }
-        /* TK 938126C -- Associazione deve comportarsi come Azienda */
-        else if(this.markingValue.includes("Condominio")/*||this.markingValue.includes('Associazione') */ ){
-            this.requiredVat= false;
-            this.makerequired=true;
-
-        }//HRAWRM-776 07/10/2021
-        else{
+        }else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
+         /** TK 978944C quando viene deselezionata la marcatura Ditta Individuale Nome e Cognome vengono sbiancati */
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="firstIndividualName"]').value = '';
+            this.template.querySelector('[data-id="lastIndividualName"]').value = '';
             this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
-            this.makerequired= false;
-            this.requiredVat=true;//HRAWRM-776 07/10/2021
+            /** TK 978944C quando viene selezionata la marcatura condominio la P.Iva viene nascosta */
+            if(this.markingValue.includes('Condominio'))
+            {
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-show');
+                this.template.querySelector('[data-id="vatNumber"]').value = '';
+                this.condominioSelected = true;
+            }
+            else if(this.condominioSelected){
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-show');
+            }
+            /** TK 978944C quando viene selezionata la marcatura associazione la P.Iva viene sbiancata */
+            if(this.markingValue.includes('Associazione')){
+                this.template.querySelector('[data-id="vatNumber"]').value = '';
+            }
+            //Ticket 977444C
+            let fCodeVat = this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')? true : false;
+            this.makerequired= this.markingValue.includes("Azienda") ? true : fCodeVat;
+            this.requiredVat= !fCodeVat;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
@@ -655,6 +676,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     isValidated=false;
                     messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
                 }
+            }
+        }
+        if(this.markingValue === 'Azienda'){
+            if(!fiscalCode.reportValidity()){
+                isValidated=false;
             }
         }
 

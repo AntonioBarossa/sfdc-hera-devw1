@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>bonusSocialeIdrico</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_WaterSocialBonus</value>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;Bonus Sociale Idrico&quot;,
+    &quot;iconName&quot;: &quot;standard:endorsement&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Codice Richiesta&quot;,
+        &quot;fieldName&quot;: &quot;codiceRichiestaSgate&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data inizio validità bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataInizioValiditaBonus&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data fine validità bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataFineValiditaBonus&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Tipo Domanda&quot;,
+        &quot;fieldName&quot;: &quot;tipoDomanda&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Tipo Cliente&quot;,
+        &quot;fieldName&quot;: &quot;tipoCliente&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Numero Componenti&quot;,
+        &quot;fieldName&quot;: &quot;numeroComponenti&quot;
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">Callout:MulesoftBasePath/data-enrichment/gate-paperworks-demand</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

@@ -1,6 +1,9 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
-    private static List<Contract> contractToDelete = new List<Contract>();
+    @TestVisible private static List<Contract> contractToDelete = new List<Contract>();
+    @TestVisible private static List<Contract> contractToUpdate = new List<Contract>();
+    @TestVisible private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
+    private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
     private static Boolean isFinalizerAttached = false;
 
     public class HDT_QBL_Finalizer implements Finalizer {
@@ -56,6 +59,77 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             }
         }
     }
+    public static void alignFields(List<SBQQ__Subscription__c> newSubs){
+        Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
+        }
+
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
+            [SELECT id, 
+            Order.OrderReference__c, 
+            Order.ContractReference__c, 
+            Order.ServicePoint__c, 
+            Order.Commodity__c,
+            Order.EffectiveDate__c, 
+            Order.RecordType.DeveloperName 
+            FROM OrderItem 
+            WHERE Id IN :itemToSub.keySet()
+            WITH Security_Enforced ]);
+
+        for(SBQQ__Subscription__c sub : newSubs){
+            OrderItem item = itemsMap.get(sub.SBQQ__OrderProduct__c);
+            if(item == null ){   continue;   }
+            if('Ambiente'.equalsIgnoreCase(item?.Order?.Commodity__c) && item?.Order?.EffectiveDate__c!=null){      
+                sub.SBQQ__SubscriptionStartDate__c = item.Order.EffectiveDate__c;
+            }
+        }
+    }
+
+    public static void fakeMoveOutMoveInForOffers(List<SBQQ__Subscription__c> newSubs){
+        Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
+        }
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
+            [
+                SELECT id, 
+                Order.OrderReference__c, 
+                Order.ContractReference__c, 
+                Order.ServicePoint__c, 
+                Order.ContractReference__r.SAPContractCode__c,
+                Order.SapContractCode__c,
+                Order.EffectiveDate__c,
+                Order.RecordTypeId,
+                Order.RecordType.DeveloperName 
+                FROM OrderItem 
+                WHERE Id IN :itemToSub.keySet()
+                WITH Security_Enforced 
+            ]
+        );
+
+
+        List<SBQQ__Subscription__c> subsToMove = new List<SBQQ__Subscription__c>();
+        Set<Id> oldOfferContracts = new Set<Id>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            OrderItem item = itemsMap.get(sub.SBQQ__OrderProduct__c);
+            if(subsRelocation.checkConditions(item?.Order, item?.Order?.SapContractCode__c)){
+                subsToMove.add(sub);
+                oldOfferContracts.add(item.Order.ContractReference__c);
+            }
+        }
+
+        Map<String, List<Sobject>> sobjectsToDml = subsRelocation.moveSubscriptionOffers( subsToMove, oldOfferContracts, itemsMap );
+        if(sobjectsToDml?.get('deleteContracts')?.isEmpty() == false){
+            contractToDelete.addAll((List<Contract>) sobjectsToDml?.get('deleteContracts'));
+        }
+        if(sobjectsToDml?.get('updateContracts')?.isEmpty() == false){
+            contractToUpdate.addAll((List<Contract>) sobjectsToDml?.get('updateContracts'));
+        }
+        if(sobjectsToDml?.get('updateSubs')?.isEmpty() == false){
+            subscriptionToUpdate.addAll((List<SBQQ__Subscription__c>) sobjectsToDml?.get('updateSubs'));
+        }
+    }
     
     /**
      * Questo metodo serve solo per i VAS venduti su Contratti Attivi
@@ -77,15 +151,23 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             Order.RecordType.DeveloperName,
             Order.SBQQ__Quote__r.IsFromVasSection__c 
             FROM OrderItem 
-            WHERE Id IN :itemToSub.keySet() 
-            //AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' 
-            //    OR 
-            //        (
-            //        Order.RecordType.DeveloperName='HDT_RT_VAS' 
-            //        AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
-            //        ) 
-            //    )
-            AND Order.SBQQ__Quote__r.IsFromVasSection__c = true
+            WHERE 
+                Id IN :itemToSub.keySet() 
+            /*AND (
+				Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' OR 
+				Order.RecordType.DeveloperName = 'HDT_RT_AgevolazioniAmbiente'
+                OR Order.RecordType.DeveloperName = 'HDT_RT_ModificaTariffaRimozione'
+                OR 
+                    (
+                    Order.RecordType.DeveloperName='HDT_RT_VAS' 
+                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
+                    ) 
+                )*/
+                AND(
+                    Order.RecordType.DeveloperName = 'HDT_RT_AgevolazioniAmbiente'
+                    OR Order.RecordType.DeveloperName = 'HDT_RT_ModificaTariffaRimozione'
+                    OR Order.SBQQ__Quote__r.IsFromVasSection__c = true
+                )
             WITH Security_Enforced ]);
         list<OrderItem> items = itemsMap.values();
         
@@ -300,6 +382,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     public static void deleteContractsOnAfterInsert(){
         if(!contractToDelete.isEmpty()){
             HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+            contractToDelete.clear();
         }
     }
 
@@ -310,10 +393,42 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
                 //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
                 isFinalizerAttached = true;
-            }else if(!(System.isQueueable() || isFinalizerAttached)){
+            }else if(!System.isQueueable()){
                 HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
                 contractToDelete.clear();
             }
+        }
+        if(!contractToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(contractToUpdate);
+            contractToUpdate.clear();
+        }
+        if(!subscriptionToUpdate.isEmpty()){
+            //system.debug('updateSubs ');
+            //system.debug(json.serializePretty(subscriptionToUpdate));
+            HDT_UTL_DatabaseService.updateSObject(subscriptionToUpdate);
+            subscriptionToUpdate.clear();
+        }
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 17/01/2023
+    * @description closeSubscriptionsToday - chiusura subscription per processo di cessazione 
+    *              metodo richiamato nell'HDT_UTL_HerokuPostSalesManager
+    * @param contractId - Id del contratto
+    * @return Void
+    */
+    public static void closeSubscriptionsToday(Id contractId){
+        List<SBQQ__Subscription__c> toCloseSub = [  SELECT Id, SBQQ__TerminatedDate__c, SBQQ__EndDate__c
+                                                    FROM SBQQ__Subscription__c
+                                                    WHERE SBQQ__Contract__c =: contractId];
+        if(toCloseSub != null){
+            DateTime nowDateTime = DateTime.now();
+            Date closingDate = date.newinstance(nowDateTime.year(), nowDateTime.month(), nowDateTime.day()-1);
+            for(SBQQ__Subscription__c currentSub : toCloseSub){
+                currentSub.SBQQ__TerminatedDate__c = closingDate;
+            }
+            HDT_UTL_DatabaseService.updateSObject(toCloseSub);
         }
     }
 
@@ -326,5 +441,4 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         }
         public RootLookup(){}
     }
-
 }

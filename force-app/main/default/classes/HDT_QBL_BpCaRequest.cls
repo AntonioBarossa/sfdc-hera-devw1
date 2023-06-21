@@ -15,13 +15,19 @@ public without sharing class HDT_QBL_BpCaRequest implements Queueable,Database.A
         this.searchToUse = searchToUse;
     }
     public void execute(QueueableContext context) {
+        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+        HDT_UTL_QuoteProcess.disableCpq();
         //System.debug('HDT_QBL_BpCaRequest.execute');
         if(!accountContactRelList.isEmpty()){
             HDT_UTL_Account.createBpCa(accountContactRelList, saleId, searchToUse);
-            this.connectAccSpwithBp(saleId);
         }else{
             HDT_UTL_Account.makeRequest(account,contact);
         }
+        if (String.isNotBlank(saleId)){
+            this.connectAccSpwithBp(saleId);
+        }
+
+        HDT_UTL_QuoteProcess.enableCpq();
         
     }
 

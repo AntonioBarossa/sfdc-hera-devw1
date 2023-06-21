@@ -118,6 +118,10 @@
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>OwnerAC__c</picklist>
@@ -134,6 +138,14 @@
         <picklist>PaymentMode__c</picklist>
         <values>
             <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAGOPA</fullName>
             <default>false</default>
         </values>
         <values>

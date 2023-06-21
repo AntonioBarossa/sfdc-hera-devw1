@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 03-20-2023
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_CaseValidations {
 
@@ -28,15 +35,30 @@ public inherited sharing class HDT_QR_CaseValidations {
         ClientCategory__c,
         ShipmentAddressAssign__c,
         TemporaryConnectionEndDate__c,
+        Description,
+        SupplyCity__c,
+        InvoicingCity__c,
+        ContractAccountCode__c,
+        RateCategory__c,
         BillingIsAddressVerified__c,
+        SalesCompany__c,
         BillingCountry__c,
-        DepositPaymentMode__c
+        Caliber__c,
+        Channel__c,
+        DepositPaymentMode__c,
+        UseSubCategory__c,
+        IntendedUse__c,
+        CaliberAvailable__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
         LIMIT 1
         ];
 
+    }
+
+    public List<Case> getCaseByTypeBillingProfile(String processType, Id accountId, String contractAccount){
+        return [SELECT Id FROM Case WHERE Type =: processType AND AccountId =: accountId AND ContractAccountCode__c =:contractAccount];
     }
 
     public List<ContentDocumentLink> getDocumentByCaseId(String recordId){

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WasteCommodityType__c</fullName>
+    <description>Campo utilizzato dalla CB Documentale al fine di diversificare le funzionalità Ambiente da quelle Ele - Gas - Acqua</description>
+    <externalId>false</externalId>
+    <label>Tipologia Servizio Ambiente</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Ambiente</fullName>
+                <default>false</default>
+                <label>Ambiente</label>
+            </value>
+            <value>
+                <fullName>TARI</fullName>
+                <default>false</default>
+                <label>TARI</label>
+            </value>
+            <value>
+                <fullName>TCP</fullName>
+                <default>false</default>
+                <label>TCP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

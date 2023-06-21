@@ -50,10 +50,32 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             columnsObj.confObj = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
             columnsObj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleColumn>();
 
-            columnsObj.confObj = getConfObj(tabValue);
+            // CR026 - Montors
+            
+            Id recId = Id.valueOf(recordId);
+            Boolean isExternal = false;
+            String sObjName = recId.getSObjectType().getDescribe().getName();
+            String customerCode = '';
 
-            //columnsObj.confObj.recordCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].Name;
-            columnsObj.confObj.customerCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].CustomerCode__c;
+            switch on sObjName {
+                when 'SiebelCustomer__x' {
+                    customerCode = HDT_QR_AccountStatement.getSiebelCustomer(recordId)[0].OU_NUM__c;
+                    isExternal = true;
+                }
+    
+                when 'SalesforceCustomer__x' {
+                    customerCode = HDT_QR_AccountStatement.getSalesforceCustomer(recordId)[0].CustomerCodeC__c;
+                    isExternal = true;
+                }
+                
+                when 'Account' {
+                    customerCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].CustomerCode__c;
+                }                       
+            }
+            columnsObj.confObj = getConfObj(tabValue, isExternal);
+            columnsObj.confObj.customerCode = customerCode;
+            
+            // CR026 - Montors
 
             if(columnsObj.confObj.buttonList == null || columnsObj.confObj.buttonList.size()==0){
                 columnsObj.success = false;
@@ -91,8 +113,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         return columnsObj;
     }
 
-    public static HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail getConfObj(String tabValue) {
-                
+    public static HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail getConfObj(String tabValue, Boolean isExternal) {
+
         HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail objDetail = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
         objDetail.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
@@ -116,13 +138,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c, butMdt.Accesskey__c));
+
+            if(!isExternal || (isExternal && !butMdt.HideForExtObj__c)){
+                objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c, butMdt.Accesskey__c));
+            }
+            
         }
 
         return objDetail;
     }
 
-    public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumnsHelper(String tabValue) {
+    public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumnsHelper(String tabValue, String recordId) {
 
         HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj obj = new HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj();
 
@@ -161,8 +187,18 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
+        Id recId = Id.valueOf(recordId);
+        Boolean isExternal = false;
+        String sObjName = recId.getSObjectType().getDescribe().getName();
+
+        if(!sObjName.equalsIgnoreCase('Account') ){
+            isExternal = true;
+        }
+
         for(HDT_ButtonDetails__mdt buttonMdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(buttonMdt.MasterLabel, buttonMdt.ButtonCode__c, buttonMdt.IsVisible__c, buttonMdt.ButtonType__c, buttonMdt.Parameters__c,buttonMdt.Accesskey__c));
+            if(!isExternal || (isExternal && !buttonMdt.HideForExtObj__c)){
+                obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(buttonMdt.MasterLabel, buttonMdt.ButtonCode__c, buttonMdt.IsVisible__c, buttonMdt.ButtonType__c, buttonMdt.Parameters__c,buttonMdt.Accesskey__c));
+            }
         }
 
         obj.success = true;

@@ -2,10 +2,15 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
 
-        HDT_ObjectRecordType__mdt accBus = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Business');
-        HDT_ObjectRecordType__mdt accRes = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Residenziale');
-        List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
-        List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
+        // HDT_ObjectRecordType__mdt accBus = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Business');
+        // HDT_ObjectRecordType__mdt accRes = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Residenziale');
+        // List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
+        // List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
+
+        List<HDT_ObjectRecordType__mdt> accBusList = [SELECT ValueToRemove__c FROM HDT_ObjectRecordType__mdt WHERE DeveloperName = 'Acc_CustomerMarking_HDT_RT_Business'];
+        List<HDT_ObjectRecordType__mdt> accResList = [SELECT ValueToRemove__c FROM HDT_ObjectRecordType__mdt WHERE DeveloperName = 'Acc_CustomerMarking_HDT_RT_Residenziale'];
+        List<String> listDeniedBus = accBusList.size() > 0 ? accBusList[0].ValueToRemove__c.split(';') : null;
+        List<String> listDeniedRes = accResList.size() > 0 ? accResList[0].ValueToRemove__c.split(';') : null;
 
         Id accRecordTypeResId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         Id accRecordTypeBusId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
@@ -164,6 +169,8 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         Map<String, List<String>> accToIndividualMap = new Map<String, List<String>>();
         Map<String, String> accountToOwnerIdMap = new Map<String, String>();
         HDT_QR_Contact contQr = new HDT_QR_Contact();
+        Map<String, List<String>> accToContListMap = new Map<String, List<String>>();
+        List<Contact> contToUpdateList = new List<Contact>();
 
         for(Account acc : (List<Account>) Trigger.new){
             Account odlAcc = (Account) Trigger.oldMap.get(acc.Id);
@@ -175,13 +182,20 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
 
         if(!accidSet.isEmpty()){
             accIdList.addAll(accidSet);
-            for(Contact cont : contQr.getContactsIdByAccountIdList(accIdList)){
+            for(Contact cont : contQr.getContactsFromAcrByAccId(accIdList)){
                 if(accToIndividualMap.get(cont.AccountId) != null){
                     accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
                 }
                 else {
                     accToIndividualMap.put(cont.AccountId, new List<String>());
                     accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
+                }
+                if(accToContListMap.containsKey(cont.AccountId)){
+                    accToContListMap.get(cont.AccountId).add(cont.Id);
+                }
+                else{
+                    accToContListMap.put(cont.AccountId, new List<String>());
+                    accToContListMap.get(cont.AccountId).add(cont.Id);
                 }
             }
         }
@@ -200,7 +214,22 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
                 HDT_UTL_DatabaseService.updateSObject(individToUpdateList);
             }
         }
+        if(!accToContListMap.values().isEmpty()){
+            for(String accId : accToContListMap.keySet()){
+                for(String contId : accToContListMap.get(accId)){
+                    Contact cont = new Contact(
+                        Id = contId,
+                        OwnerId = accountToOwnerIdMap.get(accId)
+                    );
+                    contToUpdateList.add(cont);
+                }
+            }
+            if(!contToUpdateList.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(contToUpdateList);
+            }
+        }
     }
+
     @TestVisible
     private static void feedBillingCountry(List<Account> accountList)
     {

@@ -5,7 +5,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'SAPStep__c' => 'SAPStep__c IN (###)',
         'Type__c' => 'Type__c IN (###)',
         'Priority__c' => 'wrts_prcgvr__Priority__c IN (###)',
-        'CompanyOwner__c' => 'Account__r.CompanyOwner__c IN (###)',
+        //'CompanyOwner__c' => '(Account__r.CompanyOwner__c IN (###) OR Interaction__r.CompanyOwner__c IN (###))',
+        'CompanyOwner__c' => 'CompanyOwner__c IN (###)',
         'ClientCategory__c' => 'Account__r.Category__c IN (###)',
         'ClientMarking__c' => 'Account__r.CustomerMarking__c IN (###)',
         'ComplaintSeverity__c' => 'Case__r.CriticalAttribute__c IN (###)',
@@ -28,7 +29,10 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.Process__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
-        'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Case__r.CommodityFormula__c IN (###) OR Order__r.CommodityFormula__c IN (###))'
+        'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Case__r.CommodityFormula__c IN (###) OR Order__r.CommodityFormula__c IN (###))',
+        'ATO__c' => '(Case__r.AtoFormula__c IN (###) OR Order__r.ATO__c IN (###))',
+        'RequestSource__c' => '(Case__r.RequestSource__c IN (###) OR Order__r.RequestSource__c IN (###))',
+        'SupplyCity__c' => '(Case__r.SupplyCity__c IN (###) OR Order__r.SupplyCity__c IN (###))'
     };
 
     public List<AssignmentRule__c> start(Database.BatchableContext bc) {
@@ -65,7 +69,10 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 Type__c,
                 UserCreatorChannel__c,
                 UserCreatorGroup__c,
-                Vendor__c
+                Vendor__c,
+                RequestSource__c,
+                SupplyCity__c,
+                ATO__c
             FROM AssignmentRule__c
             WHERE
                 Deactivated__c = false AND
@@ -191,11 +198,12 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             } else  {
                 mapping = MAPPINGS.get(key);
                 if(mapping != null) {
-                    value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+                    value = '\'' + (String.escapeSingleQuotes((String) ruleMap.get(key)).replace(';','\',\'')) + '\'';
                     query.add(mapping.replace(PLACEHOLDER, value));
                 }
             }
         }
+        system.debug('kkk Query: '+String.join(query, ' AND ') + ' LIMIT 10000');
         // RETURN THE UNIFIED VALUES
         return String.join(query, ' AND ') + ' LIMIT 10000';
     }

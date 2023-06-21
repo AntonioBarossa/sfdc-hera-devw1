@@ -43,10 +43,11 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         {fieldName: 'P0__c', required: false},
         {fieldName: 'K__c', required: false},
         {fieldName: 'I0__c', required: false},
-        {fieldName: 'Lambda__c', required: false},
+        //{fieldName: 'Lambda__c', required: false},
         {fieldName: 'DailyContribution__c', required: false},
         {fieldName: 'WeeklyContribution__c', required: false},
-        {fieldName: 'ProductIdentifier__c', required: false}
+        {fieldName: 'ProductIdentifier__c', required: false},
+        {fieldName: 'Index__c', required: false}
 
     ];
 
@@ -239,9 +240,9 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         }
 
         for(var i in techOffObj){
-            //console.log('> > > > ' + i + ' - ' + techOffObj[i]);
+            console.log('> > > > ' + i + ' - ' + techOffObj[i]);
             let foundField = this.fieldsList.find(field  => field.fieldName === i);
-            //console.log('>>>> ' + JSON.stringify(foundField));
+            console.log('>>>> ' + JSON.stringify(foundField));
             if(!this.checkIsNotNull(techOffObj[i]) && foundField.required){
                 this.dispatchEvent(
                     new ShowToastEvent({

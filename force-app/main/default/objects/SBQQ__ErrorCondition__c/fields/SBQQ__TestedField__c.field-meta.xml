@@ -223,6 +223,16 @@
                 <default>false</default>
                 <label>Codice Amico</label>
             </value>
+            <value>
+                <fullName>ContractReference__c</fullName>
+                <default>false</default>
+                <label>ContractReference__c</label>
+            </value>
+            <value>
+                <fullName>ListPriceName__c</fullName>
+                <default>false</default>
+                <label>ListPriceName__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -414,6 +424,14 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>FriendCode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>ContractReference__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>ListPriceName__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

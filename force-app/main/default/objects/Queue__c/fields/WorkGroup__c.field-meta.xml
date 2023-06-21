@@ -1442,6 +1442,16 @@
                 <label>HCM_BACK_Verifiche</label>
             </value>
             <value>
+                <fullName>HCM_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_CON_Protocollo</label>
+            </value>
+            <value>
                 <fullName>HCM_DISCO_ Appuntamenti</fullName>
                 <default>false</default>
                 <label>HCM_DISCO_ Appuntamenti</label>
@@ -1482,9 +1492,29 @@
                 <label>HCM_SPORT_Escalation</label>
             </value>
             <value>
+                <fullName>HCM_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Pagamenti</label>
+            </value>
+            <value>
                 <fullName>HCM_TRG_Reclami_scritti</fullName>
                 <default>false</default>
                 <label>HCM_TRG_Reclami_scritti</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Variazioni</label>
             </value>
             <value>
                 <fullName>HS_DAFC_Tesoreria_Verifica comportamento banca</fullName>
@@ -1515,6 +1545,81 @@
                 <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
                 <default>false</default>
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_CONSERVICE</fullName>
+                <default>false</default>
+                <label>MMS_BACK_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_CONTACT CENTER</fullName>
+                <default>false</default>
+                <label>MMS_BACK_CONTACT CENTER</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_GESTIONE CLIENTI</fullName>
+                <default>false</default>
+                <label>MMS_BACK_GESTIONE CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_COVISIAN</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_COVISIAN</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_KOINE&apos;</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_KOINE&apos;</label>
+            </value>
+            <value>
+                <fullName>MMS_CREDITO</fullName>
+                <default>false</default>
+                <label>MMS_CREDITO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_AMBIENTE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_AMBIENTE</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO_MSERVICE</label>
+            </value>
+            <value>
+                <fullName>MMS_GESTIONE TECNICA CLIENTI</fullName>
+                <default>false</default>
+                <label>MMS_GESTIONE TECNICA CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_INCASSI</fullName>
+                <default>false</default>
+                <label>MMS_INCASSI</label>
+            </value>
+            <value>
+                <fullName>MMS_LEGALE</fullName>
+                <default>false</default>
+                <label>MMS_LEGALE</label>
+            </value>
+            <value>
+                <fullName>MMS_TESORERIA</fullName>
+                <default>false</default>
+                <label>MMS_TESORERIA</label>
+            </value>
+            <value>
+                <fullName>MMS-BACK-CC</fullName>
+                <default>false</default>
+                <label>MMS-BACK-CC</label>
+            </value>
+            <value>
+                <fullName>Supporto alla Vendita</fullName>
+                <default>false</default>
+                <label>Supporto alla Vendita</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -15,6 +15,16 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Ripristino Sigilli / Piombi Rotti</fullName>
+                <default>false</default>
+                <label>Ripristino Sigilli / Piombi Rotti</label>
+            </value>
+            <value>
+                <fullName>Ripiombatura Post Collaudo Antincendio</fullName>
+                <default>false</default>
+                <label>Ripiombatura Post Collaudo Antincendio</label>
+            </value>
+            <value>
                 <fullName>Cliente paga un acconto</fullName>
                 <default>false</default>
                 <label>Cliente paga un acconto</label>
@@ -360,28 +370,97 @@
                 <label>Assistenza Sociale (DEPRECATO)</label>
             </value>
             <value>
+                <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</fullName>
+                <default>false</default>
+                <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale su contratto Energy</fullName>
+                <default>false</default>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Permanenza condizioni di disagio su contratto Energy</fullName>
+                <default>false</default>
+                <label>Permanenza condizioni di disagio su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <default>false</default>
+                <label>Bonus integrativo solo per non Energy</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Bolletta Fuga H2O</label>
             </value>
             <value>
-                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <fullName>Servizio Avviso Sms/mail</fullName>
+                <default>false</default>
+                <label>Servizio Avviso Sms/mail</label>
+            </value>
+            <value>
+                <fullName>Delibera 2018</fullName>
+                <default>false</default>
+                <label>Delibera 2018</label>
+            </value>
+            <value>
+                <fullName>Ricalcolo consumi</fullName>
+                <default>false</default>
+                <label>Ricalcolo consumi</label>
+            </value>
+            <value>
+                <fullName>Monitoraggio</fullName>
+                <default>false</default>
+                <label>Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Autorità idrico 655</fullName>
+                <default>false</default>
+                <label>Autorità idrico 655</label>
+            </value>
+            <value>
+                <fullName>Costituzione in mora (REMSI)</fullName>
+                <default>false</default>
+                <label>Costituzione in mora (REMSI)</label>
+            </value>
+            <value>
+                <fullName>Non allacciato</fullName>
+                <default>false</default>
+                <label>Non allacciato</label>
+            </value>
+            <value>
+                <fullName>Uso irriguo</fullName>
+                <default>false</default>
+                <label>Uso irriguo</label>
+            </value>
+            <value>
+                <fullName>Non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>Non allacciato/uso irriguo</label>
+            </value>
+            <value>
+                <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Bonus integrativo solo per non Energy</label>
+                <label>Cessazione utilizzo apparecchiatura elettromedicale</label>
             </value>
             <value>
                 <fullName>Chiamata Mura</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Chiamata Mura</label>
+            </value>
+            <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</label>
             </value>
             <value>
                 <fullName>Delibera 655 2016</fullName>
@@ -553,12 +632,36 @@
             <valueName>Assistenza sociale (ente)</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Bolletta Fuga H2O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Autorità idrico 655</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Costituzione in mora (REMSI)</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Malfunzionamento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Ricalcolo consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Monitoraggio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
@@ -585,6 +688,46 @@
             <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Bonus integrativo solo per non Energy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Agevolazioni non Energy indirette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Volontà estorta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Firma falsa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Servizio Avviso Sms/mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Delibera 2018</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
             <valueName>Portabilità dei dati</valueName>
         </valueSettings>
@@ -609,8 +752,20 @@
             <valueName>Opposizione</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
             <valueName>Caduta Linea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Muta</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
@@ -619,14 +774,6 @@
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
-            <valueName>Volontà estorta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
-            <valueName>Firma falsa</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>AMBPrimoSecClass</label>
+    <protected>false</protected>
+    <values>
+        <field>ControlledField__c</field>
+        <value xsi:type="xsd:string">FirstLevelComplaintClassification__c</value>
+    </values>
+    <values>
+        <field>ControllingField__c</field>
+        <value xsi:type="xsd:string">ComplaintType__c</value>
+    </values>
+    <values>
+        <field>DependecyJSON__c</field>
+        <value xsi:type="xsd:string">{&quot;Reclamo Scritto&quot;:[{&quot;label&quot;:&quot;Reclamo Scritto&quot;,&quot;value&quot;:&quot;Reclamo Scritto&quot;},{&quot;label&quot;:&quot;Richiesta di Rettifica di fatturazione&quot;,&quot;value&quot;:&quot;Richiesta di Rettifica di fatturazione&quot;}],&quot;Richiesta Info&quot;:[{&quot;label&quot;:&quot;Richiesta di informazioni&quot;,&quot;value&quot;:&quot;Richiesta di informazioni&quot;}]}</value>
+    </values>
+    <values>
+        <field>ObjectDeveloperName__c</field>
+        <value xsi:type="xsd:string">Case</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">RiclassificazioneAmbiente</value>
+    </values>
+</CustomMetadata>

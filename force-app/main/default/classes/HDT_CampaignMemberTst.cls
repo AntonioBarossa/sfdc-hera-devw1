@@ -16,7 +16,7 @@ public with sharing class HDT_CampaignMemberTst{
 
         List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1,true); 
 
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 
         List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accs[0].Id);
         contacts[0].Company__c = 'MMS';

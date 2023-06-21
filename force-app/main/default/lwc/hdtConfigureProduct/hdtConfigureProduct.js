@@ -217,6 +217,7 @@ export default class hdtConfigureProduct extends LightningElement {
             if(check){
                 updateSaleNext({sale: saleData}).then(data =>{
                     this.loaded = true;
+                    this.getQuotesData();
                     this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
                 }).catch(error => {
                     this.loaded = true;

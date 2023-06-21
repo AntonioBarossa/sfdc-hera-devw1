@@ -13,6 +13,7 @@
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
         <valueSettings>
+            
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
@@ -146,12 +147,12 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -162,15 +163,16 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Ditta individuale</controllingFieldValue>
             <controllingFieldValue>Ditta individuale</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
             <controllingFieldValue>MMS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>G2 - MMS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -181,12 +183,12 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -397,12 +399,12 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -503,12 +505,12 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -543,41 +545,42 @@
             <controllingFieldValue>NEWENRGGEL-Persona fisica</controllingFieldValue>
             <controllingFieldValue>ONE POWER-Persona fisica</controllingFieldValue>
             <controllingFieldValue>S4 ENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>BENACO-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>AAS Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ACEL-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>BLU RANTON-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Persona fisica</controllingFieldValue>
-            <controllingFieldValue>Enegan-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ERMES-Persona fisica</controllingFieldValue>
             <controllingFieldValue>EstEnergy-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GENESI-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>MMS Persona fisica</controllingFieldValue>
-            <controllingFieldValue>MOODS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>Enegan-Persona fisica</controllingFieldValue>
             <controllingFieldValue>NOIENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>NWGENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Persona fisica</controllingFieldValue>
             <controllingFieldValue>Persona fisica</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>SGR-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>AAS Persona fisica</controllingFieldValue>
+            <controllingFieldValue>NWGENERGIA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ERMES-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>MMS Persona fisica</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ACEL-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>MOODS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>BENACO-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GENESI-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>BLU RANTON-Persona fisica</controllingFieldValue>
             <controllingFieldValue>TOP ENERGY-Persona fisica</controllingFieldValue>
             <controllingFieldValue>UNION-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>SGR-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>G1 - MMS Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Persona fisica</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -668,15 +671,15 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G5 - MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -768,9 +771,9 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
@@ -982,18 +985,18 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
             <controllingFieldValue>AAS Parti comuni</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Parti comuni</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>Parti comuni</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Parti comuni</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G4 - MMS Parti comuni</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -1039,38 +1042,38 @@
             <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
             <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
             <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
             <controllingFieldValue>SGR-Altro</controllingFieldValue>
-            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
-            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
-            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
-            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
             <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
-            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
             <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
             <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
+            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
+            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
+            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
+            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
+            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
             <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
             <controllingFieldValue>UNION-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -1085,38 +1088,38 @@
             <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
             <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
             <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
             <controllingFieldValue>SGR-Altro</controllingFieldValue>
-            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
-            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
-            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
-            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
             <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
-            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
             <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
             <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
+            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
+            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
+            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
+            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
+            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
             <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
             <controllingFieldValue>UNION-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
@@ -1257,12 +1260,12 @@
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>G6 - MMS Associazione</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>

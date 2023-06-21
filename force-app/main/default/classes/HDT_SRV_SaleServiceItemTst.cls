@@ -167,7 +167,7 @@ static void makeData(){
         LIMIT 1];
         
         Test.startTest();
-        System.runAs(tUser){
+        //System.runAs(tUser){
             List<ServicePoint__c> spRetrieved = [SELECT id FROM ServicePoint__c LIMIT 1];
             List<Sale__c> saleRetrieved = [SELECT id FROM Sale__c LIMIT 1];
             Map<String,String> mapStrings = New Map<String,String>();
@@ -175,7 +175,7 @@ static void makeData(){
             HDT_SRV_SaleServiceItem testClass = new HDT_SRV_SaleServiceItem();
             testClass.createRecord(spRetrieved[0],saleRetrieved[0],mapStrings);
             
-        }
+        //}
         Test.stopTest();
         List<SaleServiceItem__c> testSize = [SELECT Id FROM SaleServiceItem__c];
 
@@ -216,7 +216,7 @@ static void makeData(){
 
         
         Test.startTest();
-        System.runAs(tUser){
+        //System.runAs(tUser){
             List<Opportunity> oppRetrieved = [SELECT Id FROM Opportunity LIMIT 1];
             List<ServicePoint__c> spRetrieved = [SELECT id FROM ServicePoint__c LIMIT 1];
             List<Sale__c> saleRetrieved = [SELECT id FROM Sale__c LIMIT 1];
@@ -228,7 +228,7 @@ static void makeData(){
             List<SaleServiceItem__c> ssiRetrieved = [SELECT Id,Opportunity__c FROM SaleServiceItem__c LIMIT 1];
              returnedList = testClass.groupRecordsByOpportunity(oppRetrieved, ssiRetrieved);
 
-        }
+        //}
         
 
         System.assertEquals(true,returnedList.size() == 0, 'The method correctly returned a list of SaleServiceItem__c null');

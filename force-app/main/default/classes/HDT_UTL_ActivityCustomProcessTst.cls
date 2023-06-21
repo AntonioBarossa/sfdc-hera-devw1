@@ -59,7 +59,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
     
     @isTest static void updateActivity(){
         
-        wrts_prcgvr__Activity__c myActivity = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'];
+        wrts_prcgvr__Activity__c myActivity = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'];
         
         Test.startTest();
         
@@ -68,7 +68,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
         
         Test.stopTest();
         
-        myActivity = [SELECT id, ownerId FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'];
+        myActivity = [SELECT id, ownerId FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'];
         
         System.assertEquals(userinfo.getuserid(), myActivity.ownerId, 'Activity not updated correctly');
         System.assertNotEquals(null, myActivity, 'Activity not updated correctly');        
@@ -113,7 +113,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
                                                      Order__r.Account.VATNumber__c, Order__r.Account.CustomerMarking__c, Order__r.Account.Category__c, 
                                                      Order__r.Account.CustomerType__c, Order__r.ProcessType__c, Order__r.Market__c, Order__r.Catalog__c,
                                                      Order__r.ServicePoint__r.Account__r.CustomerCode__c
-                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'].Id;
+                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'].Id;
         
         List<Id> myActivityListId = new List<Id>();
         myActivityListId.add(myActivityId);
@@ -160,5 +160,24 @@ public class HDT_UTL_ActivityCustomProcessTst {
 
         HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(newActList, oldActList);
 
+    }
+    @IsTest
+    public static void testShareRecordAppointmentSelf(){
+        List<wrts_prcgvr__Activity__c> newActs= [SELECT id,Account__c,Case__c,Order__c FROM wrts_prcgvr__Activity__c];
+        Map<Id,wrts_prcgvr__Activity__c> oldActsMap = new Map<Id,wrts_prcgvr__Activity__c>();
+        Id rtId = constants.ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT;
+        for (wrts_prcgvr__Activity__c newAct :newActs){
+            newAct.RecordTypeId = rtId;
+            newAct.isSelfAppointment__c = true;
+            wrts_prcgvr__Activity__c oldAct = new wrts_prcgvr__Activity__c(Id = newAct.Id);
+            oldAct.RecordTypeId = rtId;
+            oldAct.isSelfAppointment__c = false;
+            oldActsMap.put(newAct.Id,oldAct);
+        }
+        test.startTest();
+            HDT_UTL_ActivityCustomProcess.shareRecordAppointmentSelf(newActs,oldActsMap);  
+        test.stopTest();
+        List<Account> accs = [SELECT id,ShareForAppointment__c FROM Account WHERE Id = : newActs[0].Account__c];
+        System.assertEquals(true, accs[0].ShareForAppointment__c, 'Account non condiviso');
     }
 }

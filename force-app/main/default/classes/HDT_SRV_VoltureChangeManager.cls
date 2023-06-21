@@ -61,7 +61,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             }
             clonedOrder.put('PhoneNumber__c', phone);
         }
-        if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
+        if( ( clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')) ) &&
+            !'Acqua'.equalsIgnoreCase((String)clonedOrder.get('CommodityFormula__c')) )
         {
             clonedOrder.put('Email__c', emptyEmailDefault);
         }
@@ -236,8 +237,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         List<Order> orderListUpdate = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
         for(Order singleOrder : myOrderList){
-            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
-            && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+            if('Amm. Precheck OK SII'.equalsIgnoreCase(singleOrder.Phase__c) 
+            && ('Switch In'.equalsIgnoreCase(singleOrder.DocumentalProcessType__c) 
             /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();

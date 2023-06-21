@@ -66,6 +66,9 @@ public with sharing class HDT_UTL_CreditCheck {
             if('Gas'.equalsIgnoreCase(o.ServicePoint__r.CommoditySector__c)){
                 iwd.commodity = 'GAS';
             }
+            if('Acqua'.equalsIgnoreCase(o.ServicePoint__r.CommoditySector__c)){
+                iwd.commodity = 'ACQUA';
+            }
             if (o.IsVAS__c){
                 iwd.annualConsumption = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(o.Id); 
             }else if(o.ServicePoint__r?.AnnualConsumption__c != null){

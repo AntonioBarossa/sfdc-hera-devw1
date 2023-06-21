@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.ExcessivePublicCount')
 public with sharing class HDT_WRP_BpCaVariationVatGroup {
 	
-	public String numeroSr;
+	public String numeroSR;
 	public String codiceCausale;
 	public String dataCreazione;
 	public String cancellaBpAlternativo;

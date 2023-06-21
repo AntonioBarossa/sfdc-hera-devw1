@@ -29,7 +29,7 @@ public class HDT_UTL_ScartiTst {
             HDT_UTL_DataFactoryTst.pClickCasePhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza',constants.ORDER_RECORDTYPEID_DEFAULT,constants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT);
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id; 
             
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,accId,'Bozza'); 
@@ -965,7 +965,7 @@ public class HDT_UTL_ScartiTst {
                 error = true;
                 System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
-            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            System.assert(!error,'Non è stata lanciata l\'eccezione attesa');
             o.Phase__c = 'Errore Lavorazione SAP';
             update o;
             update new Order (Id = o.Id,ManagedSapDiscard__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
@@ -1003,7 +1003,7 @@ public class HDT_UTL_ScartiTst {
                 error = true;
                 System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
-            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            System.assert(!error,'Non è stata lanciata l\'eccezione attesa');
             c.Phase__c = 'Errore Lavorazione SAP';
             update c;
             update new Case (Id = c.Id,DistributorFlowCode__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );

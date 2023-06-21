@@ -30,7 +30,10 @@ public without sharing class HDT_WS_MulesoftCaller {
                 }
             }
 
-            req.setbody(body);
+            if(String.isNotEmpty(body)){
+                req.setbody(body);
+            }
+            
             req.setTimeout(120000); // timeout in milliseconds
 
             // Create a new http object to send the request object

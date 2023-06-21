@@ -142,7 +142,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             this.tipoCopia = result.c.CopyType__c;
             this.orderIdPre = result.c.Order__c;
             this.selectedSend = result.c.SendMode__c;
-            this.selectedActivity = result.c.Channel__c;
+            //this.selectedActivity = result.c.Channel__c;
+            this.selectedActivity = result.c.Origin;
             this.caseRecord = {Id : this.recordid, AccountId : this.accountId};
             if(result.c.channel__c == 'Sportello'){
                 this.showButtonPreview = true;
@@ -436,7 +437,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 }).then(response =>{
                     if(response == null || response == ''){
                         const event = new ShowToastEvent({
-                            message: 'Puoi Continuare la lavorazione in autonomia',
+                            message: 'Processo confermato con successo',
                             variant: 'success',
                             mode: 'dismissable'
                             });

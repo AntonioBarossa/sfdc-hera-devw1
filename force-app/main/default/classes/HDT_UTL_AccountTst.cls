@@ -65,7 +65,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, FiscalCode__c
 			                    FROM Account
-			                    WHERE Name='test account0'];
+			                    WHERE Name='test account bsn0'];
 
 			List<Contact> tCon=[SELECT Id, FirstName, MobilePhone, email, fiscalCode__c
 			                    FROM Contact
@@ -94,7 +94,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c
 			                    FROM Account
-			                    WHERE Name='test account0'];
+			                    WHERE Name='test account bsn0'];
 
 			List<Contact> tCon=[SELECT Id, FirstName, MobilePhone, email, fiscalCode__c, CertifiedEmail__c
 			                    FROM Contact
@@ -123,7 +123,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
-			                    WHERE Name='test account0'];
+			                    WHERE Name='test account bsn0'];
 
 			List<Contact> tCon=[SELECT Id, FirstName, MobilePhone, email, fiscalCode__c, CertifiedEmail__c, phone
 			                    FROM Contact
@@ -192,7 +192,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
-			                    WHERE Name='test account0'];
+			                    WHERE Name='test account bsn0'];
 
 			List<Contact> tCon=[SELECT Id, FirstName, MobilePhone, email, fiscalCode__c, CertifiedEmail__c, phone
 			                    FROM Contact

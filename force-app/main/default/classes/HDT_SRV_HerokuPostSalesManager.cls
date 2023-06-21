@@ -77,6 +77,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             
             mrrList = removeNonCommoditySubscriptions(mrrList);
             String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            String commodity = obj.get('Commodity__c') != null ? (String)obj.get('Commodity__c') : '';
+            System.debug(LoggingLevel.DEBUG, 'processType: ' + processType);
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
             || processType.equalsIgnoreCase('Variazione Domiciliazione')
@@ -89,8 +91,28 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
             mrrList = supplyTypeTech(mrrList);
+            Map<String,Object> objFields = new Map<String,Object>();
+            if('Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('INVIADATAQC', 'Y');
+                objFields.put('WrittenReceiptRequestDate__c', obj.get('WrittenReceiptRequestDate__c'));
+                objFields.put('CreatedDate', obj.get('CreatedDate'));
+            }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Interna') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Type', 'Verifica Interna');
+            }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Integrita Sigilli') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Reason__c', obj.get('Reason__c'));
+                objFields.put('Type', 'Verifica Integrita Sigilli');
+            }
+            if(!objFields.isEmpty()){
+                mrrList = handleMrrFields(mrrList, objFields, currentCase);
+            }
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 20000);
+            arg.put('timeout', 120000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
@@ -423,6 +445,77 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return mrrList;
     }
 
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields, Case currentCase)
+    {
+        String fieldName = '';
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case') && currentCase != null && obj.Id == currentCase.Id)
+            {
+
+                if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
+                    Boolean foundQc = false;
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR  - WrittenReceiptRequestDate__c: ' + objFields.get('WrittenReceiptRequestDate__c'));
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - CreatedDate: ' + objFields.get('CreatedDate'));
+                    Datetime foo = System.now();
+                    if (objFields.get('WrittenReceiptRequestDate__c') != null) {
+                        Date receiptDate = Date.valueOf(objFields.get('WrittenReceiptRequestDate__c'));
+                        foo = Datetime.newInstance(receiptDate, System.now().time());
+                    }else{
+                        foo = (Datetime) objFields.get('CreatedDate');
+                    }
+                    String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - dateFinal: ' + dateFinal);
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('QC'))
+                        {
+                            foundQc = true;
+                            f.value = dateFinal;
+                            break;
+                        }
+                    }
+                    if(!foundQc){
+                        wrts_prcgvr.MRR_1_0.Field qcDateField = new wrts_prcgvr.MRR_1_0.Field();
+                        qcDateField.name = 'QC';
+                        qcDateField.fieldType = 'STRING';
+                        qcDateField.value = dateFinal;
+                        obj.fields.add(qcDateField);
+                    }
+                }
+
+                if (objFields.get('PhoneNumber__c') != null || 'Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))) {
+                    Boolean foundNote = false;
+                    String concatPhoneNote = '';
+                    if('Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))){
+                        //W2 Concatenazione Recapito Telefonico - Motivazione - Note
+                        concatPhoneNote = (objFields.get('PhoneNumber__c') != null ? String.valueOf(objFields.get('PhoneNumber__c')) : '') + (objFields.get('Reason__c') != null ? ' - ' + String.valueOf(objFields.get('Reason__c')) : '') +(objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                        System.debug(LoggingLevel.DEBUG, 'NOTE A DL: ' + concatPhoneNote);
+                    }else{
+                        //W2 Concatenazione Recapito Telefonico - Note
+                        concatPhoneNote = String.valueOf(objFields.get('PhoneNumber__c')) + (objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                    }
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('ANNOTAZIONI'))
+                        {
+                            f.value = concatPhoneNote;
+                            foundNote = true;
+                            break;
+                        }
+                    }
+
+                    if(!foundNote){
+                        wrts_prcgvr.MRR_1_0.Field dlNoteField = new wrts_prcgvr.MRR_1_0.Field();
+                        dlNoteField.name = 'ANNOTAZIONI';
+                        dlNoteField.fieldType = 'STRING';
+                        dlNoteField.value = concatPhoneNote;
+                        obj.fields.add(dlNoteField);
+                    }
+                }
+            }
+        }
+        return mrrList;
+    }
     @TestVisible
     private static wrts_prcgvr.MRR_1_0.MultiRequest supplyTypeTech(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
     {

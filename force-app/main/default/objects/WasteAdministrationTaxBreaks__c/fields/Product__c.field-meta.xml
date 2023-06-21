@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>ProdottoOpzione</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Il prodotto opzione non esiste.</errorMessage>
+        <filterItems>
+            <field>Product2.Family</field>
+            <operation>equals</operation>
+            <value>Opzioni Tari</value>
+        </filterItems>
+        <filterItems>
+            <field>Product2.Service__c</field>
+            <operation>equals</operation>
+            <value>Ambiente</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Amministrazione Testo Agevolazioni</relationshipLabel>
+    <relationshipName>Amministrazione_Testo_Agevolazioni</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

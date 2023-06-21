@@ -21,7 +21,9 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
         sales.add(HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id,'Attiva')[0]);
 
-        List<ServicePoint__c> servicePoints = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> servicePoints = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        servicePoints[0].CommoditySector__c = 'Gas';
+        insert servicePoints;
         
         List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1, false);
         products[0].Family = 'VAS Opzione prodotto';
@@ -37,6 +39,8 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
         List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(2,false, accounts[0].Id, sales, pricebookId);
         orders[0].BillingProfile__c = billingProfiles[0].Id;
         orders[1].BillingProfile__c = billingProfiles[0].Id;
+        orders[0].Commodity__c = 'Gas';
+        orders[1].Commodity__c = 'Gas';
 
         insert orders;
 
@@ -130,6 +134,34 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
         System.assertEquals(false, check, 'saveProsegui did not work correctly');
 
         System.assertNotEquals(true, check, 'saveProsegui did not work correctly');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testInitWihoutSale() {
+
+        Test.startTest();
+
+        Order testOrder = [SELECT Id FROM Order WHERE Name Like 'testOrderName%' LIMIT 1];
+
+        Map<String,Object> check = HDT_LC_OrderDossierWizard.initWihoutSale(testOrder.Id);
+
+        System.assertEquals(true, check.get('check'), 'InitWihoutSale did not work correctly');
+        System.assertNotEquals(false, check.get('check'), 'InitWihoutSale did not work correctly');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testIsCommunity() {
+
+        Test.startTest();
+
+        Map<String, Object> check = HDT_LC_OrderDossierWizard.isCommunity();
+
+        System.assertEquals(false, check.get('isCommunity'), 'isCommunity did not work correctly');
+        System.assertNotEquals(true, check.get('isCommunity'), 'isCommunity did not work correctly');
 
         Test.stopTest();
     }

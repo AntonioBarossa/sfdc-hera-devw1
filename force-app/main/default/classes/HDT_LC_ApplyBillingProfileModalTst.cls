@@ -17,12 +17,12 @@ public with sharing class HDT_LC_ApplyBillingProfileModalTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 
-        HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
         
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
-        productList[0].Name = 'POD';
+        productList[0].Name = 'Punto Fornitura Acqua';
         productList[0].Family = 'VAS Fatturabili';
         insert productList;
 
@@ -36,11 +36,50 @@ public with sharing class HDT_LC_ApplyBillingProfileModalTst {
         qlList[0].PaymentMode__c = 'RID';
         qlList[0].SendingBillMode__c = 'Bolletta per e-mail';
         qlList[0].BillingProfile__c = bpList[0].Id;
+        qlList[0].SBQQ__RequiredBy__c = qlList[1].Id;
+
         qlList[1].PaymentMode__c = 'Bollettino postale';
         qlList[1].SendingBillMode__c = 'Cartaceo';
+        qlList[1].ServicePoint__c = spList[0].Id;
         qlList[1].BillingProfile__c = bpList[0].Id;
-        qlList[0].SBQQ__RequiredBy__c = qlList[1].Id;
         update qlList;
+    }
+
+    @isTest
+    public static void testGetBonusPerOffer() {
+
+        Test.startTest();
+
+        List<SBQQ__QuoteLine__c> ql = [SELECT Id, SBQQ__RequiredBy__c FROM SBQQ__QuoteLine__c];
+
+        List<SBQQ__QuoteLine__c> result = HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(ql);
+
+        System.assertEquals(false, result.isEmpty(), 'result is not empty nor null');
+        System.assertNotEquals(true, result.isEmpty(), 'result is empty or null');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetEligibleQuoteLinesToApply() {
+
+        Test.startTest();
+
+        Sale__c sale = [SELECT Id FROM Sale__c WHERE Name = 'testSaleName0' LIMIT 1];
+        BillingProfile__c bp = [SELECT Id, PaymentMethod__c, PaymentConditions__c, BillSendingMethod__c, InvoicingCity__c FROM BillingProfile__c LIMIT 1];
+        bp.PaymentMethod__c = 'Bollettino postale';
+        bp.BillSendingMethod__c = 'Cartaceo';
+
+        Map<String, Object> inputs = new Map<String, Object>();
+        inputs.put('saleId', sale.Id);
+        inputs.put('selectedBillingProfile', JSON.Serialize(bp));
+
+        String result = HDT_LC_ApplyBillingProfileModal.getEligibleQuoteLinesToApply(inputs);
+
+        System.assertEquals(false, String.isBlank(result), 'result is not empty nor null');
+        System.assertNotEquals(true, String.isBlank(result), 'result is empty or null');
+
+        Test.stopTest();
     }
 
     @isTest
@@ -73,9 +112,32 @@ public with sharing class HDT_LC_ApplyBillingProfileModalTst {
         );
         insert bp;
 
-        List<SBQQ__QuoteLine__c> qline = [SELECT Id, BillingProfile__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID'];
+        List<SBQQ__QuoteLine__c> qline = [SELECT Id,
+                                                SBQQ__ProductFamily__c,
+                                                BillingProfile__c,
+                                                SBQQ__RequiredBy__c,
+                                                Name,
+                                                SBQQ__RequiredBy__r.BillingProfile__c,
+                                                SBQQ__RequiredBy__r.BillingProfile__r.Name,
+                                                ServicePoint__r.ServicePointCode__c,
+                                                SBQQ__RequiredBy__r.SBQQ__Product__c,
+                                                SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
+                                                SBQQ__Quote__r.ContractReference__c,
+                                                SBQQ__Quote__r.AllowChangeUse__c,
+                                                SBQQ__Quote__r.AmendmentAllowed__c,
+                                                SBQQ__Quote__r.ContractReference__r.BillingProfile__c,
+                                                SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name,
+                                                SBQQ__Product__r.Name 
+                                            FROM SBQQ__QuoteLine__c 
+                                            WHERE PaymentMode__c = 'RID'];
+        List<HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp> wrpList = new List<HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp>();
+        for(SBQQ__QuoteLine__c ql : qline){
+            HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp wrp = new HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp(ql);
+            wrp.isDueThirtyDays='Si';
+            wrpList.add(wrp);
+        }
 
-        HDT_LC_ApplyBillingProfileModal.updateQuoteLinesBillingProfile(qLine, bp.Id);
+        HDT_LC_ApplyBillingProfileModal.updateQuoteLinesBillingProfile(JSON.serialize(wrpList), bp.Id);
 
         qline = [SELECT Id, BillingProfile__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID'];
 

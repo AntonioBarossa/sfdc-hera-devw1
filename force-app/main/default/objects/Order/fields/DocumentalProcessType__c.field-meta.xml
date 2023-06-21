@@ -2,22 +2,22 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DocumentalProcessType__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(CONTAINS(TEXT(ProcessType__c),&apos;Subentro&apos;),&apos;Subentro su GdM chiuso&apos;,
-	IF(ISPICKVAL(ProcessType__c,&apos;Prima Attivazione con modifica&apos;),&apos;Prima attivazione con modifica&apos;,
-		IF(CONTAINS(TEXT(ProcessType__c),&apos;Prima Attivazione&apos;),&apos;Prima Attivazione&apos;,
-			IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Offerta&apos;),&apos;Cambio offerta&apos;,
-				IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Uso&apos;),&apos;Cambio uso&apos;,
-					IF(ISPICKVAL(ProcessType__c,&apos;Connessione con Attivazione&apos;),&apos;Connessione con attivazione&apos;,
-						IF(ISPICKVAL(ProcessType__c,&apos;Switch in Reseller&apos;),&apos;Switch In&apos;,
-							IF(CONTAINS(TEXT(ProcessType__c),&apos;Switch in&apos;),&apos;Switch In&apos;,
-								IF(ISPICKVAL(ProcessType__c,&apos;Proroga Temporanea&apos;),&apos;Proroga Connessione Temporanea&apos;,
-									IF(ISPICKVAL(ProcessType__c,&apos;Temporanea - Nuova Attivazione&apos;),&apos;Temporanea-Nuova attivazione&apos;,
-										IF(ISPICKVAL(ProcessType__c,&apos;Riattivazione non morose&apos;),&apos;Riatt. Fornitura non Morosa&apos;,
-											IF(CONTAINS(TEXT(ProcessType__c),&apos;Aggiunta Sconti o Bonus&apos;),&apos;Nuovi Bonus Contributi VAS&apos;,
-												IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Standard&apos;)),&apos;Voltura&apos;,
-													IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Con Autolettura&apos;)),&apos;Voltura con autolettura&apos;,
-														IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Retroattiva&apos;)),&apos;Voltura retroattiva&apos;,
-																	IF(AND(CONTAINS(TEXT(ProcessType__c),&apos;Voltura con Switch&apos;),CONTAINS(TEXT(Phase__c),&apos;In Attesa Legge 80&apos;)),&apos;Legge 80 Voltura con switch&apos;,TEXT(ProcessType__c)))))))))))))))))</formula>
+    <formula>IF(AND(CommodityFormula__c != &apos;Ambiente&apos;,CONTAINS(TEXT(ProcessType__c),&apos;Subentro&apos;)),&apos;Subentro su GdM chiuso&apos;,
+		IF(ISPICKVAL(ProcessType__c,&apos;Prima Attivazione con modifica&apos;),&apos;Prima attivazione con modifica&apos;,
+			IF(CONTAINS(TEXT(ProcessType__c),&apos;Prima Attivazione&apos;),&apos;Prima Attivazione&apos;,
+				IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Offerta&apos;),&apos;Cambio offerta&apos;,
+					IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Uso&apos;),&apos;Cambio uso&apos;,
+						IF(ISPICKVAL(ProcessType__c,&apos;Connessione con Attivazione&apos;),&apos;Connessione con attivazione&apos;,
+							IF(ISPICKVAL(ProcessType__c,&apos;Switch in Reseller&apos;),&apos;Switch In&apos;,
+								IF(CONTAINS(TEXT(ProcessType__c),&apos;Switch in&apos;),&apos;Switch In&apos;,
+									IF(ISPICKVAL(ProcessType__c,&apos;Proroga Temporanea&apos;),&apos;Proroga Connessione Temporanea&apos;,
+										IF(ISPICKVAL(ProcessType__c,&apos;Temporanea - Nuova Attivazione&apos;),&apos;Temporanea-Nuova attivazione&apos;,
+											IF(ISPICKVAL(ProcessType__c,&apos;Riattivazione non morose&apos;),&apos;Riatt. Fornitura non Morosa&apos;,
+												IF(CONTAINS(TEXT(ProcessType__c),&apos;Aggiunta Sconti o Bonus&apos;),&apos;Nuovi Bonus Contributi VAS&apos;,
+													IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Standard&apos;)),&apos;Voltura&apos;,
+														IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Con Autolettura&apos;)),&apos;Voltura con autolettura&apos;,
+															IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Retroattiva&apos;)),&apos;Voltura retroattiva&apos;,
+																		IF(AND(CONTAINS(TEXT(ProcessType__c),&apos;Voltura con Switch&apos;),CONTAINS(TEXT(Phase__c),&apos;In Attesa Legge 80&apos;)),&apos;Legge 80 Voltura con switch&apos;,TEXT(ProcessType__c)))))))))))))))))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipo Processo Documentale</label>
     <required>false</required>

@@ -1,0 +1,1473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process__c</fullName>
+    <externalId>false</externalId>
+    <label>Processo</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Cluster__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tutti</fullName>
+                <default>false</default>
+                <label>Tutti</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
+                <default>false</default>
+                <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
+            </value>
+            <value>
+                <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
+                <default>false</default>
+                <label>Modifica Contr Preattivazione Anagr Res</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratto Preattivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratto Preattivazione</label>
+            </value>
+            <value>
+                <fullName>Switch Out SII</fullName>
+                <default>false</default>
+                <label>Switch Out SII</label>
+            </value>
+            <value>
+                <fullName>Proroga Temporanea</fullName>
+                <default>false</default>
+                <label>Proroga Temporanea</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Riattivazione Non Morose</fullName>
+                <default>false</default>
+                <label>Riattivazione Non Morose</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Nuovo contratto</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Subentro</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Subentro</label>
+            </value>
+            <value>
+                <fullName>Switch Out per Voltura</fullName>
+                <default>false</default>
+                <label>Switch Out per Voltura</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione - ACQ</fullName>
+                <default>false</default>
+                <label>Prima Attivazione - ACQ</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Ele</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Ele</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione In delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione In delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Fuori delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima Attivazione con modifica</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <label>Cambio Offerta</label>
+            </value>
+            <value>
+                <fullName>Cambio Uso</fullName>
+                <default>false</default>
+                <label>Cambio Uso</label>
+            </value>
+            <value>
+                <fullName>Connessione con Attivazione</fullName>
+                <default>false</default>
+                <label>Connessione con Attivazione</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Subentro Ele</fullName>
+                <default>false</default>
+                <label>Subentro Ele</label>
+            </value>
+            <value>
+                <fullName>Switch in con voltura tecnica</fullName>
+                <default>false</default>
+                <label>Switch in con voltura tecnica</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Switch in Reseller</fullName>
+                <default>false</default>
+                <label>Switch in Reseller</label>
+            </value>
+            <value>
+                <fullName>Switch in Fittizio</fullName>
+                <default>false</default>
+                <label>Switch in Fittizio</label>
+            </value>
+            <value>
+                <fullName>Switch in Winback</fullName>
+                <default>false</default>
+                <label>Switch in Winback</label>
+            </value>
+            <value>
+                <fullName>Switch in Gas</fullName>
+                <default>false</default>
+                <label>Switch in Gas</label>
+            </value>
+            <value>
+                <fullName>Switch in Ele</fullName>
+                <default>false</default>
+                <label>Switch in Ele</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Ele</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Gas</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Cambio Uso Tecnico</fullName>
+                <default>false</default>
+                <label>Cambio Uso Tecnico</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Ele</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Ele</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Gas</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Gas</label>
+            </value>
+            <value>
+                <fullName>Autolettura da cliente</fullName>
+                <default>false</default>
+                <label>Autolettura da cliente</label>
+            </value>
+            <value>
+                <fullName>Autolettura da processo</fullName>
+                <default>false</default>
+                <label>Autolettura da processo</label>
+            </value>
+            <value>
+                <fullName>Lettura Acqua Avviso al Cliente - Acqua</fullName>
+                <default>false</default>
+                <label>Lettura Acqua Avviso al Cliente - Acqua</label>
+            </value>
+            <value>
+                <fullName>Allineamento Canone Rai</fullName>
+                <default>false</default>
+                <label>Allineamento Canone Rai</label>
+            </value>
+            <value>
+                <fullName>Sospensione Canone Rai</fullName>
+                <default>false</default>
+                <label>Sospensione Canone Rai</label>
+            </value>
+            <value>
+                <fullName>Sospensione Canone Rai Calamità</fullName>
+                <default>false</default>
+                <label>Sospensione Canone Rai Calamità</label>
+            </value>
+            <value>
+                <fullName>Chiusura Contatore</fullName>
+                <default>false</default>
+                <label>Chiusura Contatore</label>
+            </value>
+            <value>
+                <fullName>Recesso per Altri Motivi</fullName>
+                <default>false</default>
+                <label>Recesso per Altri Motivi</label>
+            </value>
+            <value>
+                <fullName>Recesso per Rifiuto Voltura</fullName>
+                <default>false</default>
+                <label>Recesso per Rifiuto Voltura</label>
+            </value>
+            <value>
+                <fullName>Recesso per Ripensamento</fullName>
+                <default>false</default>
+                <label>Recesso per Ripensamento</label>
+            </value>
+            <value>
+                <fullName>Recesso su Richiesta Cliente</fullName>
+                <default>false</default>
+                <label>Recesso su Richiesta Cliente</label>
+            </value>
+            <value>
+                <fullName>Recesso</fullName>
+                <default>false</default>
+                <label>Recesso</label>
+            </value>
+            <value>
+                <fullName>Disattivazione VAS</fullName>
+                <default>false</default>
+                <label>Disattivazione VAS</label>
+            </value>
+            <value>
+                <fullName>Votive Modena Cessazione</fullName>
+                <default>false</default>
+                <label>Votive Modena Cessazione</label>
+            </value>
+            <value>
+                <fullName>Errore di Fatturazione</fullName>
+                <default>false</default>
+                <label>Errore di Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Gestione Bonus Sociale</fullName>
+                <default>false</default>
+                <label>Gestione Bonus Sociale</label>
+            </value>
+            <value>
+                <fullName>Inversione del Contatore</fullName>
+                <default>false</default>
+                <label>Inversione del Contatore</label>
+            </value>
+            <value>
+                <fullName>Prescrizione Fatture</fullName>
+                <default>false</default>
+                <label>Prescrizione Fatture</label>
+            </value>
+            <value>
+                <fullName>Ricostruzione Consumi</fullName>
+                <default>false</default>
+                <label>Ricostruzione Consumi</label>
+            </value>
+            <value>
+                <fullName>Ritorno a Fatturazione Bimestrale/Mensile</fullName>
+                <default>false</default>
+                <label>Ritorno a Fatturazione Bimestrale/Mensile</label>
+            </value>
+            <value>
+                <fullName>Sollecito Emissione Bolletta</fullName>
+                <default>false</default>
+                <label>Sollecito Emissione Bolletta</label>
+            </value>
+            <value>
+                <fullName>Testo Contratto in Bolletta</fullName>
+                <default>false</default>
+                <label>Testo Contratto in Bolletta</label>
+            </value>
+            <value>
+                <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
+                <default>false</default>
+                <label>Unificazione/Separazione BP-CA-Bolletta</label>
+            </value>
+            <value>
+                <fullName>Verifica Titolarità POD/PDR</fullName>
+                <default>false</default>
+                <label>Verifica Titolarità POD/PDR</label>
+            </value>
+            <value>
+                <fullName>Rettifica Consumi</fullName>
+                <default>false</default>
+                <label>Rettifica Consumi</label>
+            </value>
+            <value>
+                <fullName>Caduta Linea/Chiamata Muta</fullName>
+                <default>false</default>
+                <label>Caduta Linea/Chiamata Muta</label>
+            </value>
+            <value>
+                <fullName>Comunicazione di Fallimento</fullName>
+                <default>false</default>
+                <label>Comunicazione di Fallimento</label>
+            </value>
+            <value>
+                <fullName>Errore Chiamata</fullName>
+                <default>false</default>
+                <label>Errore Chiamata</label>
+            </value>
+            <value>
+                <fullName>Informative</fullName>
+                <default>false</default>
+                <label>Informative</label>
+            </value>
+            <value>
+                <fullName>Informazioni ambientali</fullName>
+                <default>false</default>
+                <label>Informazioni ambientali</label>
+            </value>
+            <value>
+                <fullName>Informazioni servizi Hera</fullName>
+                <default>false</default>
+                <label>Informazioni servizi Hera</label>
+            </value>
+            <value>
+                <fullName>Allineamento Anagrafica</fullName>
+                <default>false</default>
+                <label>Allineamento Anagrafica</label>
+            </value>
+            <value>
+                <fullName>Disassociazione Utente Web</fullName>
+                <default>false</default>
+                <label>Disassociazione Utente Web</label>
+            </value>
+            <value>
+                <fullName>Esercizio Diritti Privacy</fullName>
+                <default>false</default>
+                <label>Esercizio Diritti Privacy</label>
+            </value>
+            <value>
+                <fullName>Modifica Alert</fullName>
+                <default>false</default>
+                <label>Modifica Alert</label>
+            </value>
+            <value>
+                <fullName>Modifica Privacy</fullName>
+                <default>false</default>
+                <label>Modifica Privacy</label>
+            </value>
+            <value>
+                <fullName>Variazione Anagrafica Cliente</fullName>
+                <default>false</default>
+                <label>Variazione Anagrafica Cliente</label>
+            </value>
+            <value>
+                <fullName>Richiesta Parere</fullName>
+                <default>false</default>
+                <label>Richiesta Parere</label>
+            </value>
+            <value>
+                <fullName>Associazione Utente Web</fullName>
+                <default>false</default>
+                <label>Associazione Utente Web</label>
+            </value>
+            <value>
+                <fullName>Gestione Disalimentabilità</fullName>
+                <default>false</default>
+                <label>Gestione Disalimentabilità</label>
+            </value>
+            <value>
+                <fullName>Interruzione Fornitura</fullName>
+                <default>false</default>
+                <label>Interruzione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Riattivazione Fornitura</fullName>
+                <default>false</default>
+                <label>Riattivazione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Disalimentabile</fullName>
+                <default>false</default>
+                <label>Risoluzione No Disalimentabile</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Punto Sospeso</fullName>
+                <default>false</default>
+                <label>Risoluzione No Punto Sospeso</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Sospensione</fullName>
+                <default>false</default>
+                <label>Risoluzione No Sospensione</label>
+            </value>
+            <value>
+                <fullName>Risoluzione Punto Sospeso</fullName>
+                <default>false</default>
+                <label>Risoluzione Punto Sospeso</label>
+            </value>
+            <value>
+                <fullName>Sospensione Fornitura</fullName>
+                <default>false</default>
+                <label>Sospensione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Votive Modena Pagamenti Morosità</fullName>
+                <default>false</default>
+                <label>Votive Modena Pagamenti Morosità</label>
+            </value>
+            <value>
+                <fullName>Notifica Attivazione POD</fullName>
+                <default>false</default>
+                <label>Notifica Attivazione POD</label>
+            </value>
+            <value>
+                <fullName>Notifica Variazione Stato PDR SII</fullName>
+                <default>false</default>
+                <label>Notifica Variazione Stato PDR SII</label>
+            </value>
+            <value>
+                <fullName>Riattivazione a seguito di cessato pericolo</fullName>
+                <default>false</default>
+                <label>Riattivazione a seguito di cessato pericolo</label>
+            </value>
+            <value>
+                <fullName>Sospensione a seguito di potenziale pericolo</fullName>
+                <default>false</default>
+                <label>Sospensione a seguito di potenziale pericolo</label>
+            </value>
+            <value>
+                <fullName>Attivazione Click&amp;Pay</fullName>
+                <default>false</default>
+                <label>Attivazione Click&amp;Pay</label>
+            </value>
+            <value>
+                <fullName>Comunicazione Pagamento</fullName>
+                <default>false</default>
+                <label>Comunicazione Pagamento</label>
+            </value>
+            <value>
+                <fullName>Contenzioso In Corso</fullName>
+                <default>false</default>
+                <label>Contenzioso In Corso</label>
+            </value>
+            <value>
+                <fullName>Copia Bolletta/Bollettino</fullName>
+                <default>false</default>
+                <label>Copia Bolletta/Bollettino</label>
+            </value>
+            <value>
+                <fullName>Doppi Pagamenti/Incassi</fullName>
+                <default>false</default>
+                <label>Doppi Pagamenti/Incassi</label>
+            </value>
+            <value>
+                <fullName>Pagamento ClickPay</fullName>
+                <default>false</default>
+                <label>Pagamento ClickPay</label>
+            </value>
+            <value>
+                <fullName>Pagamento Online</fullName>
+                <default>false</default>
+                <label>Pagamento Online</label>
+            </value>
+            <value>
+                <fullName>Paperless</fullName>
+                <default>false</default>
+                <label>Paperless</label>
+            </value>
+            <value>
+                <fullName>Piano Rateizzazione</fullName>
+                <default>false</default>
+                <label>Piano Rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Revoca Domiciliazione</fullName>
+                <default>false</default>
+                <label>Revoca Domiciliazione</label>
+            </value>
+            <value>
+                <fullName>Richiesta Domiciliazione</fullName>
+                <default>false</default>
+                <label>Richiesta Domiciliazione</label>
+            </value>
+            <value>
+                <fullName>Rimborso</fullName>
+                <default>false</default>
+                <label>Rimborso</label>
+            </value>
+            <value>
+                <fullName>Storno Rateizzazione</fullName>
+                <default>false</default>
+                <label>Storno Rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Variazione Domiciliazione</fullName>
+                <default>false</default>
+                <label>Variazione Domiciliazione</label>
+            </value>
+            <value>
+                <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+                <default>false</default>
+                <label>Nuovo Impianto - Aggiunta Attacco</label>
+            </value>
+            <value>
+                <fullName>Rimozione Impianto</fullName>
+                <default>false</default>
+                <label>Rimozione Impianto</label>
+            </value>
+            <value>
+                <fullName>Ripristino Fornitura Interrotta</fullName>
+                <default>false</default>
+                <label>Ripristino Fornitura Interrotta</label>
+            </value>
+            <value>
+                <fullName>Spostamento Contatore</fullName>
+                <default>false</default>
+                <label>Spostamento Contatore</label>
+            </value>
+            <value>
+                <fullName>Spostamento Votive Modena</fullName>
+                <default>false</default>
+                <label>Spostamento Votive Modena</label>
+            </value>
+            <value>
+                <fullName>Unificazione POD</fullName>
+                <default>false</default>
+                <label>Unificazione POD</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco</label>
+            </value>
+            <value>
+                <fullName>Nuovo Impianto</fullName>
+                <default>false</default>
+                <label>Nuovo Impianto</label>
+            </value>
+            <value>
+                <fullName>Modifica Impianto</fullName>
+                <default>false</default>
+                <label>Modifica Impianto</label>
+            </value>
+            <value>
+                <fullName>Emissione Impulsi</fullName>
+                <default>false</default>
+                <label>Emissione Impulsi</label>
+            </value>
+            <value>
+                <fullName>BP/CA - errata categoria</fullName>
+                <default>false</default>
+                <label>BP/CA - errata categoria</label>
+            </value>
+            <value>
+                <fullName>Cambio contatore non registrato</fullName>
+                <default>false</default>
+                <label>Cambio contatore non registrato</label>
+            </value>
+            <value>
+                <fullName>Condizioni Contrattuali Errate</fullName>
+                <default>false</default>
+                <label>Condizioni Contrattuali Errate</label>
+            </value>
+            <value>
+                <fullName>Dettaglio Bolletta</fullName>
+                <default>false</default>
+                <label>Dettaglio Bolletta</label>
+            </value>
+            <value>
+                <fullName>Dichiarazione di intento</fullName>
+                <default>false</default>
+                <label>Dichiarazione di intento</label>
+            </value>
+            <value>
+                <fullName>Fiscale</fullName>
+                <default>false</default>
+                <label>Fiscale</label>
+            </value>
+            <value>
+                <fullName>Gestione Calamità</fullName>
+                <default>false</default>
+                <label>Gestione Calamità</label>
+            </value>
+            <value>
+                <fullName>Mancata Telelettura/lettura</fullName>
+                <default>false</default>
+                <label>Mancata Telelettura/lettura</label>
+            </value>
+            <value>
+                <fullName>Marcatura/Uso PdR</fullName>
+                <default>false</default>
+                <label>Marcatura/Uso PdR</label>
+            </value>
+            <value>
+                <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
+                <default>false</default>
+                <label>Modifica/Azzeramento Consumo Annuo</label>
+            </value>
+            <value>
+                <fullName>Modifica Layout di dettaglio</fullName>
+                <default>false</default>
+                <label>Modifica Layout di dettaglio</label>
+            </value>
+            <value>
+                <fullName>Modifica Portale SOL Gestione Energia</fullName>
+                <default>false</default>
+                <label>Modifica Portale SOL Gestione Energia</label>
+            </value>
+            <value>
+                <fullName>Modifica Tariffa Residente/Non Residente</fullName>
+                <default>false</default>
+                <label>Modifica Tariffa Residente/Non Residente</label>
+            </value>
+            <value>
+                <fullName>Split Payment</fullName>
+                <default>false</default>
+                <label>Split Payment</label>
+            </value>
+            <value>
+                <fullName>Variazione Fase</fullName>
+                <default>false</default>
+                <label>Variazione Fase</label>
+            </value>
+            <value>
+                <fullName>Variazione indirizzo di fornitura</fullName>
+                <default>false</default>
+                <label>Variazione indirizzo di fornitura</label>
+            </value>
+            <value>
+                <fullName>Variazione Potenza</fullName>
+                <default>false</default>
+                <label>Variazione Potenza</label>
+            </value>
+            <value>
+                <fullName>Variazione su Amministratore</fullName>
+                <default>false</default>
+                <label>Variazione su Amministratore</label>
+            </value>
+            <value>
+                <fullName>Variazione Tensione</fullName>
+                <default>false</default>
+                <label>Variazione Tensione</label>
+            </value>
+            <value>
+                <fullName>Variazione Portata</fullName>
+                <default>false</default>
+                <label>Variazione Portata</label>
+            </value>
+            <value>
+                <fullName>Altre Verifiche</fullName>
+                <default>false</default>
+                <label>Altre Verifiche</label>
+            </value>
+            <value>
+                <fullName>Consegna copia chiave GdM</fullName>
+                <default>false</default>
+                <label>Consegna copia chiave GdM</label>
+            </value>
+            <value>
+                <fullName>Richiesta lettura cliente</fullName>
+                <default>false</default>
+                <label>Richiesta lettura cliente</label>
+            </value>
+            <value>
+                <fullName>Sost. contatore cliente</fullName>
+                <default>false</default>
+                <label>Sost. contatore cliente</label>
+            </value>
+            <value>
+                <fullName>Verifica Dati al DL</fullName>
+                <default>false</default>
+                <label>Verifica Dati al DL</label>
+            </value>
+            <value>
+                <fullName>Verifica GDM</fullName>
+                <default>false</default>
+                <label>Verifica GDM</label>
+            </value>
+            <value>
+                <fullName>Verifica Tensione - Pressione</fullName>
+                <default>false</default>
+                <label>Verifica Tensione - Pressione</label>
+            </value>
+            <value>
+                <fullName>Interventi con Verifica - ACQ</fullName>
+                <default>false</default>
+                <label>Interventi con Verifica - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Pressione - ACQ</fullName>
+                <default>false</default>
+                <label>Verifica Pressione - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Integrita Sigilli - ACQ</fullName>
+                <default>false</default>
+                <label>Verifica Integrita Sigilli - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Fuga Idrica - Acqua</fullName>
+                <default>false</default>
+                <label>Verifica Fuga Idrica - Acqua</label>
+            </value>
+            <value>
+                <fullName>Comportamento Altri Venditori</fullName>
+                <default>false</default>
+                <label>Comportamento Altri Venditori</label>
+            </value>
+            <value>
+                <fullName>Comportamento Venditori HC</fullName>
+                <default>false</default>
+                <label>Comportamento Venditori HC</label>
+            </value>
+            <value>
+                <fullName>Reclamo Scritto/Rich. Info</fullName>
+                <default>false</default>
+                <label>Reclamo Scritto/Rich. Info</label>
+            </value>
+            <value>
+                <fullName>Votive Modena Contestazione Fattura</fullName>
+                <default>false</default>
+                <label>Votive Modena Contestazione Fattura</label>
+            </value>
+            <value>
+                <fullName>Indennizzo</fullName>
+                <default>false</default>
+                <label>Indennizzo</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni VAS</fullName>
+                <default>false</default>
+                <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>HVAC</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Autoelettrica</fullName>
+                <default>false</default>
+                <label>Autoelettrica</label>
+            </value>
+            <value>
+                <fullName>Annullamento Contratti</fullName>
+                <default>false</default>
+                <label>Annullamento Contratti</label>
+            </value>
+            <value>
+                <fullName>Contratto Non Richiesto</fullName>
+                <default>false</default>
+                <label>Contratto Non Richiesto</label>
+            </value>
+            <value>
+                <fullName>Gestione Rifiuti</fullName>
+                <default>false</default>
+                <label>Gestione Rifiuti</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni Varie / Ambientali</fullName>
+                <default>false</default>
+                <label>Segnalazioni Varie / Ambientali</label>
+            </value>
+            <value>
+                <fullName>Consumo Anomalo Idrico</fullName>
+                <default>false</default>
+                <label>Consumo Anomalo Idrico</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <controllingFieldValue>Generiche VAS</controllingFieldValue>
+            <controllingFieldValue>Canone Rai</controllingFieldValue>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <controllingFieldValue>PostSales VAS</controllingFieldValue>
+            <valueName>Tutti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <valueName>Comportamento Altri Venditori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <valueName>Comportamento Venditori HC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <valueName>Reclamo Scritto/Rich. Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <valueName>Votive Modena Contestazione Fattura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <valueName>Indennizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Documentale/Copia Contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Modifica Contr Preattivazione Pagamento Residenziale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Modifica Contr Preattivazione Anagr Res</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Modifica Contratto Preattivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch Out SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Proroga Temporanea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Contratti/Bonus Commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Riattivazione Non Morose</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Intervento Riattivazione luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Nuovo contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Subentro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch Out per Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione In delibera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione Fuori delibera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione con modifica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio Offerta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio Uso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Connessione con Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Aggiunta Sconti o Bonus VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in con voltura tecnica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Voltura con Switch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Ripristinatorio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Reseller</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Fittizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Winback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch in Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Aggiunta Sconti o Bonus VAS Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Aggiunta Sconti o Bonus VAS Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Temporanea - Nuova Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio Uso Tecnico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio Offerta Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio Offerta Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>Autolettura da cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>Autolettura da processo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>Lettura Acqua Avviso al Cliente - Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Caduta Linea/Chiamata Muta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Comunicazione di Fallimento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Errore Chiamata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Informative</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Informazioni ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <valueName>Informazioni servizi Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Gestione Rifiuti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Segnalazioni Varie / Ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Consumo Anomalo Idrico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Gestione Disalimentabilità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Interruzione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Riattivazione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Risoluzione No Disalimentabile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Risoluzione No Punto Sospeso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Risoluzione No Sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Risoluzione Punto Sospeso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Sospensione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Votive Modena Pagamenti Morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>BP/CA - errata categoria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Cambio contatore non registrato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Condizioni Contrattuali Errate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Dettaglio Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Dichiarazione di intento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Fiscale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Gestione Calamità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Mancata Telelettura/lettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Marcatura/Uso PdR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Modifica/Azzeramento Consumo Annuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Modifica Layout di dettaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Modifica Portale SOL Gestione Energia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Modifica Tariffa Residente/Non Residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Split Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione Fase</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione indirizzo di fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione Potenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione su Amministratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione Tensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <valueName>Variazione Portata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Generiche VAS</controllingFieldValue>
+            <valueName>Contratto Non Richiesto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Annullamento</controllingFieldValue>
+            <valueName>Annullamento Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone Rai</controllingFieldValue>
+            <valueName>Allineamento Canone Rai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone Rai</controllingFieldValue>
+            <valueName>Sospensione Canone Rai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone Rai</controllingFieldValue>
+            <valueName>Sospensione Canone Rai Calamità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Chiusura Contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Recesso per Altri Motivi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Recesso per Rifiuto Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Recesso per Ripensamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Recesso su Richiesta Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Recesso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Disattivazione VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <valueName>Votive Modena Cessazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Errore di Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Gestione Bonus Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Inversione del Contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Prescrizione Fatture</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Ricostruzione Consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Ritorno a Fatturazione Bimestrale/Mensile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Sollecito Emissione Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Testo Contratto in Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Unificazione/Separazione BP-CA-Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Verifica Titolarità POD/PDR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Rettifica Consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Allineamento Anagrafica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Disassociazione Utente Web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Esercizio Diritti Privacy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Modifica Alert</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Modifica Privacy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Variazione Anagrafica Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Richiesta Parere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Associazione Utente Web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <valueName>Notifica Attivazione POD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <valueName>Notifica Variazione Stato PDR SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <valueName>Riattivazione a seguito di cessato pericolo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <valueName>Sospensione a seguito di potenziale pericolo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Attivazione Click&amp;Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Comunicazione Pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Contenzioso In Corso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Copia Bolletta/Bollettino</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Doppi Pagamenti/Incassi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Pagamento ClickPay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Pagamento Online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Paperless</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Piano Rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Revoca Domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Richiesta Domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Rimborso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Storno Rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <valueName>Variazione Domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Nuovo Impianto - Aggiunta Attacco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Rimozione Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Ripristino Fornitura Interrotta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Spostamento Contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Spostamento Votive Modena</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Unificazione POD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Aggiunta Attacco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Nuovo Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Modifica Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Emissione Impulsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Altre Verifiche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Consegna copia chiave GdM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Richiesta lettura cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Sost. contatore cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Dati al DL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica GDM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Tensione - Pressione</valueName>
+        </valueSettings>
+
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Interventi con Verifica - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Pressione - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Integrita Sigilli - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Fuga Idrica - Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PostSales VAS</controllingFieldValue>
+            <valueName>Segnalazioni VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PostSales VAS</controllingFieldValue>
+            <valueName>HVAC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PostSales VAS</controllingFieldValue>
+            <valueName>Autoelettrica</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

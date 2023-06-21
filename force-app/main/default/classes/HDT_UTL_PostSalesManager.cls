@@ -28,6 +28,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void submitForApproval(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
+    }
 
     public void changeQuotationType(SObject inputCase){
 
@@ -105,6 +110,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 activity.Case__c = parentCase.Id;
                 activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
+            } else if (parentCase.Type.equalsIgnoreCase('Consumo Anomalo Idrico') && currentCase.Type.equalsIgnoreCase('Verifica Fuga Idrica') && (currentCase.Commodity__c.equalsIgnoreCase('Acqua') || currentCase.CommodityFormula__c.equalsIgnoreCase('Acqua'))) {
+                List<wrts_prcgvr__Activity__c> actElabManualeList = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED];
+                wrts_prcgvr__Activity__c actElabManuale = new wrts_prcgvr__Activity__c();
+                if(actElabManualeList != null && !actElabManualeList.isEmpty()){
+                    actElabManuale = actElabManualeList[0];
+                    if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'KO Definitivo';
+                        parentCase.Status = 'Closed';
+                    }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'Documentazione validata';
+                        parentCase.Status = 'In Lavorazione';
+                    }
+                }
+            } else if ('Ricostruzione Consumi'.equalsIgnoreCase(parentCase.Type) && !'Completata'.equalsIgnoreCase(parentCase.Phase__c) && 'Acqua'.equalsIgnoreCase(parentCase.Commodity__c) &&'Completata'.equalsIgnoreCase(currentCase.Phase__c)){
+                parentCase.Phase__c = 'Completata';
+                parentCase.Status = 'Closed';
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -122,7 +143,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         Case currentCase = (Case) inputCase;
         System.debug(LoggingLevel.DEBUG,'Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
-        SObject objToUpdate = null;
+        List<SObject> objToUpdate = new List<SObject>();
+
+        List<String> phasesOrder = new List<String>{'Bozza','Da Inviare','In Lavorazione'};
+        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesOrder);
+
+        List<String> phasesCase = new List<String>{'Bozza','Da Inviare'};
+        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesCase);
 
         System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {
@@ -148,7 +175,48 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
                 acc.IsWrongFiscalData__c = false;
-                objToUpdate = acc;
+                objToUpdate.add(acc);
+
+                for ( Case c : caseToUpdate )
+                {
+                    if( c.Id != currentCase.Id ){
+                        c.FirstName__c = currentCase.FirstName__c;
+                        c.LastName__c = currentCase.LastName__c;
+                        c.FiscalCode__c = currentCase.FiscalCode__c;
+                        c.VatNumber__c = currentCase.VatNumber__c;
+                        c.BillingCity__c = currentCase.BillingCity__c;
+                        c.BillingCityCode__c = currentCase.BillingCityCode__c;
+                        c.BillingCountry__c = currentCase.BillingCountry__c;
+                        c.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                        c.BillingPlace__c = currentCase.BillingPlace__c;
+                        c.BillingPostalCode__c = currentCase.BillingPostalCode__c;
+                        c.BillingProvince__c = currentCase.BillingProvince__c;
+                        c.BillingStreetCode__c = currentCase.BillingStreetCode__c;
+                        c.BillingStreetName__c = currentCase.BillingStreetName__c;
+                        c.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
+                        c.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
+                        objToUpdate.add(c);
+                    }
+                }
+
+                for ( Order o : orderToUpdate )
+                {
+                    o.BankAccountSignatoryFirstName__c = currentCase.FirstName__c;
+                    o.BankAccountSignatoryLastName__c = currentCase.LastName__c;
+                    o.BankAccountSignatoryFiscalCode__c = currentCase.FiscalCode__c;
+                    o.CustomerVATNumber__c = currentCase.VatNumber__c;
+                    o.BillingCity = currentCase.BillingCity__c;
+                    o.BillingCityCode__c = currentCase.BillingCityCode__c;
+                    o.BillingCountry = currentCase.BillingCountry__c;
+                    o.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                    o.BillingPlace__c = currentCase.BillingPlace__c;
+                    o.BillingPostalCode = currentCase.BillingPostalCode__c;
+                    o.BillingState = currentCase.BillingProvince__c;
+                    o.BillingStreetName__c = currentCase.BillingStreetName__c;
+                    o.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
+                    o.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
+                    objToUpdate.add(o);
+                }
             }
             when 'Variazione Gruppo IVA' {
                 Account acc = new Account();
@@ -157,7 +225,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.VATGroup__c = currentCase.VATGroup__c;
                 acc.VATGroupStartDate__c = currentCase.VATGroupStartDate__c;
                 acc.VATGroupEndDate__c = currentCase.VATGroupEndDate__c;
-                objToUpdate = acc;
+                objToUpdate.add(acc);
+
+                for ( Case c : caseToUpdate )
+                {
+                    if( c.Id != currentCase.Id ){
+                        c.IsVATGroupJoined__c = currentCase.IsVATGroupJoined__c;
+                        c.VATGroup__c = currentCase.VATGroup__c;
+                        c.VATGroupStartDate__c = currentCase.VATGroupStartDate__c;
+                        c.VATGroupEndDate__c = currentCase.VATGroupEndDate__c;
+                        objToUpdate.add(c);
+                    }
+                }
             }
             when 'Modifica Dati di Contatto' {
                 Contact c = new Contact();
@@ -167,12 +246,40 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.MobilePhone = currentCase.Mobile__c;
                 c.CertifiedEmail__c = currentCase.CertifiedEmail__c;
                 c.Fax = currentCase.Fax__c;
-                objToUpdate = c;
+                objToUpdate.add(c);
 
                 Account acc = new Account();
                 acc.Id = currentCase.AccountId;
                 acc.CustomerMarking__c = currentCase.CustomerMarking__c;
-                HDT_UTL_DatabaseService.updateSObject(acc);
+                objToUpdate.add(acc);
+
+                for ( Case cs : caseToUpdate )
+                {
+                    if( cs.Id != currentCase.Id ){
+                        // cs.Email__c = currentCase.Email__c;
+                        // cs.PhoneNumber__c = currentCase.PhoneNumber__c;
+                        // cs.Mobile__c = currentCase.Mobile__c;
+                        // cs.CertifiedEmail__c = currentCase.CertifiedEmail__c;
+                        // cs.Fax__c = currentCase.Fax__c;
+                        // cs.CustomerMarking__c = currentCase.CustomerMarking__c;
+                        cs.Email__c = !String.isBlank(currentCase.Email__c) ? currentCase.Email__c : cs.Email__c;
+                        cs.SuppliedEmail = !String.isBlank(currentCase.SuppliedEmail) ? currentCase.SuppliedEmail : cs.SuppliedEmail;
+                        cs.PhoneNumber__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : !String.isBlank(currentCase.PhoneNumber__c) ? currentCase.PhoneNumber__c : cs.PhoneNumber__c;
+                        cs.Mobile__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : cs.Mobile__c;
+                        cs.CertifiedEmail__c = !String.isBlank(currentCase.CertifiedEmail__c) ? currentCase.CertifiedEmail__c : cs.CertifiedEmail__c;
+                        cs.Fax__c = !String.isBlank(currentCase.Fax__c) ? currentCase.Fax__c : cs.Fax__c;
+                        cs.CustomerMarking__c = !String.isBlank(currentCase.CustomerMarking__c) ? currentCase.CustomerMarking__c : cs.CustomerMarking__c;
+                        objToUpdate.add(cs);
+                    }
+                }
+
+                for ( Order o : orderToUpdate )
+                {
+                    o.Email__c = currentCase.Email__c;
+                    o.PhoneNumber__c = currentCase.Mobile__c;
+                    o.InvoiceCertifiedEmailAddress__c = currentCase.CertifiedEmail__c;
+                    objToUpdate.add(o);
+                }
             }
             when 'Modifica Dati di Recapito' {
                 BillingProfile__c bp = new BillingProfile__c();
@@ -199,7 +306,59 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 bp.InvoicingProvince__c = currentCase.InvoicingProvince__c;
                 bp.ReminderFlag__c = currentCase.ReminderFlag__c;
                 bp.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
-                objToUpdate = bp;
+                objToUpdate.add(bp);
+                
+                for ( Case c : caseToUpdate )
+                {
+                    if( c.Id != currentCase.Id ){
+                        c.CareOf__c = currentCase.CareOf__c;
+                        c.InvoiceEmail__c = currentCase.InvoiceEmail__c;
+                        c.BillSendingMethod__c = currentCase.BillSendingMethod__c;
+                        c.InvoiceCertifiedEmailAddress__c = currentCase.InvoiceCertifiedEmailAddress__c;
+                        c.SendCertifiedEmailConsentDate__c = currentCase.SendCertifiedEmailConsentDate__c;
+                        c.ElectronicInvoicingMethod__c = currentCase.ElectronicInvoicingMethod__c;
+                        c.ElectronicInvoiceCertifiedEmailAddress__c = currentCase.ElectronicInvoiceCertifiedEmailAddress__c;
+                        c.OfficeSubjectCode__c = currentCase.OfficeSubjectCode__c;
+                        c.XMLType__c = currentCase.XMLType__c;
+                        c.InvoicingPostalCode__c = currentCase.InvoicingPostalCode__c;
+                        c.InvoicingStreetNumber__c = currentCase.InvoicingStreetNumber__c;
+                        c.InvoicingCityCode__c = currentCase.InvoicingCityCode__c;
+                        c.InvoicingStreetCode__c = currentCase.InvoicingStreetCode__c;
+                        c.InvoicingCity__c = currentCase.InvoicingCity__c;
+                        c.InvoicingStreetNumberExtension__c = currentCase.InvoicingStreetNumberExtension__c;
+                        c.IsInvoicingVerified__c = currentCase.IsInvoicingVerified__c;
+                        c.InvoicingPlace__c = currentCase.InvoicingPlace__c;
+                        c.InvoicingStreetName__c = currentCase.InvoicingStreetName__c;
+                        c.InvoicingCountry__c = currentCase.InvoicingCountry__c;
+                        c.InvoicingProvince__c = currentCase.InvoicingProvince__c;
+                        c.ReminderFlag__c = currentCase.ReminderFlag__c;
+                        c.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
+                        objToUpdate.add(c);
+                    }
+                }
+
+                for ( Order o : orderToUpdate )
+                {
+                    o.InvoiceEmailAddress__c = currentCase.InvoiceEmail__c;
+                    o.BillSendMode__c = currentCase.BillSendingMethod__c;
+                    o.InvoiceCertifiedEmailAddress__c = currentCase.InvoiceCertifiedEmailAddress__c;
+                    o.SendCertifiedEmailConsentDate__c = currentCase.SendCertifiedEmailConsentDate__c;
+                    o.ElectronicInvoicingMethod__c = currentCase.ElectronicInvoicingMethod__c;
+                    o.XMLType__c = currentCase.XMLType__c;
+                    o.ShippingPostalCode = currentCase.InvoicingPostalCode__c;
+                    o.ShippingPostalCode__c = currentCase.InvoicingPostalCode__c;
+                    o.ShippingStreetNumber__c = currentCase.InvoicingStreetNumber__c;
+                    o.ShippingCityCode__c = currentCase.InvoicingCityCode__c;
+                    o.ShippingStreetCode__c = currentCase.InvoicingStreetCode__c;
+                    o.ShippingCity__c = currentCase.InvoicingCity__c;
+                    o.ShippingStreetNumberExtension__c = currentCase.InvoicingStreetNumberExtension__c;
+                    o.ShippingIsAddressVerified__c = currentCase.IsInvoicingVerified__c;
+                    o.ShippingPlace__c = currentCase.InvoicingPlace__c;
+                    o.ShippingStreetName__c = currentCase.InvoicingStreetName__c;
+                    o.ShippingCountry__c = currentCase.InvoicingCountry__c;
+                    o.ShippingProvince__c = currentCase.InvoicingProvince__c;
+                    objToUpdate.add(o);
+                }
             }
             when else {
                 System.debug(LoggingLevel.DEBUG,'Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
@@ -351,9 +510,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             //wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
             activity.Order__c = currentCase.VulturePracticeReference__c;
             //HDT_UTL_DatabaseService.insertSObject(activity);
+            HDT_UTL_DatabaseService.insertSObject(activity);
         }
-        HDT_UTL_DatabaseService.insertSObject(activity);
-
     }
 
     public void changePaymentMethod(SObject inputCase){
@@ -405,6 +563,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         HDT_UTL_DatabaseService.updateSObject(servPoint);
     }
 
+    public static wrts_prcgvr__Activity__c createActivityExternal(String templateName){
+        return createActivity(templateName);
+    }
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
@@ -524,10 +685,133 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
-    public void submitForApproval(SObject inputCase)
+    public void handleSelfReadings(SObject inputCase)
     {
+        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL','Validazione KO da Gestore', 'Esito KO da DBO'};
+        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata','Validazione OK da Gestore', 'Esito OK da DBO'};
         Case currentCase = (Case) inputCase;
-        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
+        
+        try {
+            if(currentCase.ParentId != null){
+                Case parentCase = [SELECT Id, Type, Subprocess__c FROM Case where Id =: currentCase.ParentId WITH SECURITY_ENFORCED LIMIT 1];
+                if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiKo.contains(currentCase.Phase__c)){
+                    HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                }else if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiOk.contains(currentCase.Phase__c)){
+                    parentCase.Phase__c = 'Da Inviare';
+                    update parentCase;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+        }
+    }
+
+    //metodo che aggiorna le unità abitative su SP al completamento del case di Modifica unità immobiliari - Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleUpdateUnitServicePoint(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+            try {
+                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c, CommercialHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                if(sp != null && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+                    sp.NotDomesticHousingUnit__c = currentCase.Unita_Abitative__c;
+                    sp.NotResidentDomesticHousingUnit__c = currentCase.NotResidentDomesticHousingUnit__c;
+                    sp.ResidentDomesticHousingUnit__c = currentCase.ResidentDomesticHousingUnit__c;
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    sp.CommercialHousingUnit__c = currentCase.CommercialHousingUnit__c;
+                    update sp;
+                }else if (sp != null && 'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    update sp;
+                }
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+            }
+            
+        }
+    }
+
+    //metodo che gestisce la creazione di una activity per una determinata casistica del processo di Modifica Unità Immobiliari Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation, PMD.CyclomaticComplexity')
+    public void handleCreazioneActivityVariazioni(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+        try {
+            if('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) &&('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+                if(!'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){ //in caso di Promiscuo faccio il check di variazione totale unità abitative
+                    ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                    if(sp != null){
+                        Integer spUnitDomRes = (sp.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.ResidentDomesticHousingUnit__c) : 0;
+                        Integer spUnitDomNonRes = (sp.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.NotResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomRes = (currentCase.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.ResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomNonRes = (currentCase.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.NotResidentDomesticHousingUnit__c) : 0;
+        
+                        Integer totaleUnitServicePoint = spUnitDomRes + spUnitDomNonRes;
+                        Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
+                        if(totaleUnitServicePoint != totaleUnitCase){
+                            HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
+                        }else{ //se non viene variato il totale delle unità abitative, alla ricezione dell'Esito OK da DBO imposto fase Completata
+                            currentCase.Phase__c = 'Completata';
+                            currentCase.Status = 'Closed';
+                            updateFuture(JSON.serialize(currentCase));
+                        }
+                    }
+                }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c)){
+                //BBP W2 4.0 pg. 601 - Creazione Activity Gestione Rimborso in caso di Esito Positivo e Data Retroattiva valorizzata
+                if(currentCase.RetroactiveDate__c != null) {
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                }else{
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+    }
+
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleChiusuraActivitiesPending(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+        Set<String> processTypeSet = new Set<String>{'Ricostruzione Consumi', 'Comunicazione con il Gestore'};
+
+        try {
+            if (processTypeSet.contains(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }else if ('Consumo Anomalo Idrico'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa' AND Type__c = 'Gestione Back Office'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        if ('Documentazione incompleta'.equalsIgnoreCase(currentCase.Phase__c)) {
+                            act.Reason__c = 'Documentazione Incompleta';
+                        }
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+        
     }
 
     @Future
@@ -536,5 +820,14 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
         HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
+    public void closeCaseLetturaInseritaInSap(SObject inputCase){
 
+        Case currentCase = (Case) inputCase;
+
+        currentCase.Phase__c = 'Completata';
+        currentCase.Status = 'Closed';
+
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
+
+    }
 }

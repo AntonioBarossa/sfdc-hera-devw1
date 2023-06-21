@@ -13,8 +13,9 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     private static void mySetup() {
         HDT_UTL_DataFactoryTst.pClickInstance();
         //ACCOUNT
-        Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
-        
+        Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Enti')[0];
+        account.VATNumber__c = '00692800428';
+        insert account;
         //CONTACT
         Contact contact;
         if(!isLead){
@@ -144,17 +145,9 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         Account acc = [SELECT Id, CustomerCode__c FROM Account];
        String res1 = HDT_LC_AccountSelectorController.search(acc.CustomerCode__c, acc.Id);
         System.debug('£££ res1: ' + res1);
-        Boolean caught = false;
-        try{
-            String res2 = HDT_LC_AccountSelectorController.search('1000000000000000', activity.Id);
-            System.debug('£££ res2: ' + res2);
-        } catch (Exception e) {
-            caught = true;
-            System.debug('seach - exception message: ' + e.getMessage());
-            System.debug('seach - exception type name: ' + e.getTypeName());
-            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
-        }
-        System.assert(caught, 'Eccezione non avvenuta.');
+        String res2 = HDT_LC_AccountSelectorController.search('1000000000000000', activity.Id);
+        System.debug('£££ res2: ' + res2);
+        System.assertEquals('{"preFilter":null,"leads":null,"leadId":null,"isCall":null,"contacts":null,"contactId":null,"accounts":null,"accountId":null}', res2, 'Metodo in errore');
         
     }
     

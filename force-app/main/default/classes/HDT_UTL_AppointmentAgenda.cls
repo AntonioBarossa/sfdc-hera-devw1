@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 25-05-2022
+ * @last modified by  : Giacinto Florio
+**/
 public with sharing class HDT_UTL_AppointmentAgenda {
     public enum requestType {
         CANCELLATION,CONFIRM,EDIT,NEW_SLOT,FIRST_SEARCH
@@ -79,6 +86,12 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         String objectName = 'wrts_prcgvr__Activity__c';
         List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+String.escapeSingleQuotes(activityId)+'\'');
         return (wrts_prcgvr__Activity__c)activities[0];
+    }
+
+    public static Case getCase(Id caseId,String fields){
+        String objectName = 'Case';
+        List<SObject> cases = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+String.escapeSingleQuotes(caseId)+'\'');
+        return (Case)cases[0];
     }
 
     public static wrts_prcgvr__Activity__c getCryptoActivity(String cryptedId,String fields){

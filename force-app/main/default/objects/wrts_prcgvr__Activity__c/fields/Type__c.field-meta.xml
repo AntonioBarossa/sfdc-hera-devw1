@@ -51,9 +51,19 @@
                 <label>Anticipo Appuntamento</label>
             </value>
             <value>
+                <fullName>Approvazione Agevolazione</fullName>
+                <default>false</default>
+                <label>Approvazione Agevolazione</label>
+            </value>
+            <value>
                 <fullName>Approvazione Bonus Commerciale</fullName>
                 <default>false</default>
                 <label>Approvazione Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Approvazione Gestione Fuga</fullName>
+                <default>false</default>
+                <label>Approvazione Gestione Fuga</label>
             </value>
             <value>
                 <fullName>Approvazione Offerte</fullName>
@@ -84,11 +94,6 @@
                 <fullName>Back Office - Supporto/Comunicazioni Urgenti</fullName>
                 <default>false</default>
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
-            </value>
-            <value>
-                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
-                <default>false</default>
-                <label>Segnalazione HVAC e Fotovoltaico</label>
             </value>
             <value>
                 <fullName>Blocco Sollecito</fullName>
@@ -261,9 +266,19 @@
                 <label>Eseguire Gestione Manuale SAP</label>
             </value>
             <value>
+                <fullName>Esito approvazione</fullName>
+                <default>false</default>
+                <label>Esito approvazione</label>
+            </value>
+            <value>
                 <fullName>Esito Da Gestire</fullName>
                 <default>false</default>
                 <label>Esito Da Gestire</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
             </value>
             <value>
                 <fullName>Esito KO da DL</fullName>
@@ -319,6 +334,21 @@
                 <fullName>Gestione Agenzia</fullName>
                 <default>false</default>
                 <label>Gestione Agenzia</label>
+            </value>
+            <value>
+                <fullName>Gestione Back Office</fullName>
+                <default>false</default>
+                <label>Gestione Back Office</label>
+            </value>
+            <value>
+                <fullName>Gestione blocco sollecito</fullName>
+                <default>false</default>
+                <label>Gestione blocco sollecito</label>
+            </value>
+            <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
             </value>
             <value>
                 <fullName>Gestione dati discordanti</fullName>
@@ -381,9 +411,19 @@
                 <label>Gestione Votive</label>
             </value>
             <value>
+                <fullName>Gestire fuga</fullName>
+                <default>false</default>
+                <label>Gestire fuga</label>
+            </value>
+            <value>
                 <fullName>Giro contatore da gestire</fullName>
                 <default>false</default>
                 <label>Giro contatore da gestire</label>
+            </value>
+            <value>
+                <fullName>Green Loyalty</fullName>
+                <default>false</default>
+                <label>Green Loyalty</label>
             </value>
             <value>
                 <fullName>In attesa risposta cliente</fullName>
@@ -421,6 +461,11 @@
                 <label>Inviare Preventivo</label>
             </value>
             <value>
+                <fullName>Inviare Resoconto Verifica</fullName>
+                <default>false</default>
+                <label>Inviare Resoconto Verifica</label>
+            </value>
+            <value>
                 <fullName>Inviata comunicazione</fullName>
                 <default>false</default>
                 <label>Inviata comunicazione</label>
@@ -436,6 +481,11 @@
                 <label>Invio registrazione</label>
             </value>
             <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
+            </value>
+            <value>
                 <fullName>Istruttoria creata/Non necessaria</fullName>
                 <default>false</default>
                 <label>Istruttoria creata/Non necessaria</label>
@@ -444,6 +494,11 @@
                 <fullName>Iva e Accise da validare</fullName>
                 <default>false</default>
                 <label>Iva e Accise da validare</label>
+            </value>
+            <value>
+                <fullName>KO creazione BP CA</fullName>
+                <default>false</default>
+                <label>KO creazione BP CA</label>
             </value>
             <value>
                 <fullName>KO Credit Check</fullName>
@@ -488,7 +543,7 @@
             <value>
                 <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
                 <default>false</default>
-                <label>Legge 80_Istanza EE Estraneità Debiti</label>
+                <label>Legge 80_Istanza EE</label>
             </value>
             <value>
                 <fullName>Mancata messa a ruolo contratto</fullName>
@@ -499,6 +554,11 @@
                 <fullName>Modifica Contratti PreAttivazione</fullName>
                 <default>false</default>
                 <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
             </value>
             <value>
                 <fullName>Note_di gestione pratica</fullName>
@@ -631,6 +691,16 @@
                 <label>Protocollo - Reclami Post Vendita</label>
             </value>
             <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
+            </value>
+            <value>
+                <fullName>Protocollo - TARI da Ufficio</fullName>
+                <default>false</default>
+                <label>Protocollo - TARI da Ufficio</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Variazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
@@ -649,6 +719,11 @@
                 <fullName>Protocollo - Voltura</fullName>
                 <default>false</default>
                 <label>Protocollo - Voltura</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Web</fullName>
+                <default>false</default>
+                <label>Protocollo - Web</label>
             </value>
             <value>
                 <fullName>Quality Call</fullName>
@@ -766,6 +841,11 @@
                 <label>Scarto transitorio</label>
             </value>
             <value>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
+            </value>
+            <value>
                 <fullName>Segnalazioni Commissioni Agenzie</fullName>
                 <default>false</default>
                 <label>Segnalazioni Commissioni Agenzie</label>
@@ -879,6 +959,11 @@
                 <fullName>Venditore Non Definito</fullName>
                 <default>false</default>
                 <label>Venditore Non Definito</label>
+            </value>
+            <value>
+                <fullName>Verifica Back Office</fullName>
+                <default>false</default>
+                <label>Verifica Back Office</label>
             </value>
             <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>

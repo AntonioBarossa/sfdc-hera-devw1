@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Utenza non servita</fullName>
+        <default>false</default>
+        <label>Utenza non servita</label>
+    </customValue>
+    <customValue>
+        <fullName>Utenza servita</fullName>
+        <default>false</default>
+        <label>Utenza servita</label>
+    </customValue>
+    <customValue>
+        <fullName>Utenza non servita con progettazione in corso</fullName>
+        <default>false</default>
+        <label>Utenza non servita con progettazione in corso</label>
+    </customValue>
+    <customValue>
+        <fullName>Utenza temporaneamente non servita</fullName>
+        <default>false</default>
+        <label>Utenza temporaneamente non servita</label>
+    </customValue>
+    <masterLabel>Info Depurazione in fattura</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

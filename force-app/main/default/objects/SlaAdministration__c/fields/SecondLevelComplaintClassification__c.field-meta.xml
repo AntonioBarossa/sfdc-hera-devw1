@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SecondLevelComplaintClassification__c</fullName>
+    <externalId>false</externalId>
+    <label>Classificazione 2° Livello</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Misura</fullName>
+                <default>false</default>
+                <label>Misura</label>
+            </value>
+            <value>
+                <fullName>Mercato</fullName>
+                <default>false</default>
+                <label>Mercato</label>
+            </value>
+            <value>
+                <fullName>Qualità Commerciale</fullName>
+                <default>false</default>
+                <label>Qualità Commerciale</label>
+            </value>
+            <value>
+                <fullName>Fatturazione</fullName>
+                <default>false</default>
+                <label>Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Doppia Fatturazione</fullName>
+                <default>false</default>
+                <label>Doppia Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Bonus sociale</fullName>
+                <default>false</default>
+                <label>Bonus sociale</label>
+            </value>
+            <value>
+                <fullName>Contratti</fullName>
+                <default>false</default>
+                <label>Contratti</label>
+            </value>
+            <value>
+                <fullName>Altro</fullName>
+                <default>false</default>
+                <label>Altro</label>
+            </value>
+            <value>
+                <fullName>Connessioni, lavori e qualità tecnica</fullName>
+                <default>false</default>
+                <label>Connessioni, lavori e qualità tecnica</label>
+            </value>
+            <value>
+                <fullName>Morosità e sospensione</fullName>
+                <default>false</default>
+                <label>Morosità e sospensione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

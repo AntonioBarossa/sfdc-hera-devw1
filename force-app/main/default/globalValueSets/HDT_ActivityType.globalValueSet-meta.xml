@@ -376,6 +376,51 @@
         <label>Gestione esito negativo di annullamento</label>
     </customValue>
     <customValue>
+        <fullName>Gestire fuga</fullName>
+        <default>false</default>
+        <label>Gestire fuga</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Back Office</fullName>
+        <default>false</default>
+        <label>Gestione Back Office</label>
+    </customValue>
+	<customValue>
+        <fullName>Approvazione Agevolazione</fullName>
+        <default>false</default>
+        <label>Approvazione Agevolazione</label>
+    </customValue>
+	<customValue>
+        <fullName>Esito approvazione</fullName>
+        <default>false</default>
+        <label>Esito approvazione</label>
+    </customValue>
+	<customValue>
+        <fullName>Modifica Indirizzo Fornitura</fullName>
+        <default>false</default>
+        <label>Modifica Indirizzo Fornitura</label>
+    </customValue>
+	<customValue>
+        <fullName>Aprire Variazione</fullName>
+        <default>false</default>
+        <label>Aprire Variazione</label>
+    </customValue>
+	<customValue>
+        <fullName>KO creazione BP CA</fullName>
+        <default>false</default>
+        <label>KO creazione BP CA</label>
+    </customValue>
+	<customValue>
+        <fullName>Aprire Cessazione</fullName>
+        <default>false</default>
+        <label>Aprire Cessazione</label>
+    </customValue>
+	<customValue>
+        <fullName>Approvazione Gestione Fuga</fullName>
+        <default>false</default>
+        <label>Approvazione Gestione Fuga</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione Iva e Accise</fullName>
         <default>false</default>
         <label>Gestione Iva e Accise</label>
@@ -431,6 +476,11 @@
         <label>Giro contatore da gestire</label>
     </customValue>
     <customValue>
+        <fullName>Green Loyalty</fullName>
+        <default>false</default>
+        <label>Green Loyalty</label>
+    </customValue>
+    <customValue>
         <fullName>In attesa documentazione</fullName>
         <default>false</default>
         <label>In attesa documentazione</label>
@@ -484,6 +534,11 @@
         <fullName>Invio registrazione</fullName>
         <default>false</default>
         <label>Invio registrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Istruttoria Back Office</fullName>
+        <default>false</default>
+        <label>Istruttoria Back Office</label>
     </customValue>
     <customValue>
         <fullName>Istruttoria Creata</fullName>
@@ -716,9 +771,24 @@
         <label>Protocollo - Voltura</label>
     </customValue>
     <customValue>
+        <fullName>Protocollo - Web</fullName>
+        <default>false</default>
+        <label>Protocollo - Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - TARI da Ufficio</fullName>
+        <default>false</default>
+        <label>Protocollo - TARI da Ufficio</label>
+    </customValue>
+    <customValue>
         <fullName>Quality Call</fullName>
         <default>false</default>
         <label>Quality Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviare Resoconto Verifica</fullName>
+        <default>false</default>
+        <label>Inviare Resoconto Verifica</label>
     </customValue>
     <customValue>
         <fullName>Quality Scaduta</fullName>
@@ -1021,6 +1091,11 @@
         <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
+        <fullName>Esito KO da DBO</fullName>
+        <default>false</default>
+        <label>Esito KO da DBO</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1155,8 +1230,20 @@
     <customValue>
         <fullName>Contattare cliente</fullName>
         <default>false</default>
-        <isActive>false</isActive>
+        <isActive>true</isActive>
         <label>Contattare cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Back Office</fullName>
+        <default>false</default>
+        <isActive>true</isActive>
+        <label>Verifica Back Office</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Rimborso</fullName>
+        <default>false</default>
+        <isActive>true</isActive>
+        <label>Gestione Rimborso</label>
     </customValue>
     <customValue>
         <fullName>Credit check KO</fullName>

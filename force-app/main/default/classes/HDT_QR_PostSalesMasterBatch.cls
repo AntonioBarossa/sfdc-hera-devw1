@@ -17,6 +17,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     String bozzaCase = 'Bozza';
     String autoletturaCase = 'Autolettura';
 
+    List<String> typesCase = new List<String>{'Modifica post accertamento','Cessazione post accertamento'};
+    List<String> caseRt = new List<String>{'HDT_RT_DisattivazioniTari','HDT_RT_VariazioniTari'};
+    String phaseInLavorazione = 'In Lavorazione';
+
+
     public List<Knowledge__kav> getExpiredArticle(){
 
         return [SELECT Id,
@@ -38,7 +43,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Type,
         Cluster__c,
         DepositPaymentMode__c,
-        SuspensionEndDate__c
+        SuspensionEndDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c
         FROM Case
         WHERE Phase__c = :this.phaseInstallments
         AND Type IN :this.typeSet
@@ -54,7 +63,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c,
         Type,
         Cluster__c,
-        Order__c
+        Order__c,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c,
+        Commodity__c
         FROM Case
         WHERE Type = :this.nonRequestedContract
         AND Phase__c = : this.phaseInstallments
@@ -79,7 +92,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Type,
         Cluster__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c
         FROM Case
         WHERE QuotationValidityDate__c < :this.todayDate
         AND (Phase__c = :this.phaseQuotations OR (Phase__c = :this.phaseQuotationsPred AND QuotationType__c = :this.quotationTypePred))
@@ -111,7 +128,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c,
         Order__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c = : this.autoletturaCase
@@ -120,8 +141,60 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
-    public List<Case> getPostSalesBozzaCase(){
+    public List<Case> getSegnalazioniBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Segnalazioni_Ambiente');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c,
+            Commodity__C,
+            RecordType.DeveloperName,
+            Status,
+            MandatoryAttachments__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Phase__c = :this.bozzaCase
+            AND Type ='Segnalazioni Ambientali'
+            AND CreatedDate < :d
+            WITH SECURITY_ENFORCED
+        ];
+    }
 
+    public List<Case> getRifiutiBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Gestione_Rifiuti');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c,
+            Commodity__C,
+            RecordType.DeveloperName,
+            Status,
+            MandatoryAttachments__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Type = 'Gestione Rifiuti'
+            AND Phase__c = :this.bozzaCase 
+            AND CreatedDate < :d //W2_CR010_RF002 Non impatta appuntamenti presi
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getPostSalesBozzaCase(){
+        Id segnalazioniRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        Id pianoRateizzazioneRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        List<Id> recordTypeToEsclude = new List<Id>{segnalazioniRtId, pianoRateizzazioneRtId};
         String whereConditionFieldValue2 = 'PostSales';
         String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
         SObject mySobj = database.query(queryString);
@@ -139,17 +212,47 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Phase__c,
         Cluster__c,
         CreatedDate,
+        Commodity__c,
+        RecordTypeId,
+        RecordType.DeveloperName,
         DepositPaymentMode__c,
         SuspensionEndDate__c,
         EffectiveDate__c,
         Order__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Status,
+        MandatoryAttachments__c
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND (RecordTypeId NOT IN :recordTypeToEsclude 
+            OR (RecordTypeId = :pianoRateizzazioneRtId AND Commodity__c != 'Ambiente')) 
         AND Type != 'Contenitore Morosità'
         AND CreatedDate < :limitDate
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getPostAccertamentoCase(){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        AccountId,
+        SupplyCity__c,
+        SupplyStreetName__c,
+        ServicePoint__c,
+        CreatedDate,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c
+        FROM Case
+        WHERE Phase__c =: this.phaseInLavorazione
+        AND RecordType.DeveloperName IN :this.caseRt
+        AND Type IN: this.typesCase
+        AND Id Not IN (Select Case__c from wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Type__c IN ('Aprire variazione','Aprire Cessazione'))
         WITH SECURITY_ENFORCED
         ];
     }
@@ -209,7 +312,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         AnnualConsumption__c,
         CaliberAvailable__c,
         CausalCode__c,
-        Order__r.EffectiveDate__c
+        Order__r.EffectiveDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status,
+        MandatoryAttachments__c
         FROM Case
         WHERE Type = 'Voltura Tecnica'
         AND Phase__c = 'In attesa Data Decorrenza'
@@ -218,4 +325,71 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<wrts_prcgvr__Activity__c> getActivitiesRicConsumi(){
+        return [SELECT ActivityStartTime__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Type__c = 'In attesa risposta cliente' AND wrts_prcgvr__Status__c = 'Aperta' AND Case__r.Type = 'Ricostruzione Consumi' AND Case__r.Reason__c = 'Ricalcolo consumi' AND Case__r.Commodity__c = 'Acqua'];
+    }
+    
+    //START MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
+    public List<Case> getPianoRateizzazioneTariCase(){
+
+        CS_DaysToExpiration__c DaysToExpiration = CS_DaysToExpiration__c.getInstance('PianoRateizzazioneTari');
+        Date limitDateWithAttachment = (System.today()).addDays(- Integer.valueOf(DaysToExpiration.NumberOfDays__c));//90
+
+        DaysToExpiration = CS_DaysToExpiration__c.getInstance('PostSales');
+        Date limitDateWithoutAttachment = (System.today()).addDays(- Integer.valueOf(DaysToExpiration.NumberOfDays__c));//30
+
+		List<Case> caseList = [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        Commodity__c,
+        RecordTypeId,
+        RecordType.DeveloperName,
+        AccountId,
+        SupplyCity__c,
+		MandatoryAttachments__c,
+        SupplyStreetName__c,
+        ServicePoint__c,
+        CreatedDate,
+        CancellationReason__c,
+        CancellationRequestDate__c,
+        Status
+        FROM Case
+        WHERE Phase__c =: this.bozzaCase
+        AND MandatoryAttachments__c != null
+        AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione'
+        AND Type = 'Piano Rateizzazione'
+        AND CreatedDate  <  :limitDateWithoutAttachment
+        AND Commodity__c = 'Ambiente'
+        WITH SECURITY_ENFORCED
+        ];
+
+        if(!caseList.isEmpty()){
+            Map<Id,Case> caseMap = new Map<Id,Case>(caseList);
+
+            List<AggregateResult> cdLs = [SELECT LinkedEntityId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId IN :caseMap.keySet()
+            WITH SECURITY_ENFORCED
+            GROUP BY LinkedEntityId];
+
+            Case currCase = null;
+            for(AggregateResult currDocument : cdLs){
+                currCase = caseMap.get((Id)currDocument.get('LinkedEntityId'));
+                if(currCase != null){
+                    if(Date.newinstance(currCase.CreatedDate.year(), currCase.CreatedDate.month(), currCase.CreatedDate.day()) > limitDateWithAttachment){
+                        caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+                    }
+                }
+            }
+
+            List<Case> caseToReturn = caseMap.values();
+
+            return caseToReturn;
+            
+        }else{
+            return caseList;
+        }
+    }
+    //END MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
 }

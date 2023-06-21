@@ -513,6 +513,54 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
@@ -1090,6 +1138,54 @@
         </values>
         <values>
             <fullName>HSPA_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
     </picklistValues>--> 
@@ -1902,6 +1998,10 @@
             <fullName>Saldo pagato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Documentazione Incompleta</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SAPStep__c</picklist>
@@ -2217,13 +2317,25 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type__c</picklist>
+        <picklist>Type__c</picklist>        
+        <values>
+            <fullName>Modifica Indirizzo Fornitura</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Gestione Fuga</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2303,6 +2415,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito Da Gestire</fullName>
             <default>false</default>
         </values>
@@ -2326,6 +2442,10 @@
             <fullName>Esito OK Riduzione Potenza</fullName>
             <default>false</default>
         </values>   
+        <values>
+            <fullName>Gestione blocco sollecito</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
@@ -2488,6 +2608,10 @@
         </values>
         <values>
             <fullName>Verifiche pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Back Office</fullName>
             <default>false</default>
         </values>
     </picklistValues>

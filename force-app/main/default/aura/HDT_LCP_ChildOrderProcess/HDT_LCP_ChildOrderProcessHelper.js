@@ -69,6 +69,7 @@
                     component.set("v.orderstatus",ord.Status);
                     component.set('v.accountId',results.accountId);
                     component.set('v.venditaId',results.venditaId);
+                    component.set('v.isRepeatedStep',results.stepRepeated);
                     if(ord.RecordType){
                     	component.set("v.recordtypeOrder",ord.RecordType.DeveloperName);
                     }
@@ -91,7 +92,8 @@
 
     refreshOrderChild : function (component, event, helper){
         console.log('HDT_LCP_ChildOrderProcessHelper.refreshOrderChild');
-        var action = component.get('c.refreshOrderChild');
+        //var action = component.get('c.refreshOrderChild');
+        var action = component.get('c.refreshOrderChildAndHistory');
         action.setParams({
             "orderId" : component.get('v.orderId'),
         });
@@ -100,8 +102,9 @@
             component.set('v.loading', false);
                 if (state === "SUCCESS") {                
                     console.log("SUCSSES1",response.getReturnValue());
-                    let result = response.getReturnValue();
-                    component.set("v.order", result);
+                    let results = response.getReturnValue();
+                    component.set("v.order", results.order);
+                    component.set('v.isRepeatedStep',results.stepRepeated);
                     var detailsComp = component.find("detailsComp");
                     detailsComp.loadAccordion();
                 }
@@ -151,7 +154,7 @@
         //     });
         // $A.enqueueAction(action);
     },
-
+    /**AF aggiunto macroprocessType per fix 984452C*/
     redirectToComponent : function(component,accountId,venditaId,orderParent){
         var checkprocess = component.get("c.isCommunity");
         var navService = component.find("navService");
@@ -170,7 +173,8 @@
                                     },
                                     state: {
                                         "c__accountId": accountId,
-                                        "c__venditaId": venditaId
+                                        "c__venditaId": venditaId,
+                                        "c__macroProcessType":'handleProcess'
                                     }
                                 };
             

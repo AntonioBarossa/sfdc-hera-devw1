@@ -40,6 +40,11 @@
                 <default>false</default>
                 <label>EDMA RETI GAS-10R0000015</label>
             </value>
+            <value>
+                <fullName>MARCHE MULTISERV.-10R0000212</fullName>
+                <default>false</default>
+                <label>MARCHE MULTISERV.-10R0000212</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

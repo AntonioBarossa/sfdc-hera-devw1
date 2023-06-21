@@ -338,6 +338,13 @@
         <values>
             <fullName>D8 - Marcatura nulla</fullName>
             <default>false</default>
+        </values><values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>ENERGETICA-Persona fisica</fullName>
@@ -2944,6 +2951,10 @@
         </values>
         <values>
             <fullName>Tutele Graduali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutele graduali Microimprese</fullName>
             <default>false</default>
         </values>
     </picklistValues>

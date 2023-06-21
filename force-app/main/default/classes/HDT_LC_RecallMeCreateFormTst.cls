@@ -23,7 +23,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         leadList[0].InterestProduct__c = 'Hera Bebè Gas';
         leadList[0].InterestArea__c    = 'Green';
         leadList[0].ContactReason__c   = 'Info commerciali';
-        leadList[0].MobilePhone        = '0123456789';
+        leadList[0].MobilePhone        = '3123456789';
         insert leadList;
 
         HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);

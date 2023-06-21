@@ -117,8 +117,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
@@ -152,8 +152,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
@@ -180,8 +180,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
@@ -726,6 +726,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return;
         } */
         newCase.SalesCompanyCode__c = 'Gas'.equals(ord.CommodityFormula__c) ? '10V0000160' : '13V0000000';
+        if('Gas'.equalsIgnoreCase(ord.CommodityFormula__c) && String.isNotBlank(ord.SalesCompanyCode__c) && '10V0000000'.equalsIgnoreCase(ord.SalesCompanyCode__c)){
+            newCase.SalesCompanyCode__c = ord.SalesCompanyCode__c;
+        }
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         newCase.SalesCompany__c = depsSrv.calculateSalesCompany(newCase.SalesCompanyCode__c);
     }
