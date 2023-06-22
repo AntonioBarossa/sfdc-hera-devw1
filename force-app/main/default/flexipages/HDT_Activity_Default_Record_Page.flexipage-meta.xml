@@ -1165,10 +1165,21 @@
                 <fieldItem>Record.ContactResult__c</fieldItem>
                 <identifier>RecordContactResult_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3112,6 +3123,10 @@
                     <value>Facet-abfead25-7b3b-4e1b-97c8-9efd4dda98a7</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Principale</value>
                 </componentInstanceProperties>
@@ -3135,6 +3150,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3162,6 +3181,10 @@
                     <value>Facet-ea0824b3-936d-4e27-b411-96cb51d300ec</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Integrazione Genesys</value>
                 </componentInstanceProperties>
@@ -3180,6 +3203,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-236d0c71-35c0-4b1a-8ad6-96c5912f3fd4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3203,6 +3230,10 @@
                     <value>Facet-cd708223-3bfb-4cfe-b534-cfde45a95a08</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Informazioni Comunicazione Distributore</value>
                 </componentInstanceProperties>
@@ -3224,6 +3255,10 @@
                     <value>Facet-04bdcb90-d514-454f-9739-893304ff9b28</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Dati Appuntamento</value>
                 </componentInstanceProperties>
@@ -3243,6 +3278,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-abc13f34-1276-4e08-99d8-94b8f75d4523</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3272,6 +3311,10 @@
                     <value>Facet-acf547ff-952f-4198-a2d8-4fe8d2aba460</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Informazioni Scarto</value>
                 </componentInstanceProperties>
@@ -3297,6 +3340,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-3261c2c2-fddf-4932-ba41-9e3235d067de</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3344,6 +3391,10 @@
                     <value>Facet-48968a13-7701-4552-96ac-41cace52848f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Assegnazione</value>
                 </componentInstanceProperties>
@@ -3384,6 +3435,10 @@
                     <value>Facet-6950295a-6426-4e69-8c1b-ffe9478cbc5d</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Altre informazioni</value>
                 </componentInstanceProperties>
@@ -3409,6 +3464,10 @@
                     <value>Facet-ae0fbe87-2330-479b-816e-288f306c5521</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Migrazione</value>
                 </componentInstanceProperties>
@@ -3428,6 +3487,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-40c6e09a-e894-4792-bb3d-29b399a3ca7d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>

@@ -24,7 +24,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
 
     @future
     public static void createActivityForChangeAddress(String recordId){
-        List<Order> ordIdList = [ SELECT Id FROM Order WHERE ParentOrder__c = :recordId 
+        List<Order> ordIdList = [ SELECT Id, ServicePoint__c, ServicePoint__r.IsAddressChanged__c FROM Order WHERE ParentOrder__c = :recordId 
                                             AND ServicePoint__r.IsAddressChanged__c = true 
                                             AND ( Process__c = 'Subentro' OR Process__c = 'Subentro Cambio Cat.Tariffa' OR
                                                 (
@@ -42,7 +42,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             activity.Order__c = ordIdList[0].Id;
             activity.Type__c = 'Modifica Indirizzo Fornitura';
-            HDT_UTL_DatabaseService.insertSObject(activity);
+            HDT_UTL_DatabaseService.upsertSObject(new List<SObject>{activity, new ServicePoint__c(Id=ordIdList[0].ServicePoint__c,IsAddressChanged__c = false)});
         }
     }
 
