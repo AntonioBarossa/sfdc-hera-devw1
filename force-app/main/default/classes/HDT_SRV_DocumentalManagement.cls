@@ -551,7 +551,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}*/
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
-				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\' AND Phase__c NOT IN (\'Annullato\',\'Bozza Annullata\')', 'Order');
 				List<SObject> orderToUpdate = new List<SObject>();
 				List<wrts_prcgvr__Activity__c> voltureActList = new List<wrts_prcgvr__Activity__c>();
 				Boolean isVoltura = false;
