@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_punto_fornitura_0</name>
         <label>Assegna punto fornitura</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.SupplyType__c</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>assigmentPreProcess</name>
         <label>assigmentPreProcess</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>firstGetFixFields.Market__c</assignToReference>
@@ -43,7 +43,7 @@
     <assignments>
         <name>assignAttachments</name>
         <label>assignAttachments</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8246</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.MandatoryAttachments__c</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>assignBillingAddress</name>
         <label>assignBillingAddress</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7238</locationY>
         <assignmentItems>
             <assignToReference>getPostSecondForm.BillingCity__c</assignToReference>
@@ -152,7 +152,7 @@
     <assignments>
         <name>AssignCluster</name>
         <label>AssignCluster</label>
-        <locationX>1860</locationX>
+        <locationX>2124</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>firstGetFixFields.Cluster__c</assignToReference>
@@ -168,7 +168,7 @@
     <assignments>
         <name>assignContract</name>
         <label>assignContract</label>
-        <locationX>4582</locationX>
+        <locationX>4846</locationX>
         <locationY>2138</locationY>
         <assignmentItems>
             <assignToReference>getAfterSubprocess.Contract__c</assignToReference>
@@ -191,7 +191,7 @@
     <assignments>
         <name>AssignErrorMessage_0</name>
         <label>AssignErrorMessage</label>
-        <locationX>4648</locationX>
+        <locationX>4912</locationX>
         <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>errorMessageSubscription</assignToReference>
@@ -207,7 +207,7 @@
     <assignments>
         <name>AssignErrorMessage_1</name>
         <label>AssignErrorMessage</label>
-        <locationX>4912</locationX>
+        <locationX>5176</locationX>
         <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>errorMessageSubscription</assignToReference>
@@ -223,7 +223,7 @@
     <assignments>
         <name>AssignErrorMessage_2</name>
         <label>AssignErrorMessage</label>
-        <locationX>5176</locationX>
+        <locationX>5440</locationX>
         <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>errorMessageSubscription</assignToReference>
@@ -239,7 +239,7 @@
     <assignments>
         <name>assignIntegration</name>
         <label>assignIntegration</label>
-        <locationX>4450</locationX>
+        <locationX>4714</locationX>
         <locationY>2354</locationY>
         <assignmentItems>
             <assignToReference>getAfterSubprocess.CausalCode__c</assignToReference>
@@ -255,7 +255,7 @@
     <assignments>
         <name>assignLandRegistry</name>
         <label>assignLandRegistry</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>5666</locationY>
         <assignmentItems>
             <assignToReference>getPreLandRegistry.LandRegistry__c</assignToReference>
@@ -271,7 +271,7 @@
     <assignments>
         <name>assignmentPostForm</name>
         <label>assignmentPostForm</label>
-        <locationX>4164</locationX>
+        <locationX>4428</locationX>
         <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>getPreLogicPreassign.FirstName__c</assignToReference>
@@ -315,7 +315,7 @@
     <assignments>
         <name>AssignmentPreForm</name>
         <label>AssignmentPreForm</label>
-        <locationX>4175</locationX>
+        <locationX>4439</locationX>
         <locationY>4178</locationY>
         <assignmentItems>
             <assignToReference>getAfterAddress.SubscriberType__c</assignToReference>
@@ -356,7 +356,7 @@
     <assignments>
         <name>AssignNewAddress_0</name>
         <label>AssignNewAddress</label>
-        <locationX>3856</locationX>
+        <locationX>4120</locationX>
         <locationY>2354</locationY>
         <assignmentItems>
             <assignToReference>getAfterSubprocess.SupplyCity__c</assignToReference>
@@ -435,7 +435,7 @@
     <assignments>
         <name>AssignNewAddress_0_0</name>
         <label>AssignNewAddress</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>getPreUpdateAddress.SupplyCity__c</assignToReference>
@@ -521,7 +521,7 @@
     <assignments>
         <name>AssignNewAddress_0_0_0</name>
         <label>AssignNewAddress</label>
-        <locationX>4582</locationX>
+        <locationX>4846</locationX>
         <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>getAfterSubprocess.SupplyCity__c</assignToReference>
@@ -600,7 +600,7 @@
     <assignments>
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
-        <locationX>4422</locationX>
+        <locationX>4686</locationX>
         <locationY>8894</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
@@ -616,7 +616,7 @@
     <assignments>
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
-        <locationX>4686</locationX>
+        <locationX>4950</locationX>
         <locationY>8894</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
@@ -632,7 +632,7 @@
     <assignments>
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
-        <locationX>4950</locationX>
+        <locationX>5214</locationX>
         <locationY>8894</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
@@ -648,7 +648,7 @@
     <assignments>
         <name>assignOldValues</name>
         <label>assignOldValues</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4478</locationY>
         <assignmentItems>
             <assignToReference>oldNumeroComponenti</assignToReference>
@@ -664,7 +664,7 @@
     <assignments>
         <name>assignPhase</name>
         <label>assignPhase</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>2594</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
@@ -680,7 +680,7 @@
     <assignments>
         <name>assignProcessTypeToSubFlow</name>
         <label>assignProcessTypeToSubFlow</label>
-        <locationX>1596</locationX>
+        <locationX>1860</locationX>
         <locationY>12590</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
@@ -696,7 +696,7 @@
     <assignments>
         <name>assignProcessTypeToSubFlow_0</name>
         <label>assignProcessTypeToSubFlow</label>
-        <locationX>1860</locationX>
+        <locationX>2124</locationX>
         <locationY>12590</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
@@ -712,7 +712,7 @@
     <assignments>
         <name>assignProcessTypeToSubFlow_0_0</name>
         <label>assignProcessTypeToSubFlow</label>
-        <locationX>2124</locationX>
+        <locationX>2388</locationX>
         <locationY>12590</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
@@ -728,7 +728,7 @@
     <assignments>
         <name>assignRavvedimentoOutput_0</name>
         <label>assignRavvedimentoOutput</label>
-        <locationX>4972</locationX>
+        <locationX>5236</locationX>
         <locationY>10094</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.BlockOnComputation__c</assignToReference>
@@ -779,7 +779,7 @@
     <assignments>
         <name>assignStatus</name>
         <label>assignStatus</label>
-        <locationX>1865</locationX>
+        <locationX>2129</locationX>
         <locationY>2378</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Status</assignToReference>
@@ -795,7 +795,7 @@
     <assignments>
         <name>assignStringConcatenazione_0_0</name>
         <label>assignStringConcatenazione</label>
-        <locationX>4950</locationX>
+        <locationX>5214</locationX>
         <locationY>9302</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Note__c</assignToReference>
@@ -811,7 +811,7 @@
     <assignments>
         <name>ChangePhase</name>
         <label>ChangePhase</label>
-        <locationX>5308</locationX>
+        <locationX>5572</locationX>
         <locationY>10910</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Phase__c</assignToReference>
@@ -834,7 +834,7 @@
     <assignments>
         <name>ChangePhaseDocumentale</name>
         <label>ChangePhaseDocumentale</label>
-        <locationX>5836</locationX>
+        <locationX>6100</locationX>
         <locationY>11234</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Phase__c</assignToReference>
@@ -857,7 +857,7 @@
     <assignments>
         <name>ChangePhaseDocumentale_1</name>
         <label>ChangePhaseDocumentale</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>2918</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
@@ -873,7 +873,7 @@
     <assignments>
         <name>ChangePhaseDocumentale_2</name>
         <label>ChangePhaseDocumentale</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>2918</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
@@ -889,7 +889,7 @@
     <assignments>
         <name>ChangePhaseIntegrati_0</name>
         <label>ChangePhaseIntegrati</label>
-        <locationX>6364</locationX>
+        <locationX>6628</locationX>
         <locationY>11126</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Phase__c</assignToReference>
@@ -912,7 +912,7 @@
     <assignments>
         <name>ChangePhaseNonIntegrati_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
-        <locationX>6100</locationX>
+        <locationX>6364</locationX>
         <locationY>11126</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Phase__c</assignToReference>
@@ -935,7 +935,7 @@
     <assignments>
         <name>ChangePhaseNonIntegrati_0_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
-        <locationX>5044</locationX>
+        <locationX>5308</locationX>
         <locationY>10502</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.Phase__c</assignToReference>
@@ -951,7 +951,7 @@
     <assignments>
         <name>desassignmentPostForm</name>
         <label>desassignmentPostForm</label>
-        <locationX>4428</locationX>
+        <locationX>4692</locationX>
         <locationY>6422</locationY>
         <assignmentItems>
             <assignToReference>getPreLogicPreassign.FirstName__c</assignToReference>
@@ -992,7 +992,7 @@
     <assignments>
         <name>preAssignBillingAccount</name>
         <label>preAssignBillingAccount</label>
-        <locationX>4164</locationX>
+        <locationX>4428</locationX>
         <locationY>6530</locationY>
         <assignmentItems>
             <assignToReference>getPreLogicPreassign.InvoicingCity__c</assignToReference>
@@ -1071,7 +1071,7 @@
     <assignments>
         <name>preAssignBillingAsIs</name>
         <label>preAssignBillingAsIs</label>
-        <locationX>3900</locationX>
+        <locationX>4164</locationX>
         <locationY>6314</locationY>
         <assignmentItems>
             <assignToReference>getPreLogicPreassign.InvoicingCity__c</assignToReference>
@@ -1150,7 +1150,7 @@
     <assignments>
         <name>preAssignBillingNulls</name>
         <label>preAssignBillingNulls</label>
-        <locationX>4428</locationX>
+        <locationX>4692</locationX>
         <locationY>6530</locationY>
         <assignmentItems>
             <assignToReference>getPreLogicPreassign.InvoicingCity__c</assignToReference>
@@ -1229,7 +1229,7 @@
     <assignments>
         <name>restoreInvoicingAddress</name>
         <label>restoreInvoicingAddress</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7346</locationY>
         <assignmentItems>
             <assignToReference>getPostSecondForm.InvoicingCity__c</assignToReference>
@@ -1308,7 +1308,7 @@
     <assignments>
         <name>saveTempFields</name>
         <label>saveTempFields</label>
-        <locationX>3256</locationX>
+        <locationX>3520</locationX>
         <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>tempCase.InvoicingCity__c</assignToReference>
@@ -1387,7 +1387,7 @@
     <assignments>
         <name>SuperficieDichiarata</name>
         <label>SuperficieDichiarata</label>
-        <locationX>5506</locationX>
+        <locationX>5770</locationX>
         <locationY>10610</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.DeclaredArea__c</assignToReference>
@@ -1403,7 +1403,7 @@
     <assignments>
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
-        <locationX>4972</locationX>
+        <locationX>5236</locationX>
         <locationY>9686</locationY>
         <assignmentItems>
             <assignToReference>getPostAttachment.ImmobileSurface__c</assignToReference>
@@ -1491,7 +1491,7 @@
     <decisions>
         <name>addressLogicPostAccertamento_0</name>
         <label>addressLogicPostAccertamento</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>1922</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress_0_0_0</targetReference>
@@ -1516,7 +1516,7 @@
     <decisions>
         <name>alternativeAddress</name>
         <label>alternativeAddress?</label>
-        <locationX>3768</locationX>
+        <locationX>4032</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress_0</targetReference>
@@ -1541,7 +1541,7 @@
     <decisions>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>3256</locationX>
+        <locationX>3520</locationX>
         <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>getAfterSubprocess</targetReference>
@@ -1578,7 +1578,7 @@
     <decisions>
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7562</locationY>
         <defaultConnector>
             <targetReference>getPreAttachment</targetReference>
@@ -1616,7 +1616,7 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>3933</locationX>
+        <locationX>4197</locationX>
         <locationY>3728</locationY>
         <defaultConnector>
             <targetReference>Riapertura_0</targetReference>
@@ -1642,7 +1642,7 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4910</locationY>
         <defaultConnector>
             <targetReference>getPreCheckTari_0</targetReference>
@@ -1679,7 +1679,7 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>5104</locationX>
+        <locationX>5368</locationX>
         <locationY>10286</locationY>
         <defaultConnector>
             <targetReference>endStepWhichProcess</targetReference>
@@ -1704,7 +1704,7 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8570</locationY>
         <defaultConnector>
             <targetReference>ConcatenazionePreDocumentale_0_0</targetReference>
@@ -1729,7 +1729,7 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>4818</locationX>
+        <locationX>5082</locationX>
         <locationY>9194</locationY>
         <defaultConnector>
             <targetReference>assignStringConcatenazione_0_0</targetReference>
@@ -1755,7 +1755,7 @@
     <decisions>
         <name>annullamentoFromDocumentale</name>
         <label>annullamentoFromDocumentale</label>
-        <locationX>1568</locationX>
+        <locationX>1832</locationX>
         <locationY>2702</locationY>
         <defaultConnector>
             <targetReference>checkOutputDocumentale_0</targetReference>
@@ -1781,7 +1781,7 @@
     <decisions>
         <name>annullamentoFromDocumentale_MDC</name>
         <label>annullamentoFromDocumentale</label>
-        <locationX>5704</locationX>
+        <locationX>5968</locationX>
         <locationY>11126</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale</targetReference>
@@ -1807,7 +1807,7 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo</name>
         <label>Annullamento</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>checkTariManaged</targetReference>
@@ -1844,7 +1844,7 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0</name>
         <label>Annullamento</label>
-        <locationX>3592</locationX>
+        <locationX>3856</locationX>
         <locationY>2138</locationY>
         <defaultConnector>
             <targetReference>alternativeAddress</targetReference>
@@ -1891,7 +1891,7 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0_0</name>
         <label>Annullamento</label>
-        <locationX>1529</locationX>
+        <locationX>1793</locationX>
         <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>assignStatus</targetReference>
@@ -1916,7 +1916,7 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>3990</locationX>
+        <locationX>4254</locationX>
         <locationY>5558</locationY>
         <defaultConnector>
             <targetReference>assignLandRegistry</targetReference>
@@ -1954,7 +1954,7 @@
     <decisions>
         <name>assignSuperficieDichiarata</name>
         <label>assignSuperficieDichiarata</label>
-        <locationX>5638</locationX>
+        <locationX>5902</locationX>
         <locationY>10502</locationY>
         <defaultConnector>
             <targetReference>IstruttoriBackOffice</targetReference>
@@ -1979,7 +1979,7 @@
     <decisions>
         <name>caseType</name>
         <label>caseType</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>saveTempFields</targetReference>
@@ -2004,7 +2004,7 @@
     <decisions>
         <name>changeCity_0</name>
         <label>cambio comune</label>
-        <locationX>1141</locationX>
+        <locationX>1405</locationX>
         <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>gestioneAllegatiVIF</targetReference>
@@ -2051,7 +2051,7 @@
     <decisions>
         <name>CheckingProduct</name>
         <label>CheckingProduct</label>
-        <locationX>4582</locationX>
+        <locationX>4846</locationX>
         <locationY>2546</locationY>
         <defaultConnector>
             <targetReference>checkingProductError</targetReference>
@@ -2120,7 +2120,7 @@
     <decisions>
         <name>checkingProductError</name>
         <label>checkingProductError</label>
-        <locationX>5044</locationX>
+        <locationX>5308</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -2176,7 +2176,7 @@
     <decisions>
         <name>checkManage</name>
         <label>checkManage</label>
-        <locationX>5309</locationX>
+        <locationX>5573</locationX>
         <locationY>5234</locationY>
         <defaultConnector>
             <targetReference>processTypeAnnullamento</targetReference>
@@ -2201,7 +2201,7 @@
     <decisions>
         <name>checkModuleFromContributor_0</name>
         <label>checkModuleFromContributor</label>
-        <locationX>5968</locationX>
+        <locationX>6232</locationX>
         <locationY>10910</locationY>
         <defaultConnector>
             <targetReference>ChoiceIntegration_0</targetReference>
@@ -2233,7 +2233,7 @@
     <decisions>
         <name>checkModuleFromContributor_0_0</name>
         <label>checkModuleFromContributor</label>
-        <locationX>1865</locationX>
+        <locationX>2129</locationX>
         <locationY>2486</locationY>
         <defaultConnector>
             <targetReference>assignPhase</targetReference>
@@ -2265,7 +2265,7 @@
     <decisions>
         <name>checkOutputDocumentale_0</name>
         <label>checkOutputDocumentale</label>
-        <locationX>1766</locationX>
+        <locationX>2030</locationX>
         <locationY>2810</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale_2</targetReference>
@@ -2290,7 +2290,7 @@
     <decisions>
         <name>checkTypePreSubprocess</name>
         <label>checkTypePreSubprocess</label>
-        <locationX>3256</locationX>
+        <locationX>3520</locationX>
         <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>SubprocessChoice</targetReference>
@@ -2315,7 +2315,7 @@
     <decisions>
         <name>ChoiceIntegration_0</name>
         <label>ChoiceIntegration</label>
-        <locationX>6232</locationX>
+        <locationX>6496</locationX>
         <locationY>11018</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseIntegrati_0</targetReference>
@@ -2368,7 +2368,7 @@
     <decisions>
         <name>ConcatenazionePreDocumentale_0_0</name>
         <label>ConcatenazionePreDocumentale</label>
-        <locationX>5104</locationX>
+        <locationX>5368</locationX>
         <locationY>8678</locationY>
         <defaultConnector>
             <targetReference>IsSurfaceNull</targetReference>
@@ -2421,7 +2421,7 @@
     <decisions>
         <name>endStepWhichProcess</name>
         <label>endStepWhichProcess?</label>
-        <locationX>5341</locationX>
+        <locationX>5605</locationX>
         <locationY>10394</locationY>
         <defaultConnector>
             <targetReference>assignSuperficieDichiarata</targetReference>
@@ -2446,7 +2446,7 @@
     <decisions>
         <name>Generalit_popolate</name>
         <label>Generalità popolate</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>6206</locationY>
         <defaultConnector>
             <targetReference>QualitaSoggetto</targetReference>
@@ -2499,7 +2499,7 @@
     <decisions>
         <name>IntegrationProcess</name>
         <label>IntegrationProcess</label>
-        <locationX>4582</locationX>
+        <locationX>4846</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>CheckingProduct</targetReference>
@@ -2538,7 +2538,7 @@
     <decisions>
         <name>IsSurfaceNull</name>
         <label>IsSurfaceNull</label>
-        <locationX>5104</locationX>
+        <locationX>5368</locationX>
         <locationY>9578</locationY>
         <defaultConnector>
             <targetReference>toDoActiveRepentant</targetReference>
@@ -2563,7 +2563,7 @@
     <decisions>
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
-        <locationX>5638</locationX>
+        <locationX>5902</locationX>
         <locationY>10802</locationY>
         <defaultConnector>
             <targetReference>checkModuleFromContributor_0</targetReference>
@@ -2609,7 +2609,7 @@
     <decisions>
         <name>processTypeAnnullamento</name>
         <label>processTypeAnnullamento</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>12482</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2661,7 +2661,7 @@
     <decisions>
         <name>Quale_Campo_Numero_Persone_0_0</name>
         <label>Quale Campo Numero Persone</label>
-        <locationX>4818</locationX>
+        <locationX>5082</locationX>
         <locationY>8786</locationY>
         <defaultConnector>
             <targetReference>ConcatenazioneLogic_0_0</targetReference>
@@ -2716,7 +2716,7 @@
     <decisions>
         <name>QualitaSoggetto</name>
         <label>Qualità Soggetto Passivo?</label>
-        <locationX>4296</locationX>
+        <locationX>4560</locationX>
         <locationY>6314</locationY>
         <defaultConnector>
             <targetReference>desassignmentPostForm</targetReference>
@@ -2741,7 +2741,7 @@
     <decisions>
         <name>Riapertura_0</name>
         <label>Riapertura?</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4070</locationY>
         <defaultConnector>
             <targetReference>AssignmentPreForm</targetReference>
@@ -2766,7 +2766,7 @@
     <decisions>
         <name>Riapertura_0_0</name>
         <label>Riapertura?</label>
-        <locationX>4395</locationX>
+        <locationX>4659</locationX>
         <locationY>6098</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -2792,7 +2792,7 @@
     <decisions>
         <name>showSecondScreen</name>
         <label>showSecondScreen?</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>5990</locationY>
         <defaultConnector>
             <targetReference>getPreAttachment</targetReference>
@@ -2817,7 +2817,7 @@
     <decisions>
         <name>toDoActiveRepentant</name>
         <label>toDoActiveRepentant?</label>
-        <locationX>5104</locationX>
+        <locationX>5368</locationX>
         <locationY>9878</locationY>
         <defaultConnector>
             <targetReference>Annullamento_0_0_0_0_0_0_0_0</targetReference>
@@ -2898,7 +2898,7 @@
     <decisions>
         <name>WhichCluster</name>
         <label>WhichCluster</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>updateFieldsPreProcess</targetReference>
@@ -2923,7 +2923,7 @@
     <decisions>
         <name>WhichProcessType</name>
         <label>WhichProcessType</label>
-        <locationX>1021</locationX>
+        <locationX>1153</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>assigmentPreProcess</targetReference>
@@ -2944,11 +2944,26 @@
             </connector>
             <label>Associa Dotazioni</label>
         </rules>
+        <rules>
+            <name>Riparazione_Dotazioni</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>firstGetFixFields.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Sost./Furto/Smarr. Dot.</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>HDT_FL_RiparazioneDotazione</targetReference>
+            </connector>
+            <label>Riparazione Dotazioni</label>
+        </rules>
     </decisions>
     <decisions>
         <name>WhichType</name>
         <label>WhichType</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>3512</locationY>
         <defaultConnector>
             <targetReference>Riapertura_0</targetReference>
@@ -3011,7 +3026,7 @@
     <recordLookups>
         <name>firstGetFixFields</name>
         <label>firstGetFixFields</label>
-        <locationX>1021</locationX>
+        <locationX>1153</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3032,7 +3047,7 @@
     <recordLookups>
         <name>getAfterAddress</name>
         <label>getAfterAddress</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>3404</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3053,7 +3068,7 @@
     <recordLookups>
         <name>getAfterForm_0</name>
         <label>getAfterForm</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3074,7 +3089,7 @@
     <recordLookups>
         <name>getAfterSubprocess</name>
         <label>getAfterSubprocess</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3095,7 +3110,7 @@
     <recordLookups>
         <name>getCase</name>
         <label>getCase</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3116,7 +3131,7 @@
     <recordLookups>
         <name>getContract</name>
         <label>getContract</label>
-        <locationX>3124</locationX>
+        <locationX>3388</locationX>
         <locationY>1298</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3144,7 +3159,7 @@
     <recordLookups>
         <name>getPostAttachment</name>
         <label>getPostAttachment</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3165,7 +3180,7 @@
     <recordLookups>
         <name>getPostSecondForm</name>
         <label>getPostSecondForm</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3186,7 +3201,7 @@
     <recordLookups>
         <name>getPreAttachment</name>
         <label>getPreAttachment</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8030</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3207,7 +3222,7 @@
     <recordLookups>
         <name>getPreCheckTari_0</name>
         <label>getPreCheckTari</label>
-        <locationX>5309</locationX>
+        <locationX>5573</locationX>
         <locationY>5018</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3228,7 +3243,7 @@
     <recordLookups>
         <name>getPreLandRegistry</name>
         <label>getPreLandRegistry</label>
-        <locationX>3990</locationX>
+        <locationX>4254</locationX>
         <locationY>5342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3249,7 +3264,7 @@
     <recordLookups>
         <name>getPreLogicPreassign</name>
         <label>getPreLogicPreassign</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>5882</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3270,7 +3285,7 @@
     <recordLookups>
         <name>getPreSecondForm</name>
         <label>getPreSecondForm</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>6914</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3291,7 +3306,7 @@
     <recordLookups>
         <name>getPreUpdateAddress</name>
         <label>getPreUpdateAddress</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1190</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3312,7 +3327,7 @@
     <recordLookups>
         <name>getSubscription</name>
         <label>getSubscription</label>
-        <locationX>3124</locationX>
+        <locationX>3388</locationX>
         <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3361,7 +3376,7 @@
     <recordLookups>
         <name>getTest</name>
         <label>getTest</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3382,7 +3397,7 @@
     <recordUpdates>
         <name>commitPostForm</name>
         <label>commitPostForm</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>6806</locationY>
         <connector>
             <targetReference>getPreSecondForm</targetReference>
@@ -3392,14 +3407,14 @@
     <recordUpdates>
         <name>finalUpdate</name>
         <label>finalUpdate</label>
-        <locationX>1865</locationX>
+        <locationX>2129</locationX>
         <locationY>3278</locationY>
         <inputReference>getAfterForm_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAddress_0</name>
         <label>updateAddress</label>
-        <locationX>3856</locationX>
+        <locationX>4120</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>getAfterAddress</targetReference>
@@ -3409,7 +3424,7 @@
     <recordUpdates>
         <name>updateAddress_0_0</name>
         <label>updateAddress</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1406</locationY>
         <connector>
             <targetReference>getAfterForm_0</targetReference>
@@ -3419,14 +3434,14 @@
     <recordUpdates>
         <name>updateafterSecondForm</name>
         <label>updateafterSecondForm</label>
-        <locationX>5341</locationX>
+        <locationX>5605</locationX>
         <locationY>11678</locationY>
         <inputReference>getPostAttachment</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAfterSubProcessMDC</name>
         <label>updateAfterSubProcessMDC</label>
-        <locationX>4582</locationX>
+        <locationX>4846</locationX>
         <locationY>3212</locationY>
         <connector>
             <targetReference>getAfterAddress</targetReference>
@@ -3436,7 +3451,7 @@
     <recordUpdates>
         <name>updateAttachments</name>
         <label>updateAttachments</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8354</locationY>
         <connector>
             <targetReference>getPostAttachment</targetReference>
@@ -3446,7 +3461,7 @@
     <recordUpdates>
         <name>updateAttachments_0</name>
         <label>updateAttachments</label>
-        <locationX>1529</locationX>
+        <locationX>1793</locationX>
         <locationY>2162</locationY>
         <connector>
             <targetReference>AnnullamentoSreenIndirizzo_0_0</targetReference>
@@ -3476,7 +3491,7 @@
     <recordUpdates>
         <name>updateFieldsPreProcess</name>
         <label>updateFieldsPreProcess</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>getCase</targetReference>
@@ -3486,7 +3501,7 @@
     <recordUpdates>
         <name>updatePostLandRegistry</name>
         <label>updatePostLandRegistry</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>5774</locationY>
         <connector>
             <targetReference>getPreLogicPreassign</targetReference>
@@ -3496,7 +3511,7 @@
     <recordUpdates>
         <name>updatePostSecondForm</name>
         <label>updatePostSecondForm</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7454</locationY>
         <connector>
             <targetReference>Annullamento_0_0</targetReference>
@@ -3506,7 +3521,7 @@
     <recordUpdates>
         <name>updatePreForm</name>
         <label>updatePreForm</label>
-        <locationX>4175</locationX>
+        <locationX>4439</locationX>
         <locationY>4286</locationY>
         <connector>
             <targetReference>assignOldValues</targetReference>
@@ -3516,7 +3531,7 @@
     <recordUpdates>
         <name>updateTest</name>
         <label>updateTest</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4802</locationY>
         <connector>
             <targetReference>Annullamento_0_0_0_0_0_0_0</targetReference>
@@ -3526,7 +3541,7 @@
     <screens>
         <name>alertChangeCity_0</name>
         <label>alertChangeCity</label>
-        <locationX>754</locationX>
+        <locationX>1018</locationX>
         <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3572,7 +3587,7 @@
     <screens>
         <name>checkRavvedimentoOperoso_0</name>
         <label>checkRavvedimentoOperoso</label>
-        <locationX>4972</locationX>
+        <locationX>5236</locationX>
         <locationY>9986</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3690,7 +3705,7 @@
     <screens>
         <name>ConcatenazioneLogic_0_0</name>
         <label>ConcatenazioneLogic</label>
-        <locationX>4818</locationX>
+        <locationX>5082</locationX>
         <locationY>9086</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3809,7 +3824,7 @@
     <screens>
         <name>GestioneAllegati_0_0</name>
         <label>GestioneAllegati</label>
-        <locationX>4675</locationX>
+        <locationX>4939</locationX>
         <locationY>8138</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3905,7 +3920,7 @@
     <screens>
         <name>gestioneAllegatiVIF</name>
         <label>gestioneAllegatiVIF</label>
-        <locationX>1529</locationX>
+        <locationX>1793</locationX>
         <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4001,7 +4016,7 @@
     <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
-        <locationX>5704</locationX>
+        <locationX>5968</locationX>
         <locationY>11018</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4070,7 +4085,7 @@
     <screens>
         <name>screenDocumentale_0</name>
         <label>screenDocumentale</label>
-        <locationX>1568</locationX>
+        <locationX>1832</locationX>
         <locationY>2594</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4134,7 +4149,7 @@
     <screens>
         <name>screenErrorMessage</name>
         <label>screenErrorMessage</label>
-        <locationX>5044</locationX>
+        <locationX>5308</locationX>
         <locationY>2954</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4181,7 +4196,7 @@
     <screens>
         <name>ScreenForm</name>
         <label>ScreenForm</label>
-        <locationX>4087</locationX>
+        <locationX>4351</locationX>
         <locationY>4586</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4438,7 +4453,7 @@
     <screens>
         <name>ScreenLandRegistry</name>
         <label>ScreenLandRegistry</label>
-        <locationX>3990</locationX>
+        <locationX>4254</locationX>
         <locationY>5450</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4557,7 +4572,7 @@
     <screens>
         <name>SecondFormDipendenti_0</name>
         <label>SecondFormDipendenti</label>
-        <locationX>4098</locationX>
+        <locationX>4362</locationX>
         <locationY>7022</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4773,7 +4788,7 @@
     <screens>
         <name>Selezione_Indirizzo</name>
         <label>Selezione Indirizzo</label>
-        <locationX>727</locationX>
+        <locationX>991</locationX>
         <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4972,7 +4987,7 @@
     <screens>
         <name>Selezione_Indirizzo_0</name>
         <label>Selezione Indirizzo</label>
-        <locationX>3592</locationX>
+        <locationX>3856</locationX>
         <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5121,7 +5136,7 @@
     <screens>
         <name>SubprocessChoice</name>
         <label>SubprocessChoice</label>
-        <locationX>3256</locationX>
+        <locationX>3520</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5340,7 +5355,7 @@
     <screens>
         <name>verificaAccertamentiTari_0</name>
         <label>verificaAccertamentiTari</label>
-        <locationX>3933</locationX>
+        <locationX>4197</locationX>
         <locationY>3620</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5427,7 +5442,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>895</locationX>
+        <locationX>1027</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>firstGetFixFields</targetReference>
@@ -5437,7 +5452,7 @@
     <subflows>
         <name>checkManaedTari</name>
         <label>checkManaedTari</label>
-        <locationX>5309</locationX>
+        <locationX>5573</locationX>
         <locationY>5126</locationY>
         <connector>
             <targetReference>checkManage</targetReference>
@@ -5478,7 +5493,7 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>1141</locationX>
+        <locationX>1405</locationX>
         <locationY>1838</locationY>
         <connector>
             <targetReference>changeCity_0</targetReference>
@@ -5507,7 +5522,7 @@
     <subflows>
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
-        <locationX>1992</locationX>
+        <locationX>2256</locationX>
         <locationY>12782</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -5543,6 +5558,25 @@
         <flowName>HDT_FL_RiconciliazioneDotazioni</flowName>
         <inputAssignments>
             <name>inputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeFromDraft</name>
+            <value>
+                <elementReference>ResumeFromDraft</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>HDT_FL_RiparazioneDotazione</name>
+        <label>HDT_FL_RiparazioneDotazione</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <flowName>HDT_FL_RiparazioneDotazione</flowName>
+        <inputAssignments>
+            <name>caseId</name>
             <value>
                 <elementReference>InputCase</elementReference>
             </value>
