@@ -7,7 +7,13 @@ public with sharing class HDT_UTL_QualityCall {
     
 
     public void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method){
+        this.setLogRecord(srList, recordToWork, logs, method,2);
+    }
+    
+    public void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method,Integer attempts){
+        attempts--; //inserendo upNum == 1 ripete eventualmente una sola volta il'update;
         Integer index = 0;
+        List<SObject> rObejct = new List<SObject>();
         for(Database.SaveResult sr :srList){
             try{
                 if (!sr.isSuccess() || Test.isRunningTest()){
@@ -18,12 +24,20 @@ public with sharing class HDT_UTL_QualityCall {
                     for (Database.Error error :  sr.getErrors()){
                         errorMessage += error.getMessage() +  '\n';
                     }
-                    logs.addLog('HDT_BA_QualityCall', method, request, null, errorMessage, recordId, null, null);
-                }  
+                    if (recordId == null || !errorMessage.containsIgnoreCase('unable to obtain exclusive access to this record') || attempts < 0 ){
+                        logs.addLog('HDT_BA_QualityCall', method, request, null, errorMessage, recordId, null, null);
+                        continue;
+                    }
+                    rObejct.add(obj);
+                }
             }catch(Exception ex){
                 System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - crea Log ' +ex.getMessage());
             }
             index++;
+        }
+        if (!rObejct.isEmpty()){
+            List<Database.SaveResult> newSrList = Database.update(rObejct, false);
+            this.setLogRecord(newSrList, rObejct, logs, method + ' - newAttempt',attempts);
         }
     }
 
