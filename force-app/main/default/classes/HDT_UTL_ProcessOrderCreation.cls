@@ -24,7 +24,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Map<Id, ServicePoint__c> servicePointMap;
     private Map<Id, Contract> contractMap;
     private Id childOrderRecordTypeId;
-    private OrderItem fakeOrderItem;
+    private OrderItem tempOrderItem;
     private Map<String, String> companyCodeMap;
     private Map<String, String> processMatrixMap;
     private Map<Id, List<SBQQ__ProductOption__c>> otherRequiredOption;
@@ -41,7 +41,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         mapFieldsObject();
 
-        if(isDiscountAndBonusProcess){
+        if(isDiscountAndBonusProcess || isMucProcess){
             processDiscountBonus = new HDT_UTL_ProcessDiscountAndBonus(mapHeaderForWrapper);
         }
 
@@ -61,7 +61,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
 
-        fakeOrderItem = new OrderItem();
+        tempOrderItem = new OrderItem();
         // STEP 1: convert from csv the objects: 
         //      - Sale__c
         //      - Child Order
@@ -111,7 +111,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                             convertionError = mapTypeField(processObj.parentOrder, mapAllFields, count, tempValue);
                         }
                         when 'OrderItem' {
-                            convertionError = mapTypeField(fakeOrderItem, mapAllFields, count, tempValue);
+                            convertionError = mapTypeField(tempOrderItem, mapAllFields, count, tempValue);
                         }
                     }
                 }
@@ -386,7 +386,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     //system.debug(LoggingLevel.DEBUG, '>>> activation');
                     for(HDT_WRP_OrderItem wrpOrderItem : childOrder.orderItemList){
 
-                        //wrpOrderItem.OrderItem = fakeOrderItem;
+                        //wrpOrderItem.OrderItem = tempOrderItem;
 
                         if(wrpOrderItem.itemType.equalsIgnoreCase('offertaComm')){
                             String productKey = buildProductKey(wrpOrderItem.product);
@@ -548,6 +548,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                                 }
 
                                 wrpOrderItem.product.Id = tempProdOpt.SBQQ__OptionalSKU__c;
+                                if(isMucProcess){
+                                    wrpOrderItem.orderItem = tempOrderItem;
+                                }
                                 wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
                                 wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
                                 wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
@@ -1168,11 +1171,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 additionalProduct2.add(wrpOrderItem.product);
             }*/
 
-            if(isDiscountAndBonusProcess){
+            if(isDiscountAndBonusProcess || isMucProcess){
                 processDiscountBonus.handleDiscountAndBonus(wrpChildOrder, csvValues);
             }
 
-            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura') && !isDiscountAndBonusProcess){
+            if(!isMucProcess && !processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura') && !isDiscountAndBonusProcess){
                 wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
             }
 

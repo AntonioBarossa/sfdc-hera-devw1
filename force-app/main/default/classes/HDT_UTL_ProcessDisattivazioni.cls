@@ -166,7 +166,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             //System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + processObj.newCase);
             
             Contract contract;
-            if(podContractMap.containsKey(processObj.csvSplitted[contractIndex])){
+            if(podContractMap.containsKey(processObj.csvSplitted[contractIndex])){                
                 contract = podContractMap.get(processObj.csvSplitted[contractIndex]);
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
@@ -177,6 +177,11 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 continue;
             }
             
+            if(!contract.status.equalsIgnoreCase('Attivo')){
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Il contratto non è attivo'));
+                continue;
+            }
+
             String accountId = contract.AccountId;
             processObj.newCase.AccountId = accountId;
 
