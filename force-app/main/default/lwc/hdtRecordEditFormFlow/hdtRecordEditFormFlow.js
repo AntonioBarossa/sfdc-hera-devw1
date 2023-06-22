@@ -379,6 +379,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.saveInDraft = false;
             this.cancelCase = false;
             const fields = event.detail.fields;
+            
+            //Pre-valorizzazione campo Data Inserimento Richiesta, sulle tutte le pratiche su cui non è a video nel wizard di processo
+            if (!fields.CustomerRequestDate__c){
+                var today = new Date();
+                fields.CustomerRequestDate__c = today.toISOString();
+            }
+            
             console.log('fields ' + JSON.stringify(fields));
             if(this.validateClass){
                 validateRecord({
