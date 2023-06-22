@@ -16,6 +16,12 @@
 &quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHC&quot;,
 &quot;existsdefault&quot;:true,
 &quot;defaultusers&quot;: [&quot;anna.guidoboni@heravendita.com&quot;]
+},
+{
+&quot;nomesocieta&quot;:&quot;Marche Multiservizi S.p.A&quot;,
+&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataMMS&quot;,
+&quot;existsdefault&quot;:true,
+&quot;defaultusers&quot;: [&quot;andrea.biettini@heravendita.com&quot;,&quot;emanuele.guglielmi@heravendita.com&quot;,&quot;stefano.scotti@heravendita.com&quot;]
 }
 ]</value>
     </values>
