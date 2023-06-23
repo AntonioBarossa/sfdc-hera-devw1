@@ -2,75 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>58.0</apiVersion>
     <assignments>
-        <name>Assegna_Forniture</name>
-        <label>Assegna Forniture</label>
-        <locationX>710</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>theCase</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyStreetName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyStreetName__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyCity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyCity__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyPostalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyPostalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyCountry__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyCountry__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyProvince__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyProvince__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyStreetNumberExtension__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyStreetNumberExtension__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.SupplyStreetNumber__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.ServicePoint__r.SupplyStreetNumber__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>aggiorna_Case</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Case0</name>
         <label>Assign Case</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>theCase</assignToReference>
             <operator>Assign</operator>
@@ -82,29 +17,13 @@
             <targetReference>get_Default_Value_Choice</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Assign_Case1</name>
-        <label>Assign Case</label>
-        <locationX>842</locationX>
-        <locationY>1106</locationY>
-        <assignmentItems>
-            <assignToReference>theCase</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case1</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>get_Opzioni_Consegna</targetReference>
-        </connector>
-    </assignments>
     <collectionProcessors>
         <description>Fa sì che il valore sportello sia presente solo per gli utenti che hanno canale sportello</description>
         <name>filter_records</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>filter records</label>
-        <locationX>479</locationX>
-        <locationY>1574</locationY>
+        <locationX>176</locationX>
+        <locationY>566</locationY>
         <assignNextValueToReference>currentItem_filter_records_0</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>get_Opzioni_Consegna</collectionReference>
@@ -128,35 +47,10 @@
         </connector>
     </collectionProcessors>
     <decisions>
-        <name>Annullamento_1</name>
-        <label>Annullamento 1</label>
-        <locationX>710</locationX>
-        <locationY>890</locationY>
-        <defaultConnector>
-            <targetReference>Get_Case1</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
-        <rules>
-            <name>Annulla1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtRecordEditFormFlow.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Annullamento_Subflow</targetReference>
-            </connector>
-            <label>Annulla1</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Annullamento_2</name>
         <label>Annullamento 2</label>
-        <locationX>479</locationX>
-        <locationY>2006</locationY>
+        <locationX>176</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Get_Equipment</targetReference>
         </defaultConnector>
@@ -172,7 +66,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Annullamento_Subflow</targetReference>
             </connector>
             <label>Annulla</label>
@@ -193,8 +86,8 @@
     <decisions>
         <name>Annullamento_3</name>
         <label>Annullamento 3</label>
-        <locationX>941</locationX>
-        <locationY>2438</locationY>
+        <locationX>594</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_Get_ProcessEquipment</targetReference>
         </defaultConnector>
@@ -261,8 +154,8 @@
     <decisions>
         <name>Annullamento_4</name>
         <label>Annullamento 4</label>
-        <locationX>941</locationX>
-        <locationY>2954</locationY>
+        <locationX>594</locationX>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>allegatiObbligatori</targetReference>
         </defaultConnector>
@@ -278,7 +171,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Annullamento_Subflow</targetReference>
             </connector>
             <label>Annulla</label>
@@ -299,8 +191,8 @@
     <decisions>
         <name>Annullamento_5</name>
         <label>Annullamento 5</label>
-        <locationX>1337</locationX>
-        <locationY>3170</locationY>
+        <locationX>924</locationX>
+        <locationY>2162</locationY>
         <defaultConnector>
             <targetReference>Conferma_Pratica</targetReference>
         </defaultConnector>
@@ -316,7 +208,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Annullamento_Subflow</targetReference>
             </connector>
             <label>Annulla</label>
@@ -332,79 +223,6 @@
                 </rightValue>
             </conditions>
             <label>Bozza</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Riprendi_Processo_Decision</name>
-        <label>Riprendi Processo Decision</label>
-        <locationX>479</locationX>
-        <locationY>242</locationY>
-        <defaultConnector>
-            <targetReference>Dato_tecnico_comunale</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Nuovo Processo</defaultConnectorLabel>
-        <rules>
-            <name>Riprendi_Processo</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ResumeFromDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
-                <operator>EndsWith</operator>
-                <rightValue>
-                    <stringValue>VariazioniTari</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Case0</targetReference>
-            </connector>
-            <label>Riprendi Processo Tari</label>
-        </rules>
-        <rules>
-            <name>Riprendi_TCP</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ResumeFromDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Riprendi TCP</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Tari_or_TCP</name>
-        <label>Tari or TCP</label>
-        <locationX>908</locationX>
-        <locationY>458</locationY>
-        <defaultConnectorLabel>TCP</defaultConnectorLabel>
-        <rules>
-            <name>Tari</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Dato_tecnico_comunale.TARIManagingStartDate__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Dato_tecnico_comunale.TARIManagingEndDate__c</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assegna_Forniture</targetReference>
-            </connector>
-            <label>Tari</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -440,8 +258,8 @@
     <recordLookups>
         <name>Copy_1_of_Get_ProcessEquipment</name>
         <label>Copy 1 of Get ProcessEquipment</label>
-        <locationX>941</locationX>
-        <locationY>2738</locationY>
+        <locationX>594</locationX>
+        <locationY>1730</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Dotaz_Consegnare</targetReference>
@@ -459,52 +277,10 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Dato_tecnico_comunale</name>
-        <label>Dato tecnico comunale</label>
-        <locationX>908</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Tari_or_TCP</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.SupplyCity__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>CityTechnicalData__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Case1</name>
-        <label>Get Case</label>
-        <locationX>842</locationX>
-        <locationY>998</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Case1</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>get_Default_Value_Choice</name>
         <label>get Default Value Choice</label>
-        <locationX>50</locationX>
-        <locationY>458</locationY>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>get_Opzioni_Consegna</targetReference>
@@ -531,8 +307,8 @@
     <recordLookups>
         <name>Get_Equipment</name>
         <label>Get Equipment</label>
-        <locationX>941</locationX>
-        <locationY>2114</locationY>
+        <locationX>594</locationX>
+        <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_ProcessEquipment</targetReference>
@@ -552,11 +328,11 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>479</locationX>
+        <locationX>176</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Riprendi_Processo_Decision</targetReference>
+            <targetReference>Assign_Case0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -573,8 +349,8 @@
     <recordLookups>
         <name>Get_Option_Selected</name>
         <label>Get Option Selected</label>
-        <locationX>479</locationX>
-        <locationY>1790</locationY>
+        <locationX>176</locationX>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Consegna_dotazioni</targetReference>
@@ -594,8 +370,8 @@
     <recordLookups>
         <name>get_Opzioni_Consegna</name>
         <label>get Opzioni Consegna</label>
-        <locationX>479</locationX>
-        <locationY>1466</locationY>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>filter_records</targetReference>
@@ -615,8 +391,8 @@
     <recordLookups>
         <name>Get_ProcessEquipment</name>
         <label>Get ProcessEquipment</label>
-        <locationX>941</locationX>
-        <locationY>2222</locationY>
+        <locationX>594</locationX>
+        <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Dotaz_RItirare</targetReference>
@@ -634,20 +410,10 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordUpdates>
-        <name>aggiorna_Case</name>
-        <label>aggiorna Case</label>
-        <locationX>710</locationX>
-        <locationY>674</locationY>
-        <connector>
-            <targetReference>SubprocessChoice</targetReference>
-        </connector>
-        <inputReference>theCase</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Aggiorna_ProcessEquipment2</name>
         <label>Aggiorna ProcessEquipment</label>
-        <locationX>1073</locationX>
-        <locationY>2546</locationY>
+        <locationX>726</locationX>
+        <locationY>1538</locationY>
         <connector>
             <targetReference>Copy_1_of_Get_ProcessEquipment</targetReference>
         </connector>
@@ -670,8 +436,8 @@
     <recordUpdates>
         <name>Conferma_Pratica</name>
         <label>Conferma Pratica</label>
-        <locationX>1601</locationX>
-        <locationY>3278</locationY>
+        <locationX>1144</locationX>
+        <locationY>2270</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -697,8 +463,8 @@
     <recordUpdates>
         <name>Update_Consegna_dotazioni</name>
         <label>Update Consegna dotazioni</label>
-        <locationX>479</locationX>
-        <locationY>1898</locationY>
+        <locationX>176</locationX>
+        <locationY>890</locationY>
         <connector>
             <targetReference>Annullamento_2</targetReference>
         </connector>
@@ -721,8 +487,8 @@
     <screens>
         <name>allegatiObbligatori</name>
         <label>Allegati Obbligatori</label>
-        <locationX>1337</locationX>
-        <locationY>3062</locationY>
+        <locationX>924</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -822,8 +588,8 @@
     <screens>
         <name>Screen_Dotaz_Consegnare</name>
         <label>Screen Dotaz Consegnare</label>
-        <locationX>941</locationX>
-        <locationY>2846</locationY>
+        <locationX>594</locationX>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -988,8 +754,8 @@
     <screens>
         <name>Screen_Dotaz_RItirare</name>
         <label>Screen Dotaz RItirare</label>
-        <locationX>941</locationX>
-        <locationY>2330</locationY>
+        <locationX>594</locationX>
+        <locationY>1322</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1186,8 +952,8 @@
     <screens>
         <name>Screen_Wizard2</name>
         <label>Screen Wizard</label>
-        <locationX>479</locationX>
-        <locationY>1682</locationY>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1320,112 +1086,19 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>SubprocessChoice</name>
-        <label>SubprocessChoice</label>
-        <locationX>710</locationX>
-        <locationY>782</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_1</targetReference>
-        </connector>
-        <fields>
-            <name>screenHeader4</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtRecordEditFormFlow</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>theCase.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Sottoprocesso</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>theCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>353</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Subflow</name>
         <label>Annullamento Subflow</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>176</locationX>
+        <locationY>2738</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

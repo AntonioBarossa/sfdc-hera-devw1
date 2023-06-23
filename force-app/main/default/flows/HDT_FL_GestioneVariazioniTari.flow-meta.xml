@@ -2945,7 +2945,7 @@
             <label>Associa Dotazioni</label>
         </rules>
         <rules>
-            <name>Riparazione_Dotazioni</name>
+            <name>Sost_Furto_Smarr</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>firstGetFixFields.Type</leftValueReference>
@@ -2955,9 +2955,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>HDT_FL_RiparazioneDotazione</targetReference>
+                <targetReference>HDT_FL_SostFurtoSmarr</targetReference>
             </connector>
-            <label>Riparazione Dotazioni</label>
+            <label>Sost./Furto/Smarr</label>
         </rules>
     </decisions>
     <decisions>
@@ -5570,11 +5570,11 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>HDT_FL_RiparazioneDotazione</name>
-        <label>HDT_FL_RiparazioneDotazione</label>
+        <name>HDT_FL_SostFurtoSmarr</name>
+        <label>HDT_FL_SostFurtoSmarr</label>
         <locationX>314</locationX>
         <locationY>350</locationY>
-        <flowName>HDT_FL_RiparazioneDotazione</flowName>
+        <flowName>HDT_FL_SostFurtoSmarr</flowName>
         <inputAssignments>
             <name>caseId</name>
             <value>
