@@ -773,7 +773,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -831,15 +831,59 @@
             <targetReference>Annullamento_4</targetReference>
         </connector>
         <fields>
-            <name>screenHeader1</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sottoprocesso {!theCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>Screen_Dotaz_Consegnare_Section1</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
                 <name>Screen_Dotaz_Consegnare_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>screenHeader1</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!theCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Dotaz_Consegnare_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>titleDotCons</name>
+                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Consegnare&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Dotaz_Consegnare_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Screen_Dotaz_Consegnare_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Screen_Dotaz_Consegnare_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>wizardDotConsegnare</name>
@@ -872,7 +916,7 @@
                     <inputParameters>
                         <name>labelInputSection</name>
                         <value>
-                            <stringValue>Dotazioni da consegnare</stringValue>
+                            <stringValue>Codici Dotazioni da consegnare</stringValue>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -953,9 +997,53 @@
             <targetReference>Annullamento_3</targetReference>
         </connector>
         <fields>
-            <name>screenHeader2</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sottoprocesso {!theCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>Screen_Dotaz_RItirare_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Screen_Dotaz_RItirare_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>screenHeader2</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!theCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Dotaz_RItirare_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>titleDotRit</name>
+                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Ritirare&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Dotaz_RItirare_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>DotazioniRitirare</name>
@@ -982,10 +1070,10 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Screen_Dotaz_RItirare_Section1</name>
+            <name>Screen_Dotaz_RItirare_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Screen_Dotaz_RItirare_Section1_Column1</name>
+                <name>Screen_Dotaz_RItirare_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>spacer</name>
@@ -1026,7 +1114,7 @@
                     <inputParameters>
                         <name>labelInputSection</name>
                         <value>
-                            <stringValue>Dotazioni da ritirare</stringValue>
+                            <stringValue>Codici Dotazioni da ritirare</stringValue>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -1332,7 +1420,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annullamento_Subflow</name>
         <label>Annullamento Subflow</label>

@@ -16,7 +16,7 @@
     },
   {
 &quot;FieldName&quot;: &quot;AccountId&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2,
 &quot;ReadOnly&quot;: true
 }
@@ -30,44 +30,44 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{
 &quot;FieldName&quot;: &quot;SupplyStreetName__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1,
   &quot;Label&quot; : &quot;Via&quot;
   
 },
 {
 &quot;FieldName&quot;: &quot;SupplyCity__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2,
   &quot;Label&quot; : &quot;Comune&quot;
 },
 {
 &quot;FieldName&quot;: &quot;SupplyPostalCode__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1,
   &quot;Label&quot; : &quot;CAP&quot;
 },
 {
 &quot;FieldName&quot;: &quot;SupplyCountry__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2,
   &quot;Label&quot; : &quot;Stato&quot;
 },
 {
 &quot;FieldName&quot;: &quot;SupplyProvince__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1,
   &quot;Label&quot; : &quot;Provincia&quot;
 },
 {
 &quot;FieldName&quot;: &quot;SupplyStreetNumberExtension__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2,
   &quot;Label&quot; : &quot;Estens. Civico&quot;
 },
 {
 &quot;FieldName&quot;: &quot;SupplyStreetNumber__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1,
   &quot;Label&quot; : &quot;Civico&quot;
 }
