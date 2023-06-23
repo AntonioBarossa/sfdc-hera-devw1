@@ -105,6 +105,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_ENU_AnagAlignmentContext context = codiceServizio.equals('VS2') ? HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_POD : HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_PDR;
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
+        anagAlignCase.CustomerRequestDate__c = System.now();
         switch on codicePrestazione {
             when 'A01', 'A40', 'A03', 'S01', 'S02','A10' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;

@@ -141,6 +141,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             throw new HDT_UTL_HeraException('Could not find primary contact for Account: ' + inputContract.AccountId);
         }
 
+        c.CustomerRequestDate__c = System.now();
         c.AccountId = inputContract.AccountId;
         c.ContactId = acr.ContactId;
         c.Contract__c = inputContract.Id;
