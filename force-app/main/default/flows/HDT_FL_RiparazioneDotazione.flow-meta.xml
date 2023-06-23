@@ -86,8 +86,8 @@
     <decisions>
         <name>Annullamento_3</name>
         <label>Annullamento 3</label>
-        <locationX>594</locationX>
-        <locationY>1430</locationY>
+        <locationX>610</locationX>
+        <locationY>1538</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_Get_ProcessEquipment</targetReference>
         </defaultConnector>
@@ -120,42 +120,12 @@
             </conditions>
             <label>Salva in Bozza</label>
         </rules>
-        <rules>
-            <name>Aggiorna_ProcessEquipment</name>
-            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
-            <conditions>
-                <leftValueReference>ProcessEquipmentRecord.Id</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessEquipmentRecord.Id</leftValueReference>
-                <operator>EqualTo</operator>
-            </conditions>
-            <conditions>
-                <leftValueReference>wizardDotRitirare.outputId</leftValueReference>
-                <operator>NotEqualTo</operator>
-            </conditions>
-            <conditions>
-                <leftValueReference>wizardDotRitirare.outputId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Aggiorna_ProcessEquipment2</targetReference>
-            </connector>
-            <label>Aggiorna ProcessEquipment</label>
-        </rules>
     </decisions>
     <decisions>
         <name>Annullamento_4</name>
         <label>Annullamento 4</label>
-        <locationX>594</locationX>
-        <locationY>1946</locationY>
+        <locationX>1039</locationX>
+        <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>allegatiObbligatori</targetReference>
         </defaultConnector>
@@ -191,8 +161,8 @@
     <decisions>
         <name>Annullamento_5</name>
         <label>Annullamento 5</label>
-        <locationX>924</locationX>
-        <locationY>2162</locationY>
+        <locationX>1369</locationX>
+        <locationY>2078</locationY>
         <defaultConnector>
             <targetReference>Conferma_Pratica</targetReference>
         </defaultConnector>
@@ -258,8 +228,8 @@
     <recordLookups>
         <name>Copy_1_of_Get_ProcessEquipment</name>
         <label>Copy 1 of Get ProcessEquipment</label>
-        <locationX>594</locationX>
-        <locationY>1730</locationY>
+        <locationX>1039</locationX>
+        <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Dotaz_Consegnare</targetReference>
@@ -307,7 +277,7 @@
     <recordLookups>
         <name>Get_Equipment</name>
         <label>Get Equipment</label>
-        <locationX>594</locationX>
+        <locationX>610</locationX>
         <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -391,7 +361,7 @@
     <recordLookups>
         <name>Get_ProcessEquipment</name>
         <label>Get ProcessEquipment</label>
-        <locationX>594</locationX>
+        <locationX>610</locationX>
         <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -412,10 +382,10 @@
     <recordUpdates>
         <name>Aggiorna_ProcessEquipment2</name>
         <label>Aggiorna ProcessEquipment</label>
-        <locationX>726</locationX>
-        <locationY>1538</locationY>
+        <locationX>610</locationX>
+        <locationY>1430</locationY>
         <connector>
-            <targetReference>Copy_1_of_Get_ProcessEquipment</targetReference>
+            <targetReference>Annullamento_3</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -436,8 +406,8 @@
     <recordUpdates>
         <name>Conferma_Pratica</name>
         <label>Conferma Pratica</label>
-        <locationX>1144</locationX>
-        <locationY>2270</locationY>
+        <locationX>1589</locationX>
+        <locationY>2186</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -487,8 +457,8 @@
     <screens>
         <name>allegatiObbligatori</name>
         <label>Allegati Obbligatori</label>
-        <locationX>924</locationX>
-        <locationY>2054</locationY>
+        <locationX>1369</locationX>
+        <locationY>1970</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -557,7 +527,7 @@
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
-                    <stringValue>Success</stringValue>
+                    <stringValue>success</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -588,8 +558,8 @@
     <screens>
         <name>Screen_Dotaz_Consegnare</name>
         <label>Screen Dotaz Consegnare</label>
-        <locationX>594</locationX>
-        <locationY>1838</locationY>
+        <locationX>1039</locationX>
+        <locationY>1754</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -688,7 +658,7 @@
                     <inputParameters>
                         <name>labelSaveButton</name>
                         <value>
-                            <stringValue>Conferma</stringValue>
+                            <stringValue>Avanti</stringValue>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -754,13 +724,13 @@
     <screens>
         <name>Screen_Dotaz_RItirare</name>
         <label>Screen Dotaz RItirare</label>
-        <locationX>594</locationX>
+        <locationX>610</locationX>
         <locationY>1322</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_3</targetReference>
+            <targetReference>Aggiorna_ProcessEquipment2</targetReference>
         </connector>
         <fields>
             <name>Screen_Dotaz_RItirare_Section1</name>
@@ -886,7 +856,7 @@
                     <inputParameters>
                         <name>labelSaveButton</name>
                         <value>
-                            <stringValue>Conferma</stringValue>
+                            <stringValue>Avanti</stringValue>
                         </value>
                     </inputParameters>
                     <inputParameters>
