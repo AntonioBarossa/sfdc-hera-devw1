@@ -1234,6 +1234,18 @@
         <label>Contattare cliente</label>
     </customValue>
     <customValue>
+        <fullName>Verifica Back Office</fullName>
+        <default>false</default>
+        <isActive>true</isActive>
+        <label>Verifica Back Office</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Rimborso</fullName>
+        <default>false</default>
+        <isActive>true</isActive>
+        <label>Gestione Rimborso</label>
+    </customValue>
+    <customValue>
         <fullName>Credit check KO</fullName>
         <default>false</default>
         <isActive>false</isActive>

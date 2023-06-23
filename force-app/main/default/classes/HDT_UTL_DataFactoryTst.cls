@@ -3546,6 +3546,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return cityTechnicalData;
 	}
 
+	public static List<Equipment__c> createEquipment(Integer numberRecords, Boolean doInsert, Id accountId, Id contractId){
+		List<Equipment__c> eqs = new List<Equipment__c>();
+
+		for(Integer n =0; n<numberRecords;n++){
+			eqs.add(new Equipment__c(Contract__c = contractId, Account__c=accountId, EquipmentCode__c ='##TEST'+n));
+		}
+		if(doInsert){	insert eqs;}
+		return eqs;
+	}
+
 
 	/**
 	* @author Cristiano Salvati (c.salvati@key2.it)

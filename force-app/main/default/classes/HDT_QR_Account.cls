@@ -164,7 +164,9 @@ public inherited sharing class HDT_QR_Account {
     public List<Account> getAccountById(String id){
         return [
             SELECT
-            Id,Name
+            Id, Name,
+            Phone, MobilePhone__c, OtherPhone__c, CustomerCode__c,
+            CompanyOwner__c, BillingPlace__c
             FROM Account 
             WHERE id = :id
             WITH SECURITY_ENFORCED
