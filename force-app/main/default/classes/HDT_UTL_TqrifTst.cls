@@ -1,5 +1,5 @@
 @isTest 
-public class HDT_UTL_TqrifTst {
+public class HDT_UTL_TqrifTst { 
 
     @TestSetup
     static void makeData(){
@@ -9,6 +9,8 @@ public class HDT_UTL_TqrifTst {
         
         List<Contact> lc = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         AccountContactRelation acr = [Select id, IsDirect, IsActive, Roles From AccountContactRelation WHERE AccountId=:accList[0].Id];
+        // system.debug('++++ ivaste');
+        // system.debug(acr);
         acr.Roles='Titolare';
         update acr;
         //HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[0].Id, lc[0].Id);
@@ -26,36 +28,71 @@ public class HDT_UTL_TqrifTst {
     @isTest 
     public static void testCreateEquipmentHandler(){
         ProcessEquipment__c prcEq = [SELECT Case__c, OldGarbageBag1__c, OldGarbageBag2__c FROM ProcessEquipment__c LIMIT 1];
+        // system.debug('++++ ivaste');
+        // system.debug(prcEq);
         HDT_UTL_Tqrif utlTqrif = new HDT_UTL_Tqrif();
         Case c = new HDT_QR_HerokuPostSalesManager().getCaseRecord(prcEq.Case__c);
         c.Consegna_Restituzione_dotazioni__c = 'Sportello';
+        
         List<Case> result;
 
         Test.startTest();
+        utlTqrif.getProcessEquipment(prcEq.Case__c);
+        Set<String> equipmentCodes = utlTqrif.getEquipmentCodes(prcEq.Case__c);
+        
         //TEST1
-        result = utlTqrif.createEquipmentHandler(c);
+        result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         Assert.areEqual(1, result.size(), 'It should return just one Case (for under 120L)');
 
-        //TEST2
+        //TEST3
         List<Equipment__c> eqsToUpdate = new List<Equipment__c>{ new Equipment__c(EquipmentCode__c=prcEq.OldGarbageBag1__c, Volumetry__c=130)};
         upsert eqsToUpdate EquipmentCode__c;
 
-        result = utlTqrif.createEquipmentHandler(c);
-        Assert.areEqual(2, result.size(), 'It should return two Case (for under 120L and for Over 120L)');
+        //result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
+        //Assert.areEqual(2, result.size(), 'It should return two Case (for under 120L and for Over 120L)');
 
-        //TEST3
         c.Consegna_Restituzione_dotazioni__c = 'Domicilio';
 
-        result = utlTqrif.createEquipmentHandler(c);
+        result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         Assert.areEqual(1, result.size(), 'It should return just one Case (for both 120L and for Over 120L for "domicilio")');
 
         //TEST4
         eqsToUpdate = new List<Equipment__c>{ new Equipment__c(EquipmentCode__c=prcEq.OldGarbageBag2__c, Volumetry__c=130)};
         upsert eqsToUpdate EquipmentCode__c;
         c.Consegna_Restituzione_dotazioni__c = 'Sportello';
-        result = utlTqrif.createEquipmentHandler(c);
+        result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         Assert.areEqual(1, result.size(), 'It should return just one Case (for over 120L)');
+        
+		utlTqrif.startProcess(c);
+        Assert.areEqual([Select Count() FROM ProcessEquipment__c WHERE Case__c !=:c.Id], 1, 'It should insert just 1 processEquipment');
+        // system.debug('++++ ivaste');
+        // system.debug([Select Case__c, OldGarbageBag1__c, OldGarbageBag2__c FROM ProcessEquipment__c WHERE Case__c !=:c.Id]);
+        Test.stopTest();
+    }
+    
+    @isTest 
+    public static void testCreateMultipleProcessEquipment(){
+        ProcessEquipment__c prcEq = [SELECT Case__c, OldGarbageBag1__c, OldGarbageBag2__c FROM ProcessEquipment__c LIMIT 1];
+        system.debug('++++ ivaste');
+        system.debug(prcEq);
+        HDT_UTL_Tqrif utlTqrif = new HDT_UTL_Tqrif();
+        Case c = new HDT_QR_HerokuPostSalesManager().getCaseRecord(prcEq.Case__c);
+        c.Consegna_Restituzione_dotazioni__c = 'Sportello';
+        
+        List<Case> result;
 
+        Test.startTest();
+        utlTqrif.getProcessEquipment(prcEq.Case__c);
+        Set<String> equipmentCodes = utlTqrif.getEquipmentCodes(prcEq.Case__c);
+
+        //TEST2
+        List<Equipment__c> eqsToUpdate = new List<Equipment__c>{ new Equipment__c(EquipmentCode__c=prcEq.OldGarbageBag1__c, Volumetry__c=130)};
+        upsert eqsToUpdate EquipmentCode__c;
+        
+        utlTqrif.startProcess(c);
+        Assert.areEqual([Select Count() FROM ProcessEquipment__c WHERE Case__c !=:c.Id], 2, 'It should insert 2 processEquipment');
+        //system.debug('++++ ivaste');
+        //system.debug([Select Case__c, OldGarbageBag1__c, OldGarbageBag2__c FROM ProcessEquipment__c WHERE Case__c !=:c.Id]);
         Test.stopTest();
     }
 }
