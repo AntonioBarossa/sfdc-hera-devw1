@@ -19,7 +19,7 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
         if(!String.isBlank(numberOfDays)){
             Date d = date.today();
             Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
-            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT 50000];
+            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT 10000];
         }
         Set<String> caseIdSet = new Set<String>();
         Set<String> orderIdSet = new Set<String>();
