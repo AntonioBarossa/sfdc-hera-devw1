@@ -66,33 +66,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignProcessEquipment</name>
-        <label>assignProcessEquipment</label>
-        <locationX>446</locationX>
-        <locationY>2738</locationY>
-        <assignmentItems>
-            <assignToReference>newProcessEquipment.Case__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>inputCase</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>newProcessEquipment.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordEditFormSecondFrom.outputId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>createProcessEquipment</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssignResultValues</name>
         <label>AssignResultValues</label>
         <locationX>710</locationX>
-        <locationY>3062</locationY>
+        <locationY>3146</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -180,6 +157,35 @@
             <targetReference>ParentChoice</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>newProcessEquipmentFromForm</name>
+        <label>newProcessEquipmentFromForm</label>
+        <locationX>446</locationX>
+        <locationY>2738</locationY>
+        <defaultConnector>
+            <targetReference>updateNewProcessEquipment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Nuovo</defaultConnectorLabel>
+        <rules>
+            <name>Esistente</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>recordEditFormSecondFrom.outputId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordEditFormSecondFrom.outputId</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>SceltaButtons_1</targetReference>
+            </connector>
+            <label>Esistente</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>RiprendiProcesso</name>
         <label>RipresaProcesso</label>
@@ -284,7 +290,7 @@
         <name>SceltaButtons_1</name>
         <label>SceltaButtons</label>
         <locationX>446</locationX>
-        <locationY>2954</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>AssignResultValues</targetReference>
         </defaultConnector>
@@ -444,16 +450,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>createProcessEquipment</name>
-        <label>createProcessEquipment</label>
-        <locationX>446</locationX>
-        <locationY>2846</locationY>
-        <connector>
-            <targetReference>SceltaButtons_1</targetReference>
-        </connector>
-        <inputReference>newProcessEquipment</inputReference>
-    </recordCreates>
     <recordLookups>
         <name>getCityTech</name>
         <label>getCityTech</label>
@@ -584,7 +580,7 @@
         <name>FinalUpdate</name>
         <label>FinalUpdate</label>
         <locationX>710</locationX>
-        <locationY>3170</locationY>
+        <locationY>3254</locationY>
         <inputReference>getInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -596,6 +592,30 @@
             <targetReference>SceltaButtons</targetReference>
         </connector>
         <inputReference>getInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateNewProcessEquipment</name>
+        <label>updateNewProcessEquipment</label>
+        <locationX>534</locationX>
+        <locationY>2846</locationY>
+        <connector>
+            <targetReference>SceltaButtons_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordEditFormSecondFrom.outputId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>inputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ProcessEquipment__c</object>
     </recordUpdates>
     <screens>
         <name>FirstForm</name>
@@ -858,7 +878,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>assignProcessEquipment</targetReference>
+            <targetReference>newProcessEquipmentFromForm</targetReference>
         </connector>
         <fields>
             <name>screenHeader_2</name>
@@ -951,7 +971,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
