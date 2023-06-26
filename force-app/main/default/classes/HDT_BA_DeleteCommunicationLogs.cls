@@ -15,11 +15,15 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
         }
 
         //imposto tramite custom setting il delay sulla query che pesca i record di CommunicationLogTracking__c
-        String numberOfDays = setNumberOfDays();
+        List<CS_DaysToExpiration__c> expRecord = [SELECT NumberOfDays__c, QueryLimit__c FROM CS_DaysToExpiration__c WHERE Type__c='DeleteCommunicationLogs'];
+        String numberOfDays = expRecord[0]?.NumberOfDays__c;
+        Integer queryLimit = !String.isBlank(expRecord[0]?.QueryLimit__c) ? Integer.valueOf(expRecord[0]?.QueryLimit__c) : 10000;
         if(!String.isBlank(numberOfDays)){
             Date d = date.today();
             Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
-            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT 50000];
+            System.debug(LoggingLevel.DEBUG, '>>>>endDate: ' + endDate);
+            System.debug(LoggingLevel.DEBUG, '>>>>queryLimit: ' + queryLimit);
+            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
         }
         Set<String> caseIdSet = new Set<String>();
         Set<String> orderIdSet = new Set<String>();
@@ -76,10 +80,5 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
         if(counterOk > 0 && cltList.size() > 0){
             delete cltList;
         }
-    }
-
-    public String setNumberOfDays() {
-        List<CS_DaysToExpiration__c> numberOfDays = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='DeleteCommunicationLogs'];
-        return numberOfDays[0]?.NumberOfDays__c;
     }
 }
