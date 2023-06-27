@@ -5,8 +5,6 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
     private static HDT_SRV_BatchExecutionKpi srvBatchEx = new HDT_SRV_BatchExecutionKpi();
     BatchExecutionKpiConfiguration__mdt kpiMeta = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_DeleteCommunicationLogs');
     BatchExecutionKpi__c kpiTrack=new BatchExecutionKpi__c();
-    List<CommunicationLogTracking__c> cltList = new List<CommunicationLogTracking__c>();
-
 
     public List<CommunicationLog__c> start(Database.BatchableContext bc){
         //creo record di tracciamento KPI
@@ -14,30 +12,16 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
             kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_DeleteCommunicationLogs');
         }
 
-        //imposto tramite custom setting il delay sulla query che pesca i record di CommunicationLogTracking__c
+        //imposto tramite custom setting il delay e la limit sulla query che pesca i record di CommunicationLog__c
         List<CS_DaysToExpiration__c> expRecord = [SELECT NumberOfDays__c, QueryLimit__c FROM CS_DaysToExpiration__c WHERE Type__c='DeleteCommunicationLogs'];
-        String numberOfDays = expRecord[0]?.NumberOfDays__c;
-        Integer queryLimit = !String.isBlank(expRecord[0]?.QueryLimit__c) ? Integer.valueOf(expRecord[0]?.QueryLimit__c) : 10000;
-        if(!String.isBlank(numberOfDays)){
-            Date d = date.today();
-            Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
-            System.debug(LoggingLevel.DEBUG, '>>>>endDate: ' + endDate);
-            System.debug(LoggingLevel.DEBUG, '>>>>queryLimit: ' + queryLimit);
-            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
-        }
-        Set<String> caseIdSet = new Set<String>();
-        Set<String> orderIdSet = new Set<String>();
-        if(cltList.size() > 0){
-            for (CommunicationLogTracking__c clt : cltList) {
-                if(clt.CaseId__c != null){
-                    caseIdSet.add(clt.CaseId__c);
-                }else if(clt.OrderId__c != null){
-                    orderIdSet.add(clt.OrderId__c);
-                }
-            }
-        }
+        String numberOfDays = expRecord.size() > 0 && !String.isBlank(expRecord[0].NumberOfDays__c) ? expRecord[0].NumberOfDays__c : '3';
+        Integer queryLimit = expRecord.size() > 0 && !String.isBlank(expRecord[0].QueryLimit__c) ? Integer.valueOf(expRecord[0].QueryLimit__c) : 10000;
+        Date d = date.today();
+        Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
+        System.debug(LoggingLevel.DEBUG, '>>>>endDate: ' + endDate);
+        System.debug(LoggingLevel.DEBUG, '>>>>queryLimit: ' + queryLimit);
 
-        return [SELECT Id FROM CommunicationLog__c WHERE (CaseID__c IN: caseIdSet OR OrderID__c IN: orderIdSet)];
+        return [SELECT Id FROM CommunicationLog__c WHERE CreatedDate <: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
     }
 
     public void execute(Database.BatchableContext bc, List<CommunicationLog__c> deleteList){
@@ -74,11 +58,6 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
 
         if(kpiMeta!=null && kpiMeta.EnableTracking__c){
             srvBatchEx.updateRecord(kpiTrack.Id,counterOk, counterKo, counterKo + counterOk);
-        }
-
-        //se l'eliminazione è andata a buon fine, procedo con l'eliminazione dei record sull'entita CommunicationLogTracking
-        if(counterOk > 0 && cltList.size() > 0){
-            delete cltList;
         }
     }
 }
