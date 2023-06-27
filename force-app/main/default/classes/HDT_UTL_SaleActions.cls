@@ -6,6 +6,19 @@ public with sharing class HDT_UTL_SaleActions
 
     private static final Set<String> COMMODITY_PRODUCT_SET = new Set<String>{'POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente'};
     private static final Set<String> VAS_PRODUCT_SET = new Set<String>{'VAS Fatturabili','VAS Prodotto','VAS Servizio'};
+    private static final Set<String> FAMILY_PROD_SET = new Set<String>{'Bonus Percentuale',
+    'Bonus Eur/Giorno',
+    'Bonus Eur/Mese',
+    'Bonus Eur/kWh',
+    'Contributo Eur/kWh',
+    'Contributo Eur/Mese',
+    'Contributo Eur/Giorno',
+    'Contributo Eur/kW',
+    'Offerta commerciale',
+    'Promozione',
+    'Bonus Eur/SMC',
+    'Contributo Eur/SMC'
+    };
     private static final String NON_TARI_KEY = 'nonTari';
     private static final String QUOTE_PROCESS_NAME = 'Vendita Guidata Offerte';
 
@@ -40,7 +53,9 @@ public with sharing class HDT_UTL_SaleActions
             SBQQ__RequiredBy__r.BillingProfile__c,
             SBQQ__RequiredBy__r.Name,
             SBQQ__RequiredBy__r.SBQQ__RequiredBy__r.Name,
-            SBQQ__RequiredBy__r.ServicePoint__c
+            SBQQ__RequiredBy__r.SBQQ__RequiredBy__c,
+            SBQQ__RequiredBy__r.ServicePoint__c,
+            SBQQ__Quote__r.SBQQ__Type__c
             FROM SBQQ__QuoteLine__c 
             WHERE SBQQ__Quote__r.Sale__c = :saleId AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED];
@@ -104,8 +119,9 @@ public with sharing class HDT_UTL_SaleActions
                     result.put(key, new List<SBQQ__QuoteLine__c>());
                 }
                 (result.get(key)).add(quoteLine);
-            }
-            else
+            }else if ('Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c) && quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c != null){
+                continue;
+            }else 
             {
                 /** NON TARI Order Split
                  * Energy and Water order split is performed based on the presence of the main quote line
@@ -120,9 +136,12 @@ public with sharing class HDT_UTL_SaleActions
                     result.put(key, new List<SBQQ__QuoteLine__c>());
                 }
                 /* If the quoteLine is of the type "Punto Fornitura" a group is created putting the RequiredBy__c as main quote line */
-                if(COMMODITY_PRODUCT_SET.contains(quoteLine.SBQQ__Product__r.Name))
+                // ticket 986654C
+                if(COMMODITY_PRODUCT_SET.contains(quoteLine.SBQQ__Product__r.Name) && !'Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c))
                 {
                     (result.get(key)).add(quoteLineMap.get(quoteLine.SBQQ__RequiredBy__c));
+                }else if (('Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c))&& FAMILY_PROD_SET.contains(quoteLine.SBQQ__ProductFamily__c)){
+                    (result.get(key)).add(quoteLineMap.get(quoteLine.SBQQ__RequiredBy__c == null ? quoteLine.Id : quoteLine.SBQQ__RequiredBy__c));
                 }
                 /* This branch identifies those quote lines "VAS" and "Cambio Offerta" using the same check performed to associate the Billing Profile
                 * Check HDT_LC_ApplyBillingProfileModal.getEligibleQuoteLinesToApply for further information
@@ -144,7 +163,7 @@ public with sharing class HDT_UTL_SaleActions
                 }
             }
         }
-
+        
         return result;
     }
 
@@ -261,7 +280,7 @@ public with sharing class HDT_UTL_SaleActions
             quoteLineGroups.add((result.get(key)).groupLine);
         }
         HDT_UTL_DatabaseService.insertSObject(quoteLineGroups);
-
+        
         return result;
     }
     

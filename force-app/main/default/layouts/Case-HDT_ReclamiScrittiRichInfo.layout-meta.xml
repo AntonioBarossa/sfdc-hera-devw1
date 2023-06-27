@@ -115,6 +115,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>SignalOutcome__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>SoldBy__c</field>
             </layoutItems>
             <layoutItems>

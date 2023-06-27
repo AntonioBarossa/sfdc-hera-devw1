@@ -1633,6 +1633,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_SoldByController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_SoldByControllerTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_TargetObjectCreateForm</apexClass>
         <enabled>true</enabled>
     </classAccesses>
