@@ -14,12 +14,13 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
 
         //imposto tramite custom setting il delay e la limit sulla query che pesca i record di CommunicationLog__c
         List<CS_DaysToExpiration__c> expRecord = [SELECT NumberOfDays__c, QueryLimit__c FROM CS_DaysToExpiration__c WHERE Type__c='DeleteCommunicationLogs'];
-        String numberOfDays = !String.isBlank(expRecord[0]?.NumberOfDays__c) ? expRecord[0]?.NumberOfDays__c : '3';
-        Integer queryLimit = !String.isBlank(expRecord[0]?.QueryLimit__c) ? Integer.valueOf(expRecord[0]?.QueryLimit__c) : 10000;
+        String numberOfDays = expRecord.size() > 0 && !String.isBlank(expRecord[0].NumberOfDays__c) ? expRecord[0].NumberOfDays__c : '3';
+        Integer queryLimit = expRecord.size() > 0 && !String.isBlank(expRecord[0].QueryLimit__c) ? Integer.valueOf(expRecord[0].QueryLimit__c) : 10000;
         Date d = date.today();
         Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
         System.debug(LoggingLevel.DEBUG, '>>>>endDate: ' + endDate);
         System.debug(LoggingLevel.DEBUG, '>>>>queryLimit: ' + queryLimit);
+
         return [SELECT Id FROM CommunicationLog__c WHERE CreatedDate <: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
     }
 
