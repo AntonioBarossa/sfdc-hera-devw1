@@ -81,6 +81,8 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
     @track salesCompanies;
     @track disabledSalesCompany = false;
 
+    @api serviceCatalogId;
+
     connectedCallback(){
         this.loadingSpinner = true;
 
@@ -105,6 +107,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 {
                     label: 'Marche Multiservizi TARI',
                     value: 'Marche Multiservizi TARI'
+                },
+                {
+                    label: 'Multi',
+                    value: 'Multi'
                 }
             ];
             this.salesCompanies = JSON.stringify(salesCompArray);
@@ -116,7 +122,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 .then(result => {
                     this.cluster = result;
                     this.showInputSection = true;
-                    prePopulateFields({recordId: this.recordId, context: this.context})
+                    prePopulateFields({recordId: this.recordId, context: this.context, serviceCatalogId: this.serviceCatalogId})
                     .then(result => {
 
                         console.log('#PrePopulateResult -> '+result);
@@ -224,10 +230,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                             });
                                             //Topic ThenCatch    
                                         }
-                                        if (payload.SalesCompany__c){
-                                            this.selectedSalesCompany = payload.SalesCompany__c;
-                                            this.disabledSalesCompany = true;
-                                        }
+                                        // if (payload.SalesCompany__c){
+                                        //     this.selectedSalesCompany = payload.SalesCompany__c;
+                                        //     this.disabledSalesCompany = true;
+                                        // }
 
                                     }
                                 
@@ -239,6 +245,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                     this.loadingSpinner = false;
                                 });
                             
+                            }
+                            if (payload && payload.SalesCompany__c){
+                                this.selectedSalesCompany = payload.SalesCompany__c;
+                                this.disabledSalesCompany = true;
                             }
 
                             this.loadingSpinner = false;
