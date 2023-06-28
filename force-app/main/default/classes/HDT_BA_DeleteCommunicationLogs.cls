@@ -6,7 +6,7 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
     BatchExecutionKpiConfiguration__mdt kpiMeta = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_DeleteCommunicationLogs');
     BatchExecutionKpi__c kpiTrack=new BatchExecutionKpi__c();
 
-    public List<CommunicationLog__c> start(Database.BatchableContext bc){
+    public Database.QueryLocator start(Database.BatchableContext bc){
         //creo record di tracciamento KPI
         if(kpiMeta!=null && kpiMeta.EnableTracking__c){
             kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_DeleteCommunicationLogs');
@@ -21,7 +21,10 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
         System.debug(LoggingLevel.DEBUG, '>>>>endDate: ' + endDate);
         System.debug(LoggingLevel.DEBUG, '>>>>queryLimit: ' + queryLimit);
 
-        return [SELECT Id FROM CommunicationLog__c WHERE CreatedDate <: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
+        String queryString = 'SELECT Id FROM CommunicationLog__c WHERE CreatedDate <: endDate LIMIT :queryLimit';
+        // return [SELECT Id FROM CommunicationLog__c WHERE CreatedDate <: endDate WITH SECURITY_ENFORCED LIMIT :queryLimit];
+        return Database.getQueryLocator(queryString);
+
     }
 
     public void execute(Database.BatchableContext bc, List<CommunicationLog__c> deleteList){
