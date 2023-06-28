@@ -324,6 +324,7 @@ public inherited sharing class HDT_QR_Case {
             WHERE Id != :senderId 
             AND AccountId = :accountId
             AND Phase__c IN :phases
+            AND Type NOT IN ('Variazione Anagrafica Cliente','Informative')
             WITH SECURITY_ENFORCED
         ];
     }
