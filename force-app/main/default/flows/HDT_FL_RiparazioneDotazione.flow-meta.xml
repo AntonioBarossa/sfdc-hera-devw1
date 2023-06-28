@@ -87,9 +87,9 @@
         <name>Annullamento_3</name>
         <label>Annullamento 3</label>
         <locationX>610</locationX>
-        <locationY>1538</locationY>
+        <locationY>1430</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Get_ProcessEquipment</targetReference>
+            <targetReference>Screen_Dotaz_Consegnare</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
@@ -125,7 +125,7 @@
         <name>Annullamento_4</name>
         <label>Annullamento 4</label>
         <locationX>1039</locationX>
-        <locationY>1862</locationY>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>allegatiObbligatori</targetReference>
         </defaultConnector>
@@ -162,7 +162,7 @@
         <name>Annullamento_5</name>
         <label>Annullamento 5</label>
         <locationX>1369</locationX>
-        <locationY>2078</locationY>
+        <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Conferma_Pratica</targetReference>
         </defaultConnector>
@@ -225,27 +225,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Copy_1_of_Get_ProcessEquipment</name>
-        <label>Copy 1 of Get ProcessEquipment</label>
-        <locationX>1039</locationX>
-        <locationY>1646</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Screen_Dotaz_Consegnare</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </filters>
-        <object>ProcessEquipment__c</object>
-        <outputReference>ProcessEquipmentRecord</outputReference>
-        <queriedFields>Id</queriedFields>
-    </recordLookups>
     <recordLookups>
         <name>get_Default_Value_Choice</name>
         <label>get Default Value Choice</label>
@@ -380,34 +359,10 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordUpdates>
-        <name>Aggiorna_ProcessEquipment2</name>
-        <label>Aggiorna ProcessEquipment</label>
-        <locationX>610</locationX>
-        <locationY>1430</locationY>
-        <connector>
-            <targetReference>Annullamento_3</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>wizardDotRitirare.outputId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>ProcessEquipment__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Conferma_Pratica</name>
         <label>Conferma Pratica</label>
         <locationX>1589</locationX>
-        <locationY>2186</locationY>
+        <locationY>1970</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -458,7 +413,7 @@
         <name>allegatiObbligatori</name>
         <label>Allegati Obbligatori</label>
         <locationX>1369</locationX>
-        <locationY>1970</locationY>
+        <locationY>1754</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -559,7 +514,7 @@
         <name>Screen_Dotaz_Consegnare</name>
         <label>Screen Dotaz Consegnare</label>
         <locationX>1039</locationX>
-        <locationY>1754</locationY>
+        <locationY>1538</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -730,7 +685,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Aggiorna_ProcessEquipment2</targetReference>
+            <targetReference>Annullamento_3</targetReference>
         </connector>
         <fields>
             <name>Screen_Dotaz_RItirare_Section1</name>
@@ -1068,7 +1023,7 @@
         <name>Annullamento_Subflow</name>
         <label>Annullamento Subflow</label>
         <locationX>176</locationX>
-        <locationY>2738</locationY>
+        <locationY>2522</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
