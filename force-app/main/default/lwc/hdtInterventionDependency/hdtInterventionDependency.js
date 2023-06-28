@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from "lwc";
+import { LightningElement, api, wire, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { MessageContext, subscribe, unsubscribe } from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
@@ -25,7 +25,7 @@ export default class HdtInterventionDependency extends LightningElement {
         else this.materialArray = this.materialArray=val?.split(";");
     }
 
-    materialArray;
+    @track materialArray;
 
     mapOfPicklistValues = {};
     eventButton;
