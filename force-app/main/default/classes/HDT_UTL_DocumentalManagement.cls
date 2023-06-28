@@ -1190,6 +1190,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		result.put('radio2', valueTwo);
 		result.put('activitiesToCreate', JSON.serialize(activitiesToCreate));
 		result.put('moduliOpzionaliMancanti', JSON.serialize(moduliOpzionaliMancanti));
+		result.put('orderList', JSON.serialize(orderList));
 
 		return result;
 	}

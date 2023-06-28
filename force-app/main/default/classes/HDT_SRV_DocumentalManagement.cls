@@ -588,6 +588,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}
 				moduliOpzionaliMancanti = (Set<String>) JSON.deserialize(radioMap.get('moduliOpzionaliMancanti'), Set<String>.class);
 				List<DocumentalActivity__c> radioBtnAct = (List<DocumentalActivity__c>) JSON.deserialize(radioMap.get('activitiesToCreate'), List<DocumentalActivity__c>.class);
+				orderList = (List<SObject>) JSON.deserialize(radioMap.get('orderList'), List<SObject>.class);
 				if(!radioBtnAct.isEmpty())
 				{
 					activitiesToCreate.addAll(radioBtnAct);
