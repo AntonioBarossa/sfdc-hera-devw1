@@ -1,6 +1,6 @@
 <template>
     <div class="slds-box">
-        <label class="slds-form-element__label" for="city" >
+        <!--<label class="slds-form-element__label" for="city" >
             <abbr class="slds-required" title="required">* </abbr>Comune
         </label>
         <c-hdt-custom-lookup
@@ -15,7 +15,18 @@
             required="true"
             id="city"
             data-id="city" >
-        </c-hdt-custom-lookup>
+        </c-hdt-custom-lookup>-->
+
+
+        <lightning-input 
+            type="text" 
+            label="Comune"
+            required
+            data-id="city"
+            value={city} 
+            disabled>
+        </lightning-input>
+
 
         <lightning-combobox
             disabled={operationGroupDisabled}

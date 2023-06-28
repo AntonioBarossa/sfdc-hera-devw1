@@ -4,6 +4,8 @@ import { MessageContext, subscribe, unsubscribe } from "lightning/messageService
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 import generatePicklistsData from "@salesforce/apex/HDT_LC_InterventionDependency.generatePicklistsData";
 
+const MAX_MATERIAL_SELECTION = 7;
+
 export default class HdtInterventionDependency extends LightningElement {
     @api city = null;
     @api cityId = null;
@@ -65,10 +67,14 @@ export default class HdtInterventionDependency extends LightningElement {
             //this.materials = [{ value: this.material, label: this.material }];
             this.materials = this.materialArray.map(el => { return {value: el, label: el };});
         }
+
+        //City must be readOnly
+        this.handleCitySelected();
+        //City must be readOnly
     }
 
     handleCitySelected(event) {
-        this.city = event.detail.code;
+        //this.city = event.detail.code;
 
         if (this.city) {
             generatePicklistsData({ city: this.city })
@@ -135,7 +141,7 @@ export default class HdtInterventionDependency extends LightningElement {
         this.materialArray = event.detail.value;
         
         const checkboxGroup = this.template.querySelector('[data-id="material"]');
-        if(this.materialArray.length > 7)   checkboxGroup.setCustomValidity("Non si possono selezionare più di 7 materiali");
+        if(this.materialArray.length > MAX_MATERIAL_SELECTION)   checkboxGroup.setCustomValidity("Non si possono selezionare più di 7 materiali");
         else    checkboxGroup.setCustomValidity("");
         checkboxGroup.reportValidity();
     }
