@@ -69,7 +69,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
 
     @AuraEnabled
-    public static String prePopulateFields(String recordId, String context){
+    public static String prePopulateFields(String recordId, String context, String serviceCatalogId){
 
         Case infoCase = new Case(Id = recordId);
 
@@ -162,6 +162,30 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
             HDT_UTL_DatabaseService.updateSObject(infoCase);
 
+        }else if ('EC1Level'.equalsIgnoreCase(context)){
+            System.debug(LoggingLevel.DEBUG, '>>>serviceCatalogId: ' + serviceCatalogId);
+            List<AccountStatementFilter__c> stmList = [SELECT DocumentSelected__c FROM AccountStatementFilter__c WHERE Id =: serviceCatalogId WITH SECURITY_ENFORCED LIMIT 1];
+            if(stmList.size() > 0){
+                String societa = '';
+                Set<String> societaSet = new Set<String>();
+                String documentJson = (String) stmList[0].get('DocumentSelected__c');
+                System.debug(LoggingLevel.DEBUG, '>>>documentJson: ' + documentJson);
+                List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
+                if(primoLivelloList.size() > 0){
+                    for (Integer i = 0; i < primoLivelloList.size(); i++) {
+                        Map<String,Object> pl = (Map<String, Object>)primoLivelloList[i];
+                        System.debug(LoggingLevel.DEBUG, '>>>società ' + (String) pl.get('societa'));
+                        societaSet.add((String) pl.get('societa'));
+                    }
+                    if(societaSet.size() > 1){
+                        societa = 'Multi';
+                    }else if (societaSet.size() == 1){
+                        societa = societaSet.iterator().next();
+                    }
+                }
+                infoCase.SalesCompany__c = societa;
+                HDT_UTL_DatabaseService.updateSObject(infoCase);
+            }
         }
 
         return null;
