@@ -11,6 +11,8 @@ export default class HdtInterventionDependency extends LightningElement {
     @api cityId = null;
     @api operationGroup = null;
     @api operationType = null;
+    @api interviewId;
+    
     //@api material = null;
 
 

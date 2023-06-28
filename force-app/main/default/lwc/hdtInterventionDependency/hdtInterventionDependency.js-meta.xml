@@ -5,12 +5,13 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="cityId" type="String" label="Id Comune" role="inputOnly"/>
+            <!--<property name="cityId" type="String" label="Id Comune" role="inputOnly"/>-->
             <property name="city" type="String" label="Comune"/>
             <!-- If city returns editable, set outputOnly -->
             <property name="operationGroup" type="String" label="Gruppo Intervento"/>
             <property name="operationType" type="String" label="Tipo Intervento"/>
             <property name="material" type="String" label="Materiale"/>
+            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
     <apiVersion>57.0</apiVersion>
