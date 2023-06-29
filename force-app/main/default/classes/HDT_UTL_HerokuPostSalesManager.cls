@@ -815,6 +815,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         HDT_UTL_Morosita morUtl = new HDT_UTL_Morosita();
         try {
+            currentCase.CustomerRequestDate__c = System.now();
             tipo = reqWrp.requestMap.get('TIPO_SIEBEL');
             sottotipo = reqWrp.requestMap.get('SOTTOTIPO_SIEBEL');
             cluster = reqWrp.requestMap.get('CLUSTER');
