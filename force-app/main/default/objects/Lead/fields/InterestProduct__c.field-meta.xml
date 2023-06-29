@@ -221,6 +221,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Relax Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Prezzo Netto Special Dual</valueName>
         </valueSettings>
         <valueSettings>
