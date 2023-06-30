@@ -9,7 +9,19 @@ export default class HdtInterventionDependency extends LightningElement {
     @api cityId = null;
     @api operationGroup = null;
     @api operationType = null;
-    @api material = null;
+    //@api material = null;
+
+
+    @api get material(){
+        return this.materialArray?.join(';');
+    }
+    set material(val){
+        if(!val)    this.materialArray=[];
+        else if(val instanceof Array)    this.materialArray=val;
+        else this.materialArray = this.materialArray=val?.split(";");
+    }
+
+    materialArray;
 
     mapOfPicklistValues = {};
     eventButton;
@@ -49,8 +61,9 @@ export default class HdtInterventionDependency extends LightningElement {
             this.operationTypes = [{ value: this.operationType, label: this.operationType }];
         }
 
-        if (!this.materials.length && this.material) {
-            this.materials = [{ value: this.material, label: this.material }];
+        if (!this.materials.length && this.materialArray?.length) {
+            //this.materials = [{ value: this.material, label: this.material }];
+            this.materials = this.materialArray.map(el => { return {value: el, label: el };});
         }
     }
 
@@ -119,7 +132,12 @@ export default class HdtInterventionDependency extends LightningElement {
     }
 
     materialChange(event) {
-        this.material = event.detail.value;
+        this.materialArray = event.detail.value;
+        
+        const checkboxGroup = this.template.querySelector('[data-id="material"]');
+        if(this.materialArray.length > 7)   checkboxGroup.setCustomValidity("Non si possono selezionare più di 7 materiali");
+        else    checkboxGroup.setCustomValidity("");
+        checkboxGroup.reportValidity();
     }
 
     unsubscribeToMessageChannel() {
@@ -146,7 +164,7 @@ export default class HdtInterventionDependency extends LightningElement {
                 this.template.querySelector('[data-id="operationType"]').reportValidity();
                 isValid = false;
             }
-            if (!this.material) {
+            if (!this.materialArray?.length) {
                 this.template.querySelector('[data-id="material"]').reportValidity();
                 isValid = false;
             }

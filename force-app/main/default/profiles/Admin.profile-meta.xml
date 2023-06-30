@@ -2121,6 +2121,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>VasSupplierTable__c.OrderReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>VasSupplierTable__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2222,6 +2227,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>VisitAssignmentRules__c.Consumption__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.ClientAge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

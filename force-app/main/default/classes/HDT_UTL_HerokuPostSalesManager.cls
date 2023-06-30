@@ -542,8 +542,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     spAmb.SAPImplantCode__c = implant;
                 }
                 if('Richieste di riparazione dotazione domiciliare'.equalsIgnoreCase(recordCase.subprocess__c)){
-                    List<Case> gestDotz = new HDT_UTL_Tqrif().createEquipmentHandler(recordCase);
-                    if(gestDotz?.isEmpty() == false){    HDT_UTL_DatabaseService.updateSObject(gestDotz);    }
+                    new HDT_UTL_Tqrif().startProcess(recordCase);
                 }
                 /*
                 if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){

@@ -1,6 +1,9 @@
 public with sharing class HDT_UTL_Tqrif {
 
+    private ProcessEquipment__c parentProcessEquipment;
+
     private static HDT_QR_Account qrAccount = new HDT_QR_Account();
+    private static HDT_QR_Equipment qrEquipment = new HDT_QR_Equipment();
     private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
 
     private List<String> fieldsName = new List<String>
@@ -21,17 +24,63 @@ public with sharing class HDT_UTL_Tqrif {
         'GarbageBin6__c',
         'GarbageBin7__c'
     };
+
+
     
-    public List<Case> createEquipmentHandler(Case theCase){
-        List<Case> casesToCreate = new List<Case>();
+    public void startProcess(Case theCase){
+        getProcessEquipment(theCase.Id);
         Set<String> equipmentCodes = getEquipmentCodes(theCase.Id);
         system.debug(equipmentCodes);
-        List<AggregateResult> volumetrics = [   SELECT MIN(Volumetry__c) volMin, MAX(Volumetry__c) volMax 
-                                                FROM Equipment__c 
-                                                WHERE 
-                                                    Contract__c = :theCase.Contract__c AND
-                                                    EquipmentCode__c IN :equipmentCodes
-                                                WITH SECURITY_ENFORCED Group By Contract__c];
+        List<Case> casesToInsert = createEquipmentHandler(theCase, equipmentCodes);
+
+        if(casesToInsert.isEmpty()){   return;    }
+        HDT_UTL_DatabaseService.insertSObject(casesToInsert);
+        List<ProcessEquipment__c> preqs = new List<ProcessEquipment__c>();
+
+        if(casesToInsert.size()==1){
+            ProcessEquipment__c preq = parentProcessEquipment.clone(false, false, false, false);
+            preq.Case__c = casesToInsert[0].Id;
+            preqs.add(preq);
+
+        }else{
+
+            preqs.addAll(
+                getMultipleProcessEquipment(casesToInsert, qrEquipment.getEquipmentByCodes(equipmentCodes, theCase.Contract__c))
+            );
+        }
+
+        if(!preqs.isEmpty()){   HDT_UTL_DatabaseService.insertSObject(preqs);   }
+    }
+
+    @SuppressWarnings('PMD.LocalVariableNamingConventions')
+    private List<ProcessEquipment__c> getMultipleProcessEquipment(List<Case> casesInserted, Map<String, Equipment__c> codeToEquipment){
+        ProcessEquipment__c under120 = new ProcessEquipment__c(Case__c=casesInserted[0].Id);
+        ProcessEquipment__c over120 = new ProcessEquipment__c(Case__c=casesInserted[1].Id);
+        List<ProcessEquipment__c> preqs = new List<ProcessEquipment__c>{under120, over120};
+
+
+        for(String oldField : fieldsName){
+            String code = STRING.valueOf(parentProcessEquipment.get('Old'+oldField));
+            if(STRING.isBlank(code)){       continue;       }
+
+            Equipment__c eq = codeToEquipment.get(code);
+            if(eq==null){       continue;       }
+
+            String newFieldValue = STRING.valueOf(parentProcessEquipment.get('New'+oldField));
+
+            if(eq.Volumetry__c < 120){      under120.put('Old'+oldField, code);under120.put('New'+oldField, newFieldValue);     }
+            else{      over120.put('Old'+oldField, code);over120.put('New'+oldField, newFieldValue);     }
+        }
+
+        return preqs;
+    }
+    
+    @TestVisible
+    private List<Case> createEquipmentHandler(Case theCase, Set<String> equipmentCodes){
+        List<Case> casesToCreate = new List<Case>();
+        if(equipmentCodes.isEmpty()){   return casesToCreate;  }
+
+        List<AggregateResult> volumetrics = qrEquipment.getAggregatesInfosByCodes(equipmentCodes, theCase.Contract__c);
         if(volumetrics.isEmpty()){   return casesToCreate;  }
 
         List<Account> accs = qrAccount.getAccountById(theCase.AccountId);
@@ -57,18 +106,19 @@ public with sharing class HDT_UTL_Tqrif {
         return casesToCreate;
     }
 
+    @TestVisible
     private Set<String> getEquipmentCodes(Id caseId){
         Set<String> equipmentCodes = new Set<String>();
-        List<ProcessEquipment__c> proc = getProcessEquipment(caseId);
-        if(proc.isEmpty()){     return null;     }
+        if(parentProcessEquipment == null){     return null;     }
         for(String oldField : fieldsName){
-            String code = STRING.valueOf(proc[0].get('Old'+oldField));
+            String code = STRING.valueOf(parentProcessEquipment.get('Old'+oldField));
             if(STRING.isNotBlank(code)){    equipmentCodes.add(code);    }
         }
         return equipmentCodes;
     }
 
-    private List<ProcessEquipment__c> getProcessEquipment(Id caseId){
+    @TestVisible
+    private void getProcessEquipment(Id caseId){
         String query = 'SELECT ' +
             'Old'+STRING.join(fieldsName, ', Old') +', ' + //aggiunta desinenza Old
             'New' + STRING.join(fieldsName, ', New') +' ' +//aggiunta desinenza New
@@ -77,7 +127,8 @@ public with sharing class HDT_UTL_Tqrif {
             'WITH SECURITY_ENFORCED ';
 
         system.debug(query);
-        return (List<ProcessEquipment__c>) Database.query(STRING.escapeSingleQuotes(query));
+        List<ProcessEquipment__c> processes = (List<ProcessEquipment__c>) Database.query(STRING.escapeSingleQuotes(query));
+        if(!processes.isEmpty()){    this.parentProcessEquipment = processes[0];   }
     }
 
     private Case initCase(Case parentCase, Account account){//parentCase query on HDT_QR_HerokuPostSalesManager
@@ -91,7 +142,7 @@ public with sharing class HDT_UTL_Tqrif {
         theCase.Status = 'Bozza';
         theCase.ServicePoint__c = parentCase.ServicePoint__c;
         theCase.Contract__c = parentCase.Contract__c;
-        theCase.RelatedCase__c = parentCase.Id;
+        theCase.ParentId = parentCase.Id;
 
         List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account?.Id);
         if(!accContactRels.isEmpty()){

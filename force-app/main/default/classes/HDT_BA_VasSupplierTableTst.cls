@@ -42,10 +42,10 @@ public class HDT_BA_VasSupplierTableTst {
             vsTables[2].VasSupplierStatus__c = 'KO FORNITORE';
             insert vsTables;
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende Soho');
 			Id accId = accs[0].id; 
             
-            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,accId,'Bozza'); 
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(3,true,accId,'Bozza'); 
             
             Id pricebookId = Test.getStandardPricebookId();
             
@@ -63,10 +63,14 @@ public class HDT_BA_VasSupplierTableTst {
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
             Id contractId = contracts[0].id;
                         
-            List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1,true,accId,sales,pricebookId);
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(3,true,accId,sales,pricebookId);
             Id orderId = orders[0].id;
           
-            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,true,orderId,pointId,productId,entryId);
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,false,orderId,pointId,productId,entryId);
+            orderItems[0].OrderId = orders[0].Id;
+            orderItems[1].OrderId = orders[1].Id;
+            orderItems[2].OrderId = orders[2].Id;
+            insert orderItems;
             Id orderItemId = orderItems[0].id;
             
             List<SBQQ__Subscription__c> subs = HDT_UTL_DataFactoryTst.createSubscription (2,false,accId,contractId,pointId);
@@ -76,10 +80,11 @@ public class HDT_BA_VasSupplierTableTst {
             }
             subs[1].VasPracticeCode__c = 'VasServizio';
             subs[1].SBQQ__Product__c = productId;
+            subs[1].SBQQ__OrderProduct__c = orderItems[1].id;
             insert subs;
             
             List<Asset> assets = HDT_UTL_DataFactoryTst.createAsset(2,false);
-            assets[0].SBQQ__OrderProduct__c = orderItemId;
+            assets[0].SBQQ__OrderProduct__c = orderItems[2].id;
             assets[0].VasPracticeCode__c = 'vascode';
             assets[0].AccountId = accs[0].id;
             assets[1].SBQQ__OrderProduct__c = null;
@@ -163,7 +168,14 @@ public class HDT_BA_VasSupplierTableTst {
             }
         }
         System.assertNotEquals(1, assetAct, 'Non si è creata l\'attività per l\'asset');
-        System.assertNotEquals(1, subScriptionAct, 'Non si è creata l\'attività per la subscription');
-        
+        System.assertNotEquals(1, subScriptionAct, 'Non si è creata l\'attività per la subscription');   
+    }
+
+    @isTest
+    static void testOrderReferenceOnTable(){
+        Test.startTest();
+            Database.executeBatch(new HDT_BA_VasSupplierTable());
+        Test.stopTest();
+        System.assertEquals([SELECT id FROM VasSupplierTable__c WHERE OrderReference__c != null].size(), 2, 'Ordine non correttamente ribaltato sul rispettivo campo nella tabella fornitori');
     }
 }

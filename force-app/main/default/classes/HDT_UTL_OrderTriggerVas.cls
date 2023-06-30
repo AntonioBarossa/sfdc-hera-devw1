@@ -83,7 +83,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             }
             switch on orderToWork.RecordType.DeveloperName {
                 when 'HDT_RT_VAS','HDT_RT_ScontiBonus', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione' {
-                    ordersToCancel.add(orderToWork);
+                    //ordersToCancel.add(orderToWork);
+                    vasOrdersToCancel.add(orderToWork);
                 }
                 when 'HDT_RT_Default'{
                     //verifyDraftVas(orderToWork,vasOrdersToCancel);
@@ -103,7 +104,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
-        orderSrv.updateRecords(ordersToCancel);
+        //orderSrv.updateRecords(ordersToCancel);
+        orderSrv.updateRecords(vasOrdersToCancel);
     }
 
     /* 
