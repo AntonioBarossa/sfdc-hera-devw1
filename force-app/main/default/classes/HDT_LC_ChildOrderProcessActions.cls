@@ -477,9 +477,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         if(String.isBlank(currentOrder.PhoneNumber__c) && String.isBlank(orderToUpdate.PhoneNumber__c))
         {
-            orderToUpdate.PhoneNumber__c = currentOrder.Contact__c != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
-                                            : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? 
-                                                currentOrder.Contact__r.Phone : emptyPhoneDefault;
+            if (currentOrder.Contact__c == null )
+            {
+                orderToUpdate.PhoneNumber__c = emptyPhoneDefault;
+            }
+            else {
+                orderToUpdate.PhoneNumber__c = currentOrder.Contact__r.MobilePhone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
+                : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.Phone) ? 
+                    currentOrder.Contact__r.Phone : emptyPhoneDefault;
+            }
+
         }
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
