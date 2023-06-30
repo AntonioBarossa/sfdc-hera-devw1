@@ -881,9 +881,53 @@
             <targetReference>newProcessEquipmentFromForm</targetReference>
         </connector>
         <fields>
-            <name>screenHeader_2</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>ScreenSecondForm_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenSecondForm_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>screenHeader_2</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenSecondForm_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>titleTable</name>
+                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Consegnare&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenSecondForm_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>DataTableEquipment</name>
@@ -910,10 +954,10 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>ScreenSecondForm_Section1</name>
+            <name>ScreenSecondForm_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>ScreenSecondForm_Section1_Column1</name>
+                <name>ScreenSecondForm_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>space_0</name>
@@ -1013,7 +1057,7 @@
             <inputParameters>
                 <name>labelInputSection</name>
                 <value>
-                    <stringValue>Dotazioni da consegnare</stringValue>
+                    <stringValue>Codici Dotazioni da consegnare</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
