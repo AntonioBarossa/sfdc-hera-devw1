@@ -570,7 +570,7 @@ public with sharing class HDT_UTL_BpCaCreate
             {
                 otherChildToUpdate.ContractAccountCode__c = orderToUpdate.ContractAccountCode__c;
             }
-            if(String.isNotBlank(otherChild.BillingProfile__c) && !otherChild.BillingProfile.equalsIgnoreCase(orderToUpdate.BillingProfile__c))
+            if(String.isNotBlank(otherChild.BillingProfile__c) && !otherChild.BillingProfile__c.equalsIgnoreCase(orderToUpdate.BillingProfile__c))
             {
                 otherChild.BillingProfile__c = orderToUpdate.BillingProfile__c;
             }
