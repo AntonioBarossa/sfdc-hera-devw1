@@ -20,7 +20,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, false);
         leadList[0].CampaignSource__c  = campaignList[0].Id;
         leadList[0].SourceAgency__c    = 'Linetech';
-        leadList[0].InterestProduct__c = 'Hera Caldaia';
+        leadList[0].InterestProduct__c = 'Hera Bebè Gas';
         leadList[0].InterestArea__c    = 'Green';
         leadList[0].ContactReason__c   = 'Info commerciali';
         leadList[0].MobilePhone        = '3123456789';
@@ -45,7 +45,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         insert cmlA;
         camMemLeadAss.add(cmlA);
         Test.startTest();
-        HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, cmp[0].Id, ld[0].MobilePhone);
+        HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, ld[0].InterestProduct__c, cmp[0].Id, ld[0].MobilePhone);
         Test.stopTest();
         } catch(Exception e) {
             System.assertEquals('Script-thrown exception', e.getMessage(), 'The exception throws an error message in case the given lead has a campaign member');
@@ -62,7 +62,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         try{ 
         
         Test.startTest();
-        Id response = HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, cmp[0].Id, ld[0].MobilePhone);
+        Id response = HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, ld[0].InterestProduct__c, cmp[0].Id, ld[0].MobilePhone);
         System.assertEquals(null, response, 'When the list of CampaignMemberLeadAssigment__c is empty the method returns null');
         Test.stopTest();
         } catch(Exception e) {
@@ -85,7 +85,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         insert cmlA;
         camMemLeadAss.add(cmlA);
         Test.startTest();
-        Id response = HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, cmp[0].Id, ld[0].MobilePhone);
+        Id response = HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead(ld[0].Id, ld[0].SourceAgency__c, ld[0].InterestProduct__c, cmp[0].Id, ld[0].MobilePhone);
         List<CampaignMember> campaignMemmberResult = [SELECT Id FROM CampaignMember WHERE LeadId = :ld[0].Id LIMIT 1];       
         System.assertEquals(campaignMemmberResult[0].Id, response, 'The method creates a campaign member from a Lead');
         System.assertNotEquals(null, response, 'The method is expected to create a campaign member from a Lead');
@@ -105,13 +105,13 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         CampaignMemberLeadAssigment__c cmlA = new CampaignMemberLeadAssigment__c();
         cmlA.Name               = 'prova';
         cmlA .Agency__c         =  acc;
-        cmlA.InterestProduct__c = 'Hera Caldaia';
+        cmlA.InterestProduct__c = 'Hera Bebè Gas';
         cmlA.SourceAgency__c    = 'Linetech';
         insert cmlA;
         
         Test.startTest();
         
-        String result = HDT_LC_RecallMeCreateForm.createCampaignMemberFromContact(con, 'Linetech', cam, '3333453344');
+        String result = HDT_LC_RecallMeCreateForm.createCampaignMemberFromContact(con, 'Linetech', 'Hera Bebè Gas', cam, '3333453344');
         
         Test.stopTest();
         

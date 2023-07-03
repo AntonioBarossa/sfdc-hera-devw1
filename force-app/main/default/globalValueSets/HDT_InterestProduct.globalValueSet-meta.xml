@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Comunita Energetiche</fullName>
-        <default>false</default>
-        <label>Comunità Energetiche</label>
-    </customValue>
-    <customValue>
         <fullName>Hera Bebè Dual</fullName>
         <default>false</default>
         <label>Hera Bebè Dual</label>
@@ -39,11 +34,6 @@
         <fullName>Hera Caldaia Sicura Business</fullName>
         <default>false</default>
         <label>Hera Caldaia Sicura Business</label>
-    </customValue>
-    <customValue>
-        <fullName>Hera Caldaia Ibrida a pompa di calore</fullName>
-        <default>false</default>
-        <label>Hera Caldaia Ibrida a pompa di calore</label>
     </customValue>
     <customValue>
         <fullName>Hera Clima</fullName>
@@ -134,11 +124,6 @@
         <fullName>Hera Led</fullName>
         <default>false</default>
         <label>Hera Led</label>
-    </customValue>
-    <customValue>
-        <fullName>Hera Led Smart</fullName>
-        <default>false</default>
-        <label>Hera Led Smart</label>
     </customValue>
     <customValue>
         <fullName>Hera Led Business</fullName>

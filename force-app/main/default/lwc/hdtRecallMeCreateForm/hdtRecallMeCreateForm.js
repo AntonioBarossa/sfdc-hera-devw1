@@ -22,9 +22,9 @@ export default class HdtRecallMeCreateForm extends LightningElement {
     @track leadId;
     @track mobilePhone;
     @track sourceAgencyOptions;
-   // @track interestProductOptions;
+    @track interestProductOptions;
     @track sourceAgency;
-  //  @track interestProduct;
+    @track interestProduct;
     @track campaignOptions = [];
     @track showSpinner = true;
 
@@ -77,8 +77,8 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 options.push({label: elem, value: elem})
             });
             this.sourceAgencyOptions = options;
-            this.showSpinner = false;
-            /*getActivePicklistValues({
+
+            getActivePicklistValues({
                 objectapiname: this.objectApiName,
                 field : 'InterestProduct__c'
             }).then(data => {
@@ -88,7 +88,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 });
                 this.interestProductOptions = options;
                 this.showSpinner = false;
-            });*/
+            });
         });
 
     }
@@ -96,10 +96,11 @@ export default class HdtRecallMeCreateForm extends LightningElement {
     handleSubmit(event) {
         this.showSpinner = true; //HRAWRM-640 20/09/2021
         let sourceAgency = this.template.querySelector('[data-id = "agencyField"]').value;
-        //let interestProduct = this.template.querySelector('[data-id = "interestProductField"]').value;
+        let interestProduct = this.template.querySelector('[data-id = "interestProductField"]').value;
         let campaignId = this.template.querySelector('[data-id = "campaignOutboundField"]').value;
         let mobilePhone = this.mobilePhone;
         console.log('prova' + sourceAgency);
+        console.log('test' + interestProduct);
         console.log('mobile' + mobilePhone);
         if (this.mobilePhone === null || this.mobilePhone === '') {
             console.log('prova te toast');
@@ -116,7 +117,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 createCampaignMemberFromLead({
                     leadId: this.recordId,
                     sourceAgency: sourceAgency,
-                    //interestProduct: interestProduct,
+                    interestProduct: interestProduct,
                     campaignId: campaignId,
                     mobilePhone: this.mobilePhone
                 }).then(result => {
@@ -155,7 +156,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 createCampaignMemberFromContact({
                     contactId: this.recordId,
                     sourceAgency: sourceAgency,
-                    //interestProduct: interestProduct,
+                    interestProduct: interestProduct,
                     campaignId: campaignId,
                     mobilePhone: this.mobilePhone
                 }).then(result => {

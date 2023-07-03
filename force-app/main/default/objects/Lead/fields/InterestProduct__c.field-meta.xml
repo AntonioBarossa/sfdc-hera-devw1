@@ -13,10 +13,6 @@
         <valueSetName>HDT_InterestProduct</valueSetName>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
-            <valueName>Comunita Energetiche</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Bebè Dual</valueName>
         </valueSettings>
         <valueSettings>
@@ -42,10 +38,6 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Caldaia Sicura Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info commerciali</controllingFieldValue>
-            <valueName>Hera Caldaia Ibrida a pompa di calore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
@@ -121,10 +113,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
-            <valueName>Hera Led Smart</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Led Business</valueName>
         </valueSettings>
         <valueSettings>
@@ -175,11 +163,11 @@
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera ProtezionePiu Casa Dual</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera ProtezionePiu Casa Gas</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera ProtezionePiu Casa Luce</valueName>
         </valueSettings>

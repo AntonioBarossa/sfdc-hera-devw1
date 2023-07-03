@@ -9,9 +9,6 @@
         var recordTypeName = '';
         var campaignId = '';
         var campaignMemberId = '';
-        var ecid = '';
-        var campaignMemberStatus = '';
-        var isCommunity = '';
 
         var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('&'), testParam = '';
                     
@@ -41,28 +38,12 @@
             if(testParam[0] == 'c__campaignMemberId'){
                 campaignMemberId = testParam[1];
             }
-            if(testParam[0] == 'c__ecid'){
-                ecid = testParam[1];
-            }
-            if(testParam[0] == 'c__campaignMemberStatus'){
-                campaignMemberStatus = testParam[1];
-            }
-            if(testParam[0] == 'c__isCommunity'){
-                isCommunity = testParam[1];
-            }
             
         }
-
-        console.log('ECID --> '+ecid);
-        console.log('campaignMemberStatus --> '+campaignMemberStatus);
-        console.log('isCommunity --> '+isCommunity);
 
         var caseId = null;
         component.set("v.campaignId",campaignId);
         component.set("v.campaignMemberId",campaignMemberId);
-        component.set("v.ecid",ecid);
-        component.set("v.campaignMemberStatus",campaignMemberStatus);
-        component.set("v.isCommunity",isCommunity);
         /*
         var flowName = myPageRef.state.c__flowName;
         var accId = myPageRef.state.c__accid;
@@ -237,17 +218,9 @@
     },
     
     handleStatusChange : function (component, event) {
-        console.log('EVENT --> '+JSON.stringify(event));
+
         console.log('### EVENT STATUS: ' + event.getParam("status"));
         var workspaceAPI = component.find("workspace");
-
-        var ecid = component.get("v.ecid");
-        var campaignMemberStatus = component.get("v.campaignMemberStatus");
-        var isCommunity = component.get("v.isCommunity");
-        console.log('ECID --> '+ecid);
-        console.log('campaignMemberStatus --> '+campaignMemberStatus);
-        console.log('isCommunity --> '+isCommunity);
-
 
         if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN" || event.getParam("status") === "ERROR") {
 
@@ -279,54 +252,33 @@
             var outputVariables = event.getParam('outputVariables');
             var outputVar;
             var newCaseId;
-            // var isCommunity;
-            // var statusCampaignMember;
+            var isCommunity;
+            var statusCampaignMember;
 
             console.log('# recordid -> ' +component.get("v.recordid"));
             if(outputVariables != null){      
-                console.log('ENTRATO IN outputVariables != null');
                 for(var i = 0; i < outputVariables.length; i++) {
                     outputVar = outputVariables[i];
-                    console.log('outputVar['+i+'].name --> '+outputVar.name);
-                    console.log('outputVar['+i+'].value --> '+outputVar.value);
                     
                     if(outputVar.name === "CaseId") {
                         newCaseId = outputVar.value;
                     }
-                    // if(outputVar.name === "isCommunity") {
-                    //     isCommunity = outputVar.value;
-                    // }
-                    // if(outputVar.name === "Status_CampaignMember") {
-                    //     statusCampaignMember = outputVar.value;
-                    // }
+                    if(outputVar.name === "isCommunity") {
+                        isCommunity = outputVar.value;
+                    }
+                    if(outputVar.name === "Status_CampaignMember") {
+                        statusCampaignMember = outputVar.value;
+                    }
                 }
             }
             else{
                 newCaseId=component.get("v.recordid");
             }
 
-            console.log('ecid --> '+ecid);
-            console.log('isCommunity --> '+isCommunity);
-            // console.log('statusCampaignMember --> '+statusCampaignMember);
-
-            if(isCommunity && campaignMemberStatus != null && campaignMemberStatus != ''){
+            if(isCommunity && statusCampaignMember != null && statusCampaignMember != ''){
                 //Richiamo saveScript
-                var SaveScriptLauncher=component.find('saveScriptLauncher');
-                console.log('SaveScriptLauncher --> '+SaveScriptLauncher);
-
-                if(ecid != null && ecid != undefined && ecid != ''){
-                    // SaveScriptLauncher.saveScriptEcid(ecid, statusCampaignMember, true);
-                    console.log('PRIMA DI ESECUZIONE getFirstLoginTime');
-                    SaveScriptLauncher.getFirstLoginTime(ecid, campaignMemberStatus, true);
-                    //SaveScriptLauncher.saveScript(campaignMemberStatus, true);
-                    console.log('DOPO ESECUZIONE getFirstLoginTime');
-
-                }
-                else{
-                    console.log('ECID VUOTO');
-                    SaveScriptLauncher.saveScript(campaignMemberStatus, true);
-
-                }
+                var SaveScriptLauncher=component.find('SaveScriptLauncher');
+                SaveScriptLauncher.saveScript(statusCampaignMember, true);
             }
 
             console.log('# outputVariable -> '+outputVariables);
