@@ -216,7 +216,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             }
                         }
                     ),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.getResident(this.order.Surface__c)?.toString()),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.getResident(this.order.ServicePoint__r.AreaDeclaredTARI__c)?.toString()),
                     new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDRES01' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, false,'', '')
                 ]
             },
