@@ -4,42 +4,41 @@ public with sharing class HDT_LC_RecallMeCreateForm {
    private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
    
    @AuraEnabled
-    public static Id createCampaignMemberFromLead(String leadId, String sourceAgency, String campaignId, String mobilePhone){ //String interestProduct, 
+    public static Id createCampaignMemberFromLead(String leadId, String sourceAgency, String interestProduct, String campaignId, String mobilePhone){
         try {
             System.debug('Lead ID'+leadId);
+        
             //Lead l = leadQr.getRecordById(leadId);
             CampaignMember campaignMember = new CampaignMember(
                 LeadId = leadId,
                 CampaignId = campaignId,
-                PhoneNumber__c = mobilePhone
+               PhoneNumber__c = mobilePhone
             );
-            Lead updateLead = new Lead(
-                Id = leadId,
-                SourceAgency__c = sourceAgency,
-                ContactReason__c ='Info commerciali' //HRAWRM-640 20/09/2021
-                //InterestProduct__c = interestProduct
-            );
-            //HDT_SRV_Lead.updateRecord(updateLead);
+           Lead updateLead = new Lead(
+               Id = leadId,
+               SourceAgency__c = sourceAgency,
+               ContactReason__c ='Info commerciali', //HRAWRM-640 20/09/2021
+               InterestProduct__c = interestProduct
+           );
+           HDT_SRV_Lead.updateRecord(updateLead);
+ 
+        List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c from CampaignMemberLeadAssigment__c where InterestProduct__c = :interestProduct AND SourceAgency__c =:sourceAgency AND agency__c != null WITH SECURITY_ENFORCED];
 
-            List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c,ProcessingType__c from CampaignMemberLeadAssigment__c where SourceAgency__c =:sourceAgency AND agency__c != null WITH SECURITY_ENFORCED]; //InterestProduct__c = :interestProduct AND 
-
-            if(listCampLeass != null && !listCampLeass.isEmpty()){
-                campaignMember.agency__c = listCampLeass[0].agency__c;
-                campaignMember.ProcessingType__c = listCampLeass[0].ProcessingType__c;
-                campaignMember.ExcludeFub__c = 'Si';
-                CampaignMember res =  campaignMemberSrv.createRecord(campaignMember);
-                HDT_SRV_Lead.updateRecord(updateLead);
-                return res.Id;
-            }else{
-                return null;
-            }
+        if(listCampLeass != null && !listCampLeass.isEmpty()){
+            campaignMember.agency__c = listCampLeass[0].agency__c;
+            CampaignMember res =  campaignMemberSrv.createRecord(campaignMember);
+            HDT_SRV_Lead.updateRecord(updateLead);
+            return res.Id;
+        }else{
+            return null;
+        }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
     @AuraEnabled
-    public static Id createCampaignMemberFromContact(String contactId, String sourceAgency, String campaignId, String mobilePhone){ //String interestProduct, 
+    public static Id createCampaignMemberFromContact(String contactId, String sourceAgency, String interestProduct, String campaignId, String mobilePhone){
         try {
             System.debug('contact ID '+contactId);
 
@@ -51,16 +50,14 @@ public with sharing class HDT_LC_RecallMeCreateForm {
            Contact updateContact = new Contact(
                Id = contactId,
                SourceAgency__c = sourceAgency,
-               ContactReason__c ='Info commerciali'
-               //InterestProduct__c = interestProduct
+               ContactReason__c ='Info commerciali',
+               InterestProduct__c = interestProduct
            );
 
-            List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c,ProcessingType__c from CampaignMemberLeadAssigment__c where SourceAgency__c =:sourceAgency AND agency__c != null WITH SECURITY_ENFORCED]; //InterestProduct__c = :interestProduct AND 
+            List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c from CampaignMemberLeadAssigment__c where InterestProduct__c = :interestProduct AND SourceAgency__c =:sourceAgency AND agency__c != null WITH SECURITY_ENFORCED];
 
             if(listCampLeass != null && !listCampLeass.isEmpty()){
                 campaignMember.agency__c = listCampLeass[0].agency__c;
-                campaignMember.ProcessingType__c = listCampLeass[0].ProcessingType__c;
-                campaignMember.ExcludeFub__c = 'Si';
                 CampaignMember res =  campaignMemberSrv.createRecord(campaignMember);
                 contactSrv.updateRecord(updateContact);
                 return res.Id;

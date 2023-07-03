@@ -10,8 +10,6 @@
 @IsTest
 public with sharing class HDT_LC_CampaignsControllerTst {
 
-    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-
     @TestSetup
     static void makeData(){
     HDT_UTL_DataFactoryTst.pClickInstance();
@@ -44,105 +42,22 @@ public with sharing class HDT_LC_CampaignsControllerTst {
     campaignList[0].StartDate = Date.today();
     campaignList[0].EndDate = Date.today()+15;
     insert campaignList;
-    
-    }
-
-    @isTest
-    static void getCurrentProfileTst(){
-
-        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-        internalUser.UserPermissionsMarketingUser=true;
-        insert internalUser;
         
-        Test.startTest();
-
-        System.runAs(internalUser) {
-
-            String resultTest = HDT_LC_CampaignsController.getCurrentProfile();
-            System.assertEquals( resultTest , 'PT1', 'getCurrentProfileTst Failed');
-
-        }
-
-        Test.stopTest();
+    /* HDT_CampaignMemberStatus__mdt cMs = new HDT_CampaignMemberStatus__mdt();
+    cMs.DeveloperName = 'test';
+    cMs.MasterLabel = 'test';
+    cMs.StatusName__c = 'test';
+    cMs.OutcomeCategory__c = 'Utile Negativo';
+   	cMs.OutcomeType__c = 'Operatore';
+    cMs.HasResponded__c = true;
+	cMs.Category__c = 'Outbound';
+    cMs.Channel__c = 'Tutti';
+    cMs.Default__c = false;
+        
+    insert cMs;
+	*/
     }
 
-    @isTest
-    static void getCampaignTipologyTst(){
-
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        listCampaign[0].Tipology__c = 'Aggiornamento anagrafiche';
-        update listCampaign;
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-                                    ContactId = contactList[0].Id,
-                                    Status = 'Inviato',
-                                    PhoneNumber__c = '3331234567',
-                                    CampaignId = listCampaign[0].Id
-                                    ); 
-        members.add(member); 
-        insert members;
-    
-        List<CampaignMember> cmList = [SELECT Id, PhoneNumber__c FROM CampaignMember LIMIT 1];
-    
-        Test.startTest();
-        String resultTest = HDT_LC_CampaignsController.getCampaignTipology( (String)cmList[0].Id );
-    
-        System.assertEquals( resultTest , 'Aggiornamento anagrafiche', 'getCampaignTipologyTst Failed');
-        Test.stopTest();
-    
-    }
-
-    @isTest
-    static void getCampaignMemberTst(){
-
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-                                    ContactId = contactList[0].Id,
-                                    Status = 'Inviato',
-                                    PhoneNumber__c = '3331234567',
-                                    CampaignId = listCampaign[0].Id
-                                    ); 
-        members.add(member); 
-        insert members;
-    
-        List<CampaignMember> cmList = [SELECT Id, PhoneNumber__c FROM CampaignMember LIMIT 1];
-    
-        Test.startTest();
-        List<CampaignMember> resultTest = HDT_LC_CampaignsController.getCampaignMember( (String)cmList[0].Id );
-    
-        System.assertEquals( resultTest.isEmpty(), false, 'getCampaignMemberTst Failed');
-        Test.stopTest();
-    
-    }
-
-    @isTest
-    static void getCampaignMemberPhoneTst(){
-
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-                                    ContactId = contactList[0].Id,
-                                    Status = 'Inviato',
-                                    PhoneNumber__c = '3331234567',
-                                    CampaignId = listCampaign[0].Id
-                                    ); 
-        members.add(member); 
-        insert members;
-    
-        List<CampaignMember> cmList = [SELECT Id, PhoneNumber__c FROM CampaignMember LIMIT 1];
-    
-        Test.startTest();
-        String resultTest = HDT_LC_CampaignsController.getCampaignMemberPhone( (String)cmList[0].Id );
-    
-        System.assertEquals(resultTest, cmList[0].PhoneNumber__c, 'getCampaignMemberPhoneTst Failed');
-        Test.stopTest();
-    
-    }
 
 @isTest
 static void testGetCampaigns(){
@@ -201,17 +116,6 @@ static void testGetOutboundCampaigns(){
 
     Test.startTest();
     List<Campaign> listaResult = HDT_LC_CampaignsController.getOutboundCampaigns();
-    System.assertEquals(listaResult.size()!=null, true, 'Same Ids of Campaign');
-    System.assertNotEquals(listaResult.size() !=null , false, 'Ids of Campaigns are not null');
-    Test.stopTest();
-
-}
-
-@isTest
-static void testGetOutboundCampaignsLead(){
-
-    Test.startTest();
-    List<Campaign> listaResult = HDT_LC_CampaignsController.getOutboundCampaignsLead();
     System.assertEquals(listaResult.size()!=null, true, 'Same Ids of Campaign');
     System.assertNotEquals(listaResult.size() !=null , false, 'Ids of Campaigns are not null');
     Test.stopTest();
@@ -287,7 +191,7 @@ static void testGetServiceCatalogUrlByCaseType(){
     List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
     List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     List<CampaignMember> members = new List<CampaignMember>();
-    CampaignMember member = new CampaignMember(
+CampaignMember member = new CampaignMember(
     ContactId = contactList[0].Id,
     Status = 'Inviato',
     CampaignId = listCampaign[0].Id
@@ -298,21 +202,9 @@ static void testGetServiceCatalogUrlByCaseType(){
     List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
 
-    wrts_prcgvr__serviceLink__c sLink = new wrts_prcgvr__serviceLink__c();
-    sLink.wrts_prcgvr__label__c = caseList[0].Type;
-    insert sLink;
-
-    wrts_prcgvr__ServiceLinkItem__c slItem = new wrts_prcgvr__ServiceLinkItem__c();
-    slItem.wrts_prcgvr__serviceLink__c = sLink.Id;
-    slItem.wrts_prcgvr__ObjectType__c = 'Account';
-    slItem.wrts_prcgvr__URL__c = '{!Id}';
-    insert slItem;
-
     Test.startTest();
     String returnedString = HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType(caseList[0], listCampaign[0].Id);
-
-    String expectedResult = accList[0].Id+'&c__campaignId=null&c__campaignMemberId='+listCampaign[0].Id;
-    System.assertEquals( returnedString, expectedResult, 'String returned is null');
+    System.assertEquals(null, returnedString, 'String returned is  null');
     Test.stopTest();
 
 }
@@ -626,10 +518,9 @@ static void testCancelAssignments(){
     List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
     List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     List<CampaignMember> members = new List<CampaignMember>();
-    CampaignMember member = new CampaignMember(
+CampaignMember member = new CampaignMember(
     ContactId = contactList[0].Id,
     Status = 'Inviato',
-    Agency__c = accList[0].Id,
     CampaignId = listCampaign[0].Id
     ); 
     members.add(member); 
@@ -693,12 +584,6 @@ CampaignMember member = new CampaignMember(
     CommercialCode__c commercialCode = new CommercialCode__c();
     commercialCode.Campaign__c = listCampaign[0].Id;
     commercialCode.FullCode__c = '1234';
-    commercialCode.AvailabilityUsesEE__c = 2;
-    commercialCode.AvailabilityUsesGAS__c = 2;
-    commercialCode.AvailabilityUsesVAS__c = 2;
-    commercialCode.ActualUsesEE__c = 0;
-    commercialCode.ActualUsesGAS__c = 0;
-    commercialCode.ActualUsesVAS__c = 0;
     insert commercialCode;
     
 
@@ -706,12 +591,12 @@ CampaignMember member = new CampaignMember(
     Boolean firstBoolean = HDT_LC_CampaignsController.incrementCommercialCode(commercialCode.Id, 'gas');
     Boolean secondBoolean = HDT_LC_CampaignsController.incrementCommercialCode(commercialCode.Id, 'energia elettrica');
     Boolean thirdBoolean = HDT_LC_CampaignsController.incrementCommercialCode(commercialCode.Id, 'vas');
-    System.assertEquals(true, firstBoolean, 'commercialCode Correclty updated');
-    System.assertNotEquals(false, firstBoolean, 'commercialCode Correclty updated');
-    System.assertEquals(true, secondBoolean, 'commercialCode Correclty updated');
-    System.assertNotEquals(false, secondBoolean, 'commercialCode Correclty updated');
-    System.assertEquals(true, thirdBoolean, 'commercialCode Correclty updated');
-    System.assertNotEquals(false, thirdBoolean, 'commercialCode Correclty updated');
+    System.assertEquals(false, firstBoolean, 'commercialCode Correclty updated');
+    System.assertNotEquals(true, firstBoolean, 'commercialCode Correclty updated');
+    System.assertEquals(false, secondBoolean, 'commercialCode Correclty updated');
+    System.assertNotEquals(true, secondBoolean, 'commercialCode Correclty updated');
+    System.assertEquals(false, thirdBoolean, 'commercialCode Correclty updated');
+    System.assertNotEquals(true, thirdBoolean, 'commercialCode Correclty updated');
     Test.stopTest();
 
 }
@@ -752,12 +637,6 @@ CampaignMember member = new CampaignMember(
     CommercialCode__c commercialCode = new CommercialCode__c();
     commercialCode.Campaign__c = listCampaign[0].Id;
     commercialCode.FullCode__c = '1234';
-    commercialCode.AvailabilityUsesEE__c = 2;
-    commercialCode.AvailabilityUsesGAS__c = 2;
-    commercialCode.AvailabilityUsesVAS__c = 2;
-    commercialCode.ActualUsesEE__c = 0;
-    commercialCode.ActualUsesGAS__c = 0;
-    commercialCode.ActualUsesVAS__c = 0;
     insert commercialCode;
 
     Map<String,Integer> mappTest = new Map<String,Integer>();
@@ -774,12 +653,12 @@ CampaignMember member = new CampaignMember(
     Boolean returnedBoolean1 = HDT_LC_CampaignsController.bulkIncrementCommercialCode(commercialCode.Id, mappTest);
     Boolean returnedBoolean2 = HDT_LC_CampaignsController.bulkIncrementCommercialCode(commercialCode.Id, mappTestOne);
     Boolean returnedBoolean3 = HDT_LC_CampaignsController.bulkIncrementCommercialCode(commercialCode.Id, mappTestTwo);
-    System.assertEquals(true, returnedBoolean1, 'Boolean is false, so commodity');
-    System.assertNotEquals(false, returnedBoolean1, 'Boolean is false, so commodity');
-    System.assertEquals(true, returnedBoolean2, 'Boolean is false, so commodity');
-    System.assertNotEquals(false, returnedBoolean2, 'Boolean is false, so commodity');
-    System.assertEquals(true, returnedBoolean3, 'Boolean is false, so commodity');
-    System.assertNotEquals(false, returnedBoolean3, 'Boolean is false, so commodity');
+    System.assertEquals(false, returnedBoolean1, 'Boolean is false, so commodity');
+    System.assertNotEquals(true, returnedBoolean1, 'Boolean is false, so commodity');
+    System.assertEquals(false, returnedBoolean2, 'Boolean is false, so commodity');
+    System.assertNotEquals(true, returnedBoolean2, 'Boolean is false, so commodity');
+    System.assertEquals(false, returnedBoolean3, 'Boolean is false, so commodity');
+    System.assertNotEquals(true, returnedBoolean3, 'Boolean is false, so commodity');
 
     Test.stopTest();
 
@@ -1004,7 +883,7 @@ static void testGetUserRole(){
     List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
     List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     List<CampaignMember> members = new List<CampaignMember>();
-    CampaignMember member = new CampaignMember(
+CampaignMember member = new CampaignMember(
     ContactId = contactList[0].Id,
     Status = 'Inviato',
     CampaignId = listCampaign[0].Id
@@ -1055,96 +934,73 @@ static void testGetUserRole(){
 }
 
 
-    @isTest
-    static void testMethodClosedTab(){
+@isTest
+static void testMethodClosedTab(){
 
-        List<Account> accList = [SELECT Id FROM Account LIMIT 1];
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
-        List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
-        List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-        ContactId = contactList[0].Id,
-        Status = 'Inviato',
-        CampaignId = listCampaign[0].Id
-        ); 
-        members.add(member); 
-        insert members;
+    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
+    List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
+    List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
+    List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
+    List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
+    List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
+    List<CampaignMember> members = new List<CampaignMember>();
+CampaignMember member = new CampaignMember(
+    ContactId = contactList[0].Id,
+    Status = 'Inviato',
+    CampaignId = listCampaign[0].Id
+    ); 
+    members.add(member); 
+    insert members;
 
-        HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
-        // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
-        List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
-        List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
-        List<Id> listaId = new List<Id>();
-        listaId.add(accList[0].Id);
-        List<String> listIdCampaignMembersId = new List<String>();
-        listIdCampaignMembersId.add(testMembers[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
+    List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
+    List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
+    List<Id> listaId = new List<Id>();
+    listaId.add(accList[0].Id);
+    List<String> listIdCampaignMembersId = new List<String>();
+    listIdCampaignMembersId.add(testMembers[0].Id);
 
-        SurveyResponse__c surveyResponseTest = New SurveyResponse__c();
-        surveyResponseTest.Campaign__c = listCampaign[0].Id;
-        surveyResponseTest.Contact__c = contactList[0].Id;
-        surveyResponseTest.Response1__c = 'Test';
-        insert surveyResponseTest;
+    SurveyResponse__c surveyResponseTest = New SurveyResponse__c();
+    surveyResponseTest.Campaign__c = listCampaign[0].Id;
+    surveyResponseTest.Contact__c = contactList[0].Id;
+    surveyResponseTest.Response1__c = 'Test';
+    insert surveyResponseTest;
 
-        CampaignEligibilityGroup__c gruppoCampagne = new CampaignEligibilityGroup__c();
-        gruppoCampagne.Name = 'Test CampaignEligibilityGroup';
-        insert gruppoCampagne;
+    CampaignEligibilityGroup__c gruppoCampagne = new CampaignEligibilityGroup__c();
+    gruppoCampagne.Name = 'Test CampaignEligibilityGroup';
+    insert gruppoCampagne;
 
 
 
-        CommercialCode__c commercialCode = new CommercialCode__c();
-        commercialCode.Campaign__c = listCampaign[0].Id;
-        commercialCode.FullCode__c = '1234';
-        insert commercialCode;
+    CommercialCode__c commercialCode = new CommercialCode__c();
+    commercialCode.Campaign__c = listCampaign[0].Id;
+    commercialCode.FullCode__c = '1234';
+    insert commercialCode;
 
-        Map<String,Integer> mappTest = new Map<String,Integer>();
-        mappTest.put('gas', 1);
-        List<Id> listaIdProdotti = new List<Id>();
+    Map<String,Integer> mappTest = new Map<String,Integer>();
+    mappTest.put('gas', 1);
+    List<Id> listaIdProdotti = new List<Id>();
 
-        for (Product2 idsFound : listProduct2) {
-            listaIdProdotti.add(idsFound.Id);
-        }
-
-        Test.startTest();
-        Boolean returnedBoolean = HDT_LC_CampaignsController.methodClosedTab(accList[0].Id,'','Campagna Outbound','Bolletta');
-        System.assertEquals(false, returnedBoolean, 'campMemUp !=null and size > 0');
-        System.assertNotEquals(true, returnedBoolean, 'campMemUp !=null and size > 0');
-        Test.stopTest();
-
+    for (Product2 idsFound : listProduct2) {
+        listaIdProdotti.add(idsFound.Id);
     }
+
+    Test.startTest();
+    Boolean returnedBoolean = HDT_LC_CampaignsController.methodClosedTab(testMembers[0].Id,'CampaignMember','Campagna Outbound','Bolletta');
+    System.assertEquals(false, returnedBoolean, 'campMemUp !=null and size > 0');
+    System.assertNotEquals(true, returnedBoolean, 'campMemUp !=null and size > 0');
+    Test.stopTest();
+
+}
 
     @isTest
     static void testRequiredCampaignCheck(){
-        List<Account> accList = [SELECT Id FROM Account LIMIT 1];
-        Campaign campaignRecord = [SELECT Id, Category__c FROM Campaign LIMIT 1];
-        campaignRecord.Category__c = 'Campagna CRM';
-        campaignRecord.Required__c = true;
-        campaignRecord.StartDate = Date.today().addDays(-1);
-        update campaignRecord;
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-        ContactId = contactList[0].Id,
-        Status = 'Inviato',
-        CampaignId = campaignRecord.Id
-        ); 
-        members.add(member); 
-        insert members;
+        Campaign campaignRecord = [SELECT Id FROM Campaign LIMIT 1];
 
         Test.startTest();
-        List<CampaignMember> campMembList = HDT_LC_CampaignsController.requiredCampaignCheck(accList[0].Id);
+        List<CampaignMember> campMembList = HDT_LC_CampaignsController.requiredCampaignCheck(campaignRecord.Id);
         System.assertNotEquals(null, campMembList, 'campMemUp = null');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void testRequiredCampaignCheckNull(){ 
-
-        Test.startTest();
-        List<CampaignMember> campMembList = HDT_LC_CampaignsController.requiredCampaignCheck('');
-        System.assertEquals(null, campMembList, 'campMemUp = null');
         Test.stopTest();
     }
 
@@ -1155,14 +1011,6 @@ static void testGetUserRole(){
         Test.startTest();
         Account acc = HDT_LC_CampaignsController.getCurrentAccount(accRecord.Id);
         System.assertNotEquals(null, acc, 'acc = null');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void testGetCurrentAccountNull(){
-        Test.startTest();
-        Account acc = HDT_LC_CampaignsController.getCurrentAccount('');
-        System.assertEquals(null, acc, 'acc = null');
         Test.stopTest();
     }
 

@@ -8,11 +8,11 @@
             value={sourceAgencyValues} data-id="agencyField" options={sourceAgencyOptions}></lightning-combobox>
 
     </template>
-    <!--<template if:true={interestProductOptions}>
+    <template if:true={interestProductOptions}>
         <lightning-combobox name="interestProduct" placeholder="--Seleziona prodotto d'interesse--"
             label="Prodotto di interesse" value={interestProductValues} data-id="interestProductField"
             options={interestProductOptions}></lightning-combobox>
-    </template>-->
+    </template>
     <template if:true={campaignOptions}>
         <lightning-combobox name="campaignOutbound" placeholder="--Seleziona campagna--" label="Campagna Outbound"
             value={value} data-id="campaignOutboundField" options={campaignOptions}></lightning-combobox>

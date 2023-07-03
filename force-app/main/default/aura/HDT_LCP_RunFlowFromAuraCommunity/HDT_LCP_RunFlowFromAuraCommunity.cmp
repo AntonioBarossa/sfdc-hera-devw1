@@ -27,11 +27,6 @@
     <!--Attributo per innesco da Campagne-->
     <aura:attribute name="campaignId" type="String"/>
 
-    <!--Attributo ecid CampaignMember da lwc per Nuovo Caso-->
-    <aura:attribute name="ecid" type="String"/>
-    <aura:attribute name="campaignMemberStatus" type="String"/>
-    <aura:attribute name="isCommunity" type="Boolean"/>
-
     <!--Attributo per innesco da CampagneMember-->
     <aura:attribute name="campaignMemberId" type="String"/>
 

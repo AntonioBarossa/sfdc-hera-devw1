@@ -46,7 +46,7 @@
             <property name="disputedReadingThree" type="Integer" label="Lettura Contestata F3" description="Valore lettura contestata" role="outputOnly"/>
 
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
-            <property name="sessionId" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
+            
         </targetConfig>
         
     </targetConfigs>

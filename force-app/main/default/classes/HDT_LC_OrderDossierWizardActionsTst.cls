@@ -43,16 +43,11 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 		contactList[0].Company__c='HC';
 		insert contactList;
         
-		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].Id, 'Bozza');
+		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
 		orderList[0].RecordTypeId=rt;
 		orderList[0].Contact__c=contactList[0].Id;
 		orderList[0].ProcessType__c='To define';
         orderList[0].CommercialProductLink__c = products[0].id;
-        
-		orderList[1].RecordTypeId=rt;
-		orderList[1].Contact__c=contactList[0].Id;
-		orderList[1].ProcessType__c='To define';
-        orderList[1].CommercialProductLink__c = products[0].id;
 		insert orderList;
 
 		List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -89,13 +84,11 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 		List<Order> parentOrder = [SELECT Id FROM Order WHERE ParentOrder__c = NULL];
 		parentOrder[0].SignatureMethod__c = 'Contratto già firmato';
 		parentOrder[0].Surface__c = 24;
-		parentOrder[1].SignatureMethod__c = 'Contratto già firmato';
-		parentOrder[1].Surface__c = 24;
 		update parentOrder;
 
 		List<Account> accList = [SELECT Id FROM Account];
 		List<Order> childs = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
-		childs[0].OrderReference__c = parentOrder[1].Id;
+		childs[0].OrderReference__c = parentOrder[0].Id;
 		childs[0].ParentOrder__c = parentOrder[0].Id;
 		childs[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
         insert childs;
@@ -104,7 +97,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 			HDT_LC_OrderDossierWizardActions.handleTariOrder(parentOrder[0]);
 		Test.stopTest();
 
-		System.assertEquals(parentOrder[1].Surface__c, [SELECT Surface__c FROM Order WHERE Id = :childs[0].Id LIMIT 1][0].Surface__c, 'handleTariOrder failed');
+		System.assertEquals(parentOrder[0].Surface__c, [SELECT Surface__c FROM Order WHERE Id = :childs[0].Id LIMIT 1][0].Surface__c, 'handleTariOrder failed');
 	}
 
 	@isTest static void testSave1(){

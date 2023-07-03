@@ -5,13 +5,11 @@
     <label>Dettaglio Fonte</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>LeadSource</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>ADSALA</fullName>
                 <default>false</default>
@@ -23,119 +21,9 @@
                 <label>ADSALSA</label>
             </value>
             <value>
-                <fullName>Advertisement</fullName>
-                <default>false</default>
-                <label>Advertisement</label>
-            </value>
-            <value>
-                <fullName>Altro</fullName>
-                <default>false</default>
-                <label>Altro</label>
-            </value>
-            <value>
-                <fullName>APP My Hera</fullName>
-                <default>false</default>
-                <label>APP My Hera</label>
-            </value>
-            <value>
-                <fullName>Arci</fullName>
-                <default>false</default>
-                <label>Arci</label>
-            </value>
-            <value>
-                <fullName>Assistente web</fullName>
-                <default>false</default>
-                <label>Assistente web</label>
-            </value>
-            <value>
-                <fullName>Back office</fullName>
-                <default>false</default>
-                <label>Back office</label>
-            </value>
-            <value>
-                <fullName>Callback</fullName>
-                <default>false</default>
-                <label>Callback</label>
-            </value>
-            <value>
-                <fullName>Camper</fullName>
-                <default>false</default>
-                <label>Camper</label>
-            </value>
-            <value>
-                <fullName>Carrello abbandonato</fullName>
-                <default>false</default>
-                <label>Carrello abbandonato</label>
-            </value>
-            <value>
-                <fullName>chat</fullName>
-                <default>false</default>
-                <label>chat</label>
-            </value>
-            <value>
-                <fullName>Consip</fullName>
-                <default>false</default>
-                <label>Consip</label>
-            </value>
-            <value>
-                <fullName>DEM</fullName>
-                <default>false</default>
-                <label>DEM</label>
-            </value>
-            <value>
                 <fullName>ecc</fullName>
                 <default>false</default>
                 <label>ecc</label>
-            </value>
-            <value>
-                <fullName>Festival Letteratura Mantova</fullName>
-                <default>false</default>
-                <label>Festival Letteratura Mantova</label>
-            </value>
-            <value>
-                <fullName>Flowershow</fullName>
-                <default>false</default>
-                <label>Flowershow</label>
-            </value>
-            <value>
-                <fullName>Google AdWords</fullName>
-                <default>false</default>
-                <label>Google AdWords</label>
-            </value>
-            <value>
-                <fullName>Helpdesk</fullName>
-                <default>false</default>
-                <label>Helpdesk</label>
-            </value>
-            <value>
-                <fullName>landing page proattivo</fullName>
-                <default>false</default>
-                <label>landing page proattivo</label>
-            </value>
-            <value>
-                <fullName>landing page standard</fullName>
-                <default>false</default>
-                <label>landing page standard</label>
-            </value>
-            <value>
-                <fullName>PA</fullName>
-                <default>false</default>
-                <label>PA</label>
-            </value>
-            <value>
-                <fullName>prodotti HVAC</fullName>
-                <default>false</default>
-                <label>prodotti HVAC</label>
-            </value>
-            <value>
-                <fullName>Protocollo</fullName>
-                <default>false</default>
-                <label>Protocollo</label>
-            </value>
-            <value>
-                <fullName>ServiziSociali</fullName>
-                <default>false</default>
-                <label>ServiziSociali</label>
             </value>
             <value>
                 <fullName>sito standard</fullName>
@@ -148,9 +36,24 @@
                 <label>sito standard proattivo</label>
             </value>
             <value>
-                <fullName>SMS</fullName>
+                <fullName>chat</fullName>
                 <default>false</default>
-                <label>SMS</label>
+                <label>chat</label>
+            </value>
+            <value>
+                <fullName>prodotti HVAC</fullName>
+                <default>false</default>
+                <label>prodotti HVAC</label>
+            </value>
+            <value>
+                <fullName>landing page standard</fullName>
+                <default>false</default>
+                <label>landing page standard</label>
+            </value>
+            <value>
+                <fullName>landing page proattivo</fullName>
+                <default>false</default>
+                <label>landing page proattivo</label>
             </value>
             <value>
                 <fullName>SOL Hera</fullName>
@@ -158,242 +61,10 @@
                 <label>SOL Hera</label>
             </value>
             <value>
-                <fullName>Sportello</fullName>
+                <fullName>APP My Hera</fullName>
                 <default>false</default>
-                <label>Sportello</label>
-            </value>
-            <value>
-                <fullName>Staff</fullName>
-                <default>false</default>
-                <label>Staff</label>
-            </value>
-            <value>
-                <fullName>Supporto agenzie</fullName>
-                <default>false</default>
-                <label>Supporto agenzie</label>
-            </value>
-            <value>
-                <fullName>Supporto GDA</fullName>
-                <default>false</default>
-                <label>Supporto GDA</label>
-            </value>
-            <value>
-                <fullName>Telefono Inbound</fullName>
-                <default>false</default>
-                <label>Telefono Inbound</label>
-            </value>
-            <value>
-                <fullName>Telefono Outbound</fullName>
-                <default>false</default>
-                <label>Telefono Outbound</label>
-            </value>
-            <value>
-                <fullName>Teleselling</fullName>
-                <default>false</default>
-                <label>Teleselling</label>
-            </value>
-            <value>
-                <fullName>Toleadoo</fullName>
-                <default>false</default>
-                <label>Toleadoo</label>
-            </value>
-            <value>
-                <fullName>Toscanini</fullName>
-                <default>false</default>
-                <label>Toscanini</label>
-            </value>
-            <value>
-                <fullName>Vendita Business</fullName>
-                <default>false</default>
-                <label>Vendita Business</label>
-            </value>
-            <value>
-                <fullName>Vendita Condomini</fullName>
-                <default>false</default>
-                <label>Vendita Condomini</label>
-            </value>
-            <value>
-                <fullName>Vendita MM</fullName>
-                <default>false</default>
-                <label>Vendita MM</label>
-            </value>
-            <value>
-                <fullName>Vendita TopBusiness</fullName>
-                <default>false</default>
-                <label>Vendita TopBusiness</label>
+                <label>APP My Hera</label>
             </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Customer Event</controllingFieldValue>
-            <controllingFieldValue>Nome Social network</controllingFieldValue>
-            <controllingFieldValue>Lead freddo</controllingFieldValue>
-            <valueName>Altro</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Event</controllingFieldValue>
-            <valueName>Arci</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Event</controllingFieldValue>
-            <valueName>Festival Letteratura Mantova</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Event</controllingFieldValue>
-            <valueName>Flowershow</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Event</controllingFieldValue>
-            <valueName>Toscanini</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform</controllingFieldValue>
-            <valueName>Carrello abbandonato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Assistente web</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Back office</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Callback</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Camper</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>chat</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Consip</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Helpdesk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>PA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Protocollo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>ServiziSociali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Sportello</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Staff</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Supporto agenzie</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Supporto GDA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Telefono Inbound</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Telefono Outbound</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Teleselling</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Vendita Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Vendita Condomini</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Vendita MM</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Creazione manuale</controllingFieldValue>
-            <valueName>Vendita TopBusiness</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>Advertisement</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>APP My Hera</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>DEM</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>Google AdWords</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>landing page proattivo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>landing page standard</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>sito standard</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>sito standard proattivo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>SMS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Webform callback</controllingFieldValue>
-            <controllingFieldValue>Webform winback</controllingFieldValue>
-            <valueName>SOL Hera</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Nome Social network</controllingFieldValue>
-            <controllingFieldValue>Lead freddo</controllingFieldValue>
-            <valueName>ADSALSA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Nome Social network</controllingFieldValue>
-            <controllingFieldValue>Lead freddo</controllingFieldValue>
-            <valueName>Toleadoo</valueName>
-        </valueSettings>
     </valueSet>
 </CustomField>
