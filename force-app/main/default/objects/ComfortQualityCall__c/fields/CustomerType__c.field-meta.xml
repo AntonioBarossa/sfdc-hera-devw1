@@ -4,9 +4,28 @@
     <description>Conterrà tutte le tipologie di clienti</description>
     <externalId>false</externalId>
     <label>Tipologia cliente</label>
-    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Piccoli Condomini</fullName>
+                <default>false</default>
+                <label>Piccoli Condomini</label>
+            </value>
+            <value>
+                <fullName>Famiglie</fullName>
+                <default>false</default>
+                <label>Famiglie</label>
+            </value>
+            <value>
+                <fullName>Azienda Soho</fullName>
+                <default>false</default>
+                <label>Azienda Soho</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
     <unique>false</unique>
 </CustomField>
