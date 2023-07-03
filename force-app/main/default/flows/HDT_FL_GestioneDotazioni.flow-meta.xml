@@ -135,6 +135,9 @@
         <label>Annulla-Bozza-Avanti</label>
         <locationX>2162</locationX>
         <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>update_Case</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
             <name>Annulla4</name>
@@ -277,6 +280,42 @@
                 <elementReference>theCase.Parent.SupplyCity__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>SupplyCountry__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyCountry__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyPostalCode__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyPostalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyProvince__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyProvince__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreetName__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreetNumberExtension__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreetNumber__c</field>
+            <value>
+                <elementReference>theCase.Parent.SupplyStreetNumber__c</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -311,6 +350,27 @@
             <field>TypeOperation__c</field>
             <value>
                 <elementReference>quadruplet.operationType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_Case</name>
+        <label>update Case</label>
+        <locationX>2426</locationX>
+        <locationY>1538</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -404,7 +464,7 @@
             <inputParameters>
                 <name>isCancel</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -560,15 +620,10 @@
             <fields>
                 <name>Screen_Dotaz_Consegnare_Section1_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>screenHeader1</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!theCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!theCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>4</stringValue>
+                        <stringValue>2</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -577,14 +632,19 @@
                 <name>Screen_Dotaz_Consegnare_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
+                    <name>screenHeader1</name>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px;&quot;&gt;Processo di {!theCase.Type}&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
                     <name>titleDotCons</name>
-                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Consegnare&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 24px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Consegnare&lt;/strong&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>4</stringValue>
+                        <stringValue>8</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -595,7 +655,7 @@
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>4</stringValue>
+                        <stringValue>2</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -744,7 +804,7 @@
                 </fields>
                 <fields>
                     <name>titleDotRit</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 28px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Dotazioni da Ritirare&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 24px;&quot;&gt;Dotazioni da Ritirare&lt;/strong&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -882,7 +942,7 @@
             <targetReference>getCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento</name>
         <label>Annullamento</label>
