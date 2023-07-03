@@ -11,7 +11,7 @@
                 </li>
                 <template if:true={enableDocumental}>
                     <li>
-                        <lightning-button onclick={checkReitekStatus} class="slds-m-left_x-small" disabled={disablePreviewButton} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
+                        <lightning-button onclick={handleModalPreview} class="slds-m-left_x-small" disabled={disablePreviewButton} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
                     </li>
                     <li>
                         <lightning-button onclick={sendDocumentFile} class="slds-m-left_x-small" disabled={disablePrintButtonFunction} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>

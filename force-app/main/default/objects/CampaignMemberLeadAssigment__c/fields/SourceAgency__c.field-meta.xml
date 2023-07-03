@@ -11,19 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Covisian</fullName>
+                <fullName>Koinè</fullName>
                 <default>false</default>
-                <label>Covisian</label>
-            </value>
-            <value>
-                <fullName>Koinè Bologna Srl</fullName>
-                <default>false</default>
-                <label>Koinè Bologna Srl</label>
-            </value>
-            <value>
-                <fullName>Koinè Srl</fullName>
-                <default>false</default>
-                <label>Koinè Srl</label>
+                <label>Koinè</label>
             </value>
             <value>
                 <fullName>Linetech</fullName>

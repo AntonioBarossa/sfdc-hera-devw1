@@ -7,6 +7,7 @@ public with sharing class HDT_LC_ReletedListAccount {
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
     private static HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
+
     @AuraEnabled
     public static Contact insertContact(Map<String,String> dataContact, Map<String,String> contactAddress){
        // System.debug('HDT_LC_ReletedListAccount');
@@ -104,7 +105,7 @@ public with sharing class HDT_LC_ReletedListAccount {
         //HRAWRM-500 Start 04/10/2021
         List<AccountContactRelation> listAccountContactRelation = accoContRelQr.getContactsByAccountWithRoles(accountId);
         List<HDT_WRP_AccountContactRelation> lWrap = new List<HDT_WRP_AccountContactRelation>();
-        string currentProfile = HDT_LC_CampaignsController.getCurrentProfile();
+
         for (AccountContactRelation temp : listAccountContactRelation) {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
             Date endDate = temp.EndDate;
@@ -122,12 +123,7 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.endDate               = String.valueOf(endDate.day() + '/' + endDate.month() + '/' + endDate.year());
             n.startDate             = String.valueOf(startDate.day() + '/' + startDate.month() + '/' + startDate.year());
             }
-            if (currentProfile.contains('Partner User')) {
-                n.contactUrl= '/contact/' +temp.ContactId;
-            }
-            else{
-                n.contactUrl= '/lightning/r/Contact/' +temp.ContactId +'/view';//     
-            }
+            n.contactUrl            = '/lightning/r/Contact/' +temp.ContactId +'/view';
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
