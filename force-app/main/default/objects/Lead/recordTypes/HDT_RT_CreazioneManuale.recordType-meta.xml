@@ -1042,6 +1042,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prezzo Netto Relax Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prezzo Netto Special Dual</fullName>
             <default>false</default>
         </values>
