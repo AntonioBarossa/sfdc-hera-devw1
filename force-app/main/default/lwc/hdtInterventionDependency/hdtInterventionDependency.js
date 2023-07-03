@@ -25,7 +25,7 @@ export default class HdtInterventionDependency extends LightningElement {
         else this.materialArray = this.materialArray=val?.split(";");
     }
 
-    @track materialArray;
+    @track materialArray = [];
 
     mapOfPicklistValues = {};
     eventButton;
@@ -34,6 +34,10 @@ export default class HdtInterventionDependency extends LightningElement {
     operationGroups = [];
     operationTypes = [];
     materials = [];
+
+    get materialsSize(){
+        return this.materials.length;
+    }
 
     //subscribe
     @wire(MessageContext)

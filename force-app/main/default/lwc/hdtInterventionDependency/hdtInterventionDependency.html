@@ -66,17 +66,20 @@
         </lightning-combobox>
     -->
 
+    <template lwc:if={materialsSize}>
         <lightning-checkbox-group 
-            name="material"
-            label="Materiali"
-            required
-            disabled={materialsDisabled}
-            options={materials}
-            value={materialArray}
-            message-when-value-missing="Necessario selezionare almeno un materiale"
-            data-id="material"
-            onchange={materialChange}>
+        name="material"
+        label="Materiali"
+        required
+        disabled={materialsDisabled}
+        options={materials}
+        value={materialArray}
+        message-when-value-missing="Necessario selezionare almeno un materiale"
+        data-id="material"
+        onchange={materialChange}>
         </lightning-checkbox-group>
+    </template>
+        
 
 
 <!--     </div>
