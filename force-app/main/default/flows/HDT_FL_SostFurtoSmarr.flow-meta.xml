@@ -95,7 +95,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Switch_Subprocess</targetReference>
+            <targetReference>Crea_ProcessEquipment</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -184,7 +184,7 @@
         <name>Switch_Subprocess</name>
         <label>Switch Subprocess</label>
         <locationX>248</locationX>
-        <locationY>1466</locationY>
+        <locationY>1574</locationY>
         <defaultConnectorLabel>Niente</defaultConnectorLabel>
         <rules>
             <name>Richieste_Rip_Tari</name>
@@ -231,6 +231,23 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_ProcessEquipment</name>
+        <label>Crea ProcessEquipment</label>
+        <locationX>578</locationX>
+        <locationY>1298</locationY>
+        <connector>
+            <targetReference>Switch_Subprocess</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ProcessEquipment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Dato_tecnico_comunale</name>
         <label>Dato tecnico comunale</label>
@@ -462,7 +479,7 @@
         <name>HDT_FL_RiparazioneDotazione</name>
         <label>HDT_FL_RiparazioneDotazione</label>
         <locationX>116</locationX>
-        <locationY>1574</locationY>
+        <locationY>1682</locationY>
         <flowName>HDT_FL_RiparazioneDotazione</flowName>
         <inputAssignments>
             <name>caseId</name>
