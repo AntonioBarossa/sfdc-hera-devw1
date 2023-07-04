@@ -153,6 +153,13 @@
                 <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>07</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>ParentChoice</targetReference>
         </connector>
