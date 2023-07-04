@@ -128,6 +128,14 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 }
             );
         }
+        if('Gestione Dotazioni'.equalsIgnoreCase(caso.Type)){
+            List<String> materials = mapObj.get('herambienteMateriale').split(';');
+            mapObj.put('herambienteMaterialeTcp', materials[0]);
+            for(Integer index = 1;index<materials.size();index++){
+                mapObj.put('herambienteMateriale'+(index+1)+'Tcp', materials[index]);
+            }
+            mapObj.remove('herambienteMateriale');
+        }
         /*  HANDLE APP DATA     */
     }
 }
