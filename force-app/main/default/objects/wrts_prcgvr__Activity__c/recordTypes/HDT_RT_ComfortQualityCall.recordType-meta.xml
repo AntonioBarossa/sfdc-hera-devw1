@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_ComfortQualityCall</fullName>
     <active>true</active>
@@ -2258,6 +2258,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comfort Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contratti%2FBonus Commerciale</fullName>
             <default>false</default>
         </values>
@@ -2291,6 +2295,10 @@
         </values>
         <values>
             <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call</fullName>
             <default>false</default>
         </values>
         <values>
