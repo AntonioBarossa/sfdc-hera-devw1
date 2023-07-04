@@ -6,7 +6,8 @@ public inherited sharing class HDT_QR_Paperless {
         CaseNumber,
         AccountCode__c,
         BillingProfile__r.ContractAccountCode__c,
-        DocumentPaymentMethod__c 
+        DocumentPaymentMethod__c,
+        ContractAccountCode__c 
         FROM Case 
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED 
