@@ -32,13 +32,15 @@ public class HDT_LC_BillingProfileSelectionTst {
         insert accList;
         Id accountId = accList[0].Id;
 
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accountId, null, null, null, null);
+
         //Creo il BillingProfile
         List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accountId);
         insert bpList;
         Id bpId = bpList[0].Id;
         Test.setMock(HTTPCalloutMock.class, new HDT_WS_TestMock());
         Test.startTest();
-        String results = HDT_LC_BillingProfileSelection.handleNewBillingProfile(bpId,accountId);
+        String results = HDT_LC_BillingProfileSelection.handleNewBillingProfile(bpId,accountId,caseList[0].Id);
         Test.stopTest();
     }
     class HDT_WS_TestMock implements HTTPCalloutMock
