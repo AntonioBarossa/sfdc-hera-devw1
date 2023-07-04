@@ -23,7 +23,7 @@ public without sharing class HDT_QBL_BpCaRequest implements Queueable,Database.A
         }else{
             HDT_UTL_Account.makeRequest(account,contact);
         }
-        if (String.isNotBlank(saleId)){
+        if (String.isNotBlank(saleId) && saleId instanceOf Id){
             this.connectAccSpwithBp(saleId);
         }
 

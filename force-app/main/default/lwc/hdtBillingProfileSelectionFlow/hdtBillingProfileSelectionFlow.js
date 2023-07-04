@@ -25,6 +25,7 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @track showSelector;
     @track columns;
     @track showModal = false;
+    @track showSpinner = false;
 
     @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
         wiredCase({ error, data }) {
@@ -77,42 +78,67 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
 
     handleRecordSelection(event){
         this.results = event.detail.selectedRows[0].Id;
+        this.codiceCa = event.detail.selectedRows[0].ContractAccountCode__c;
+        console.log('selected ' + JSON.stringify(event.detail.selectedRows[0]));
+    }
+    
+    validateNext(){
+        return this.commodity && (this.commodity==='Acqua' || this.commodity === 'Teleriscaldamento') && !this.codiceCa?false:true;
     }
     handleNewBilling(event){
-        console.log('event received' + event.detail);
+        this.results =  event.detail;
+        this.handleNext();
+        /*console.log('event received' + event.detail);
         this.results = event.detail;
         if(this.commodity && (this.commodity==='Acqua' || this.commodity === 'Teleriscaldamento')){
-            createBpInSap({
-                billingId:this.results,
-                accountId:this.accountId
-            }).then(result=>{
-                var response = JSON.parse(result);
-                if(response.codiceContatto && response.codiceContatto != null && response.codiceContatto != 'undefined'){
-                    this.codiceCa = response.codiceContatto;
-                    this.handleNext();
-                }else{
-                    this.showMessage('Errore',response.commenti,'error');
-                }
-            }).catch(error => {
-                console.log('error ' + JSON.stringify(error));
-            });
+            this.createBpCa(this.results);
         }else{
             this.handleNext();
-        }
+        }*/
         //this.handleShowModal();
     }
 
     handleShowModal(){
         this.showModal = !this.showModal;
     }
+
+    createBpCa(billingId){
+        this.showSpinner = true;
+        createBpInSap({
+            billingId:billingId,
+            accountId:this.accountId,
+            processId:this.caseId
+        }).then(result=>{
+            var response = JSON.parse(result);
+            if(response.codiceContatto && response.codiceContatto != null && response.codiceContatto != 'undefined'){
+                if(response.id && response.id != null && response.id != 'undefined'){
+                    this.results = response.id;
+                }
+                this.codiceCa = response.codiceContatto;
+                this.handleNext();
+            }else{
+                this.showMessage('Errore',response.commenti,'error');
+            }
+            this.showSpinner = false;
+        }).catch(error => {
+            this.showSpinner = false;
+            this.showMessage('Errore',JSON.stringify(error),'error');
+            console.log('error ' + JSON.stringify(error));
+            
+        });
+    }
    
     handleNext(event){
-        if((this.results != null && this.results != "" && this.results != "undefined") || this.nonReqSelection === true){
-            const navigateNextEvent = new FlowNavigationNextEvent();
-            this.dispatchEvent(navigateNextEvent);
-        }else{
-            this.showMessage('Errore','Attenzione! Seleziona un Billing Profile prima di andare avanti','error');  
+        if(this.validateNext()){
+            if((this.results != null && this.results != "" && this.results != "undefined") || this.nonReqSelection === true){
+                const navigateNextEvent = new FlowNavigationNextEvent();
+                this.dispatchEvent(navigateNextEvent);
+            }else{
+                this.showMessage('Errore','Attenzione! Seleziona un Billing Profile prima di andare avanti','error');  
 
+            }
+        }else{
+            this.createBpCa(this.results);
         }
 
     }
