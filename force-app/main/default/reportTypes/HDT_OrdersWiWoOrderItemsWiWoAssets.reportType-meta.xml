@@ -1596,7 +1596,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwnerLabel__c</field>
+            <field>CompanyOwner__c</field>
             <table>Order</table>
         </columns>
         <columns>
