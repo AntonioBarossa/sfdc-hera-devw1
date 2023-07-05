@@ -966,6 +966,11 @@
                 <label>Verifica Back Office</label>
             </value>
             <value>
+                <fullName>Gestione Rimborso</fullName>
+                <default>false</default>
+                <label>Gestione Rimborso</label>
+            </value>
+            <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
                 <default>false</default>
                 <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
