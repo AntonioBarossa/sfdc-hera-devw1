@@ -502,6 +502,11 @@
     </customSettingAccesses>
     <description>Identico al profilo Hera Standard User, ha la possibilità di inviare comunicazione One Shot grazie al Publisher Layout</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.CompanyOwnerLabel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.DocumentalSystem__c</field>
         <readable>true</readable>
@@ -36169,6 +36174,15 @@
         <uiLoginFlowType>VisualWorkflow</uiLoginFlowType>
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>ExpRavv__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

@@ -35,7 +35,7 @@ public with sharing class HDT_SRV_Paperless {
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'codiceCliente' => currentCase.AccountCode__c,
-            'contoContrattuale' => currentCase.BillingProfile__r.ContractAccountCode__c,
+            'contoContrattuale' => currentCase.ContractAccountCode__c,
             'rds' => currentCase.CaseNumber,
             'modalitaPagamento' => modalitaPagamento
         };
