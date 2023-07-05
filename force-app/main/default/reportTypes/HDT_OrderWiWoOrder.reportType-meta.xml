@@ -697,7 +697,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
+            <field>CompanyOwnerLabel__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -3305,7 +3305,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
+            <field>CompanyOwnerLabel__c</field>
             <table>Order.Orders__r</table>
         </columns>
         <columns>
