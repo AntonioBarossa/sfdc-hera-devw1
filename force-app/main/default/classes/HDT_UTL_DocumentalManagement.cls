@@ -1170,7 +1170,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				if (singleRadio.groupName.contains('326_radio')){
 					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
 						String[] splitString = singleRadio.groupName.split('_');
-						String incrementale = splitString[splitString.size() - 1];
+						String incrementale = splitString[splitString.size() - 1].trim();
 						String actDescriptionIstanza = 'Ritornato correttamente';
 						Order orderToUpdate = orderMap.get('Istanza326_'+incrementale);
 						if(orderToUpdate != null){
@@ -1208,15 +1208,15 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}
 				when 'radio1_HCM','radio1_NS','radio1_EST','radio1_EBT','radio1_HC_vas'{
-					if(hcOneFound) {break;} 
+					if(hcOneFound) {continue;} 
 					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}
 				when 'radio2_HCM','radio2_NS','radio2_EST','radio2_EBT','radio2_HC_vas'{
-					if(hcTwoFound) {break;}
+					if(hcTwoFound) {continue;}
 					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}				
 				when else {
-					break;
+					continue;
 				}
 			}
 		}
@@ -1230,4 +1230,4 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return result;
 	}
 
-}	
+}
