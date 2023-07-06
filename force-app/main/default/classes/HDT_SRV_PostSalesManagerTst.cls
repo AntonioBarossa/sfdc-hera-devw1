@@ -45,6 +45,7 @@ public class HDT_SRV_PostSalesManagerTst {
         caseList2[0].BillingProfile__c  = billingProfileList[0].Id;
         caseList2[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
         caseList2[0].Type  = 'Variazione indirizzo di fornitura';
+        caseList2[0].ShipmentAddressAssign__c  = 'VIA LUZIO DOLCE 15, URBANIA PU, 61049 ITALIA';
         caseList2[0].ServicePoint__c = servPointList[0].Id;
         caseList2[1].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
         caseList2[1].Type = 'Riattivazione Fornitura';
@@ -150,6 +151,25 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione Validata', 'Bozza', rtIdConsAnom, 'HDT_RT_ConsumoAnomaloIdrico','A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo','Documentazione Validata', rtIdConsAnom, 'HDT_RT_ConsumoAnomaloIdrico','A','','','');
 
+    }
+
+    @IsTest
+    static void handleUpdateUnitServicePointTst(){
+        
+        Case currentCase = [SELECT Id, ServicePoint__c, Type, CommodityFormula__c, ShipmentAddressAssign__c FROM Case WHERE Type = 'Variazione indirizzo di fornitura' LIMIT 1];
+        currentCase.Commodity__c = 'Acqua';
+
+        Test.startTest();
+
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('handleUpdateUnitServicePoint', currentCase));
+
+        
+        Case resultCase = [SELECT Id, ServicePoint__r.SupplyAddress__c FROM Case WHERE Id =: currentCase.Id LIMIT 1];
+
+        System.assertEquals(currentCase.ShipmentAddressAssign__c, resultCase.ServicePoint__r.SupplyAddress__c, 'handleUpdateUnitServicePointTst: ShipmentAddressAssign__c != SupplyAddress__c');
+
+        Test.stopTest();
     }
 
     @IsTest

@@ -728,8 +728,49 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             } catch (Exception e) {
                 System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
             }
-            
         }
+
+        if( String.isNotBlank(currentCase.ServicePoint__c) && 
+            String.isNotBlank(currentCase.ShipmentAddressAssign__c) && 
+            'Variazione Indirizzo di fornitura'.equalsIgnoreCase(currentCase.Type) &&
+            ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) )
+        {
+            try {
+                ServicePoint__c sp = [SELECT SupplyStreet__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyProvince__c, SupplyCity__c, SupplyCountry__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED LIMIT 1];
+                Map<String,String> parsedAddress = parseAddress(currentCase.ShipmentAddressAssign__c);
+                sp.SupplyStreet__c = parsedAddress.get('streetName');
+                sp.SupplyStreetName__c = parsedAddress.get('streetName');
+                sp.SupplyStreetNumber__c = parsedAddress.get('streetNumber');
+                sp.SupplyPostalCode__c = parsedAddress.get('postalCode');
+                sp.SupplyProvince__c = parsedAddress.get('province');
+                sp.SupplyCity__c = parsedAddress.get('city');
+                sp.SupplyCountry__c = parsedAddress.get('country');
+                update sp;
+                System.debug('HERE IN THE V.I.F. IF');
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+            }
+        }
+
+    }
+
+    private Map<String,String> parseAddress(String address)
+    {
+        Map<String,String> parsedAddress = new Map<String,String>();
+
+        String street = address.split(',').get(0);
+        parsedAddress.put('streetName', street.replaceAll('[0-9]{1,}|\\-', '').trim() );
+        parsedAddress.put('streetNumber', street.replaceAll('[a-zA-Z]{1,}|\\-', '').trim() );
+        
+        String city = address.split(',').get(1);
+        parsedAddress.put('province', city.right(2).trim() );
+        parsedAddress.put('city', city.Substring(0, city.length()-2).trim() );
+        
+        String state = address.split(',').get(2);
+        parsedAddress.put('country', state.replaceAll('[0-9]{1,}|\\-', '').trim() );
+        parsedAddress.put('postalCode', state.replaceAll('[a-zA-Z]{1,}|\\-', '').trim() );
+
+        return parsedAddress;
     }
 
     //metodo che gestisce la creazione di una activity per una determinata casistica del processo di Modifica Unità Immobiliari Acqua
