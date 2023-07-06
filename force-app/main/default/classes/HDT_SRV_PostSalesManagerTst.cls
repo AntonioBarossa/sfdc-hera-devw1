@@ -158,6 +158,12 @@ public class HDT_SRV_PostSalesManagerTst {
         
         Case currentCase = [SELECT Id, ServicePoint__c, Type, CommodityFormula__c, ShipmentAddressAssign__c FROM Case WHERE Type = 'Variazione indirizzo di fornitura' LIMIT 1];
         currentCase.Commodity__c = 'Acqua';
+        currentCase.SupplyStreetName__c = 'VIA LUZIO DOLCE';
+        currentCase.SupplyStreetNumber__c = '15';
+        currentCase.SupplyPostalCode__c = '61049';
+        currentCase.SupplyProvince__c = 'PU';
+        currentCase.SupplyCity__c = 'URBANIA';
+        currentCase.SupplyCountry__c = 'ITALIA';
 
         Test.startTest();
 
@@ -167,7 +173,7 @@ public class HDT_SRV_PostSalesManagerTst {
         
         Case resultCase = [SELECT Id, ServicePoint__r.SupplyAddress__c FROM Case WHERE Id =: currentCase.Id LIMIT 1];
 
-        System.assertEquals(currentCase.ShipmentAddressAssign__c, resultCase.ServicePoint__r.SupplyAddress__c, 'handleUpdateUnitServicePointTst: ShipmentAddressAssign__c != SupplyAddress__c');
+        System.assertEquals(currentCase.ShipmentAddressAssign__c, resultCase.ServicePoint__r.SupplyAddress__c, 'handleUpdateUnitServicePointTst: SupplyAddress__c did not updated');
 
         Test.stopTest();
     }
