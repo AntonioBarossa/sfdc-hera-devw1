@@ -43,6 +43,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                         System.debug(LoggingLevel.DEBUG, 'Response OK: commento da SAP: ' + (String)data.get('commenti'));
                         response.success = true;
                         response.message = 'OK';
+                        if (data.get('commenti') == null) {
+                            okFromSap = false;
+                        }
                     }
                 }
             } else {
