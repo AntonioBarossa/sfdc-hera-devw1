@@ -40,6 +40,7 @@ export default class HdtCampaignMemberVenditaTeleselling extends LightningElemen
     @track endCallDateTime;
     @track waitingTime;
     @track callDuration;
+    gettingEcid=true;
 
     enableClickToCall(){
         getPhoneNumber({ 'campaignMemberId': this.recordId}).then(data => {
@@ -346,6 +347,7 @@ export default class HdtCampaignMemberVenditaTeleselling extends LightningElemen
         getEcid({ 'campaignMemberId': this.recordId}).then(data => {
             console.log("getEcid launch SUCCESS --> " + JSON.stringify(data));
             this.ecid = data;
+            this.gettingEcid=false;
             console.log('this.ecid --> '+this.ecid);
         }).catch(err => {
             console.log(err);
