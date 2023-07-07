@@ -376,7 +376,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>Inviata a SAP</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
