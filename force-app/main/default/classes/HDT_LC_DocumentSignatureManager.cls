@@ -26,16 +26,17 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     public static void createActivityForChangeAddress(String recordId){
         List<Order> ordIdList = [ SELECT Id, ServicePoint__c, ServicePoint__r.IsAddressChanged__c FROM Order WHERE ParentOrder__c = :recordId 
                                             AND ServicePoint__r.IsAddressChanged__c = true 
-                                            AND ( Process__c = 'Subentro' OR Process__c = 'Subentro Cambio Cat.Tariffa' OR
-                                                (
-                                                    ( Process__c = 'Prima Attivazione' OR
-                                                    Process__c = 'Voltura' OR
-                                                    Process__c = 'Cambio Offerta' OR
-                                                    Process__c = 'Voltura - Subentro Scarico produttivo' OR
-                                                    Process__c = 'Connessione con Attivazione' ) AND 
-                                                    ( Commodity__c = 'Acqua' OR Commodity__c = 'Ambiente' OR Commodity__c = 'Teleriscaldamento' )
-                                                )
-                                            ) WITH SECURITY_ENFORCED ];
+                                            AND 
+                                                ( Process__c = 'Prima Attivazione' OR
+                                                Process__c = 'Voltura' OR
+                                                Process__c = 'Subentro' OR
+                                                Process__c = 'Subentro Cambio Cat.Tariffa' OR
+                                                Process__c = 'Cambio Offerta' OR
+                                                Process__c = 'Voltura - Subentro Scarico produttivo' OR
+                                                Process__c = 'Connessione con Attivazione' ) 
+                                            AND 
+                                                ( Commodity__c = 'Acqua' OR Commodity__c = 'Ambiente' OR Commodity__c = 'Teleriscaldamento' )
+                                            WITH SECURITY_ENFORCED ];
         
         if ( !ordIdList.isEmpty())
         {
