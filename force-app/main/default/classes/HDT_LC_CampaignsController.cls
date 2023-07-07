@@ -663,6 +663,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             req.setBody(params);
             req.setHeader('Accept', 'application/json');
             req.setHeader('Content-Type', 'application/json');
+            req.setTimeout(28000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
             return res.getBody();
