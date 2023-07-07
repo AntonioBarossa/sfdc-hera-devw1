@@ -2,10 +2,240 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <assignments>
+        <name>AssigmentCoppiDonna</name>
+        <label>AssigmentCoppiDonna</label>
+        <locationX>13470</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiDonna</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiDonna_0</name>
+        <label>AssigmentCoppiDonna</label>
+        <locationX>22798</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiDonna_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiMTB</name>
+        <label>AssigmentCoppiMTB</label>
+        <locationX>14526</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiMTB</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiMTB_0</name>
+        <label>AssigmentCoppiMTB</label>
+        <locationX>23854</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiMTB_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiRambla</name>
+        <label>AssigmentCoppiRambla</label>
+        <locationX>14262</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiRambla</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiRambla_0</name>
+        <label>AssigmentCoppiRambla</label>
+        <locationX>23590</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiRambla_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiUomo</name>
+        <label>AssigmentCoppiUomo</label>
+        <locationX>13734</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiUomo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentCoppiUomo_0</name>
+        <label>AssigmentCoppiUomo</label>
+        <locationX>23062</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanCoppiUomo_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentFoldedCoppi</name>
+        <label>AssigmentFoldedCoppi</label>
+        <locationX>13998</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanFoldedCoppi</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigmentFoldedCoppi_0</name>
+        <label>AssigmentFoldedCoppi</label>
+        <locationX>23326</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>booleanFoldedCoppi_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignMonopattinoElettrico</name>
         <label>assignMonopattinoElettrico</label>
-        <locationX>8410</locationX>
-        <locationY>1814</locationY>
+        <locationX>10918</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionHeraMonopattinoElettrico</assignToReference>
             <operator>Add</operator>
@@ -27,8 +257,8 @@
     <assignments>
         <name>assignMonopattinoElettrico_0</name>
         <label>assignMonopattinoElettrico</label>
-        <locationX>16418</locationX>
-        <locationY>1814</locationY>
+        <locationX>20246</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionHeraMonopattinoElettrico_0</assignToReference>
             <operator>Add</operator>
@@ -50,8 +280,8 @@
     <assignments>
         <name>aumenataContatoreSanificatore_OB</name>
         <label>aumenataContatoreSanificatore_OB</label>
-        <locationX>17298</locationX>
-        <locationY>1814</locationY>
+        <locationX>21126</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore_0</assignToReference>
             <operator>Add</operator>
@@ -66,8 +296,8 @@
     <assignments>
         <name>aumentaContatoreCityBikeOmega</name>
         <label>aumentaContatoreCityBikeOmega</label>
-        <locationX>10434</locationX>
-        <locationY>1814</locationY>
+        <locationX>12942</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>cityBikeOmegaCounter</assignToReference>
             <operator>Add</operator>
@@ -89,8 +319,8 @@
     <assignments>
         <name>aumentaContatoreCityBikeUnisex</name>
         <label>aumentaContatoreCityBikeUnisex</label>
-        <locationX>10698</locationX>
-        <locationY>1814</locationY>
+        <locationX>13206</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>cityBikeUnisexCounter</assignToReference>
             <operator>Add</operator>
@@ -112,8 +342,8 @@
     <assignments>
         <name>aumentaContatoreERUN</name>
         <label>aumentaContatoreERUN</label>
-        <locationX>8058</locationX>
-        <locationY>1814</locationY>
+        <locationX>10566</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeErunCounter</assignToReference>
             <operator>Add</operator>
@@ -135,8 +365,8 @@
     <assignments>
         <name>aumentaContatoreERUN_0</name>
         <label>aumentaContatoreERUN</label>
-        <locationX>16066</locationX>
-        <locationY>1814</locationY>
+        <locationX>19894</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeErunCounter_1</assignToReference>
             <operator>Add</operator>
@@ -158,8 +388,8 @@
     <assignments>
         <name>aumentaContatoreESLEEK</name>
         <label>aumentaContatoreESLEEK</label>
-        <locationX>8850</locationX>
-        <locationY>1814</locationY>
+        <locationX>11358</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEsleekCounter</assignToReference>
             <operator>Add</operator>
@@ -181,8 +411,8 @@
     <assignments>
         <name>aumentaContatoreESLEEK_0</name>
         <label>aumentaContatoreESLEEK</label>
-        <locationX>16858</locationX>
-        <locationY>1814</locationY>
+        <locationX>20686</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEsleekCounter_1</assignToReference>
             <operator>Add</operator>
@@ -204,8 +434,8 @@
     <assignments>
         <name>aumentaContatoreESPIKE</name>
         <label>aumentaContatoreESPIKE</label>
-        <locationX>8586</locationX>
-        <locationY>1814</locationY>
+        <locationX>11094</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEspikeCounter</assignToReference>
             <operator>Add</operator>
@@ -227,8 +457,8 @@
     <assignments>
         <name>aumentaContatoreESPIKE_0</name>
         <label>aumentaContatoreESPIKE</label>
-        <locationX>16594</locationX>
-        <locationY>1814</locationY>
+        <locationX>20422</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEspikeCounter_1</assignToReference>
             <operator>Add</operator>
@@ -250,8 +480,8 @@
     <assignments>
         <name>aumentaContatoreEWAY</name>
         <label>aumentaContatoreEWAY</label>
-        <locationX>7794</locationX>
-        <locationY>1814</locationY>
+        <locationX>10302</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEwayCounter</assignToReference>
             <operator>Add</operator>
@@ -273,8 +503,8 @@
     <assignments>
         <name>aumentaContatoreEWAY_0</name>
         <label>aumentaContatoreEWAY</label>
-        <locationX>15802</locationX>
-        <locationY>1814</locationY>
+        <locationX>19630</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeEwayCounter_1</assignToReference>
             <operator>Add</operator>
@@ -296,8 +526,8 @@
     <assignments>
         <name>aumentaContatoreFLIPPER</name>
         <label>aumentaContatoreFLIPPER</label>
-        <locationX>18178</locationX>
-        <locationY>1814</locationY>
+        <locationX>22006</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
             <operator>Add</operator>
@@ -319,8 +549,8 @@
     <assignments>
         <name>aumentaContatoreFoldedFlipper</name>
         <label>aumentaContatoreFoldedFlipper</label>
-        <locationX>9642</locationX>
-        <locationY>1814</locationY>
+        <locationX>12150</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>foldedFlipperCounter</assignToReference>
             <operator>Add</operator>
@@ -342,8 +572,8 @@
     <assignments>
         <name>aumentaContatoreGraziellaGenio</name>
         <label>aumentaContatoreGraziellaGenio</label>
-        <locationX>8322</locationX>
-        <locationY>1814</locationY>
+        <locationX>10830</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeGraziellaCounter</assignToReference>
             <operator>Add</operator>
@@ -365,8 +595,8 @@
     <assignments>
         <name>aumentaContatoreGraziellaGenio_0</name>
         <label>aumentaContatoreGraziellaGenio</label>
-        <locationX>16330</locationX>
-        <locationY>1814</locationY>
+        <locationX>20158</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>ebikeGraziellaCounter_1</assignToReference>
             <operator>Add</operator>
@@ -388,8 +618,8 @@
     <assignments>
         <name>aumentaContatoreLampada</name>
         <label>aumentaContatoreLampada</label>
-        <locationX>9290</locationX>
-        <locationY>1814</locationY>
+        <locationX>11798</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica</assignToReference>
             <operator>Add</operator>
@@ -404,8 +634,8 @@
     <assignments>
         <name>aumentaContatoreLampada_AZ</name>
         <label>aumentaContatoreLampada_AZ</label>
-        <locationX>21434</locationX>
-        <locationY>1694</locationY>
+        <locationX>26450</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica_0_0</assignToReference>
             <operator>Add</operator>
@@ -420,8 +650,8 @@
     <assignments>
         <name>aumentaContatoreLampada_OB</name>
         <label>aumentaContatoreLampada_OB</label>
-        <locationX>17562</locationX>
-        <locationY>1814</locationY>
+        <locationX>21390</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica_0</assignToReference>
             <operator>Add</operator>
@@ -436,8 +666,8 @@
     <assignments>
         <name>aumentaContatoreMountainBikePerformance_0</name>
         <label>aumentaContatoreMountainBikePerformance</label>
-        <locationX>10170</locationX>
-        <locationY>1814</locationY>
+        <locationX>12678</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>mountainBikePerfomanceCounter</assignToReference>
             <operator>Add</operator>
@@ -459,8 +689,8 @@
     <assignments>
         <name>aumentaContatoreNUVOLADONNA</name>
         <label>aumentaContatoreNUVOLADONNA</label>
-        <locationX>9114</locationX>
-        <locationY>1814</locationY>
+        <locationX>11622</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>nuvolaDonnaCounter</assignToReference>
             <operator>Add</operator>
@@ -482,8 +712,8 @@
     <assignments>
         <name>aumentaContatoreNUVOLAUOMO</name>
         <label>aumentaContatoreNUVOLAUOMO</label>
-        <locationX>9378</locationX>
-        <locationY>1814</locationY>
+        <locationX>11886</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>nuvolaUomoCounter</assignToReference>
             <operator>Add</operator>
@@ -505,8 +735,8 @@
     <assignments>
         <name>aumentaContatoreOMEGA</name>
         <label>aumentaContatoreOMEGA</label>
-        <locationX>17914</locationX>
-        <locationY>1814</locationY>
+        <locationX>21742</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
             <operator>Add</operator>
@@ -528,8 +758,8 @@
     <assignments>
         <name>aumentaContatorePERFORMANCE</name>
         <label>aumentaContatorePERFORMANCE</label>
-        <locationX>18706</locationX>
-        <locationY>1814</locationY>
+        <locationX>22534</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
             <operator>Add</operator>
@@ -551,8 +781,8 @@
     <assignments>
         <name>aumentaContatorePrestigeUomo</name>
         <label>aumentaContatorePrestigeUomo</label>
-        <locationX>17386</locationX>
-        <locationY>1814</locationY>
+        <locationX>21214</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>nuvolaUomoCounter_0</assignToReference>
             <operator>Add</operator>
@@ -574,8 +804,8 @@
     <assignments>
         <name>aumentaContatoreSanificatore_AZ</name>
         <label>aumentaContatoreSanificatore_AZ</label>
-        <locationX>21170</locationX>
-        <locationY>1694</locationY>
+        <locationX>26186</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore_0_0</assignToReference>
             <operator>Add</operator>
@@ -590,8 +820,8 @@
     <assignments>
         <name>aumentaContatoreSanificatori</name>
         <label>aumentaContatoreSanificatori</label>
-        <locationX>9554</locationX>
-        <locationY>1814</locationY>
+        <locationX>12062</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore</assignToReference>
             <operator>Add</operator>
@@ -606,8 +836,8 @@
     <assignments>
         <name>aumentaContatoreTrekkingAlpha</name>
         <label>aumentaContatoreTrekkingAlpha</label>
-        <locationX>9906</locationX>
-        <locationY>1814</locationY>
+        <locationX>12414</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>trekkingAlphaCounter</assignToReference>
             <operator>Add</operator>
@@ -629,8 +859,8 @@
     <assignments>
         <name>aumentaContatoreUNISEXC4</name>
         <label>aumentaContatoreUNISEXC4</label>
-        <locationX>17650</locationX>
-        <locationY>1814</locationY>
+        <locationX>21478</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
             <operator>Add</operator>
@@ -652,8 +882,8 @@
     <assignments>
         <name>aumentaNuvolaDonna</name>
         <label>aumentaNuvolaDonna</label>
-        <locationX>17122</locationX>
-        <locationY>1814</locationY>
+        <locationX>20950</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>nuvolaDonnaCounter_0</assignToReference>
             <operator>Add</operator>
@@ -675,8 +905,8 @@
     <assignments>
         <name>aumentaTREKKINGALPHA</name>
         <label>aumentaTREKKINGALPHA</label>
-        <locationX>18442</locationX>
-        <locationY>1814</locationY>
+        <locationX>22270</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
             <operator>Add</operator>
@@ -698,8 +928,8 @@
     <assignments>
         <name>countNormalWallbox</name>
         <label>countNormalWallbox</label>
-        <locationX>4538</locationX>
-        <locationY>1934</locationY>
+        <locationX>6518</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>NormalWallboxCounter</assignToReference>
             <operator>Add</operator>
@@ -714,8 +944,8 @@
     <assignments>
         <name>countNormalWallbox_0</name>
         <label>countNormalWallbox</label>
-        <locationX>19498</locationX>
-        <locationY>1934</locationY>
+        <locationX>25306</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>NormalWallboxCounter</assignToReference>
             <operator>Add</operator>
@@ -731,7 +961,7 @@
         <name>countTermostatiConInstallazione</name>
         <label>countTermostatiConInstallazione</label>
         <locationX>1282</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>termostatiConInstallazioneCounter</assignToReference>
             <operator>Add</operator>
@@ -746,8 +976,8 @@
     <assignments>
         <name>countTermostatiConInstallazione_1</name>
         <label>countTermostatiConInstallazione</label>
-        <locationX>10962</locationX>
-        <locationY>1934</locationY>
+        <locationX>13470</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>termostatiConInstallazioneCounter_1</assignToReference>
             <operator>Add</operator>
@@ -763,7 +993,7 @@
         <name>countTermostatiSenzaInstallazione</name>
         <label>countTermostatiSenzaInstallazione</label>
         <locationX>1546</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>termostatiSenzaInstallazioneCounter</assignToReference>
             <operator>Add</operator>
@@ -778,8 +1008,8 @@
     <assignments>
         <name>countTermostatiSenzaInstallazione_1</name>
         <label>countTermostatiSenzaInstallazione</label>
-        <locationX>11226</locationX>
-        <locationY>1814</locationY>
+        <locationX>13734</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>termostatiSenzaInstallazioneCounter_1</assignToReference>
             <operator>Add</operator>
@@ -792,10 +1022,106 @@
         </connector>
     </assignments>
     <assignments>
+        <name>countWallBoxNoSim</name>
+        <label>countWallBoxNoSim</label>
+        <locationX>5726</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxNoSim</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>countWallBoxNoSim_0</name>
+        <label>countWallBoxNoSim</label>
+        <locationX>24514</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxNoSim</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>countWallBoxPotenza</name>
+        <label>countWallBoxPotenza</label>
+        <locationX>5990</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxPotenza</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>countWallBoxPotenza_0</name>
+        <label>countWallBoxPotenza</label>
+        <locationX>24778</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxPotenza</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>countWallBoxPotenzaCavo</name>
+        <label>countWallBoxPotenzaCavo</label>
+        <locationX>6254</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxPotenzaCavo</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>countWallBoxPotenzaCavo_0</name>
+        <label>countWallBoxPotenzaCavo</label>
+        <locationX>25042</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>counterWallBoxPotenzaCavo</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>countWallboxRfid</name>
         <label>countWallboxRfid</label>
-        <locationX>4010</locationX>
-        <locationY>1934</locationY>
+        <locationX>5198</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>WallboxRfidCounter</assignToReference>
             <operator>Add</operator>
@@ -810,8 +1136,8 @@
     <assignments>
         <name>countWallboxRfid_0</name>
         <label>countWallboxRfid</label>
-        <locationX>18970</locationX>
-        <locationY>1934</locationY>
+        <locationX>23986</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>WallboxRfidCounter</assignToReference>
             <operator>Add</operator>
@@ -826,8 +1152,8 @@
     <assignments>
         <name>isNewClientAssigment</name>
         <label>isNewClientAssigment</label>
-        <locationX>14988</locationX>
-        <locationY>998</locationY>
+        <locationX>18750</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
             <operator>Assign</operator>
@@ -842,8 +1168,8 @@
     <assignments>
         <name>isOldClientAssignment</name>
         <label>isOldClientAssignment</label>
-        <locationX>15252</locationX>
-        <locationY>998</locationY>
+        <locationX>19014</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
             <operator>Assign</operator>
@@ -858,8 +1184,8 @@
     <assignments>
         <name>outputVasTypeAssignment</name>
         <label>outputVasTypeAssignment</label>
-        <locationX>15120</locationX>
-        <locationY>518</locationY>
+        <locationX>18882</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>outputVasType</assignToReference>
             <operator>Assign</operator>
@@ -874,8 +1200,8 @@
     <assignments>
         <name>setInstallazioneWallbox</name>
         <label>setInstallazioneWallbox</label>
-        <locationX>4406</locationX>
-        <locationY>2366</locationY>
+        <locationX>6188</locationX>
+        <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>hasInstallazioneWallbox</assignToReference>
             <operator>Assign</operator>
@@ -890,8 +1216,8 @@
     <assignments>
         <name>setInstallazioneWallbox_0</name>
         <label>setInstallazioneWallbox</label>
-        <locationX>19366</locationX>
-        <locationY>2366</locationY>
+        <locationX>24976</locationX>
+        <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>hasInstallazioneWallbox</assignToReference>
             <operator>Assign</operator>
@@ -906,8 +1232,8 @@
     <assignments>
         <name>setKitMontaggioATerra</name>
         <label>setKitMontaggioATerra</label>
-        <locationX>4274</locationX>
-        <locationY>1934</locationY>
+        <locationX>5462</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>hasKitMontaggioTerra</assignToReference>
             <operator>Assign</operator>
@@ -922,8 +1248,8 @@
     <assignments>
         <name>setKitMontaggioATerra_0</name>
         <label>setKitMontaggioATerra</label>
-        <locationX>19234</locationX>
-        <locationY>1934</locationY>
+        <locationX>24250</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>hasKitMontaggioTerra</assignToReference>
             <operator>Assign</operator>
@@ -939,7 +1265,7 @@
         <name>setTermostatoConInstallazioneTrue</name>
         <label>setTermostatoConInstallazioneTrue</label>
         <locationX>1282</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>termostatoConInstallazione</assignToReference>
             <operator>Assign</operator>
@@ -954,8 +1280,8 @@
     <assignments>
         <name>setTermostatoConInstallazioneTrue_1</name>
         <label>setTermostatoConInstallazioneTrue</label>
-        <locationX>10962</locationX>
-        <locationY>1814</locationY>
+        <locationX>13470</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>termostatoConInstallazione_1</assignToReference>
             <operator>Assign</operator>
@@ -970,8 +1296,8 @@
     <decisions>
         <name>Canale</name>
         <label>Canale</label>
-        <locationX>9730</locationX>
-        <locationY>1334</locationY>
+        <locationX>12238</locationX>
+        <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0_0</targetReference>
         </defaultConnector>
@@ -1002,8 +1328,8 @@
     <decisions>
         <name>Categoria</name>
         <label>Categoria</label>
-        <locationX>15120</locationX>
-        <locationY>1214</locationY>
+        <locationX>18882</locationX>
+        <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0</targetReference>
         </defaultConnector>
@@ -1027,8 +1353,8 @@
     <decisions>
         <name>checkForEbike</name>
         <label>checkForEbike</label>
-        <locationX>9378</locationX>
-        <locationY>1694</locationY>
+        <locationX>12546</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_2</targetReference>
         </defaultConnector>
@@ -1241,12 +1567,87 @@
             </connector>
             <label>isCITYBIKE_UNISEX</label>
         </rules>
+        <rules>
+            <name>isCoppiDonna</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI CITY BIKE DONNA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiDonna</targetReference>
+            </connector>
+            <label>isCoppiDonna</label>
+        </rules>
+        <rules>
+            <name>isCoppiUomo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI CITY BIKE UOMO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiUomo</targetReference>
+            </connector>
+            <label>isCoppiUomo</label>
+        </rules>
+        <rules>
+            <name>isFoldedCoppi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FOLDED COPPI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentFoldedCoppi</targetReference>
+            </connector>
+            <label>isFoldedCoppi</label>
+        </rules>
+        <rules>
+            <name>isCoppiRambla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPITREKKING RAMBLA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiRambla</targetReference>
+            </connector>
+            <label>isCoppiRambla</label>
+        </rules>
+        <rules>
+            <name>isCoppiMTB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI MTB</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiMTB</targetReference>
+            </connector>
+            <label>isCoppiMTB</label>
+        </rules>
     </decisions>
     <decisions>
         <name>checkForEbike_0</name>
         <label>checkForEbike</label>
-        <locationX>17386</locationX>
-        <locationY>1694</locationY>
+        <locationX>21874</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_2_0</targetReference>
         </defaultConnector>
@@ -1459,12 +1860,87 @@
             </connector>
             <label>isMOUNTAIN_EBIKE_PERFORMANCE_OB</label>
         </rules>
+        <rules>
+            <name>isCoppiDonna_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI CITY BIKE DONNA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiDonna_0</targetReference>
+            </connector>
+            <label>isCoppiDonna</label>
+        </rules>
+        <rules>
+            <name>isCoppiUomo_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI CITY BIKE UOMO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiUomo_0</targetReference>
+            </connector>
+            <label>isCoppiUomo</label>
+        </rules>
+        <rules>
+            <name>isFoldedCoppi_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FOLDED COPPI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentFoldedCoppi_0</targetReference>
+            </connector>
+            <label>isFoldedCoppi</label>
+        </rules>
+        <rules>
+            <name>isCoppiRambla_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPITREKKING RAMBLA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiRambla_0</targetReference>
+            </connector>
+            <label>isCoppiRambla</label>
+        </rules>
+        <rules>
+            <name>isCoppiMTB_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>COPPI MTB</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssigmentCoppiMTB_0</targetReference>
+            </connector>
+            <label>isCoppiMTB</label>
+        </rules>
     </decisions>
     <decisions>
         <name>checkForInstallazione</name>
         <label>checkForInstallazione</label>
-        <locationX>4538</locationX>
-        <locationY>2246</locationY>
+        <locationX>6320</locationX>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_1</targetReference>
         </defaultConnector>
@@ -1488,8 +1964,8 @@
     <decisions>
         <name>checkForInstallazione_0</name>
         <label>checkForInstallazione</label>
-        <locationX>19498</locationX>
-        <locationY>2246</locationY>
+        <locationX>25108</locationX>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_1_0</targetReference>
         </defaultConnector>
@@ -1513,8 +1989,8 @@
     <decisions>
         <name>checkLampadaDiRicarica</name>
         <label>checkLampadaDiRicarica</label>
-        <locationX>9554</locationX>
-        <locationY>1694</locationY>
+        <locationX>12062</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_4</targetReference>
         </defaultConnector>
@@ -1553,8 +2029,8 @@
     <decisions>
         <name>checklampadadiRicarica_AZ</name>
         <label>checklampadadiRicarica_AZ</label>
-        <locationX>21434</locationX>
-        <locationY>1574</locationY>
+        <locationX>26450</locationX>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct4_0_0</targetReference>
         </defaultConnector>
@@ -1593,8 +2069,8 @@
     <decisions>
         <name>checkLampadaDiRicarica_OB</name>
         <label>checkLampadaDiRicarica_OB</label>
-        <locationX>17562</locationX>
-        <locationY>1694</locationY>
+        <locationX>21390</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_4_0</targetReference>
         </defaultConnector>
@@ -1633,8 +2109,8 @@
     <decisions>
         <name>foundMonopattinoElettrico</name>
         <label>checkMonopattinoElettrico</label>
-        <locationX>8542</locationX>
-        <locationY>1694</locationY>
+        <locationX>11050</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_3</targetReference>
         </defaultConnector>
@@ -1658,8 +2134,8 @@
     <decisions>
         <name>foundMonopattinoElettrico_0</name>
         <label>checkMonopattinoElettrico</label>
-        <locationX>16550</locationX>
-        <locationY>1694</locationY>
+        <locationX>20378</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_3_0</targetReference>
         </defaultConnector>
@@ -1684,7 +2160,7 @@
         <name>hasInstallazione</name>
         <label>hasInstallazione</label>
         <locationX>1546</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_0</targetReference>
         </defaultConnector>
@@ -1737,8 +2213,8 @@
     <decisions>
         <name>hasInstallazione_0</name>
         <label>hasInstallazione</label>
-        <locationX>11094</locationX>
-        <locationY>1694</locationY>
+        <locationX>13602</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>countTermostatiSenzaInstallazione_1</targetReference>
         </defaultConnector>
@@ -1762,8 +2238,8 @@
     <decisions>
         <name>hasRFID</name>
         <label>hasRFID</label>
-        <locationX>4274</locationX>
-        <locationY>1814</locationY>
+        <locationX>5858</locationX>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>countNormalWallbox</targetReference>
         </defaultConnector>
@@ -1798,12 +2274,57 @@
             </connector>
             <label>foundKitMontaggioATerra</label>
         </rules>
+        <rules>
+            <name>found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>NO SIM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxNoSim</targetReference>
+            </connector>
+            <label>foundWallBoxNoSim</label>
+        </rules>
+        <rules>
+            <name>foundPotenza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WALL BOX 7.4 MOD POTENZA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxPotenza</targetReference>
+            </connector>
+            <label>foundPotenza</label>
+        </rules>
+        <rules>
+            <name>foundPotenzaCavo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CAVO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxPotenzaCavo</targetReference>
+            </connector>
+            <label>foundPotenzaCavo</label>
+        </rules>
     </decisions>
     <decisions>
         <name>hasRFID_0</name>
         <label>hasRFID</label>
-        <locationX>19234</locationX>
-        <locationY>1814</locationY>
+        <locationX>24646</locationX>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>countNormalWallbox_0</targetReference>
         </defaultConnector>
@@ -1838,12 +2359,57 @@
             </connector>
             <label>foundKitMontaggioATerra</label>
         </rules>
+        <rules>
+            <name>foundWallBoxNoSim_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>NO SIM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxNoSim_0</targetReference>
+            </connector>
+            <label>foundWallBoxNoSim</label>
+        </rules>
+        <rules>
+            <name>foundPotenza_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WALL BOX 7.4 MOD POTENZA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxPotenza_0</targetReference>
+            </connector>
+            <label>foundPotenza</label>
+        </rules>
+        <rules>
+            <name>foundPotenzaCavo_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CAVO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallBoxPotenzaCavo_0</targetReference>
+            </connector>
+            <label>foundPotenzaCavo</label>
+        </rules>
     </decisions>
     <decisions>
         <name>hasWallbox</name>
         <label>hasWallbox</label>
-        <locationX>4538</locationX>
-        <locationY>1694</locationY>
+        <locationX>6320</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>checkForInstallazione</targetReference>
         </defaultConnector>
@@ -1874,8 +2440,8 @@
     <decisions>
         <name>hasWallbox_0</name>
         <label>hasWallbox</label>
-        <locationX>19498</locationX>
-        <locationY>1694</locationY>
+        <locationX>25108</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>checkForInstallazione_0</targetReference>
         </defaultConnector>
@@ -1906,8 +2472,8 @@
     <decisions>
         <name>isVas</name>
         <label>isVas</label>
-        <locationX>14570</locationX>
-        <locationY>2894</locationY>
+        <locationX>18332</locationX>
+        <locationY>2582</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -1928,8 +2494,8 @@
     <decisions>
         <name>isVas_0</name>
         <label>isVas</label>
-        <locationX>4890</locationX>
-        <locationY>2894</locationY>
+        <locationX>6144</locationX>
+        <locationY>2582</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_0</name>
@@ -1950,8 +2516,8 @@
     <decisions>
         <name>Nuovo_o_Vecchio_Cliente</name>
         <label>Nuovo o Vecchio Cliente</label>
-        <locationX>15120</locationX>
-        <locationY>878</locationY>
+        <locationX>18882</locationX>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>isOldClientAssignment</targetReference>
         </defaultConnector>
@@ -1975,8 +2541,8 @@
     <decisions>
         <name>Tipo_VAS</name>
         <label>Tipo VAS</label>
-        <locationX>4890</locationX>
-        <locationY>1454</locationY>
+        <locationX>6144</locationX>
+        <locationY>1298</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Hera_Led_Smart</name>
@@ -2192,8 +2758,8 @@
     <decisions>
         <name>Tipo_VAS_0</name>
         <label>Tipo VAS</label>
-        <locationX>20510</locationX>
-        <locationY>1334</locationY>
+        <locationX>25526</locationX>
+        <locationY>1190</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>HERA_CONTAWATT_1</name>
@@ -2289,8 +2855,8 @@
     <decisions>
         <name>Tipo_VAS_0_0</name>
         <label>Tipo VAS</label>
-        <locationX>14570</locationX>
-        <locationY>1454</locationY>
+        <locationX>18332</locationX>
+        <locationY>1298</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Hera_Led_Smart_0</name>
@@ -2515,14 +3081,32 @@
     <formulas>
         <name>costoTotaleWallboxNoRfid</name>
         <dataType>Number</dataType>
-        <expression>1399*{!NormalWallboxCounter}+IF({!hasInstallazioneWallbox}, 399*{!NormalWallboxCounter}, 0)</expression>
-        <scale>2</scale>
+        <expression>1399*{!NormalWallboxCounter}+IF({!hasInstallazioneWallbox}, 499*{!NormalWallboxCounter}, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>costoTotaleWallBoxNoSim</name>
+        <dataType>Number</dataType>
+        <expression>1099*{!counterWallBoxNoSim}+IF({!hasInstallazioneWallbox}, 499*{!counterWallBoxNoSim}, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>costoTotaleWallBoxPotenza</name>
+        <dataType>Number</dataType>
+        <expression>1499*{!counterWallBoxPotenza}+IF({!hasInstallazioneWallbox}, 499*{!counterWallBoxPotenza}, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>costoTotaleWallBoxPotenzaCavo</name>
+        <dataType>Number</dataType>
+        <expression>1649*{!counterWallBoxPotenzaCavo}+IF({!hasInstallazioneWallbox}, 499*{!counterWallBoxPotenzaCavo}, 0)</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>costoTotaleWallboxRfid</name>
         <dataType>Number</dataType>
-        <expression>1599*{!WallboxRfidCounter}+IF({!hasInstallazioneWallbox}, 399*{!WallboxRfidCounter}, 0)</expression>
-        <scale>2</scale>
+        <expression>1599*{!WallboxRfidCounter}+IF({!hasInstallazioneWallbox}, 499*{!WallboxRfidCounter}, 0)</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>DataOggi</name>
@@ -2666,28 +3250,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <formulas>
         <name>totaleCostoMonopattiniElettrici</name>
         <dataType>Number</dataType>
-        <expression>549 * {!counterMonopattinoElettrico}</expression>
-        <scale>2</scale>
+        <expression>649 * {!counterMonopattinoElettrico}</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleCostoMonopattiniElettrici1</name>
         <dataType>Number</dataType>
-        <expression>549 * {!counterMonopattinoElettrico_0}</expression>
-        <scale>2</scale>
+        <expression>649 * {!counterMonopattinoElettrico_0}</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totalNumberWallBox</name>
         <dataType>Number</dataType>
-        <expression>{!NormalWallboxCounter}+{!WallboxRfidCounter}</expression>
-        <scale>2</scale>
+        <expression>{!NormalWallboxCounter}+{!WallboxRfidCounter}+{!counterWallBoxNoSim}+{!counterWallBoxPotenza}+{!counterWallBoxPotenzaCavo}</expression>
+        <scale>0</scale>
     </formulas>
     <interviewLabel>HDT Script Gestione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT Script - VAS</label>
     <loops>
         <name>ForEachOrderProduct4_0_0</name>
         <label>ForEachOrderProduct4_0_0</label>
-        <locationX>21082</locationX>
-        <locationY>1454</locationY>
+        <locationX>26098</locationX>
+        <locationY>1298</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2701,7 +3285,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>ForEachOrderProduct_0</name>
         <label>ForEachOrderProduct</label>
         <locationX>1194</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2714,8 +3298,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_0_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>10874</locationX>
-        <locationY>1574</locationY>
+        <locationX>13382</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2728,8 +3312,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_1</name>
         <label>ForEachOrderProduct</label>
-        <locationX>3922</locationX>
-        <locationY>1574</locationY>
+        <locationX>5110</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2742,8 +3326,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_1_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>18882</locationX>
-        <locationY>1574</locationY>
+        <locationX>23898</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2756,8 +3340,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_2</name>
         <label>ForEachOrderProduct</label>
-        <locationX>7706</locationX>
-        <locationY>1574</locationY>
+        <locationX>10214</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2770,8 +3354,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_2_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>15714</locationX>
-        <locationY>1574</locationY>
+        <locationX>19542</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2784,8 +3368,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_3</name>
         <label>ForEachOrderProduct</label>
-        <locationX>8322</locationX>
-        <locationY>1574</locationY>
+        <locationX>10830</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2798,8 +3382,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_3_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>16330</locationX>
-        <locationY>1574</locationY>
+        <locationX>20158</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2812,8 +3396,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_4</name>
         <label>ForEachOrderProduct</label>
-        <locationX>9202</locationX>
-        <locationY>1574</locationY>
+        <locationX>11710</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2826,8 +3410,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_4_0</name>
         <label>ForEachOrderProduct_4_0</label>
-        <locationX>17210</locationX>
-        <locationY>1574</locationY>
+        <locationX>21038</locationX>
+        <locationY>1406</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -2860,8 +3444,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <description>Vado a cercare se ci sono contratti attivi o cessati sull&apos;Account per capire se si tratta di un Nuovo Cliente o uno Vecchio</description>
         <name>GetAccountContracts</name>
         <label>GetAccountContracts</label>
-        <locationX>15120</locationX>
-        <locationY>758</locationY>
+        <locationX>18882</locationX>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Nuovo_o_Vecchio_Cliente</targetReference>
@@ -2895,8 +3479,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetChildOrder</name>
         <label>GetChildOrder</label>
-        <locationX>15120</locationX>
-        <locationY>278</locationY>
+        <locationX>18882</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetVasOrderItem</targetReference>
@@ -2916,8 +3500,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>15120</locationX>
-        <locationY>158</locationY>
+        <locationX>18882</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetChildOrder</targetReference>
@@ -2937,8 +3521,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrderProducts_0</name>
         <label>GetOrderProducts</label>
-        <locationX>15120</locationX>
-        <locationY>638</locationY>
+        <locationX>18882</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetAccountContracts</targetReference>
@@ -2965,8 +3549,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetVasOrderItem</name>
         <label>GetVasOrderItem</label>
-        <locationX>15120</locationX>
-        <locationY>398</locationY>
+        <locationX>18882</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>outputVasTypeAssignment</targetReference>
@@ -3000,8 +3584,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Aziende</name>
         <label>Screen Conferma Adesione Aziende</label>
-        <locationX>20510</locationX>
-        <locationY>2222</locationY>
+        <locationX>25526</locationX>
+        <locationY>1982</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3181,8 +3765,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Inbound</name>
         <label>Screen Conferma Adesione Famiglie Inbound</label>
-        <locationX>4758</locationX>
-        <locationY>3014</locationY>
+        <locationX>6012</locationX>
+        <locationY>2690</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3737,8 +4321,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Outbound</name>
         <label>Screen Conferma Adesione Famiglie Outbound</label>
-        <locationX>14438</locationX>
-        <locationY>3014</locationY>
+        <locationX>18200</locationX>
+        <locationY>2690</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4250,8 +4834,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Aziende</name>
         <label>Screen HERA CALDAIA SICURA Aziende</label>
-        <locationX>20202</locationX>
-        <locationY>1454</locationY>
+        <locationX>25218</locationX>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4290,7 +4874,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_Hera_Caldaia_Sicura_Inbound</name>
         <label>Screen Hera Caldaia Sicura Inbound</label>
         <locationX>2250</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4328,8 +4912,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Outbound</name>
         <label>Screen HERA CALDAIA SICURA Outbound</label>
-        <locationX>11930</locationX>
-        <locationY>1574</locationY>
+        <locationX>14438</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4367,8 +4951,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Aziende</name>
         <label>Screen HERA CONTAWATT Aziende</label>
-        <locationX>19410</locationX>
-        <locationY>1454</locationY>
+        <locationX>24426</locationX>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4407,7 +4991,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_CONTAWATT_Inbound</name>
         <label>Screen HERA CONTAWATT Inbound</label>
         <locationX>1458</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4445,8 +5029,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Outbound</name>
         <label>Screen HERA CONTAWATT Outbound</label>
-        <locationX>11138</locationX>
-        <locationY>1574</locationY>
+        <locationX>13646</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4533,8 +5117,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_E_BIKE_Inbound</name>
         <label>Screen HERA E-BIKE Inbound</label>
-        <locationX>7706</locationX>
-        <locationY>2126</locationY>
+        <locationX>10214</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4649,7 +5233,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>CITYBIKE_NUVOLA_DONNA_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;1.599€ IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.699€ IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -4671,7 +5255,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>FOLDED_FLIPPER_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;1.649 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.749 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4976,6 +5560,81 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>E_Bike_Text_Box_Inb_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.449 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiDonna</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Inb_2</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.449 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiUomo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Inb_3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.499 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanFoldedCoppi</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Inb_4</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.699 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiRambla</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Inb_5</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.999 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiMTB</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>E_BIKE_RATE_INB</name>
             <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -5076,8 +5735,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_E_BIKE_Outbound</name>
         <label>Screen HERA E-BIKE Outbound</label>
-        <locationX>15714</locationX>
-        <locationY>2126</locationY>
+        <locationX>19542</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5217,6 +5876,81 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>E_Bike_Text_Box_Out_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.449 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiDonna_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Out_2</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.449 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiUomo_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Out_3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.499 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanFoldedCoppi_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Out_4</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.699 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiRambla_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_Bike_Text_Box_Out_5</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1.999 € IVA inclusa&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>booleanCoppiMTB_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>E_BIKE_RATE_OUT</name>
             <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -5327,8 +6061,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_Aziende</name>
         <label>Screen HERA FOTOVOLTAICO Aziende</label>
-        <locationX>21346</locationX>
-        <locationY>1454</locationY>
+        <locationX>26362</locationX>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5386,8 +6120,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_F_IN</name>
         <label>Screen HERA FOTOVOLTAICO Famiglie In</label>
-        <locationX>9466</locationX>
-        <locationY>1574</locationY>
+        <locationX>11974</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5495,8 +6229,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_F_OUT</name>
         <label>Screen HERA FOTOVOLTAICO Famiglie Out</label>
-        <locationX>17474</locationX>
-        <locationY>1574</locationY>
+        <locationX>21302</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5605,7 +6339,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_LED_Inbound</name>
         <label>Screen HERA LED Inbound</label>
         <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5757,8 +6491,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_LED_Outbound</name>
         <label>Screen HERA LED Outbound</label>
-        <locationX>10258</locationX>
-        <locationY>1574</locationY>
+        <locationX>12766</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6089,7 +6823,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_LED_SMART_Inbound</name>
         <label>Screen HERA LED SMART Inbound</label>
         <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6241,8 +6975,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_LED_SMART_Outbound</name>
         <label>HERA LED SMART Outbound</label>
-        <locationX>9994</locationX>
-        <locationY>1574</locationY>
+        <locationX>12502</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6572,8 +7306,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_MONOPATTINO_ELETTRICO_Inbound</name>
         <label>Screen HERA MONOPATTINO ELETTRICO Inbound</label>
-        <locationX>8322</locationX>
-        <locationY>2126</locationY>
+        <locationX>10830</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6587,7 +7321,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di {!collectionHeraMonopattinoElettrico} è 649 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6681,8 +7415,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_MONOPATTINO_ELETTRICO_Outbound_0</name>
         <label>Screen HERA MONOPATTINO ELETTRICO Outbound</label>
-        <locationX>16330</locationX>
-        <locationY>2126</locationY>
+        <locationX>20158</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6696,7 +7430,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico_0}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico_0} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi è di {!totaleCostoMonopattiniElettrici1} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico_0}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di {!collectionHeraMonopattinoElettrico_0} è 649 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico_0} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi è di {!totaleCostoMonopattiniElettrici1} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6790,8 +7524,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_ACQUA_Inbound</name>
         <label>Screen HERA NO PROBLEM ACQUA Inbound</label>
-        <locationX>4186</locationX>
-        <locationY>1574</locationY>
+        <locationX>5374</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6829,8 +7563,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_ACQUA_Outbound</name>
         <label>Screen HERA NO PROBLEM ACQUA Outbound</label>
-        <locationX>12194</locationX>
-        <locationY>1574</locationY>
+        <locationX>14702</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6868,8 +7602,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Aziende</name>
         <label>Screen HERA NO PROBLEM GAS Aziende</label>
-        <locationX>19938</locationX>
-        <locationY>1454</locationY>
+        <locationX>24954</locationX>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6933,7 +7667,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_NO_PROBLEM_GAS_Inbound</name>
         <label>Screen HERA NO PROBLEM GAS Inbound</label>
         <locationX>1986</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6981,8 +7715,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Outbound</name>
         <label>Screen HERA NO PROBLEM GAS Outbound</label>
-        <locationX>11666</locationX>
-        <locationY>1574</locationY>
+        <locationX>14174</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7030,8 +7764,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Aziende</name>
         <label>Screen HERA NO PROBLEM LUCE Aziende</label>
-        <locationX>19674</locationX>
-        <locationY>1454</locationY>
+        <locationX>24690</locationX>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7085,7 +7819,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_NO_PROBLEM_LUCE_Inbound</name>
         <label>Screen HERA NO PROBLEM LUCE Inbound</label>
         <locationX>1722</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7143,8 +7877,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Outbound</name>
         <label>Screen HERA NO PROBLEM LUCE Outbound</label>
-        <locationX>11402</locationX>
-        <locationY>1574</locationY>
+        <locationX>13910</locationX>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7192,8 +7926,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_RICARICA_PRIVATA_Inbound</name>
         <label>Screen HERA RICARICA PRIVATA Inbound</label>
-        <locationX>3922</locationX>
-        <locationY>2678</locationY>
+        <locationX>5110</locationX>
+        <locationY>2390</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7236,8 +7970,53 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>Ric_Privata_Text_Box_1</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Box senza SIM dati che include una presa da 7,4 kW e Cavo di Ricarica è 1.099 €&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Text_Box_2</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Box con SIM Dati che include una presa da 7,4 kW e Modulatore di Potenza è 1.499 €&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Text_Box_3</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Box con SIM Dati che include una presa da 7,4 kW, Modulatore di Potenza e Cavo di Ricarica è 1.649 €&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_RICARICA_PRIVATA_STANDARD_INST_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del Servizio di Installazione Standard è 399 €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Servizio di Installazione Standard è 499 € per ogni wall box.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7252,7 +8031,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_GROUND_WALLBOX_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del Kit per montaggio a terra della Wall box è 199€&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Kit per montaggio a terra della Wall box è 199€ per ogni wall box.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7366,7 +8145,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_WALLBOX_STANDARD_INST_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!totalNumberWallBox} &lt;/span&gt;Wall Box e del relativo Servizio di installazione Standard?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!totalNumberWallBox} &lt;/span&gt;Wall Box e del relativo Servizio di installazione Standard per ogni wall box?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7402,6 +8181,51 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>WallboxRfidCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Text_Box_4</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxNoSim} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Text_Box_5</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenza} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Text_Box_6</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenzaCavo} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
                     <operator>GreaterThan</operator>
                     <rightValue>
                         <numberValue>0.0</numberValue>
@@ -7535,8 +8359,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_RICARICA_PRIVATA_Outbound</name>
         <label>Screen HERA RICARICA PRIVATA Outbound</label>
-        <locationX>18882</locationX>
-        <locationY>2678</locationY>
+        <locationX>23898</locationX>
+        <locationY>2390</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7579,8 +8403,53 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>Ric_Privata_Out_Text_Box_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di una Wall Box senza SIM dati che include una presa da 7,4 kW e Cavo di Ricarica è 1.099 €&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Out_Text_Box_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di una Wall Box con SIM Dati che include una presa da 7,4 kW e Modulatore di Potenza è 1.499 €&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Out_Text_Box_3</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di una Wall Box con SIM Dati che include una presa da 7,4 kW, Modulatore di Potenza e Cavo di Ricarica è 1.649 €&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_RICARICA_PRIVATA_STANDARD_INST_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del Servizio di Installazione Standard è 399 €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Servizio di Installazione Standard è 499 €.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7595,7 +8464,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_GROUND_WALLBOX_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del Kit per montaggio a terra della Wall box è 199€&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Kit per montaggio a terra della Wall box è 199€ per ogni wall box.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7709,7 +8578,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_WALLBOX_STANDARD_INST_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!totalNumberWallBox} &lt;/span&gt;Wall Box e del relativo Servizio di installazione Standard?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!totalNumberWallBox} &lt;/span&gt;Wall Box e del relativo Servizio di installazione Standard per ogni wall box?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7745,6 +8614,51 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>WallboxRfidCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Out_Text_Box_4</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxNoSim} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Out_Text_Box_5</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenza} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Ric_Privata_Out_Text_Box_6</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenzaCavo} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
                     <operator>GreaterThan</operator>
                     <rightValue>
                         <numberValue>0.0</numberValue>
@@ -7879,7 +8793,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_Hera_Ricarica_Pubblica_Inbound</name>
         <label>Screen Hera Ricarica Pubblica Inbound</label>
         <locationX>2514</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -7968,8 +8882,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Aziende</name>
         <label>Screen HERA SANIFICA ARIA Aziende</label>
-        <locationX>21082</locationX>
-        <locationY>2006</locationY>
+        <locationX>26098</locationX>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8124,8 +9038,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Inbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Inbound</label>
-        <locationX>9202</locationX>
-        <locationY>2126</locationY>
+        <locationX>11710</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8300,8 +9214,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Outbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Outbound</label>
-        <locationX>17210</locationX>
-        <locationY>2126</locationY>
+        <locationX>21038</locationX>
+        <locationY>1898</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8477,7 +9391,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>Screen_HERA_THERMO_Inbound</name>
         <label>Screen HERA THERMO Inbound</label>
         <locationX>1194</locationX>
-        <locationY>2246</locationY>
+        <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8620,8 +9534,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_THERMO_Outbound</name>
         <label>Screen HERA THERMO Outbound</label>
-        <locationX>10874</locationX>
-        <locationY>2246</locationY>
+        <locationX>13382</locationX>
+        <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8956,7 +9870,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>14994</locationX>
+        <locationX>18756</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetOrder</targetReference>
@@ -8972,6 +9886,106 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <scale>0</scale>
         <value>
             <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiDonna</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiDonna_0</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiMTB</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiMTB_0</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiRambla</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiRambla_0</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiUomo</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanCoppiUomo_0</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanFoldedCoppi</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>booleanFoldedCoppi_0</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
@@ -9133,6 +10147,39 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterWallBoxNoSim</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterWallBoxPotenza</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterWallBoxPotenzaCavo</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
         <value>
             <numberValue>0.0</numberValue>
         </value>
