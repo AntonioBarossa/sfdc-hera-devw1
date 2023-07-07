@@ -652,7 +652,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             +'\"macroActivityRegExp\" : \".*\",\n'
             +'\"enabled\": true,\n'
             +'\"active\": true,\n'
-            +'\"excludeTerminated\": false\n'
+            +'\"excludeTerminated\": true\n'
         +'}\n';
 
         HttpRequest req = new HttpRequest();
