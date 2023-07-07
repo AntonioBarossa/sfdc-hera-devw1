@@ -1033,6 +1033,13 @@
                 <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoNoSIM</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1099.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>checkForInstallazione</targetReference>
         </connector>
@@ -1047,6 +1054,13 @@
             <operator>Add</operator>
             <value>
                 <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoNoSIM</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1099.0</numberValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1065,6 +1079,13 @@
                 <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenza</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1499.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>checkForInstallazione</targetReference>
         </connector>
@@ -1079,6 +1100,13 @@
             <operator>Add</operator>
             <value>
                 <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenza</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1499.0</numberValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1097,6 +1125,13 @@
                 <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenzaCavo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1649.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>checkForInstallazione</targetReference>
         </connector>
@@ -1111,6 +1146,13 @@
             <operator>Add</operator>
             <value>
                 <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenzaCavo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1649.0</numberValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1209,6 +1251,27 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoNoSIM</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1598.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenza</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1998.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenzaCavo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>2148.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>ForEachOrderProduct_1</targetReference>
         </connector>
@@ -1223,6 +1286,27 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoNoSIM</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1598.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenza</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1998.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>costoPotenzaCavo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>2148.0</numberValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1947,12 +2031,19 @@
         <defaultConnectorLabel>noInstallazione</defaultConnectorLabel>
         <rules>
             <name>hasInstallazione_1</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>INSTALLAZIONE STANDARD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>INSTALL STANDARD</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1972,12 +2063,19 @@
         <defaultConnectorLabel>noInstallazione</defaultConnectorLabel>
         <rules>
             <name>hasInstallazione_1_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>INSTALLAZIONE STANDARD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>INSTALL STANDARD</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3054,6 +3152,7 @@
             <label>HERA RICARICA PRIVATA</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>corrispettivoAcquistoTermostatiInstNoPromo</name>
         <dataType>Number</dataType>
@@ -3077,6 +3176,12 @@
         <dataType>Number</dataType>
         <expression>143*{!termostatiSenzaInstallazioneCounter_1}</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>costoTotaleRicaricaPrivata</name>
+        <dataType>Number</dataType>
+        <expression>{!costoNoSIM}+{!costoPotenza}+{!costoPotenzaCavo}</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>costoTotaleWallboxNoRfid</name>
@@ -7940,36 +8045,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_RICARICA_PRIVATA_NO_RFID_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging è 1.549, in promozione a 1.399 €.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>NormalWallboxCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_RICARICA_PRIVATA_RFID_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging e Lettore RFID Card è di 1.749, in promozione a 1.599 €.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>WallboxRfidCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Ric_Privata_Text_Box_1</name>
             <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Box senza SIM dati che include una presa da 7,4 kW e Cavo di Ricarica è 1.099 €&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -8160,78 +8235,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_TotaleNoRFID_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxNoRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleRicaricaPrivata} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>NormalWallboxCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_RICARICA_PRIVATA_TotaleRfid_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>WallboxRfidCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Text_Box_4</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxNoSim} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Text_Box_5</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenza} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Text_Box_6</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenzaCavo} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_3</name>
@@ -8371,36 +8376,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <name>HERA_RICARICA_PRIVATA_Generico_0_0</name>
             <fieldText>&lt;p&gt;&lt;b&gt;[HERA RICARICA PRIVATA]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Ricarica Privata per l’acquisto di Wall Box, i dispositivi di ricarica per veicoli elettrici.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto HERA RICARICA PRIVATA]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_RICARICA_PRIVATA_NO_RFID_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging è 1.549, in promozione a 1.399 €.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>NormalWallboxCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_RICARICA_PRIVATA_RFID_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging e Lettore RFID Card è di 1.749, in promozione a 1.599 €.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>WallboxRfidCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Ric_Privata_Out_Text_Box_1</name>
@@ -8593,78 +8568,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_TotaleNoRFID_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxNoRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleRicaricaPrivata} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>NormalWallboxCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_RICARICA_PRIVATA_TotaleRfid_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>WallboxRfidCounter</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Out_Text_Box_4</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxNoSim} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxNoSim</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Out_Text_Box_5</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenza} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxPotenza</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ric_Privata_Out_Text_Box_6</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallBoxPotenzaCavo} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterWallBoxPotenzaCavo</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_3_0</name>
@@ -10062,6 +9967,39 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>costoNoSIM</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>costoPotenza</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>costoPotenzaCavo</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>counterLampadadiRicarica</name>
