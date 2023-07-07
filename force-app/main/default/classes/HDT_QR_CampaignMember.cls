@@ -701,7 +701,7 @@ public inherited sharing class HDT_QR_CampaignMember {
 
     public static List<CampaignMember> getCampMembByActivity(String actId){
 
-        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
+        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c, Ecid__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
         return campMembList;
     }
     

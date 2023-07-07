@@ -188,7 +188,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                             });
                             console.log('*********ConnectionCleared:');
                         }
-                        if(this.saveScriptDone) {
+                        if(this.saveScriptDone || localStorage.getItem("openScript-"+this.ecid) == null) {
                             console.log('BEFORE OFFLINEEND : '+event.detail.eventObj.id);
                             window.TOOLBAR.CONTACT.OfflineEnd(event.detail.eventObj.id);
                             console.log('OFFLINEEND DONE');
@@ -200,19 +200,10 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 case 'POPUP':
                     if(event.detail.eventObj.job_type !== 'manual'){
                         console.log('AUTO 1 POPUP ESEGUITA');
-                        //if (count == 0) {
-                        console.log('*******INSIDEPOPUP');
                         this.toolbarAttributes = event.detail.eventObj;
-                        console.log('*******INSIDEPOPUP PUNTO 1');
-                        // if(this.toolbarAttributes.id) {
-                        this.uuid = this.toolbarAttributes.id;
-                        // }
-                        console.log('*******INSIDEPOPUP PUNTO 2');
-                        callData = event.detail.CallData;
-                        console.log('*******INSIDEPOPUP PUNTO 3');
-                        //get ecid value from callData
-                        console.log('******preIF Inbound');
                         console.log('this.toolbarAttributes --> '+this.toolbarAttributes);
+                        this.uuid = this.toolbarAttributes.id;
+                        callData = event.detail.CallData;
                         console.log('this.toolbarAttributes.type --> '+this.toolbarAttributes.type);
                         if(this.toolbarAttributes != null && this.toolbarAttributes.type == 'inbound'){
                             console.log('******postIF Inbound2');
@@ -266,15 +257,15 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                             console.log('*******INSIDEPOPUP PUNTO 13');
                             console.log('window.TOOLBAR.EASYCIM.openScript --> params: uuid =' + this.uuid + ', ecid = ' + this.ecid);
 
-                            getEcid({ 'campaignMemberId': this.campaignMemberId}).then(data => {
+                            //getEcid({ 'campaignMemberId': this.campaignMemberId}).then(data => {
                                 let submitEcid;
-                                console.log("ctToolbarContainer launch SUCCESS --> " + JSON.stringify(data));
+                                //console.log("ctToolbarContainer launch SUCCESS --> " + JSON.stringify(data));
                                 if(this.ecid!=null){
                                     submitEcid=this.ecid;
                                 }
-                                else{
+                                /*else{
                                     submitEcid = data;
-                                }
+                                }*/
                                 console.log('ctToolbarContainer submitEcid --> '+submitEcid);
                                 if(submitEcid === null || submitEcid === undefined || submitEcid === ''){                
                                     console.log('### ctToolbarContainer ERRORE! Numero e/o ecid non trovati ###');
@@ -415,10 +406,10 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                                         console.log('openScript non eseguita perché già effettuata');
                                     }
                                 }
-                            }),error => {
+                            /*}),error => {
                                 console.log('ctToolbarContainer ERROR');
                                 console.log(error);
-                            };         
+                            };    */     
                         }
                     }
                     break;
