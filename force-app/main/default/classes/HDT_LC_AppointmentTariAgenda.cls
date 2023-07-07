@@ -104,7 +104,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String city;
         String startDate;
         String endDate;
-        String firstDate;
+        String firstAppointmentDate;
         
         public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
 
@@ -118,7 +118,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.numberOfLines = wrap.numberOfLines;
             this.startDate = wrap.startDate.format('yyyyMMddhhmmss');
             this.endDate = wrap.endDate.format('yyyyMMddhhmmss');
-            this.firstDate = wrap.firstDate.format('yyyyMMddhhmmss');
+            this.firstAppointmentDate = wrap.firstDate.format('yyyyMMddhhmmss');
         }
     }
 
