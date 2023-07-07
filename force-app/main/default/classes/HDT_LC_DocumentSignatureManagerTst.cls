@@ -1,5 +1,8 @@
 @isTest
 public with sharing class HDT_LC_DocumentSignatureManagerTst {
+
+	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+
     @TestSetup
     static void setup(){
 
@@ -20,6 +23,33 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         DocumentSendTracking__c documentSendTracking = new DocumentSendTracking__c();
         documentSendTracking.EnvelopeId__c = 'resendDocusignTst';
         insert documentSendTracking;
+    }
+
+    @isTest
+    static void createActChangeAddressTst(){ 
+
+        Test.startTest();
+        
+        List<ServicePoint__c> spList = [SELECT Id,CommoditySector__c,IsAddressChanged__c FROM ServicePoint__c];
+        spList[0].IsAddressChanged__c = true;
+        update spList;
+        
+        List<Order> orderList = [SELECT Id, ParentOrder__c, AccountId FROM Order];
+        List<Order> ordListParent = HDT_UTL_DataFactoryTst.createOrder(1, true, orderList[0].AccountId, 'Bozza');
+        orderList[0].ServicePoint__c = spList[0].Id;
+        orderList[0].ParentOrder__c = ordListParent[0].Id;
+        orderList[0].Commodity__c = 'Acqua';
+        orderList[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
+        orderList[0].ProcessType__c = 'Subentro';
+        update orderList;
+
+        HDT_LC_DocumentSignatureManager.createActChangeAddress(ordListParent[0].Id);
+        
+        Test.stopTest();
+
+        List<wrts_prcgvr__Activity__c> resultAct = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Type__c = 'Modifica Indirizzo Fornitura' AND Order__c =: orderList[0].Id ];
+
+        System.assertEquals( true, resultAct.size()>0, 'createActChangeAddress did not work correctly');
     }
 
     @isTest
