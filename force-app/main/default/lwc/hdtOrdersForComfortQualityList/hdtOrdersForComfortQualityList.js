@@ -145,11 +145,19 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
             this.loading = false;
-            if(data!=null){
-                getCachedUuid().then(cachedUuid => {
+            if(data!=null && data.Ecid__c){
+               /* getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
                         window.TOOLBAR.EASYCIM.saveScript(cachedUuid, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
                     }
+                });*/
+                window.TOOLBAR.EASYCIM.saveScript(data.Ecid__c, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
+                .then((data) => {
+                    console.log('SAVESCRIPT RESULT DATA --> '+data);
+                    if(data){
+                        localStorage.removeItem("openScript-"+data.Ecid__c);
+                    }
+                    console.log('SAVESCRIPT Quality/Comfort DONE');
                 });
             }
             const toastSuccessMessage = new ShowToastEvent({
@@ -190,12 +198,20 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     cancelContractAction(cancellationReason){
         this.loading = true;
         cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
-            if(data!=null){
-                getCachedUuid().then(cachedUuid => {
+            if(data!=null && data.Ecid__c){
+                /*getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
                         window.TOOLBAR.EASYCIM.saveScript(cachedUuid, 'Rinuncia contratto', true)
                     }
-                });
+                });*/
+                window.TOOLBAR.EASYCIM.saveScript(data.Ecid__c, 'Rinuncia contratto', true)
+                        .then((data) => {
+                            console.log('SAVESCRIPT RESULT DATA --> '+data);
+                            if(data){
+                                localStorage.removeItem("openScript-"+data.Ecid__c);
+                            }
+                            console.log('SAVESCRIPT Quality/Comfort DONE');
+                        });
             }
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({

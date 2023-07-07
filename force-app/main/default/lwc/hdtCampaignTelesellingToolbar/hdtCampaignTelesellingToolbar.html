@@ -9,6 +9,9 @@
         </c-hdt-campaign-member-button-list2>
         <lightning-button variant="neutral" label="Richiamami" title="Richiamami" onclick={handleRecallMe}>
         </lightning-button>
+        <template if:true={isCurrentUserTeleseller}>
+            <c-hdt-campaign-member-vendita-teleselling record-id={recordId} object-api-name="campaignmember" reiteklink={reiteklink} ></c-hdt-campaign-member-vendita-teleselling>
+        </template>
     </div>
     <template if:true={showModal}>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"

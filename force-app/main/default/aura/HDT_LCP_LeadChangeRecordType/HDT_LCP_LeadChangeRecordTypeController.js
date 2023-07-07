@@ -69,8 +69,30 @@
 
          	}
          	else
-         	{
+         	{                
                 console.log("Error");
+                component.set("v.mySpinner", false);
+
+                var errorMessage = '';
+
+                if(response.getError()[0]){
+                    errorMessage = response.getError()[0];
+                }
+                else{
+                    errorMessage = 'Si è verificato un errore durante l\'esecuzione. Verificare e riprovare.'
+                }
+
+                var toastEvent = $A.get("e.force:showToast");
+                    toastEvent.setParams({
+                        "type": "error",
+                        "title": "Error",
+                        "message": errorMessage.message
+                    });
+                toastEvent.fire();
+
+                setTimeout(function(){ 
+                    $A.get("e.force:closeQuickAction").fire();
+                }, 400);
          	}    
          });
          $A.enqueueAction(action);	
