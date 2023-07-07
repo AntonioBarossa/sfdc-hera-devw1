@@ -47,7 +47,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                             okFromSap = false;
                         }
                     }
-                }
+                } else {
+                    okFromSap = false;
+                } 
             } else {
                 System.debug(LoggingLevel.DEBUG, 'Response OK');
                 response.success = true;
