@@ -146,8 +146,8 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
             this.loading = false;
             if(data!=null && data.Ecid__c){
-                ecid=data.Ecid__c;
-                positiveStatus=data.PositiveOutcomeDefaultStatus__c;
+                let ecid=data.Ecid__c;
+                let positiveStatus=data.Campaign.PositiveOutcomeDefaultStatus__c;
                /* getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
                         window.TOOLBAR.EASYCIM.saveScript(cachedUuid, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
@@ -205,7 +205,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         this.loading = true;
         cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
             if(data!=null && data.Ecid__c){
-                ecid=data.Ecid__c;
+                let ecid=data.Ecid__c;
 
                 /*getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
