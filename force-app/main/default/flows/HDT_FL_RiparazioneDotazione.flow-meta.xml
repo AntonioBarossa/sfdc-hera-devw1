@@ -199,6 +199,12 @@
         <valueField>Value</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <description>(TP4 per TariNg e RIT8 per tariG)</description>
+        <name>causalCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!theCase.Account.CustomerMarking__c}) = &quot;TariG&quot;, &quot;RIT8&quot;, &quot;TP4&quot;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RiparazioneDotazione</label>
     <loops>
@@ -431,6 +437,18 @@
                 <elementReference>caseId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>causalCodeFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OperationCode__c</field>
+            <value>
+                <stringValue>07</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
