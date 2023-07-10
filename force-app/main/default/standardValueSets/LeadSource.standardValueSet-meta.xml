@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <sorted>false</sorted>
+    <sorted>true</sorted>
     <standardValue>
         <fullName>Advertisement</fullName>
         <default>false</default>
         <label>Advertisement</label>
     </standardValue>
     <standardValue>
+        <fullName>Creazione manuale</fullName>
+        <default>false</default>
+        <label>Creazione manuale</label>
+    </standardValue>
+    <standardValue>
         <fullName>Customer Event</fullName>
         <default>false</default>
         <label>Customer Event</label>
+    </standardValue>
+    <standardValue>
+        <fullName>DBU</fullName>
+        <default>false</default>
+        <label>DBU</label>
     </standardValue>
     <standardValue>
         <fullName>Employee Referral</fullName>
@@ -20,6 +30,16 @@
         <fullName>Google AdWords</fullName>
         <default>false</default>
         <label>Google AdWords</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lead freddo</fullName>
+        <default>false</default>
+        <label>Lead freddo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Nome Social network</fullName>
+        <default>false</default>
+        <label>Nome Social network</label>
     </standardValue>
     <standardValue>
         <fullName>Other</fullName>
@@ -37,24 +57,19 @@
         <label>Purchased List</label>
     </standardValue>
     <standardValue>
+        <fullName>SOL</fullName>
+        <default>false</default>
+        <label>SOL</label>
+    </standardValue>
+    <standardValue>
         <fullName>Trade Show</fullName>
         <default>false</default>
         <label>Trade Show</label>
     </standardValue>
     <standardValue>
-        <fullName>Webinar</fullName>
+        <fullName>Webform</fullName>
         <default>false</default>
-        <label>Webinar</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Website</fullName>
-        <default>false</default>
-        <label>Website</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Creazione manuale</fullName>
-        <default>false</default>
-        <label>Creazione manuale</label>
+        <label>Webform</label>
     </standardValue>
     <standardValue>
         <fullName>Webform callback</fullName>
@@ -67,23 +82,13 @@
         <label>Webform winback</label>
     </standardValue>
     <standardValue>
-        <fullName>Nome Social network</fullName>
+        <fullName>Webinar</fullName>
         <default>false</default>
-        <label>Nome Social network</label>
+        <label>Webinar</label>
     </standardValue>
     <standardValue>
-        <fullName>DBU</fullName>
+        <fullName>Website</fullName>
         <default>false</default>
-        <label>DBU</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Lead freddo</fullName>
-        <default>false</default>
-        <label>Lead freddo</label>
-    </standardValue>
-    <standardValue>
-        <fullName>SOL</fullName>
-        <default>false</default>
-        <label>SOL</label>
+        <label>Website</label>
     </standardValue>
 </StandardValueSet>

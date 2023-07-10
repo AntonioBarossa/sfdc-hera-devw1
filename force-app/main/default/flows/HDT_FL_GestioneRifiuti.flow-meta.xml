@@ -924,7 +924,8 @@
     <formulas>
         <name>NotaToSend</name>
         <dataType>String</dataType>
-        <expression>{!theCase.MaterialDescription__c} &amp; IF(ISBLANK( {!theCase.AlternativeAddress__c}), &quot;&quot;, &quot; Indirizzo Alternativo:&quot; &amp; {!theCase.AlternativeAddress__c})</expression>
+        <expression>{!theCase.MaterialDescription__c} &amp; IF(ISBLANK( {!theCase.AlternativeAddress__c}), &quot;&quot;, &quot; Indirizzo Alternativo:&quot; &amp; {!theCase.AlternativeAddress__c})
+ &amp; IF(ISBLANK( {!theCase.Note__c}), &quot;&quot;, &quot; Note:&quot; &amp; {!theCase.Note__c})</expression>
     </formulas>
     <formulas>
         <name>phone_NonBlank</name>
@@ -1233,6 +1234,7 @@
         <queriedFields>AccountId</queriedFields>
         <queriedFields>MaterialDescription__c</queriedFields>
         <queriedFields>AlternativeAddress__c</queriedFields>
+        <queriedFields>Note__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>DaInviare</name>
