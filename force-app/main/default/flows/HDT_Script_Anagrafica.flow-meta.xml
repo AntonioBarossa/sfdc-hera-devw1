@@ -5,7 +5,7 @@
         <name>AssignIdricoTrue</name>
         <label>AssignIdricoTrue</label>
         <locationX>781</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>checkIdrico</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignmentFlat</name>
         <label>AssignmentFlat</label>
         <locationX>649</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>isFlat</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignmentSpecialFlat</name>
         <label>AssignmentSpecialFlat</label>
         <locationX>913</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>isSpecialFlat</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>AssOff</name>
         <label>AssOff</label>
         <locationX>913</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>Offerta</assignToReference>
             <operator>Add</operator>
@@ -85,7 +85,7 @@
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
         <locationX>1766</locationX>
-        <locationY>1766</locationY>
+        <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -110,7 +110,7 @@
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
         <locationX>1238</locationX>
-        <locationY>1766</locationY>
+        <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -135,7 +135,7 @@
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
         <locationX>446</locationX>
-        <locationY>1766</locationY>
+        <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -160,7 +160,7 @@
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
         <locationX>1502</locationX>
-        <locationY>1646</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -185,7 +185,7 @@
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
         <locationX>644</locationX>
-        <locationY>1646</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -210,7 +210,7 @@
         <name>CheckDecisionOfferte</name>
         <label>CheckDecisionOfferte</label>
         <locationX>913</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>checkIsIdrico</targetReference>
         </defaultConnector>
@@ -250,7 +250,7 @@
         <name>checkIsIdrico</name>
         <label>LoopCheckIdrico</label>
         <locationX>913</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>LoopForOffer</targetReference>
         </defaultConnector>
@@ -275,7 +275,7 @@
         <name>isIdrico</name>
         <label>isIdrico</label>
         <locationX>561</locationX>
-        <locationY>1406</locationY>
+        <locationY>1250</locationY>
         <defaultConnector>
             <targetReference>VasDecision</targetReference>
         </defaultConnector>
@@ -300,7 +300,7 @@
         <name>VasDecision</name>
         <label>VasDecision</label>
         <locationX>1073</locationX>
-        <locationY>1526</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -328,7 +328,7 @@
         <name>LoopForOffer</name>
         <label>LoopForOffer</label>
         <locationX>561</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <collectionReference>getFigli</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -361,7 +361,7 @@
         <name>getChild_0</name>
         <label>getChild</label>
         <locationX>561</locationX>
-        <locationY>1286</locationY>
+        <locationY>1142</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isIdrico</targetReference>
@@ -382,7 +382,7 @@
         <name>getFigli</name>
         <label>getFigli</label>
         <locationX>561</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopForOffer</targetReference>
@@ -403,13 +403,48 @@
         <name>Anagrafica_Servizio_Idrico</name>
         <label>Anagrafica_Servizio_Idrico</label>
         <locationX>50</locationX>
-        <locationY>1526</locationY>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Anagrafica_Acqua</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;2. Dati Anagrafici&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto?&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;        CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;2. Dati Anagrafici&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto?&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;        CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_idrico_10</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_11</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_12</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -524,14 +559,44 @@
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>578</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>textfixanag5</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfixanag6</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>textfixanag1</name>
@@ -590,14 +655,44 @@
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>314</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Dati_Anagrafica_VAS_0_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Dati_Anagrafica_VAS_0_0_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>textfixanag1_0</name>
@@ -656,7 +751,7 @@
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
         <locationX>1370</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -669,6 +764,31 @@
             <name>text8</name>
             <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text15</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text10</name>
@@ -881,7 +1001,7 @@
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
         <locationX>1106</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -894,6 +1014,31 @@
             <name>text13_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text15_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text14_0</name>
@@ -1109,7 +1254,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1898</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1160,6 +1305,35 @@
                         <elementReference>Confermo_RB</elementReference>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_10_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1188,6 +1362,35 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_11_0_0_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1390,7 +1593,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1634</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1441,6 +1644,35 @@
                         <elementReference>Confermo_RB</elementReference>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_8_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1469,6 +1701,35 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_9_0_0_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1700,7 +1961,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>842</locationX>
-        <locationY>1766</locationY>
+        <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1740,7 +2001,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_4_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt; il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1749,6 +2010,35 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_3_0_0_4_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1779,6 +2069,35 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_3_0_0_5_0_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Legale_rappresentante_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Non_confermo_RB</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
