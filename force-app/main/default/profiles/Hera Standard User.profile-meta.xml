@@ -22315,12 +22315,12 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.SpecialDay__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.StartTimeSlot__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
