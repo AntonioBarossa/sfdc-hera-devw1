@@ -87,7 +87,7 @@ public with sharing class HDT_UTL_Tqrif {
 
         if(
             Integer.valueOf(volumetrics[0].get('volMin')) < 120 
-            || 'Domicilio'.equalsIgnoreCase(theCase.Consegna_Restituzione_dotazioni__c)
+            || 'Domicilio'.equalsIgnoreCase(theCase.EquipmentDeliveryOption__c)
         ){
             //crea case GestDot
             Case gestDot = initCase(theCase, accs[0]);
@@ -96,7 +96,7 @@ public with sharing class HDT_UTL_Tqrif {
 
         if(
             Integer.valueOf(volumetrics[0].get('volMax')) >= 120
-            && !'Domicilio'.equalsIgnoreCase(theCase.Consegna_Restituzione_dotazioni__c)
+            && !'Domicilio'.equalsIgnoreCase(theCase.EquipmentDeliveryOption__c)
         ){
             //crea altro case GestDot
             Case gestDot = initCase(theCase, accs[0]);
