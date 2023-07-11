@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>58.0</apiVersion>
     <assignments>
+        <name>add_Value</name>
+        <label>add Value</label>
+        <locationX>264</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>AvaiableOptions</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>extract_Values.ConsegnaDotazioni__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>extract_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Case0</name>
         <label>Assign Case</label>
         <locationX>176</locationX>
@@ -14,43 +30,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>get_Default_Value_Choice</targetReference>
+            <targetReference>get_Opzioni_Consegna</targetReference>
         </connector>
     </assignments>
-    <collectionProcessors>
-        <description>Fa sì che il valore sportello sia presente solo per gli utenti che hanno canale sportello</description>
-        <name>filter_records</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>filter records</label>
-        <locationX>176</locationX>
-        <locationY>566</locationY>
-        <assignNextValueToReference>currentItem_filter_records_0</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>get_Opzioni_Consegna</collectionReference>
-        <conditionLogic>or</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_filter_records_0.ConsegnaDotazioni__c</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
-                <elementReference>$User.LoginChannel__c</elementReference>
-            </rightValue>
-        </conditions>
-        <conditions>
-            <leftValueReference>currentItem_filter_records_0.ConsegnaDotazioni__c</leftValueReference>
-            <operator>NotEqualTo</operator>
-            <rightValue>
-                <stringValue>Sportello</stringValue>
-            </rightValue>
-        </conditions>
-        <connector>
-            <targetReference>Screen_Wizard2</targetReference>
-        </connector>
-    </collectionProcessors>
     <decisions>
         <name>Annullamento_2</name>
         <label>Annullamento 2</label>
         <locationX>176</locationX>
-        <locationY>998</locationY>
+        <locationY>1298</locationY>
         <defaultConnector>
             <targetReference>Get_Equipment</targetReference>
         </defaultConnector>
@@ -87,7 +74,7 @@
         <name>Annullamento_3</name>
         <label>Annullamento 3</label>
         <locationX>610</locationX>
-        <locationY>1430</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Screen_Dotaz_Consegnare</targetReference>
         </defaultConnector>
@@ -125,7 +112,7 @@
         <name>Annullamento_4</name>
         <label>Annullamento 4</label>
         <locationX>1039</locationX>
-        <locationY>1646</locationY>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>allegatiObbligatori</targetReference>
         </defaultConnector>
@@ -162,7 +149,7 @@
         <name>Annullamento_5</name>
         <label>Annullamento 5</label>
         <locationX>1369</locationX>
-        <locationY>1862</locationY>
+        <locationY>2162</locationY>
         <defaultConnector>
             <targetReference>Conferma_Pratica</targetReference>
         </defaultConnector>
@@ -196,16 +183,44 @@
         </rules>
     </decisions>
     <dynamicChoiceSets>
-        <name>Opzioni_Consegna_FilteredChoice</name>
-        <collectionReference>filter_records</collectionReference>
+        <name>opzioni_consegna_filteredChoiceAltro</name>
+        <collectionReference>get_pick_Value_Info</collectionReference>
         <dataType>String</dataType>
-        <displayField>ConsegnaDotazioni__c</displayField>
-        <object>HDT_CoerenzaComuneDotazione__mdt</object>
-        <valueField>DeveloperName</valueField>
+        <displayField>Label</displayField>
+        <object>PicklistValueInfo</object>
+        <valueField>Value</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Opzioni_Consegna_FilteredChoiceSportello</name>
+        <collectionReference>get_pickValue_InfoSportello</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Label</displayField>
+        <object>PicklistValueInfo</object>
+        <valueField>Value</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <description>(TP4 per TariNg e RIT8 per tariG)</description>
+        <name>causalCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!theCase.Account.CustomerMarking__c}) = &quot;TariG&quot;, &quot;RIT8&quot;, &quot;TP4&quot;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RiparazioneDotazione</label>
+    <loops>
+        <name>extract_Values</name>
+        <label>extract Values</label>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
+        <collectionReference>get_Opzioni_Consegna</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>add_Value</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>getFieldDefinition</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -226,38 +241,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>get_Default_Value_Choice</name>
-        <label>get Default Value Choice</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>get_Opzioni_Consegna</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Comune__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case.SupplyCity__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>ConsegnaDotazioni__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case.Consegna_Restituzione_dotazioni__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CoerenzaComuneDotazione__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Equipment</name>
         <label>Get Equipment</label>
         <locationX>610</locationX>
-        <locationY>1106</locationY>
+        <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_ProcessEquipment</targetReference>
@@ -296,34 +283,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Option_Selected</name>
-        <label>Get Option Selected</label>
-        <locationX>176</locationX>
-        <locationY>782</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Consegna_dotazioni</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Consegna_Dotazioni</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CoerenzaComuneDotazione__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>get_Opzioni_Consegna</name>
         <label>get Opzioni Consegna</label>
         <locationX>176</locationX>
-        <locationY>458</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>filter_records</targetReference>
+            <targetReference>extract_Values</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -338,10 +304,80 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>get_pick_Value_Info</name>
+        <label>get pick Value Info</label>
+        <locationX>176</locationX>
+        <locationY>974</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Screen_Wizard2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getFieldDefinition.DurableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>AvaiableOptions</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Sportello</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PicklistValueInfo</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_pickValue_InfoSportello</name>
+        <label>get pick Value Info Sportello</label>
+        <locationX>176</locationX>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_pick_Value_Info</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getFieldDefinition.DurableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>AvaiableOptions</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PicklistValueInfo</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_ProcessEquipment</name>
         <label>Get ProcessEquipment</label>
         <locationX>610</locationX>
-        <locationY>1214</locationY>
+        <locationY>1514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Dotaz_RItirare</targetReference>
@@ -358,11 +394,41 @@
         <outputReference>ProcessEquipmentRecord</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>getFieldDefinition</name>
+        <label>getFieldDefinition</label>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_pickValue_InfoSportello</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityDefinitionId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QualifiedApiName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Consegna_Restituzione_dotazioni__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>FieldDefinition</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>DurableId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Conferma_Pratica</name>
         <label>Conferma Pratica</label>
         <locationX>1589</locationX>
-        <locationY>1970</locationY>
+        <locationY>2270</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -371,6 +437,18 @@
                 <elementReference>caseId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>causalCodeFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OperationCode__c</field>
+            <value>
+                <stringValue>07</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -389,7 +467,7 @@
         <name>Update_Consegna_dotazioni</name>
         <label>Update Consegna dotazioni</label>
         <locationX>176</locationX>
-        <locationY>890</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Annullamento_2</targetReference>
         </connector>
@@ -404,7 +482,7 @@
         <inputAssignments>
             <field>Consegna_Restituzione_dotazioni__c</field>
             <value>
-                <elementReference>Get_Option_Selected.ConsegnaDotazioni__c</elementReference>
+                <elementReference>Consegna_Dotazioni</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -413,7 +491,7 @@
         <name>allegatiObbligatori</name>
         <label>Allegati Obbligatori</label>
         <locationX>1369</locationX>
-        <locationY>1754</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -514,7 +592,7 @@
         <name>Screen_Dotaz_Consegnare</name>
         <label>Screen Dotaz Consegnare</label>
         <locationX>1039</locationX>
-        <locationY>1538</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -680,7 +758,7 @@
         <name>Screen_Dotaz_RItirare</name>
         <label>Screen Dotaz RItirare</label>
         <locationX>610</locationX>
-        <locationY>1322</locationY>
+        <locationY>1622</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -878,12 +956,12 @@
         <name>Screen_Wizard2</name>
         <label>Screen Wizard</label>
         <locationX>176</locationX>
-        <locationY>674</locationY>
+        <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Option_Selected</targetReference>
+            <targetReference>Update_Consegna_dotazioni</targetReference>
         </connector>
         <fields>
             <name>screenHeader3</name>
@@ -898,10 +976,11 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Consegna_Dotazioni</name>
-                    <choiceReferences>Opzioni_Consegna_FilteredChoice</choiceReferences>
+                    <choiceReferences>Opzioni_Consegna_FilteredChoiceSportello</choiceReferences>
+                    <choiceReferences>opzioni_consegna_filteredChoiceAltro</choiceReferences>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>get_Default_Value_Choice.DeveloperName</elementReference>
+                        <elementReference>Get_Input_Case.Consegna_Restituzione_dotazioni__c</elementReference>
                     </defaultValue>
                     <fieldText>Consegna Dotazioni</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -1023,7 +1102,7 @@
         <name>Annullamento_Subflow</name>
         <label>Annullamento Subflow</label>
         <locationX>176</locationX>
-        <locationY>2522</locationY>
+        <locationY>2822</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1045,6 +1124,13 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>AvaiableOptions</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>caseId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1052,12 +1138,20 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>currentItem_filter_records_0</name>
+        <name>currentItem_filter_picklist</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>HDT_CoerenzaComuneDotazione__mdt</objectType>
+        <objectType>PicklistValueInfo</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_filter_records</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PicklistValueInfo</objectType>
     </variables>
     <variables>
         <name>currentItem_Get_Option_Selected</name>

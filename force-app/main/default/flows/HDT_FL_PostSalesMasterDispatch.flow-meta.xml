@@ -10908,6 +10908,12 @@
                 <elementReference>CaseId</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Modifiche_Anagrafiche</name>

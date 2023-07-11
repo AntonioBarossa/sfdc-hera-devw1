@@ -13,6 +13,7 @@
 		RecordType.DeveloperName = &apos;HDT_RT_PagamentoUnicoAnnualeTARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_ReclamiScrittiTARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_StornoRateizzazione_TARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_Segnalazioni&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_VariazioniTari&apos;
 	)
 )</errorConditionFormula>

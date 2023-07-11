@@ -419,7 +419,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
                         CampaignMember updateMember = new CampaignMember();
                         updateMember.Id = cm.Id;
-                        updateMember.Status = 'Positivo';
+                        updateMember.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
                         membersToUpdate.add(updateMember);
                     }
                 }

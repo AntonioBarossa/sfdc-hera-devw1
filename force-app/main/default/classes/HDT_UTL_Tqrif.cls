@@ -143,11 +143,11 @@ public with sharing class HDT_UTL_Tqrif {
         theCase.ServicePoint__c = parentCase.ServicePoint__c;
         theCase.Contract__c = parentCase.Contract__c;
         theCase.ParentId = parentCase.Id;
+        theCase.AccountId = account?.Id;
 
         List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account?.Id);
         if(!accContactRels.isEmpty()){
             AccountContactRelation accContactRel = accContactRels[0];
-            theCase.AccountId = account.Id;
             theCase.CompanyOwner__c = account.CompanyOwner__c;
             theCase.ContactId = accContactRel.ContactId;
             theCase.SuppliedEmail = accContactRel.Contact.Email;

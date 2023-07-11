@@ -82,22 +82,15 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
-        system.debug('PUNTO 1 : campaignMemberId --> '+campaignMemberId);
-        system.debug('PUNTO 2 : statusValue --> '+statusValue);
         try {
-            system.debug('PUNTO 3');
             CampaignMember cm = new CampaignMember(
             Id = campaignMemberId,
             Status = statusValue
             );
-            system.debug('PUNTO 4');
             campaignMemberSrv.updateRecord(cm);
-            system.debug('PUNTO 5');
-
             return cm;
         }
         catch (Exception e) {
-            system.debug('PUNTO 6');
             return null;
         }
     }
@@ -414,10 +407,9 @@ public inherited sharing class HDT_LC_CampaignsController {
             List<CampaignMember>campMemUp =updateCampaignMembersStatus(campaignMemberIds, 'Non Proposto Auto');
             return campMemUp!=null && campMemUp.size()>0?true:false;
         }
-        
         return false;
-        
     }
+
     @AuraEnabled
     public static  List <CampaignMember> requiredCampaignCheck(String id){
 
@@ -434,9 +426,8 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         
         return campaignMemberIds;
-        
-        
     }
+
     @AuraEnabled
     public static  Account getCurrentAccount(String id){
 
@@ -452,7 +443,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, LeadId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, LeadId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             return cm;
         }
         catch (Exception e) {
@@ -501,26 +492,15 @@ public inherited sharing class HDT_LC_CampaignsController {
 
         List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt = HDT_QR_CampaignMemberStatusMetadata.getRecords();
 
-        system.debug('campaignStatusMdt --> '+campaignStatusMdt);
-
         campaignMemberList = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId];
-
-        system.debug('campaignMemberList --> '+campaignMemberList);
-
 
         for(CampaignMember cm : campaignMemberList){
             campaignIds.add(cm.CampaignId);
         }
 
-        system.debug('campaignIds --> '+campaignIds);
-
         campaignList = [SELECT Id, Category__c, Channel__c FROM Campaign WHERE Id IN: campaignIds];
 
-        system.debug('campaignList --> '+campaignList);
-
-        system.debug('PUNTO 0');
         for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
-            system.debug('PUNTO 1');
             if (
                 ((cmdt.Category__c == 'Entrambi' && cmdt.Channel__c == 'Tutti' && campaignList[0].Channel__c!='Door to Door') ||
                 (campaignList[0].Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
@@ -532,22 +512,14 @@ public inherited sharing class HDT_LC_CampaignsController {
                 (campaignList[0].Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') || 
                 (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && campaignList[0].Channel__c=='Door to Door')) && (cmdt.OutcomeCategory__c == outcomeType)
             )  {
-                system.debug('PUNTO 2');
                 if(outcomeType !=  'Esito Parziale')
                     partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
                 else
                     partialOutcomeValues.put(cmdt.StatusName__c, cmdt.DeveloperName);
 
             }
-            system.debug('PUNTO 3');
         }
-
-        system.debug('PUNTO 4');
-
-        system.debug('partialOutcomeValues --> '+partialOutcomeValues);
-
         return partialOutcomeValues;
-        
     }
 
     @AuraEnabled
@@ -563,5 +535,154 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
+
+    @AuraEnabled
+    public static string getCampaignMemberPhone(String campaignMemberId){
+        HDT_QR_CampaignMember cmquery = new HDT_QR_CampaignMember();
+        CampaignMember cm = cmquery.getRecordById(campaignMemberId);
+        if(cm.PhoneNumber__c != null && cm.PhoneNumber__c != ''){
+            return cm.PhoneNumber__c;
+        }else{
+            return null;
+        }
+         
+    }
+
+    @AuraEnabled
+    public static List<CampaignMember> getCampaignMember(String campaignMemberId){
+        HDT_QR_CampaignMember cmquery = new HDT_QR_CampaignMember();
+        List<CampaignMember> campaignMembers = new List<CampaignMember>();    
+        campaignMembers.add(cmquery.getRecordById(campaignMemberId));
+        if(!campaignMembers.isEmpty()){
+            return campaignMembers;
+        }
+        else{
+            return null;
+        }         
+    }
+
+    @AuraEnabled
+    public static string getCampaignTipology(String campaignMemberId){
+        HDT_QR_CampaignMember cmquery = new HDT_QR_CampaignMember();
+        CampaignMember cm = cmquery.getRecordById(campaignMemberId);
+        if(cm.Campaign.Tipology__c != null && cm.Campaign.Tipology__c != ''){
+            return cm.Campaign.Tipology__c;
+        }else{
+            return '';
+        }
+    }
+
+    @AuraEnabled
+    public static string getEcid(String campaignMemberId){
+        try{
+            HDT_QR_CampaignMember cmquery = new HDT_QR_CampaignMember();
+            CampaignMember cm = cmquery.getRecordById(campaignMemberId);
+            if(cm.Ecid__c != null && cm.Ecid__c != ''){
+                return cm.Ecid__c;
+            }else{
+                String response = submitRequest(campaignMemberId);
+    
+                system.debug('response --> '+response);
+    
+                Map<String,Object> jsonMap = (Map<String,Object>) JSON.deserializeUntyped(response);
+                Map<String,Object> data = new Map<String,Object>();
+                List<Object> rowList = new List<Object>();
+                Map<String,Object> rowMap = new Map<String,Object>();
+                String jsonEcid = '';
+    
+    
+                if(!jsonMap.isEmpty() && jsonMap != null){
+                    data = (Map<String,Object>)jsonMap.get('data');
+                    system.debug('data --> '+data);
+                    if(!data.isEmpty() && data != null){
+                        system.debug('data valorizzato');
+                        rowList = (List<Object>)data.get('rowList');
+                        system.debug('rowList --> '+rowList);
+    
+                        if(!rowList.isEmpty() && rowList != null){
+                            system.debug('rowList valorizzato');
+    
+                            rowMap =  (Map<String,Object>)rowList[0];
+            
+                            system.debug('rowMap --> '+rowMap);
+            
+                            if(!rowMap.isEmpty()){
+                                jsonEcid = (String)rowMap.get('builtinEcid');
+                            }
+                        } 
+                    }
+                }
+    
+                system.debug('data --> '+data);
+                system.debug('rowList --> '+rowList);
+                system.debug('jsonEcid --> '+jsonEcid);
+
+                if(jsonEcid != '' && jsonEcid != null){
+                    cm.Ecid__c = jsonEcid;
+                    HDT_UTL_DatabaseService.updateSObject(cm);
+                }
+
+    
+                return jsonEcid;
+            }
+        }
+        catch(Exception ex){
+
+            System.debug('ERROR --> '+ex.getMessage());
+            return null;
+
+        }
+        
+         
+    }
+
+    private static String submitRequest(String campaignMemberId){
+
+        String params = '{\n'
+            +'\"listFieldToSearch\": [\n'
+            +'    {\n'
+            +'        \"value\": \"'+campaignMemberId+'\",\n'
+            +'        \"categorizedFieldKeyCode\": \"CAMPAIGN_MEMBER_ID\"\n'
+            +'    }\n'
+            +'],\n'
+            +'\"fieldList\": [\n'
+            +'    \"BUILTIN_ECID\"\n'
+            +'],\n'
+            +'\"searchMode\": \"REGEXP\",\n'
+            +'\"macroActivityRegExp\" : \".*\",\n'
+            +'\"enabled\": true,\n'
+            +'\"active\": true,\n'
+            +'\"excludeTerminated\": true\n'
+        +'}\n';
+
+        HttpRequest req = new HttpRequest();
+        try {
+            System.debug(LoggingLevel.DEBUG, 'body: ' + params);
+            req.setEndpoint('Callout:MulesoftBasePath/campaigns/ecid/search');
+            req.setMethod('POST');
+            req.setBody(params);
+            req.setHeader('Accept', 'application/json');
+            req.setHeader('Content-Type', 'application/json');
+            req.setTimeout(28000);
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            return res.getBody();
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
+        }
+        return null;
+    }
+
+    @AuraEnabled
+    public static String getCurrentProfile(){
+
+        User currentUser = [SELECT Id, UserCompany__c, LoginChannel__c, CreatorGroup__c, ProfileName__c FROM User WHERE Id = :UserInfo.getUserId() WITH SECURITY_ENFORCED];
+
+        return currentUser.ProfileName__c;
+
+    }
+
     
 }

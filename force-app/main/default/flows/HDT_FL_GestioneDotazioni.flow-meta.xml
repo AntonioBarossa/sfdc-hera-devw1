@@ -316,6 +316,12 @@
                 <elementReference>theCase.Parent.SupplyStreetNumber__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>RequestSource__c</field>
+            <value>
+                <elementReference>theCase.Parent.RequestSource__c</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -370,7 +376,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>Inviata a SAP</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -748,7 +754,7 @@
                     <inputParameters>
                         <name>processType</name>
                         <value>
-                            <stringValue>AssociaDotazioniSecondForm</stringValue>
+                            <stringValue>Gestione Dotazioni Consegna RO</stringValue>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
