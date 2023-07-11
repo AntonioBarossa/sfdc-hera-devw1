@@ -32,7 +32,7 @@ public class HDT_UTL_TqrifTst {
         // system.debug(prcEq);
         HDT_UTL_Tqrif utlTqrif = new HDT_UTL_Tqrif();
         Case c = new HDT_QR_HerokuPostSalesManager().getCaseRecord(prcEq.Case__c);
-        c.Consegna_Restituzione_dotazioni__c = 'Sportello';
+        c.EquipmentDeliveryOption__c = 'Sportello';
         
         List<Case> result;
 
@@ -51,7 +51,7 @@ public class HDT_UTL_TqrifTst {
         //result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         //Assert.areEqual(2, result.size(), 'It should return two Case (for under 120L and for Over 120L)');
 
-        c.Consegna_Restituzione_dotazioni__c = 'Domicilio';
+        c.EquipmentDeliveryOption__c = 'Domicilio';
 
         result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         Assert.areEqual(1, result.size(), 'It should return just one Case (for both 120L and for Over 120L for "domicilio")');
@@ -59,7 +59,7 @@ public class HDT_UTL_TqrifTst {
         //TEST4
         eqsToUpdate = new List<Equipment__c>{ new Equipment__c(EquipmentCode__c=prcEq.OldGarbageBag2__c, Volumetry__c=130)};
         upsert eqsToUpdate EquipmentCode__c;
-        c.Consegna_Restituzione_dotazioni__c = 'Sportello';
+        c.EquipmentDeliveryOption__c = 'Sportello';
         result = utlTqrif.createEquipmentHandler(c, equipmentCodes);
         Assert.areEqual(1, result.size(), 'It should return just one Case (for over 120L)');
         
@@ -77,7 +77,7 @@ public class HDT_UTL_TqrifTst {
         system.debug(prcEq);
         HDT_UTL_Tqrif utlTqrif = new HDT_UTL_Tqrif();
         Case c = new HDT_QR_HerokuPostSalesManager().getCaseRecord(prcEq.Case__c);
-        c.Consegna_Restituzione_dotazioni__c = 'Sportello';
+        c.EquipmentDeliveryOption__c = 'Sportello';
         
         List<Case> result;
 

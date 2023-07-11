@@ -311,7 +311,7 @@
             <field>ConsegnaDotazioni__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Input_Case.Consegna_Restituzione_dotazioni__c</elementReference>
+                <elementReference>Get_Input_Case.EquipmentDeliveryOption__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

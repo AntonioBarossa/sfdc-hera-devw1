@@ -415,7 +415,7 @@
             <field>QualifiedApiName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Consegna_Restituzione_dotazioni__c</stringValue>
+                <stringValue>EquipmentDeliveryOption__c</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -480,7 +480,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Consegna_Restituzione_dotazioni__c</field>
+            <field>EquipmentDeliveryOption__c</field>
             <value>
                 <elementReference>Consegna_Dotazioni</elementReference>
             </value>
@@ -980,7 +980,7 @@
                     <choiceReferences>opzioni_consegna_filteredChoiceAltro</choiceReferences>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_Input_Case.Consegna_Restituzione_dotazioni__c</elementReference>
+                        <elementReference>Get_Input_Case.EquipmentDeliveryOption__c</elementReference>
                     </defaultValue>
                     <fieldText>Consegna Dotazioni</fieldText>
                     <fieldType>DropdownBox</fieldType>
