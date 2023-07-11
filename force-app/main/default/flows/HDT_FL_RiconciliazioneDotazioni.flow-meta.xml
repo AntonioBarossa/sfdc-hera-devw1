@@ -93,6 +93,20 @@
                 <elementReference>getContract.ServicePoint__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.ContractAccountCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.BillingProfile__r.ContractAccountCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>firstUpdate</targetReference>
         </connector>
