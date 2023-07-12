@@ -29,6 +29,7 @@ public inherited sharing class HDT_UTL_Morosita {
         String containerId = '';
 
         Case containerCase = new case();
+        containerCase.CustomerRequestDate__c = System.now();
         containerCase.Cluster__c = currentCase.Cluster__c;
         containerCase.Type = 'Contenitore Morosità';
         containerCase.AccountId = currentCase.AccountId;

@@ -74,6 +74,9 @@ public with sharing class HDT_UTL_BpCaCreate
                 {
                     newOrder.ContractAccountCode__c = (String) sobj.get('ContractAccountCode__c');
                 }
+                if(sobj.get('BillingProfile__c') != null){
+                    newOrder.BillingProfile__c = (String) sobj.get('BillingProfile__c');
+                }
                 evt.SerializedSobj__c = JSON.serialize(newOrder);
                 platEvents.add(evt);
             }
@@ -536,13 +539,22 @@ public with sharing class HDT_UTL_BpCaCreate
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }
-        /* Otherwise only the Billing Profile needs to be updated */
+        /* Otherwise only the Billing Profile needs to be updated.
+         * In this use case SAP could return a ContractAccount already existing, we need to query it before update.
+         */
         else
         {
             orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
-            result.add(billingProfileToUpdate);
+            HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+            BillingProfile__c billingProfile = bpQr.getRecordByContractAccount(response.data.codiceContatto);
+            //Id bpId = billingProfile != null? billingProfile.Id:inputOrder.BillingProfile__c;
+            if(billingProfile != null){
+                orderToUpdate.BillingProfile__c = billingProfile.Id;
+            }else{
+                BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
+                result.add(billingProfileToUpdate);
+            }
             result.add(orderToUpdate);
         }
         /* Other orders in progress with same Account and Billing Profile which have CustomerCode and ContractAccount fields blank need to be updated */
@@ -557,6 +569,10 @@ public with sharing class HDT_UTL_BpCaCreate
             if(otherChild.ContractAccountCode__c == null)
             {
                 otherChildToUpdate.ContractAccountCode__c = orderToUpdate.ContractAccountCode__c;
+            }
+            if(String.isNotBlank(otherChild.BillingProfile__c) && otherChild.BillingProfile__c != orderToUpdate.BillingProfile__c)
+            {
+                otherChild.BillingProfile__c = orderToUpdate.BillingProfile__c;
             }
             result.add(otherChildToUpdate);
         }
@@ -611,12 +627,29 @@ public with sharing class HDT_UTL_BpCaCreate
             return JSON.serialize(data);
         }
     }
-    public void updateBillingProfile(String dataString, Id billingId){
+    public String updateBillingProfile(String dataString, Id billingId,Id processId){
         HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        Id bpId = null;
         if(String.isNotBlank(data.codiceContatto)){
-            BillingProfile__c bp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
-            update bp;
+            BillingProfile__c newBp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
+            try {
+                update newBp;
+                bpId = newBp.Id;
+            } catch (Exception ex) {
+                String error = ex.getMessage();
+                if(String.isNotBlank(error) && error.containsIgnoreCase('duplicates value')){
+                    HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+                    BillingProfile__c bp  = bpQr.getRecordByContractAccount(data.codiceContatto);
+                    if(bp != null){
+                        bpId = bp.Id;
+                        //Case caseToUpdate = new Case(Id=processId,BillingProfile__C=bp.Id);
+                        //update CaseToUpdate;
+                    }
+                }
+            }
         }
+        data.id = bpId;
+        return JSON.serialize(data);
     }
     public void updateAccount(String dataString, Id accountId){
         HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
@@ -652,5 +685,6 @@ public with sharing class HDT_UTL_BpCaCreate
         public String commenti {get;set;}
         public String codiceBP {get;set;}
         public String esito {get;set;}
+        public String id {get;set;}
     }
 }

@@ -103,6 +103,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>FuiAccess__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>BillingPostalCode</field>
             <table>Order</table>
         </columns>
@@ -118,12 +123,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c</field>
+            <field>TotalAmountVAT__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>LoginChannel__c</field>
+            <field>Campaign__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -148,6 +153,21 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>isTransition__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LoginChannel__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LoginWorkstation__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CILegalRepresentative__c</field>
             <table>Order</table>
         </columns>
@@ -158,7 +178,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>IsMyAgency__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ClientCategoryFormula__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreditCheckInProgress__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CustomerCompanyNameFormula__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -948,6 +983,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Servizio formula</displayNameOverride>
             <field>CommodityFormula__c</field>
             <table>Order</table>
         </columns>
@@ -1189,11 +1225,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Resident__c</field>
-            <table>Order</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>isTransition__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -1663,7 +1694,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
+            <field>CompanyOwnerLabel__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -2098,27 +2129,107 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>IsMyAgency__c</field>
+            <field>HydrantMouthsNumber__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FuiAccess__c</field>
+            <field>NotDisconnectabilityCustomer__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CustomerCompanyNameFormula__c</field>
+            <field>SeasonUse__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TotalAmountVAT__c</field>
+            <field>ForfaitSewer__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>LoginWorkstation__c</field>
+            <field>NumerousComunity__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DomesticResidentNumber__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PayPurification__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PaySewer__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NotResidentDomesticHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ResidentDomesticHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NotDomesticHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AgriculturalHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CommercialHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IndustrialHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ZootechnicalHousingUnit__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IntendedUse__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SupplyUseType__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UseSubCategory__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RateCategory__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BlockOnComputation__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BonusDeliveryMode__c</field>
             <table>Order</table>
         </columns>
         <masterLabel>Orders</masterLabel>
@@ -2255,6 +2366,12 @@
             <field>ServicePoint__c.SupplyCity__c</field>
             <table>Order</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Service Point: SupplySAPCityCode</displayNameOverride>
+            <field>ServicePoint__c.SupplyCityCode__c</field>
+            <table>Order</table>
+        </columns>
         <masterLabel>Service Point</masterLabel>
     </sections>
     <sections>
@@ -2268,9 +2385,40 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CohabitantsNumber__c</field>
+            <table>Order</table>
+        </columns>
+        <masterLabel>Ordini</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CreatedBy.Contact.Account</field>
             <table>Order</table>
         </columns>
         <masterLabel>Creatore</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SBQQ__Quote__c.Name</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SBQQ__Quote__c.SBQQ__Status__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SBQQ__Quote__c.SupplyCity__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SBQQ__Quote__c.SBQQ__Type__c</field>
+            <table>Order</table>
+        </columns>
+        <masterLabel>Quote</masterLabel>
     </sections>
 </ReportType>

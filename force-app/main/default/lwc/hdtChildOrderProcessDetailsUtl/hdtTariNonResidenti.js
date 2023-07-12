@@ -137,6 +137,16 @@ export const cities = [
         if (mq <= 105)  return 4;
         if (mq <= 130)  return 5;
         return 6;
+    }),
+    new comune("PIOBBICO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
     })
 ]
 .reduce((result, elem)=>{

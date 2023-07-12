@@ -29,6 +29,7 @@ public class HDT_QR_CampaignMemberTst{
 		List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(2, false);
 		campaigns[1].ParentId=campaigns[0].Id;
 		campaigns[0].IsActive=true;
+		campaigns[0].Status='In Corso';
 		campaigns[0].StartDate=Date.today().addDays(-1);
 		campaigns[0].EndDate=Date.today().addDays(15);
 		campaigns[0].Category__c='Campagna CRM';
@@ -477,4 +478,71 @@ public class HDT_QR_CampaignMemberTst{
 		System.assertEquals(false, getSibMembByAccId.isEmpty(), 'Campaign Member not found');
 		System.assertNotEquals(true, getSibMembByAccId.isEmpty(), 'Campaign Member not found');
 	}
+
+	@isTest 
+	static void testgetRecordById(){
+	
+		
+		CampaignMember camMemberTest = [SELECT id FROM CampaignMember LIMIT 1];
+		String compId = camMemberTest.id;
+	
+		HDT_QR_CampaignMember instance = new HDT_QR_CampaignMember();
+	
+		Test.startTest();
+		CampaignMember result = instance.getRecordById(compId);
+		Test.stopTest();
+	
+		System.assertNotEquals(null, result, 'Campaign Member not found');
+		System.assertEquals(compId, result.Id, 'Returned wrong Campaign Member');
+	}
+
+	@isTest
+	static void testfilterCampaignsByCategoryAndChannelWithStatus(){
+
+		List<Contact> tContact=[SELECT Id, FirstName
+		FROM Contact
+		WHERE FirstName='test'
+		LIMIT 1];
+
+		List<String> contactIds=new List<String>();
+		contactIds.add(tContact[0].id);
+
+		List<Campaign> tCampaign = [SELECT id, Channel__c, Category__c FROM Campaign LIMIT 1];
+		String tCategory = tCampaign[0].Category__c;
+		String tChannel = tCampaign[0].Channel__c;
+
+		HDT_QR_CampaignMember instance = new HDT_QR_CampaignMember();
+
+		Test.startTest();
+		List<CampaignMember> resultList = instance.filterCampaignsByCategoryAndChannelWithStatus(contactIds,tCategory,tChannel);
+		Test.stopTest();
+
+		System.assertEquals(false, resultList.isEmpty(), 'Campaign Member not found');
+		System.assertNotEquals(true, resultList.isEmpty(), 'Campaign Member not found');
+	}
+
+	@isTest
+	static void testfilterCampaignsByCategoryWithStatus(){
+
+		List<Contact> tContact=[SELECT Id, FirstName
+		FROM Contact
+		WHERE FirstName='test'
+		LIMIT 1];
+
+		List<String> contactIds=new List<String>();
+		contactIds.add(tContact[0].id);
+
+		List<Campaign> tCampaign = [SELECT id, Category__c FROM Campaign LIMIT 1];
+		String tCategory = tCampaign[0].Category__c;
+
+		HDT_QR_CampaignMember instance = new HDT_QR_CampaignMember();
+
+		Test.startTest();
+		List<CampaignMember> resultList = instance.filterCampaignsByCategoryWithStatus(contactIds,tCategory);
+		Test.stopTest();
+
+		System.assertEquals(false, resultList.isEmpty(), 'Campaign Member not found');
+		System.assertNotEquals(true, resultList.isEmpty(), 'Campaign Member not found');
+	}
+
 }

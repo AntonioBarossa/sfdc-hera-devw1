@@ -431,6 +431,11 @@
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
     </customSettingAccesses> 
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.CompanyOwnerLabel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AbiCode__c.BankName__c</field>
         <readable>true</readable>
@@ -23007,6 +23012,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.SpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.StartTimeSlot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.DaysNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35315,6 +35330,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CheckActivityBox__c</field>
         <readable>true</readable>
@@ -36057,6 +36077,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Signature__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.SignMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -38154,6 +38179,15 @@
         <layout>SlaAdministration__c-HDT_Sales</layout>
         <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>ExpRavv__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

@@ -189,7 +189,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
-                    new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
+                    //new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Codice Istat','AtecoCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
                     new fieldData('Codice Ateco','HerAteco__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'',''),
                     new fieldData('Codice Ronchi','RonchiCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
@@ -216,7 +216,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             }
                         }
                     ),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.getResident(this.order.Surface__c)?.toString()),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r?.SupplyCity__c?.toUpperCase()]?.getResident(this.order.ServicePoint__r.AreaDeclaredTARI__c)?.toString()),
                     new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDRES01' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, false,'', '')
                 ]
             },

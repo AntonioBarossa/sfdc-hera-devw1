@@ -1077,6 +1077,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return transcoded;
 	}
 
+	/*
+	* NOTA: Docusign non restituisce l'informazione dell'order a cui fa riferimento un radiobutton.
+	*/
+
 	public static Map<String, String> manageRadioBtns(List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, List<Order> orderList, Map<String, Object> extraParams)
 	{
 		Map<String, String> result = new Map<String, String>();
@@ -1086,7 +1090,23 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		Boolean hcTwoFound = false;
 		Set<String> moduliOpzionaliMancanti = new Set<String>();
 		List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
-
+		Map<String,Order> orderMap = new Map <String,Order>();
+		Integer counterLeggeOttanta = 1;
+		Integer counterIstanza = 1;
+		//creo una mappa di strnga,order che è utile a tracciate quali ordini necessitano della L80 o dell'istanza. La stringa utilizza un contatore
+		//perchè posso avere più ordini che necessitano dello stesso modulo
+		for(Order singleOrder : orderList){
+			String leggeOttanta = singleOrder.DocumentLow80__c;
+			String istanza = singleOrder.Instance326__c;
+			if ('Richiesto'.equalsIgnoreCase(leggeOttanta)) {
+				orderMap.put('L80_'+counterLeggeOttanta, singleOrder);
+				counterLeggeOttanta++;
+			}
+			if ('Richiesto'.equalsIgnoreCase(istanza)) {
+				orderMap.put('Istanza326_'+counterIstanza, singleOrder);
+				counterIstanza++;
+			}
+		}
 		for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio)
 		{
 			if(!singleRadio.selected.equalsIgnoreCase('true')) { continue; }
@@ -1116,16 +1136,24 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						continue;
 					}
 				}
+				//Aggiungo l'act solo sull'order che necessita della L80
 				if (singleRadio.groupName.contains('L80_radio')){
+					String[] splitString = singleRadio.groupName.split('_');
+					String incrementale = splitString[splitString.size() - 1];
 					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
 						String actDescriptionLeggeOtt = 'Ritornato correttamente';
-						if(singleRadio.groupName.contains('_1')){
+						Order orderToUpdate = orderMap.get('L80_'+incrementale);
+						if(orderToUpdate != null){
+							actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderToUpdate.get('OrderNumber');
+							orderToUpdate.put('DocumentLow80__c','Validato');
+						}
+						/*if(singleRadio.groupName.contains('_1')){
 							actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[0].get('OrderNumber');
 							orderList[0].put('DocumentLow80__c','Validato');
 						}else {
 							actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[1].get('OrderNumber');
 							orderList[1].put('DocumentLow80__c','Validato');
-						}
+						}*/
 						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 						if (documentalActivity != null){
 							documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
@@ -1141,14 +1169,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				if (singleRadio.groupName.contains('326_radio')){
 					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+						String[] splitString = singleRadio.groupName.split('_');
+						String incrementale = splitString[splitString.size() - 1].trim();
 						String actDescriptionIstanza = 'Ritornato correttamente';
-						if(singleRadio.groupName.contains('_1')){
+						Order orderToUpdate = orderMap.get('Istanza326_'+incrementale);
+						if(orderToUpdate != null){
+							actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderToUpdate.get('OrderNumber');
+							orderToUpdate.put('Instance326__c','Validato');
+						}
+						/*if(singleRadio.groupName.contains('_1')){
 							actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[0].get('OrderNumber');
 							orderList[0].put('Instance326__c','Validato');
 						}else {
 							actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[1].get('OrderNumber');
 							orderList[1].put('Instance326__c','Validato');
-						}
+						}*/
 						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 						if (documentalActivity != null){
 							documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
@@ -1173,15 +1208,15 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}
 				when 'radio1_HCM','radio1_NS','radio1_EST','radio1_EBT','radio1_HC_vas'{
-					if(hcOneFound) {break;} 
+					if(hcOneFound) {continue;} 
 					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}
 				when 'radio2_HCM','radio2_NS','radio2_EST','radio2_EBT','radio2_HC_vas'{
-					if(hcTwoFound) {break;}
+					if(hcTwoFound) {continue;}
 					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 				}				
 				when else {
-					break;
+					continue;
 				}
 			}
 		}
@@ -1190,8 +1225,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		result.put('radio2', valueTwo);
 		result.put('activitiesToCreate', JSON.serialize(activitiesToCreate));
 		result.put('moduliOpzionaliMancanti', JSON.serialize(moduliOpzionaliMancanti));
+		result.put('orderList', JSON.serialize(orderList));
 
 		return result;
 	}
 
-}	
+}

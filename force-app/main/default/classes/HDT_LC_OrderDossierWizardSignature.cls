@@ -357,7 +357,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
                     &&(String.isNotBlank(o.RecordType.DeveloperName) && o.RecordType.DeveloperName.equalsIgnoreCase(cqc.Process__c))
                     && (String.isNotBlank(o.Channel__c) && o.Channel__c.equalsIgnoreCase(cqc.Channel__c))
                     && (String.isNotBlank(o.CustomerCategory__c) && o.CustomerCategory__c.equalsIgnoreCase(cqc.CustomerType__c))
-                    && (String.isNotBlank(o.MarketOrigin__c) && o.MarketOrigin__c.equalsIgnoreCase(cqc.MarketType__c))
+                    && (String.isNotBlank(o.Market__c) && o.Market__c.equalsIgnoreCase(cqc.MarketType__c))
                     && (
                         (String.isNotBlank(o.SignatureMethod__c) && o.SignatureMethod__c.equalsIgnoreCase(cqc.ComfortSignatureMethod__c))
                         || (String.isNotBlank(o.SignatureMethod__c) && o.SignatureMethod__c.equalsIgnoreCase(cqc.QualitySignatureMethod__c))
