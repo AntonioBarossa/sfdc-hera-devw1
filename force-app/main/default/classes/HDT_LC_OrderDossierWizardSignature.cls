@@ -215,15 +215,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
 
     private static List<ComfortQualityCall__c> executeQuery(List<Order> orders,String signatureMethod,String docSendingMethod){
-        
-        Set<String> channel = new Set<String>();
-        Set<String> recordType = new Set<String>();
-        Set<String> customerCategory = new Set<String>();
-        Set<String> marketOrigin = new Set<String>();
         Boolean isVas = false;
         if ('HDT_RT_VAS'.equalsIgnoreCase(ord[0].RecordType.DeveloperName)){
             isVas = true;
-            continue;
         }  
         if (isVas){
             return HDT_QR_ComfortQualityCall.getRecordByOrderParamsVasMassive(orders,signatureMethod,docSendingMethod);
