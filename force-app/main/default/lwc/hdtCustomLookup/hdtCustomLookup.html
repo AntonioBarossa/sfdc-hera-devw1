@@ -18,12 +18,15 @@
                                                     class={inputClass}
                                                     type="search"
                                                     id="input"
+                                                    data-id="input"
                                                     value={searchTerm}
                                                     onclick={handleClick}
                                                     onchange={onChange}
                                                     variant="label-hidden"
                                                     autocomplete="off"
                                                     placeholder={placeholder}
+                                                    onfocusout={inblur}
+                                                    required={req}
                                     ></lightning-input>
                                 </div>
                             </template>

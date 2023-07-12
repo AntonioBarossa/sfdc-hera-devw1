@@ -541,6 +541,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     spAmb.Id = recordCase.ServicePoint__c;
                     spAmb.SAPImplantCode__c = implant;
                 }
+                if('Richieste di riparazione dotazione domiciliare'.equalsIgnoreCase(recordCase.subprocess__c)){
+                    new HDT_UTL_Tqrif().startProcess(recordCase);
+                }
                 /*
                 if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
                     spAmb.Id = recordCase.ServicePoint__c;

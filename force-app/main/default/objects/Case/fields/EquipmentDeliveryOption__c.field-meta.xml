@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EquipmentDeliveryOption__c</fullName>
+    <externalId>false</externalId>
+    <label>Consegna/Restituzione dotazioni</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>CDR/Uniflotte</fullName>
+                <default>false</default>
+                <label>Punti distribuzioni/Uniflotte</label>
+            </value>
+            <value>
+                <fullName>Domicilio</fullName>
+                <default>false</default>
+                <label>Domicilio</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

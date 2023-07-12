@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Stato della dotazione</description>
+    <externalId>false</externalId>
+    <label>Stato Dotazione</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Consegnata</fullName>
+                <default>false</default>
+                <label>Consegnata</label>
+            </value>
+            <value>
+                <fullName>Ritirata</fullName>
+                <default>false</default>
+                <label>Ritirata</label>
+            </value>
+            <value>
+                <fullName>Black-list</fullName>
+                <default>false</default>
+                <label>Black-list</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
