@@ -204,6 +204,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                         variant: 'warning',
                     }),
                 );
+                this.showMainTable = false;
             } else {
                 //this.contractDataToView = obj.response.item;
                 this.showMainTable = true;
@@ -276,7 +277,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
 
         if(this.currentView == 'W' || this.currentView == 'M'){
             this.requestObj.idAggregation = 'D';
-            this.requestObj.date = event.detail.row.consDateStart;
+            //this.requestObj.date = event.detail.row.consDateStart;
+            this.requestObj.date = event.detail.row.consDate;
             this.spinner = true;
             this.backendCall();
 
