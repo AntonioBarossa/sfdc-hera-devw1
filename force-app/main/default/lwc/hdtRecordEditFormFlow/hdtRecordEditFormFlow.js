@@ -11,6 +11,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
 import ACCOUNTID from '@salesforce/schema/Case.AccountId';
+import { performErrorActions } from './hdtValidateActions.js';
 
 import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
@@ -436,6 +437,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         if(resultWrapper.outcomeCode === "OK"){ 
                             this.template.querySelector('lightning-record-edit-form').submit(fields);
                         }else{
+                            performErrorActions.call(this, resultWrapper);
                             this.showMessage('Errore',resultWrapper.outcomeDescription,'error');  
                         }
                     })

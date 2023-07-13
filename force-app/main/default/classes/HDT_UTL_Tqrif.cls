@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_Tqrif {
     private static HDT_QR_Equipment qrEquipment = new HDT_QR_Equipment();
     private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
 
-    private List<String> fieldsName = new List<String>
+    public List<String> fieldsName = new List<String>
     {
         'CardKey1__c',
         'CardKey2__c',
