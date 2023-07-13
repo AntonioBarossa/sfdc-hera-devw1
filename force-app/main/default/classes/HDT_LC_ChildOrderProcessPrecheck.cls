@@ -63,9 +63,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         try{
             String consumptionAnnual = null;
             if(orderId != null && orderId != ''){
-                List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
+                List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnualVAS__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnualVAS__c != null WITH SECURITY_ENFORCED];
                 if(!orderItemList.isEmpty() && orderItemList[0] != null){
-                    consumptionAnnual = String.valueOf(orderItemList[0].ConsumptionAnnual__c);
+                    consumptionAnnual = String.valueOf(orderItemList[0].ConsumptionAnnualVAS__c);
                 }
             }
             return consumptionAnnual;
