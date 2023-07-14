@@ -232,6 +232,46 @@
                 <default>false</default>
                 <label>Codice Agente</label>
             </value>
+            <value>
+                <fullName>MonthsOccupation__c</fullName>
+                <default>false</default>
+                <label>Mesi Occupazione</label>
+            </value>
+            <value>
+                <fullName>MonthsOccupYear__c</fullName>
+                <default>false</default>
+                <label>Mesi di occupazione in un anno</label>
+            </value>
+            <value>
+                <fullName>DiscountHandicapList__c</fullName>
+                <default>false</default>
+                <label>Sconto Handicap</label>
+            </value>
+            <value>
+                <fullName>Note__c</fullName>
+                <default>false</default>
+                <label>Note</label>
+            </value>
+            <value>
+                <fullName>DaysNumber__c</fullName>
+                <default>false</default>
+                <label>Numero Giorni</label>
+            </value>
+            <value>
+                <fullName>EndDateTARI__c</fullName>
+                <default>false</default>
+                <label>EndDateTARI__c</label>
+            </value>
+            <value>
+                <fullName>SerQFQV__c</fullName>
+                <default>false</default>
+                <label>SerQFQV__c</label>
+            </value>
+            <value>
+                <fullName>ReasonSuspension__c</fullName>
+                <default>false</default>
+                <label>ReasonSuspension__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
