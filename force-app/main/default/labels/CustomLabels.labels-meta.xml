@@ -200,6 +200,13 @@
         <value>NESSUN_DL;</value>
     </labels>
     <labels>
+        <fullName>HDT_EnableRadioButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Abilita la vecchia gestione dei radio button l80 e I326</shortDescription>
+        <value>N</value>
+    </labels>
+    <labels>
         <fullName>HDT_M03_Distributors_Gas_To_Include</fullName>
         <language>en_US</language>
         <protected>false</protected>
