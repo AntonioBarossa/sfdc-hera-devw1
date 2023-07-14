@@ -78,15 +78,9 @@ public with sharing class HDT_UTL_EquipmentValidation implements HDT_UTL_CaseVal
         return processes[0];
     }
 
-    @TestVisible
     class HDT_WRP_EquipmentValidation extends HDT_UTL_CaseValidationWrapper {
         List<String> mandatoryFields { get; set; }
         List<String> fieldsToBlank { get; set; }
-
-        @TestVisible
-        HDT_WRP_EquipmentValidation(){
-            return;
-        }
 
         HDT_WRP_EquipmentValidation(String outcomeCode, String outcomeDescription){
             this.outcomeCode = outcomeCode;
