@@ -43,7 +43,7 @@
                 <label>Comune fornitura</label>
             </value>
             <value>
-                <fullName>ConsumptionAnnualVAS__c</fullName>
+                <fullName>ConsumptionAnnual__c</fullName>
                 <default>false</default>
                 <label>Consumo Annuo VAS</label>
             </value>
