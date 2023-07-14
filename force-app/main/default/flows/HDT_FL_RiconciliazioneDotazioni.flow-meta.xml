@@ -69,7 +69,7 @@
         <name>AssignResultValues</name>
         <label>AssignResultValues</label>
         <locationX>710</locationX>
-        <locationY>3146</locationY>
+        <locationY>3254</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -108,7 +108,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>firstUpdate</targetReference>
+            <targetReference>createProcessEquipment</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -124,7 +124,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>firstUpdate</targetReference>
+            <targetReference>createProcessEquipment</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -182,7 +182,7 @@
         <name>newProcessEquipmentFromForm</name>
         <label>newProcessEquipmentFromForm</label>
         <locationX>446</locationX>
-        <locationY>2738</locationY>
+        <locationY>2846</locationY>
         <defaultConnector>
             <targetReference>updateNewProcessEquipment</targetReference>
         </defaultConnector>
@@ -236,7 +236,7 @@
         <name>SceltaButtons</name>
         <label>SceltaButtons</label>
         <locationX>732</locationX>
-        <locationY>1490</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>getCityTech</targetReference>
         </defaultConnector>
@@ -273,7 +273,7 @@
         <name>SceltaButtons_0</name>
         <label>SceltaButtons</label>
         <locationX>50</locationX>
-        <locationY>2306</locationY>
+        <locationY>2414</locationY>
         <defaultConnector>
             <targetReference>getEquipment</targetReference>
         </defaultConnector>
@@ -311,7 +311,7 @@
         <name>SceltaButtons_1</name>
         <label>SceltaButtons</label>
         <locationX>446</locationX>
-        <locationY>3038</locationY>
+        <locationY>3146</locationY>
         <defaultConnector>
             <targetReference>AssignResultValues</targetReference>
         </defaultConnector>
@@ -381,7 +381,7 @@
         <name>Tari_o_Tcp</name>
         <label>Tari o Tcp</label>
         <locationX>512</locationX>
-        <locationY>2090</locationY>
+        <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>screenToastError</targetReference>
         </defaultConnector>
@@ -445,11 +445,6 @@
         <dataType>String</dataType>
         <expression>IF(ISNULL({!getInputCase.Contract__c}), {!getInputCase.Order__r.ServicePoint__c}, {!getInputCase.Contract__r.ServicePoint__c})</expression>
     </formulas>
-    <formulas>
-        <name>ProcessEquipmentId</name>
-        <dataType>String</dataType>
-        <expression>IF(ISNULL({!getProcessEquipment.Id}), &apos;&apos;, {!getProcessEquipment.Id})</expression>
-    </formulas>
     <interviewLabel>HDT_FL_RiconciliazioneDotazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RiconciliazioneDotazioni</label>
     <processMetadataValues>
@@ -471,11 +466,28 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>createProcessEquipment</name>
+        <label>createProcessEquipment</label>
+        <locationX>732</locationX>
+        <locationY>1382</locationY>
+        <connector>
+            <targetReference>firstUpdate</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>inputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ProcessEquipment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>getCityTech</name>
         <label>getCityTech</label>
         <locationX>512</locationX>
-        <locationY>1982</locationY>
+        <locationY>2090</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tari_o_Tcp</targetReference>
@@ -517,7 +529,7 @@
         <name>getEquipment</name>
         <label>getEquipment</label>
         <locationX>446</locationX>
-        <locationY>2414</locationY>
+        <locationY>2522</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getProcessEquipment</targetReference>
@@ -580,7 +592,7 @@
         <name>getProcessEquipment</name>
         <label>getProcessEquipment</label>
         <locationX>446</locationX>
-        <locationY>2522</locationY>
+        <locationY>2630</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ScreenSecondForm</targetReference>
@@ -601,14 +613,14 @@
         <name>FinalUpdate</name>
         <label>FinalUpdate</label>
         <locationX>710</locationX>
-        <locationY>3254</locationY>
+        <locationY>3362</locationY>
         <inputReference>getInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>firstUpdate</name>
         <label>firstUpdate</label>
         <locationX>732</locationX>
-        <locationY>1382</locationY>
+        <locationY>1490</locationY>
         <connector>
             <targetReference>SceltaButtons</targetReference>
         </connector>
@@ -618,7 +630,7 @@
         <name>updateNewProcessEquipment</name>
         <label>updateNewProcessEquipment</label>
         <locationX>534</locationX>
-        <locationY>2846</locationY>
+        <locationY>2954</locationY>
         <connector>
             <targetReference>SceltaButtons_1</targetReference>
         </connector>
@@ -642,7 +654,7 @@
         <name>FirstForm</name>
         <label>FirstForm</label>
         <locationX>50</locationX>
-        <locationY>2198</locationY>
+        <locationY>2306</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -894,7 +906,7 @@
         <name>ScreenSecondForm</name>
         <label>ScreenSecondForm</label>
         <locationX>446</locationX>
-        <locationY>2630</locationY>
+        <locationY>2738</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1072,7 +1084,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>ProcessEquipmentId</elementReference>
+                    <elementReference>getProcessEquipment.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1092,7 +1104,7 @@
         <name>screenToastError</name>
         <label>screenToastError</label>
         <locationX>974</locationX>
-        <locationY>2198</locationY>
+        <locationY>2306</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1149,7 +1161,7 @@
         <name>GestioneAnnullamento</name>
         <label>GestioneAnnullamento</label>
         <locationX>468</locationX>
-        <locationY>1598</locationY>
+        <locationY>1706</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
