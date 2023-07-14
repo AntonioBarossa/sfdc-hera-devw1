@@ -1,23 +1,28 @@
 <template>
+    <template if:true={showSpinner}>
+          <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
     <c-hdt-generic-record-selection if:true={showSelector} search-variant={searchVariant}
         search-placeholder={searchPlaceholder} max-row={maxRow} columns={columns} query-params={queryParams}
         onrecordselected={handleRecordSelection}></c-hdt-generic-record-selection>
     <template if:true={showModal}>
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
-                <div class="slds-modal__container">
-                    <!-- Modal/Popup Box LWC body starts here -->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <c-hdt-billing-profile-form account-id={accountId} oncancel={handleShowModal} onnewbillingprofilerecord={handleNewBilling}></c-hdt-billing-profile-form>
-                    </div>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c-hdt-billing-profile-form account-id={accountId} oncancel={handleShowModal}
+                        onnewbillingprofilerecord={handleNewBilling}></c-hdt-billing-profile-form>
                 </div>
-            </section>
-        </template>
+            </div>
+        </section>
+    </template>
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
             <template if:true={enableNew}>
                 <lightning-button class="slds-m-top_xsmall slds-m-bottom_small slds-float--left" variant="brand"
-                type="button" name="new" label="Crea Nuovo Billign Profile" onclick={handleShowModal}>
-            </lightning-button>
+                    type="button" name="new" label="Crea Nuovo Billing Profile" onclick={handleShowModal}>
+                </lightning-button>
             </template>
         </div>
         <div class="actionsRight">

@@ -2,10 +2,42 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <decisions>
+        <name>Check_Servizio</name>
+        <label>Check Servizio</label>
+        <locationX>402</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>updateCase_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altre Commodity</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>getCustomAct.Case__r.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCustomAct.Case__r.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Ambiente</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>isCaseValorized</name>
         <label>isCaseValorized?</label>
-        <locationX>182</locationX>
+        <locationX>226</locationX>
         <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Check_Servizio</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>YES_0</name>
@@ -17,6 +49,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getCustomAct.ActivityOutcome__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Negativo</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>updateCase</targetReference>
             </connector>
@@ -26,7 +65,7 @@
     <decisions>
         <name>isCustomLabelContains</name>
         <label>isCustomLabelContains</label>
-        <locationX>380</locationX>
+        <locationX>490</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
@@ -75,7 +114,7 @@
     <recordLookups>
         <name>getCustomAct</name>
         <label>getCustomAct</label>
-        <locationX>380</locationX>
+        <locationX>490</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -120,8 +159,35 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>updateCase_2</name>
+        <label>updateCase</label>
+        <locationX>490</locationX>
+        <locationY>638</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCustomAct.Case__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>364</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getCustomAct</targetReference>

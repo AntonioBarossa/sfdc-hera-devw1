@@ -7,7 +7,6 @@ public with sharing class HDT_LC_ReletedListAccount {
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
     private static HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
-
     @AuraEnabled
     public static Contact insertContact(Map<String,String> dataContact, Map<String,String> contactAddress){
        // System.debug('HDT_LC_ReletedListAccount');
@@ -37,11 +36,29 @@ public with sharing class HDT_LC_ReletedListAccount {
         Contact contact= new Contact(AccountId= dataContact.get('accountId'), DegreeOfStudies__c= dataContact.get('education'),LastName= account.LastName__c,Gender__c= account.Gender__c ,FirstName=account.FirstName__c ,Birthdate=birthdate, FiscalCode__c= account.FiscalCode__c,Birthcity__c=dataContact.get('birthplace') ,Phone= account.Phone, Email= account.PrimaryEmail__c,MobilePhonePrefix__c= account.MobilePhonePrefix__c, MobilePhone= account.MobilePhone__c, PhonePrefix__c= account.PhonePrefix__c, Fax= account.FAX__c,Profession__c= account.Profession__c, MailingCity= account.BillingCity, MailingCityCode__c= account.BillingCityCode__c, MailingCountry= account.BillingCountry, MailingPostalCode= account.BillingPostalCode, MailingState= account.BillingState, MailingStreet= account.BillingStreet, MailingStreetName__c= account.BillingStreetName__c, MailingStreetCode__c= account.BillingStreetCode__c, MailingStreetNumber__c= account.BillingStreetNumber__c, MailingStreetNumberExtension__c= account.BillingStreetNumberExtension__c, MailingRegion__c= account.BillingRegion__c,MailingPlace__c = account.BillingPlace__c ,MailingPlaceCode__c = account.BillingPlaceCode__c , MailingIsAddressVerified__c = account.BillingIsAddressVerified__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
+        Boolean updateAcr = true;
         if(dataContact.get('role')!=null){
             List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id, AccountId');
             if(listAccCon != null && listAccCon.size() > 0){
                 AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= dataContact.get('accountId'), Roles= dataContact.get('role'));
-                accoContRelSrv.updateRecord(acr);
+                if(acr.Roles.containsIgnoreCase('Titolare'))
+                {
+                    List<AccountContactRelation> otherAcr= [SELECT Id 
+                    FROM AccountContactRelation 
+                    WHERE AccountId = :dataContact.get('accountId') 
+                    AND (Id != :listAccCon[0].Id) 
+                    AND Roles INCLUDES ('Titolare')
+                    WITH SECURITY_ENFORCED];
+                    updateAcr = otherAcr.isEmpty();
+                }
+                if(updateAcr)
+                {
+                    accoContRelSrv.updateRecord(acr);
+                }
+                else
+                {
+                    throw new AuraHandledException('Non è possibile avere più di un Contatto Titolare sotto lo stesso Account.');
+                }
             }
             if(dataContact.get('role').equalsIgnoreCase('Amministratore Condominio'))
             {
@@ -87,7 +104,7 @@ public with sharing class HDT_LC_ReletedListAccount {
         //HRAWRM-500 Start 04/10/2021
         List<AccountContactRelation> listAccountContactRelation = accoContRelQr.getContactsByAccountWithRoles(accountId);
         List<HDT_WRP_AccountContactRelation> lWrap = new List<HDT_WRP_AccountContactRelation>();
-
+        string currentProfile = HDT_LC_CampaignsController.getCurrentProfile();
         for (AccountContactRelation temp : listAccountContactRelation) {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
             Date endDate = temp.EndDate;
@@ -96,7 +113,7 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactId             = temp.ContactId                ;
             n.contactName           = temp.Contact.name             ;
             n.roles                 = temp.Roles                    ;
-            n.contactHomePhone      = temp.Contact.HomePhone        ;
+            n.contactHomePhone      = temp.Contact.Phone            ;
             n.contactMobilePhone    = temp.Contact.MobilePhone      ;
             n.contactEmail          = temp.Contact.Email            ;
             n.contactIndividualId   = temp.Contact.IndividualId     ;
@@ -105,7 +122,12 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.endDate               = String.valueOf(endDate.day() + '/' + endDate.month() + '/' + endDate.year());
             n.startDate             = String.valueOf(startDate.day() + '/' + startDate.month() + '/' + startDate.year());
             }
-            n.contactUrl            = '/lightning/r/Contact/' +temp.ContactId +'/view';
+            if (currentProfile.contains('Partner User')) {
+                n.contactUrl= '/contact/' +temp.ContactId;
+            }
+            else{
+                n.contactUrl= '/lightning/r/Contact/' +temp.ContactId +'/view';//     
+            }
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021

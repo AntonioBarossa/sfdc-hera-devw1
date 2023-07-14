@@ -13,6 +13,8 @@ global inherited sharing class HDT_UTL_ServiceCatalogOrFilter implements wrts_pr
 
         if(objectType == 'Case'){
             res = HDT_UTL_ServiceCatalogOrFilterProcess.caseFilter(sb, method);
+        }else if ('ServicePoint__c'.equalsIgnoreCase(objectType)){
+            res = HDT_UTL_ServiceCatalogOrFilterProcess.servicePointFilter(sb, method);
         }
         else if (objectType == 'AccountStatementFilter__c'){
             res = HDT_UTL_ServiceCatalogOrFilterProcess.accountStatementFilter(sb, method);

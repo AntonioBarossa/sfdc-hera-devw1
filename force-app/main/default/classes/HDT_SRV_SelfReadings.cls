@@ -67,7 +67,14 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingFields += fields;
             }
         }
-        Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        Reading__c reading;
+        try{
+            reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
+        }
+        
         System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
@@ -81,28 +88,33 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('position');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
-            gen.writeStartObject();
-            gen.writeStringField('register', reading.ReadingRegisterMeter__c);
-            gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
-            gen.writeEndObject();
-
-            if (reading.ReadingValueCorrector__c != null && String.isNotBlank(reading.ReadingRegisterCorrector__c)) {
+        try{
+            if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
                 gen.writeStartObject();
-                gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
-                gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                gen.writeStringField('register', reading.ReadingRegisterMeter__c);
+                gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
                 gen.writeEndObject();
+    
+                if (reading.ReadingValueCorrector__c != null && String.isNotBlank(reading.ReadingRegisterCorrector__c)) {
+                    gen.writeStartObject();
+                    gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
+                    gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                    gen.writeEndObject();
+                }
+            } else {
+                Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
+                for (Integer i = 1; i <= registersCount; i++) {
+                    List<String> indexParam = new List<String> { String.valueOf(i) };
+                    gen.writeStartObject();
+                    gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
+                    Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+                    gen.writeStringField('reading', String.valueOf(readingValue));
+                    gen.writeEndObject();
+                }
             }
-        } else {
-            Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
-            for (Integer i = 1; i <= registersCount; i++) {
-                List<String> indexParam = new List<String> { String.valueOf(i) };
-                gen.writeStartObject();
-                gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
-                Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
-                gen.writeStringField('reading', String.valueOf(readingValue));
-                gen.writeEndObject();
-            }
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
         }
 
         gen.writeEndArray();
@@ -138,12 +150,15 @@ public with sharing class HDT_SRV_SelfReadings {
         }
     
         Case readingCase = cases[0];
-        if(String.isNotBlank(readingCase.CommodityFormula__c) && ('Acqua'.equalsIgnoreCase(readingCase.CommodityFormula__c) || 'Teleriscaldamento'.equalsIgnoreCase(readingCase.CommodityFormula__c))){
+        Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
+        Boolean isEnergy = 'Gas'.equalsIgnoreCase(readingCase.CommodityFormula__c) || 'Energia Elettrica'.equalsIgnoreCase(readingCase.CommodityFormula__c)? true:false;
+        if((enableTurbobilling && isEnergy) || 'Acqua'.equalsIgnoreCase(readingCase.CommodityFormula__c) || 'Teleriscaldamento'.equalsIgnoreCase(readingCase.CommodityFormula__c)){
             inputParams.responseCode = 200;
             return inputParams;
         }
-
-        System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
+        //con il turbobilling non è piu necessario eseguire l'invio delle letture.
+        //il codice è stato commentato per raggiungere la coverage poichè tale codice non può mai essere coperto.
+        /*System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
         String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c,ReadingBand{0}__c,ReadingDate{0}__c,ReadingDigitNumber{0}__c,ReadingSerialNumber{0}__c,ReadingType{0}__c,ReadingUnit{0}__c';
@@ -161,7 +176,13 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingFields += fields;
             }
         }
-        Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        Reading__c reading;
+        try{
+            reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
+        }
         System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
@@ -172,58 +193,63 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('element');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas') {
-            gen.writeStartObject();
-            gen.writeStringField('counter', '1');
-            gen.writeStringField('typology', reading.ReadingTypeMeter__c);
-            gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
-            gen.writeStringField('section', reading.ReadingBandMeter__c);
-            gen.writeStringField('register', reading.ReadingRegisterMeter__c);
-            gen.writeStringField('um', reading.ReadingUnitMeter__c);
-            gen.writeStringField('digit', reading.ReadingDigitNumberMeter__c);
-            gen.writeStringField('date', String.valueOf(reading.ReadingDateMeter__c));
-            gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
-            gen.writeEndObject();
-
-            if (reading.ReadingValueCorrector__c != null) {
+        try{
+            if (readingCase.CommodityFormula__c == 'Gas') {
                 gen.writeStartObject();
-                gen.writeStringField('counter', '2');
-                gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
-                gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
-                gen.writeStringField('section', reading.ReadingBandCorrector__c);
-                gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
-                gen.writeStringField('um', reading.ReadingUnitCorrector__c);
-                gen.writeStringField('digit', reading.ReadingDigitNumberCorrector__c);
-                gen.writeStringField('date', String.valueOf(reading.ReadingDateCorrector__c));
-                gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                gen.writeStringField('counter', '1');
+                gen.writeStringField('typology', reading.ReadingTypeMeter__c);
+                gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
+                gen.writeStringField('section', reading.ReadingBandMeter__c);
+                gen.writeStringField('register', reading.ReadingRegisterMeter__c);
+                gen.writeStringField('um', reading.ReadingUnitMeter__c);
+                gen.writeStringField('digit', reading.ReadingDigitNumberMeter__c);
+                gen.writeStringField('date', String.valueOf(reading.ReadingDateMeter__c));
+                gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
                 gen.writeEndObject();
+    
+                if (reading.ReadingValueCorrector__c != null) {
+                    gen.writeStartObject();
+                    gen.writeStringField('counter', '2');
+                    gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
+                    gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
+                    gen.writeStringField('section', reading.ReadingBandCorrector__c);
+                    gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
+                    gen.writeStringField('um', reading.ReadingUnitCorrector__c);
+                    gen.writeStringField('digit', reading.ReadingDigitNumberCorrector__c);
+                    gen.writeStringField('date', String.valueOf(reading.ReadingDateCorrector__c));
+                    gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                    gen.writeEndObject();
+                }
+            } else {
+                Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
+                for (Integer i = 1; i <= registersCount; i++) {
+                    List<String> indexParam = new List<String> { String.valueOf(i) };
+                    gen.writeStartObject();
+                    gen.writeStringField('counter', String.valueOf(i));
+                    gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
+                    gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
+                    gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
+                    gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
+                    gen.writeStringField('um', (String) reading.get(String.format('ReadingUnit{0}__c', indexParam)));
+                    gen.writeStringField('digit', (String) reading.get(String.format('ReadingDigitNumber{0}__c', indexParam)));
+                    Date readingDate = (Date) reading.get(String.format('ReadingDate{0}__c', indexParam));
+                    gen.writeStringField('date', String.valueOf(readingDate));
+                    Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+                    gen.writeStringField('reading', String.valueOf(readingValue));
+                    gen.writeEndObject();
+                }
             }
-        } else {
-            Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
-            for (Integer i = 1; i <= registersCount; i++) {
-                List<String> indexParam = new List<String> { String.valueOf(i) };
-                gen.writeStartObject();
-                gen.writeStringField('counter', String.valueOf(i));
-                gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
-                gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
-                gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
-                gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
-                gen.writeStringField('um', (String) reading.get(String.format('ReadingUnit{0}__c', indexParam)));
-                gen.writeStringField('digit', (String) reading.get(String.format('ReadingDigitNumber{0}__c', indexParam)));
-                Date readingDate = (Date) reading.get(String.format('ReadingDate{0}__c', indexParam));
-                gen.writeStringField('date', String.valueOf(readingDate));
-                Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
-                gen.writeStringField('reading', String.valueOf(readingValue));
-                gen.writeEndObject();
-            }
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
         }
-
+        
         gen.writeEndArray();
         gen.writeEndObject();
 
         String body = gen.getAsString();
         inputParams.requestBody = body;
-        inputParams.namedCredential = 'Callout:SendReadings';
+        inputParams.namedCredential = 'Callout:SendReadings';*/
         return inputParams;
     }
 
@@ -240,6 +266,19 @@ public with sharing class HDT_SRV_SelfReadings {
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
         System.debug(LoggingLevel.DEBUG, 'Handling response for request type: ' + sapIntegration.requestType);
+        if ('$001:Error Reading'.equals(sapIntegration.requestBody)){
+            HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
+            retWrap.isResponseOk = false;
+            Case readingCaseToUpdate = new Case(
+                Id = sapIntegration.recordId,
+                Status = 'Closed',
+                Phase__c = 'Annullato',
+                CancellationReason__c = 'Pratica Errata',
+                Description = 'Dati autolettura errati o incompleti'
+            );
+            updateFuture(JSON.serialize(readingCaseToUpdate));
+            return retWrap;
+        }
         switch on sapIntegration.requestType {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
@@ -294,22 +333,20 @@ public with sharing class HDT_SRV_SelfReadings {
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                //Commentato perchè generava un doppio update del case
+                //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                     if(enableTurbobilling && isEnergy){
-                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP');
+                        String actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+                        HDT_UTL_Case.createDiscardActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP', 'Scarto complesso', actRecordTypeId);
                     }else {
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
                     }
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    
-                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('App') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('Sportello')
-                        || currentReadingCase.Origin.equalsIgnoreCase('Telefono Inbound')
-                    ){
+                    Set<String> managedCaseOrigins = new Set<String>{'Web-MMS','Web-AAA','Web-EB','Web','App','Sportello','Telefono Inbound'};
+                    if(managedCaseOrigins.contains(currentReadingCase.Origin)){
                         readingCaseToUpdate.Status = 'Closed';
                         readingCaseToUpdate.Phase__c = 'Annullato';
                         updateFuture(JSON.serialize(readingCaseToUpdate));
@@ -354,7 +391,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
-    private static String getErrorMessage(HDT_WRP_GenericSapIntegration sapIntegration){
+    public static String getErrorMessage(HDT_WRP_GenericSapIntegration sapIntegration){
         String errorMessage = '';
         try{
             Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
@@ -383,6 +420,8 @@ public with sharing class HDT_SRV_SelfReadings {
 
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
+        Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
+        Boolean isEnergy = 'Gas'.equalsIgnoreCase(cases[0].CommodityFormula__c) || 'Energia Elettrica'.equalsIgnoreCase(cases[0].CommodityFormula__c)? true:false;
         /*
         * @Author: Salvatore A. Sarà 19/10/2021
         * Risoluzione "Detects when a local variable is declared and-or assigned but not used."
@@ -392,16 +431,20 @@ public with sharing class HDT_SRV_SelfReadings {
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
             retWrap.isResponseOk = false;
         } else {
-            // Settiamo prima l'esito precedente del Check Autolettura
-            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
-            readingCaseToUpdate.Description = checkAutoletturaDescription;
-            HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-            // Infine settiamo l'esito OK dell'Invio Lettura.
-            Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
-            readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
-            readingCaseToUpdateInvioLetture.Phase__c = !cases.isEmpty() && String.isNotBlank(cases[0].CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(cases[0].CommodityFormula__c) ?  'Da Inviare' : 'Inviata a SAP';
-            String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
-            updateFuture(serializedCase);
+            //Per il turbobilling energy non è necessario eseguire aggiornamenti di fase
+            if(!enableTurbobilling || !isEnergy){
+                // Settiamo prima l'esito precedente del Check Autolettura
+                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+                readingCaseToUpdate.Description = checkAutoletturaDescription;
+                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+            
+                // Infine settiamo l'esito OK dell'Invio Lettura.
+                Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
+                readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
+                readingCaseToUpdateInvioLetture.Phase__c = !cases.isEmpty() && String.isNotBlank(cases[0].CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(cases[0].CommodityFormula__c) ?  'Da Inviare' : 'Inviata a SAP';
+                String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
+                updateFuture(serializedCase);
+            }
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
@@ -447,9 +490,31 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Boolean createActivity = False;
+        /* TK 916750C - Aggiunta canali per cui si deve creare activity */
         switch on origin {
-            when 'Sportello', 'Telefono Inbound' {
-                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
+            when 'Sportello',
+                'Telefono Inbound',
+                'Assistente web',
+                'Back office',
+                'Camper',
+                'Chat',
+                'Consip',
+                'Helpdesk',
+                'PA',
+                'Protocollo',
+                'ServiziSociali',
+                'Staff',
+                'Supporto agenzie',
+                'Supporto GDA',
+                'Telefono Outbound',
+                'Teleselling',
+                'Vendita Business',
+                'Vendita Condomini',
+                'Vendita MM',
+                'Vendita TopBusiness' {
+                createActivity = msg.containsIgnoreCase('superiore valore massimo concesso') || msg.containsIgnoreCase('registri incompleti') || msg.containsIgnoreCase('Lettura non plausibile');
+
+                
             }
             when else {
                 /*

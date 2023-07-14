@@ -23,6 +23,7 @@ export default class HdtFlowNavigationButton extends LightningElement {
     @api recordId;
     @api disabledNavigationEvent;
     @api sessionid;
+    @api stopNavigationEvent;
 
     @api availableActions = [];
 
@@ -114,15 +115,15 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
         console.log('AVAILABLE_ACTIONS --> ' +this.availableActions);
 
+        if(this.sessionid){
+            const payload = { message: event.target.name,  sessionid : this.sessionid};
+            publish(this.messageContext, BUTTONMC, payload);
+        }
+
         if(this.standAlone){
 
-            if(this.sessionid){
-                const payload = { message: event.target.name,  sessionid : this.sessionid};
-                publish(this.messageContext, BUTTONMC, payload);
-            }
-
             if(event.target.name === 'save'){
-
+            
                 this.saveDraft = false;
                 this.cancelCase = false;
 
@@ -180,6 +181,10 @@ export default class HdtFlowNavigationButton extends LightningElement {
     handlePrevious(){
         const navigateBackEvent = new FlowNavigationBackEvent();
         this.dispatchEvent(navigateBackEvent);
+    }
+
+    @api clickAbort(){
+        this.template.querySelector('[data-id="abortBtn"]').click();
     }
 
 

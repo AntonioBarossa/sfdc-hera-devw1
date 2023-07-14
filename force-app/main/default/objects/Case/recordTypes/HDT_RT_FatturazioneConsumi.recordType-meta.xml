@@ -204,10 +204,11 @@
             <fullName>CMOR</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- TK 939502C -->
+        <!--<values>
             <fullName>Commissioni</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Deposito cauzionale</fullName>
             <default>false</default>
@@ -360,6 +361,82 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -433,6 +510,82 @@
         </values>
         <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -510,6 +663,82 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -577,6 +806,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -613,6 +846,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -622,6 +859,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1221,7 +1462,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1783,7 +2025,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -6715,7 +6957,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7523,7 +7765,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7558,7 +7800,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -7628,7 +7870,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -7649,6 +7891,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7847,11 +8093,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7899,6 +8153,18 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -7908,6 +8174,10 @@
         </values>
         <values>
             <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autorizzata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7999,7 +8269,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Di Autorizzazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8023,6 +8301,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica Elaborata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values>
@@ -8032,6 +8314,10 @@
         </values>
         <values>
             <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8048,6 +8334,18 @@
         </values>
         <values>
             <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stornata SAP</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8329,10 +8627,6 @@
         </values>
         <values>
             <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Malfunzionamento</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9267,7 +9561,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -10325,7 +10620,7 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>

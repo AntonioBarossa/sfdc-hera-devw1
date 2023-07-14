@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>HDT_CP_SoldBy</name>
+    </customPermissions>
+    <description>Permission Set per la visualizzazione del pulsante &quot;Venduto da&quot; sulla vendita</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HDT_SoldBy</label>
+</PermissionSet>

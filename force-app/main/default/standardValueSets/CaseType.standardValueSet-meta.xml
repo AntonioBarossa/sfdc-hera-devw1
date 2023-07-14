@@ -67,6 +67,11 @@
         <label>Autolettura da processo</label>
     </standardValue>
     <standardValue>
+        <fullName>Avviso di Servizio</fullName>
+        <default>false</default>
+        <label>Avviso di Servizio</label>
+    </standardValue>
+    <standardValue>
         <fullName>BP/CA - errata categoria</fullName>
         <default>false</default>
         <label>BP/CA - errata categoria</label>
@@ -150,6 +155,11 @@
         <fullName>Consumo Anomalo Idrico</fullName>
         <default>false</default>
         <label>Consumo Anomalo Idrico</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contenitore Morosità</fullName>
+        <default>false</default>
+        <label>Contenitore Morosità</label>
     </standardValue>
     <standardValue>
         <fullName>Contenzioso In Corso</fullName>
@@ -677,11 +687,6 @@
         <label>Verifica Integrita Sigilli</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Rottura Impianto Cliente</fullName>
-        <default>false</default>
-        <label>Verifica Rottura Impianto Cliente</label>
-    </standardValue>
-    <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>
         <default>false</default>
         <label>Trasmissione Dati Cliente Finale SII</label>
@@ -825,5 +830,10 @@
         <fullName>Promessa di Pagamento Ente</fullName>
         <default>false</default>
         <label>Promessa di Pagamento Ente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
     </standardValue>
 </StandardValueSet>

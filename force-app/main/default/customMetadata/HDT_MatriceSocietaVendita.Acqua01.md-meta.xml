@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Marcatura__c</field>
-        <value xsi:type="xsd:string">ALTRO</value>
+        <value xsi:type="xsd:string">MMS</value>
     </values>
     <values>
         <field>Offerta__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SellerCompany__c</field>
-        <value xsi:type="xsd:string">Hera Comm S.p.A.</value>
+        <value xsi:type="xsd:string">Marche Multiservizi S.p.A</value>
     </values>
     <values>
         <field>Service__c</field>

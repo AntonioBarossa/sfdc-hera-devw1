@@ -104,7 +104,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
             List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPodBillingProfile(listOrdersId);
             orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
             /* Separates order item of Ambiente */
-            List<Id> orderTariIds = new List<Id>();
+            Set<Id> orderTariIds = new Set<Id>();
             List<Id> orderNotTariIds = new List<Id>();
             for(OrderItem item : orderItemsList)
             {
@@ -186,7 +186,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         //Get Sale
         saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'LoginWorkstation__c, LoginGroup__c, CreatorGroup__c,Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         Map<String, Order> checkMap = checkExistingOrderParent(saleId);

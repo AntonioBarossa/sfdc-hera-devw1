@@ -38,8 +38,14 @@ public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable
 
         System.debug('HDT_BA_ProcessRequestItem finish ');
 
-        HDT_BA_ProcessOrderCreation orderCreation = new HDT_BA_ProcessOrderCreation(idLoaderRequest, 10, process);
-        Database.executebatch(orderCreation, 10);
+        Datetime dt = Datetime.now();
+
+        MassiveLoaderRequest__c oldReq = [SELECT Id, Description__c FROM MassiveLoaderRequest__c WHERE Id = :idLoaderRequest LIMIT 1];
+        oldReq.Description__c = oldReq.Description__c + '\n[3] Arricchimento dati ---> ora fine ---> ' + String.valueOf(dt.format('HH:mm:ss'));
+        update oldReq;
+
+        HDT_BA_ProcessOrderCreation orderCreation = new HDT_BA_ProcessOrderCreation(idLoaderRequest, 25, process);
+        Database.executebatch(orderCreation, 25);
 
     }
 

@@ -1,4 +1,4 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, api, wire, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { getRecordNotifyChange } from "lightning/uiRecordApi";
 import getAssignees from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getAssignees";
@@ -8,6 +8,9 @@ import assignToMe from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.assignT
 import isDynamicWorkGroup from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup";
 import getWorkGroups from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getWorkGroups";
 import getCurrentUser from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getCurrentUser";
+import getPickListValuesIntoList from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getPickListValuesIntoList";
+
+
 
 export default class hdtActivityReassignmentCore extends LightningElement {
     @api recordId;
@@ -17,6 +20,9 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     assignees;
     assigneeId;
     showSpinner;
+    agencyPicklistValues = [];
+    agencyValue;
+
     status = {
         error: false
     };
@@ -35,6 +41,8 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         return this.recordId == null;
     }
 
+    
+
     connectedCallback() {
         this.getRefresPageByType();
         if(this.recordId) {
@@ -46,6 +54,32 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         if(this.assignToMeMode) {
             this.doAssignToMe();
         }
+
+        getPickListValuesIntoList({})
+        .then(data => 
+            {
+                let options = [];
+                if (data) {
+                    data.forEach(val => {
+                    options.push({
+                    label: val,
+                    value: val,
+                    });
+                });
+                }
+                this.agencyPicklistValues = options;
+            });
+
+
+    }
+
+    handleAgencyChange(event) {
+
+        this.template.querySelector('[data-id="agency"]').value = event.target.value;
+        console.log('nuovo valore ' + this.template.querySelector('[data-id="agency"]').value);
+
+        this.agencyValue = this.template.querySelector('[data-id="agency"]').value;
+
     }
 
     async getRefresPageByType(){
@@ -65,9 +99,14 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     }
 
     async handleWorkGroupSearch(event) {
+        console.log('this.agencyValue --> '+this.agencyValue);
+        console.log('event.keyCode --> '+event.keyCode);
+        console.log('event.target.value --> '+event.target.value);
         if(event.keyCode === 13 && event.target.value) {
             try {
-                this.workGroups = await getWorkGroups({queryString: event.target.value});
+                console.log('BEFORE WORKGROUPS');
+                this.workGroups = await getWorkGroups({queryString: event.target.value, agency: this.agencyValue});
+                console.log('this.workGroups --> '+this.workGroups);
             } catch (err) {
                 console.error(err);
                 this.handleListButtonError("ERRORE", err);

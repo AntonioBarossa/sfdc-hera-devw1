@@ -26,6 +26,21 @@ public class HDT_UTL_CalculateFiscalCodeTst {
 
     }
     @isTest 
+    static void calculateSetFiscalCodeTest(){
+        Map<String,String> infoDtata = new Map<String,String>();
+        infoDtata.put('birthPlace', 'Roma');
+        infoDtata.put('birthDate', String.valueOf(Date.today().addDays(-100)));
+        infoDtata.put('lastName', 'LastNameTest');
+        infoDtata.put('firstName', 'FirtNameTest');
+        infoDtata.put('gender', 'Maschio');
+        Set<String> resultSetFiscalCode =HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoDtata);
+        List<String> resultFiscalCode = new List<String>(resultSetFiscalCode);
+        System.assertEquals(true, !resultFiscalCode.isEmpty(), 'Calculate FiscalCode Test');
+        System.assertEquals(16, resultFiscalCode[0].length(), 'Calculate FiscalCode Test');
+        System.assertNotEquals(true, resultFiscalCode[0].length()<16, 'FiscalCode is wrong');
+
+    }
+    @isTest 
     static void calculateFiscalCodeBirthPlaceNotFoundTest(){
         Map<String,String> infoDtata = new Map<String,String>();
         infoDtata.put('birthPlace', 'Milan');
@@ -186,6 +201,52 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         String resultFiscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
         System.assertEquals(16, resultFiscalCode.length(), 'Calculate FiscalCode Invalid Month');
         System.assertNotEquals(true, resultFiscalCode.length()<16, 'FiscalCode is wrong');
+
+    }
+    @isTest
+    static void cleanFiscalCodeFromOmocodiaTst()
+    {
+        String testCode = 'MRCMRC80ALMHRLMG';
+        String assertCode = 'MRCMRC80A01H501Y';
+        Test.startTest();
+            String result = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(testCode);
+        Test.stopTest();
+        System.assertEquals(assertCode, result, 'Fiscal code not cleaned correctly');
+    }
+
+    @isTest 
+    static void getAgeFromFiscalCodeTest(){
+        Date d = Date.today();
+        Test.startTest();
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('1111111254455698'), null, 'Calcolo cf numerico non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('XXXXXX76X41X000X'), null, 'Calcolo mese errato non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(''), null, 'Calcolo valore vuoto non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('XXXXXXXXXXXXXXXX'), null, 'Calcolo string 16 caratteri non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('XXXXXX76A 1X000X'), null, 'Calcolo cf con spazio non corretto non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(dateForFiscalCode(d,30, true, false)), 29, 'Calcolo età compiuta non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(dateForFiscalCode(d,30, false, true)), 30, 'Calcolo età non compiuta non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(dateForFiscalCode(d,0, false, true)), 0, 'Calcolo neonato non corretto');
+            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(dateForFiscalCode(d,0, true, false)), 99, 'Calcolo stesso anno compiuto non corretto');
+        Test.stopTest();
+    }
+
+    private static String dateForFiscalCode(Date d,Integer y, Boolean future, Boolean female){
+        Date start = d.addYears(-y).addDays(future? 1 : -1);
+        Map<Integer,String> mapMonth = new Map<Integer,String>{
+            1 => 'A',
+            2 => 'B',
+            3 => 'C',
+            4 => 'D',
+            5 => 'E',
+            6 => 'H',
+            7 => 'L',
+            8 => 'M',
+            9 => 'P',
+            10 => 'R',
+            11 => 'S',
+            12 => 'T'
+        };
+        return 'XXXXXX'+String.valueOf(start.year()).substring(2,4)+mapMonth.get(start.month())+String.valueOf(female? start.day()+40 : start.day())+'X000X';
 
     }
 

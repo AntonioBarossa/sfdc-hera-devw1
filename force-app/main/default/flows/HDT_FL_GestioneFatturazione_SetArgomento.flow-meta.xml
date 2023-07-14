@@ -2,10 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Set_Argument_Diritti_fissi_contratto</name>
+        <label>Set Argument Diritti fissi contratto</label>
+        <locationX>1006</locationX>
+        <locationY>180</locationY>
+        <assignmentItems>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Diritti fissi contratto</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Argument_to_Spese_Accessorie</name>
         <label>Set Argument to Spese Accessorie</label>
-        <locationX>908</locationX>
-        <locationY>50</locationY>
+        <locationX>910</locationX>
+        <locationY>39</locationY>
         <assignmentItems>
             <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +36,8 @@
     <assignments>
         <name>Set_Argumento_to</name>
         <label>Set Argumento to Spese Sollecito</label>
-        <locationX>970</locationX>
-        <locationY>273</locationY>
+        <locationX>1005</locationX>
+        <locationY>378</locationY>
         <assignmentItems>
             <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
             <operator>Assign</operator>
@@ -52,8 +68,8 @@
     <assignments>
         <name>Tipo_Documento_to_Uppercase</name>
         <label>Tipo Documento to Uppercase</label>
-        <locationX>574</locationX>
-        <locationY>273</locationY>
+        <locationX>573</locationX>
+        <locationY>274</locationY>
         <assignmentItems>
             <assignToReference>TipoDocumento</assignToReference>
             <operator>Assign</operator>
@@ -69,19 +85,12 @@
         <description>Verifica il tipo documento selezionato dall&apos;operatore sull&apos;estratto conto. A seconda del tipo documento selezionato dovrà essere opportunamento valorizzato il campo Argomento del Case di Errore Fatturazione.</description>
         <name>Check_Tipo_Documento</name>
         <label>Check Tipo Documento</label>
-        <locationX>781</locationX>
-        <locationY>275</locationY>
+        <locationX>767</locationX>
+        <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Spese_Accessorie</name>
             <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>TipoDocumento</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>FATTURAZIONE SD</stringValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>TipoDocumento</leftValueReference>
                 <operator>EqualTo</operator>
@@ -115,6 +124,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>TRATTENUTA PA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ARROTONDAMENTI IVA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -158,6 +174,21 @@
                 <targetReference>Set_Argumento_to_Interessi</targetReference>
             </connector>
             <label>Interessi</label>
+        </rules>
+        <rules>
+            <name>Diritti_fissi_contratto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FATTURAZIONE SD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Argument_Diritti_fissi_contratto</targetReference>
+            </connector>
+            <label>Diritti fissi contratto</label>
         </rules>
     </decisions>
     <formulas>

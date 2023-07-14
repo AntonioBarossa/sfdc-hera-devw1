@@ -1,8 +1,10 @@
 import { LightningElement, api } from 'lwc';
 import callSap from '@salesforce/apexContinuation/HDT_LC_AccountDataEnrichment.startRequest';
 import getTableConfig from '@salesforce/apex/HDT_LC_AccountDataEnrichment.getTableConfig';
+import { NavigationMixin } from 'lightning/navigation';
+import importBonusSociale from '@salesforce/label/c.UrlImportBonusSociale';
 
-export default class HdtAccountDataEnrichment extends LightningElement {
+export default class HdtAccountDataEnrichment extends NavigationMixin(LightningElement) {
     data = [];
     columns;
     tableTitle;
@@ -41,7 +43,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
         console.log('>>> relatedToId: ' + this.relatedToId);
         console.log('--------------');
         this.getConfiguration();
-        this.backendCall();
+        
     }
 
     getConfiguration(){
@@ -75,7 +77,8 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.columns = result.tables[0].columns;
                 this.height1 = 'singleTable';
             } 
-
+            
+            this.backendCall();
 
         }).catch(error => {
             console.log('# error -> ' + error);
@@ -116,17 +119,19 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                         this.data = obj.data;
                         break;
                     case 'odlAdsView':
-                        this.data = obj.data;
+                        this.data = obj.data.posizioni;
                         break;
                     default:
                         this.data = obj.data.posizioni;
                 }
+
             }
 
             this.showSpinner = false;
             
         }).catch(error => {
-            console.log('### error: ' + JSON.parse(error));
+            console.log('### error: ' + JSON.stringify(error));
+            //{"status":500,"body":{"message":">>>>>>>>> custom error"},"headers":{},"ok":false,"statusText":"Server Error","errorType":"fetchResponse"}
             this.showError = true;
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
@@ -213,6 +218,14 @@ export default class HdtAccountDataEnrichment extends LightningElement {
 
     openKnowledgeArticle(){
         console.log('apertura articolo knowledge con importi bonus sociale');
+        this[NavigationMixin.Navigate](
+            {
+                type: 'standard__webPage',
+                attributes: {
+                    url: importBonusSociale
+                }
+            }
+        );
     }
 
 }

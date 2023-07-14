@@ -92,7 +92,7 @@ public with sharing class HDT_UTL_EligibilityCriteriaTst
         insert new PermissionSetAssignment(AssigneeId = userAdminSuperUser[0].id, PermissionSetId = psAdmin.Id);
         insert new PermissionSetAssignment(AssigneeId = userAdminSuperUser[0].id, PermissionSetId = psSuperUser.Id);
 
-        List<SBQQ__Quote__c> quoteTest = [SELECT Id,CustomerMarking__c,CategoryTypeClient__c,CompanyOwner__c,CampaignEleggibilityGroup__c,CampaignName__c,FriendCode__c,Agency__c,UseCategory__c,MeterType__c,Channel__c,Market__c,ClientAge__c,ListPriceName__c,ConsumptionRangeGAS__c,PowerFlow__c,ResidentDeliveryAddress__c,NewClient__c,SuperUser__c,ConsumptionRangeEE__c,SBQQ__PricebookId__c, SupplyCity__c, LoginGroup__c FROM SBQQ__Quote__c];
+        List<SBQQ__Quote__c> quoteTest = [SELECT Id,CustomerMarking__c,CategoryTypeClient__c,CompanyOwner__c,CampaignEleggibilityGroup__c,CampaignName__c,FriendCode__c,Agency__c,UseCategory__c,MeterType__c,Channel__c,Market__c,ClientAge__c,ListPriceName__c,ConsumptionRangeGAS__c,PowerFlow__c,ResidentDeliveryAddress__c,NewClient__c,SuperUser__c,ConsumptionRangeEE__c,SBQQ__PricebookId__c, SupplyCity__c, LoginGroup__c, AtoReference__c, ImplantType__c FROM SBQQ__Quote__c];
         quoteTest[0].SuperUser__c = 'Y';
         quoteTest[0].ConsumptionRangeEE__c = 20.00;
         System.runAs(userAdminSuperUser[0])
@@ -114,7 +114,7 @@ public with sharing class HDT_UTL_EligibilityCriteriaTst
         PermissionSet psAdmin = [SELECT Id FROM PermissionSet WHERE Name = :Label.HDT_PermissionSetNameForCPQ];
         insert new PermissionSetAssignment(AssigneeId = userAdminSuperUser[0].id, PermissionSetId = psAdmin.Id);
 
-        List<SBQQ__Quote__c> quoteTest = [SELECT Id,CustomerMarking__c,CategoryTypeClient__c,CompanyOwner__c,CampaignEleggibilityGroup__c,CampaignName__c,FriendCode__c,Agency__c,UseCategory__c,MeterType__c,Channel__c,Market__c,ClientAge__c,ListPriceName__c,ConsumptionRangeGAS__c,PowerFlow__c,ResidentDeliveryAddress__c,NewClient__c,SuperUser__c,ConsumptionRangeEE__c,SBQQ__PricebookId__c, SupplyCity__c, LoginGroup__c FROM SBQQ__Quote__c];
+        List<SBQQ__Quote__c> quoteTest = [SELECT Id,CustomerMarking__c,CategoryTypeClient__c,CompanyOwner__c,CampaignEleggibilityGroup__c,CampaignName__c,FriendCode__c,Agency__c,UseCategory__c,MeterType__c,Channel__c,Market__c,ClientAge__c,ListPriceName__c,ConsumptionRangeGAS__c,PowerFlow__c,ResidentDeliveryAddress__c,NewClient__c,SuperUser__c,ConsumptionRangeEE__c,SBQQ__PricebookId__c, SupplyCity__c, LoginGroup__c,AtoReference__c,ImplantType__c FROM SBQQ__Quote__c];
         quoteTest[0].ConsumptionRangeEE__c = 25.00;
         quoteTest[0].ConsumptionRangeGAS__c = 25.00;
         quoteTest[0].PowerFlow__c = 25.00;

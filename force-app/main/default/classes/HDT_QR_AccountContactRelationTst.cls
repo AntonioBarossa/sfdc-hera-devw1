@@ -26,15 +26,15 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         acr.IsManagerSOL__c = True;
         update acr; 
         
-        AccountContactRelation acr1 = [SELECT Id, Roles, IsActive FROM AccountContactRelation Where AccountId =: accList[0].Id AND ContactId =: cntList[1].Id];
-        acr1.IsActive = True;
-        acr1.Roles = 'Legale rappresentante';
-        update acr1; 
+        AccountContactRelation acrOne = [SELECT Id, Roles, IsActive FROM AccountContactRelation Where AccountId =: accList[0].Id AND ContactId =: cntList[1].Id];
+        acrOne.IsActive = True;
+        acrOne.Roles = 'Legale rappresentante';
+        update acrOne; 
         
-        AccountContactRelation acr2 = [SELECT Id, Roles, IsActive FROM AccountContactRelation Where AccountId =: accList[0].Id AND ContactId =: cntList[2].Id];
-        acr2.IsActive = True;
-        acr2.Roles = 'Amministratore condominio';
-        update acr2; 
+        AccountContactRelation acrTwo = [SELECT Id, Roles, IsActive FROM AccountContactRelation Where AccountId =: accList[0].Id AND ContactId =: cntList[2].Id];
+        acrTwo.IsActive = True;
+        acrTwo.Roles = 'Amministratore condominio';
+        update acrTwo; 
         
     }
     
@@ -44,10 +44,10 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Test.startTest();
         HDT_QR_AccountContactRelation acr = new HDT_QR_AccountContactRelation();
         Contact cnt = [SELECT Id, AccountId FROM Contact WHERE Company__c='HC+HCM+EENE' LIMIT 1];
-        List<AccountContactRelation> accQRTest = new List<AccountContactRelation>();
-        accQRTest = acr.getRelatedAccounts(cnt.Id);
+        List<AccountContactRelation> accQrTest = new List<AccountContactRelation>();
+        accQrTest = acr.getRelatedAccounts(cnt.Id);
         
-        System.assertEquals(cnt.AccountId, accQRTest[0].AccountId, 'Account Id match.');
+        System.assertEquals(cnt.AccountId, accQrTest[0].AccountId, 'Account Id match.');
         
         Test.stopTest();   
     }
@@ -63,17 +63,17 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Contact cnt = [SELECT Id, AccountId FROM Contact WHERE Company__c='HC+HCM+EENE' LIMIT 1];
         Account acc = [SELECT Id FROM Account WHERE Id=:cnt.AccountId];
         
-        List<AccountContactRelation> accQRTest = new List<AccountContactRelation>();
+        List<AccountContactRelation> accQrTest = new List<AccountContactRelation>();
         accQRTest = acr.getAccountContactRelation(acc.Id, cnt.Id,  'Id, AccountId');
         
-        System.assertEquals(cnt.AccountId, accQRTest[0].AccountId, 'Account Id match.');
-        HDT_QR_AccountContactRelation acr1 = new HDT_QR_AccountContactRelation();
+        System.assertEquals(cnt.AccountId, accQrTest[0].AccountId, 'Account Id match.');
+        HDT_QR_AccountContactRelation testClass = new HDT_QR_AccountContactRelation();
         List<String> cnts = new List<String>();
         List<String> accs = new List<String>();
         cnts.add(String.valueOf(cnt.Id));
         accs.add(String.valueOf(cnt.AccountId));
-        List<AccountContactRelation> accQRTestL = new List<AccountContactRelation>();
-        accQRTestL = acr1.getAccountContactRelation(cnts, accs,  'Id, AccountId');
+        List<AccountContactRelation> accQrTestl = new List<AccountContactRelation>();
+        accQRTestL = testClass.getAccountContactRelation(cnts, accs,  'Id, AccountId');
         
         //System.assertEquals(cnt.AccountId, accQRTestL[0].AccountId, 'Account Id match.');
         
@@ -91,10 +91,10 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Contact cnt = [SELECT Id, AccountId FROM Contact WHERE Company__c='HC+HCM+EENE' LIMIT 1];
         Account acc = [SELECT Id FROM Account WHERE Id=:cnt.AccountId];
         
-        List<AccountContactRelation> accQRTest = new List<AccountContactRelation>();
-        accQRTest = acr.getRecordsFilteredByAccountAndContact(String.valueOf(acc.Id), String.valueOf(cnt.Id));
+        List<AccountContactRelation> accQrTest = new List<AccountContactRelation>();
+        accQrTest = acr.getRecordsFilteredByAccountAndContact(String.valueOf(acc.Id), String.valueOf(cnt.Id));
         
-        System.assertEquals('Titolare', accQRTest[0].Roles, 'Account Id match.');
+        System.assertEquals('Titolare', accQrTest[0].Roles, 'Account Id match.');
         
         Test.stopTest();   
     }
@@ -109,10 +109,10 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Contact cnt = [SELECT Id, AccountId FROM Contact WHERE Company__c='HC+HCM+EENE' LIMIT 1];
         Account acc = [SELECT Id FROM Account WHERE Id=:cnt.AccountId];
         
-        List<AccountContactRelation> accQRTest = new List<AccountContactRelation>();
-        accQRTest = acr.getRecordByAccountId(String.valueOf(acc.Id));
+        List<AccountContactRelation> accQrTest = new List<AccountContactRelation>();
+        accQrTest = acr.getRecordByAccountId(String.valueOf(acc.Id));
         
-        System.assertNotEquals(null, accQRTest[0].Id, 'Account Id match.');
+        System.assertNotEquals(null, accQrTest[0].Id, 'Account Id match.');
         
         Test.stopTest();   
     }
@@ -126,10 +126,10 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Contact cnt = [SELECT Id, AccountId FROM Contact WHERE Company__c='HC+HCM+EENE' LIMIT 1];
         Account acc = [SELECT Id FROM Account WHERE Id=:cnt.AccountId];
         
-        List<AccountContactRelation> accQRTest = new List<AccountContactRelation>();
-        accQRTest = acr.getContactsByAccountWithRoles(String.valueOf(acc.Id));
+        List<AccountContactRelation> accQrTest = new List<AccountContactRelation>();
+        accQrTest = acr.getContactsByAccountWithRoles(String.valueOf(acc.Id));
         
-        System.assertNotEquals(null, accQRTest[0].Id, 'Account Id match.');
+        System.assertNotEquals(null, accQrTest[0].Id, 'Account Id match.');
         
         Test.stopTest();   
     }
@@ -142,11 +142,11 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         List<String> accs = new List<String>();
         cnts.add(String.valueOf(cnt.Id));
         accs.add(String.valueOf(cnt.AccountId));
-        HDT_QR_AccountContactRelation acr1 = new HDT_QR_AccountContactRelation();
-        List<AccountContactRelation> accQRTestL = new List<AccountContactRelation>();
-        accQRTestL = acr1.getContactsByAccountWithRoles(accs);
+        HDT_QR_AccountContactRelation testClass = new HDT_QR_AccountContactRelation();
+        List<AccountContactRelation> accQrTestl = new List<AccountContactRelation>();
+        accQRTestL = testClass.getContactsByAccountWithRoles(accs);
         
-        System.assertNotEquals(null, accQRTestL[0].Id, 'Account Id match.');
+        System.assertNotEquals(null, accQrTestl[0].Id, 'Account Id match.');
         
         Test.stopTest();   
     }
@@ -160,34 +160,34 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Set<Id> accs = new Set<Id>();
         cnts.add(String.valueOf(cnt.Id));
         accs.add(cnt.AccountId);
-        HDT_QR_AccountContactRelation acr1 = new HDT_QR_AccountContactRelation();
-        List<AccountContactRelation> accQRTestL = new List<AccountContactRelation>();
+        HDT_QR_AccountContactRelation testClass = new HDT_QR_AccountContactRelation();
+        List<AccountContactRelation> accQrTestl = new List<AccountContactRelation>();
         
-        accQRTestL = acr1.getPrimaryContactRelations(accs);
-        System.assertNotEquals(null, accQRTestL[0].AccountId, 'Account Id match.');
+        accQRTestL = testClass.getPrimaryContactRelations(accs);
+        System.assertNotEquals(null, accQrTestl[0].AccountId, 'Account Id match.');
         
-        AccountContactRelation accQRTest = new AccountContactRelation();
-        accQRTest = acr1.getPrimaryContactRelation(cnt.AccountId);
-        System.assertNotEquals(null, accQRTest.AccountId, 'Account Id match.');
+        AccountContactRelation accQrTest = new AccountContactRelation();
+        accQrTest = testClass.getPrimaryContactRelation(cnt.AccountId);
+        System.assertNotEquals(null, accQrTest.AccountId, 'Account Id match.');
         
-        accQRTest = acr1.getLegalRepresentativeRelation(cnt.AccountId);
-        System.assertNotEquals(null, accQRTest.AccountId, 'Account Id match.');
+        accQrTest = testClass.getLegalRepresentativeRelation(cnt.AccountId);
+        System.assertNotEquals(null, accQrTest.AccountId, 'Account Id match.');
         
-        accQRTest = acr1.getActiveAdministratorRelation(cnt.AccountId);
-        System.assertNotEquals(null, accQRTest.AccountId, 'Account Id match.');
+        accQrTest = testClass.getActiveAdministratorRelation(cnt.AccountId);
+        System.assertNotEquals(null, accQrTest.AccountId, 'Account Id match.');
         
-        accQRTest = acr1.getPrimaryContactRelationBusiness(cnt.AccountId);
-        System.assertNotEquals(null, accQRTest.AccountId, 'Account Id match.');
+        accQrTest = testClass.getPrimaryContactRelationBusiness(cnt.AccountId);
+        System.assertNotEquals(null, accQrTest.AccountId, 'Account Id match.');
         Test.stopTest();   
         
-        accQRTestL = acr1.getAdministratorRelations();
-        System.assertNotEquals(null, accQRTestL[0].AccountId, 'Account Id match.');
+        accQrTestl = testClass.getAdministratorRelations();
+        System.assertNotEquals(null, accQrTestl[0].AccountId, 'Account Id match.');
         
-        accQRTestL = acr1.getSolContactRelations(String.valueOf(cnt.AccountId));
-        System.assertNotEquals(null, accQRTestL[0].AccountId, 'Account Id match.');
+        accQrTestl = testClass.getSolContactRelations(String.valueOf(cnt.AccountId));
+        System.assertNotEquals(null, accQrTestl[0].AccountId, 'Account Id match.');
         
-        accQRTestL = acr1.getSolContactRelation(String.valueOf(cnt.AccountId), String.valueOf(cnt.Id));
-        System.assertNotEquals(null, accQRTestL[0].AccountId, 'Account Id match.');
+        accQrTestl = testClass.getSolContactRelation(String.valueOf(cnt.AccountId), String.valueOf(cnt.Id));
+        System.assertNotEquals(null, accQrTestl[0].AccountId, 'Account Id match.');
     }
     @isTest
     public static void getPrimaryRelationsByContactsTest() {
@@ -198,15 +198,30 @@ public with sharing class HDT_QR_AccountContactRelationTst {
         Set<Id> accs = new Set<Id>();
         cnts.add(cnt.Id);
         accs.add(cnt.AccountId);
-        HDT_QR_AccountContactRelation acr1 = new HDT_QR_AccountContactRelation();
-        List<AccountContactRelation> accQRTestL = new List<AccountContactRelation>();
-        accQRTestL = acr1.getPrimaryRelationsByContacts(cnts);
+        HDT_QR_AccountContactRelation testClass = new HDT_QR_AccountContactRelation();
+        List<AccountContactRelation> accQrTestl = new List<AccountContactRelation>();
+        accQrTestl = testClass.getPrimaryRelationsByContacts(cnts);
         
-        System.assertNotEquals(null, accQRTestL[0].AccountId, 'Account Id match.');
+        System.assertNotEquals(null, accQrTestl[0].AccountId, 'Account Id match.');
         
         
         
         Test.stopTest();   
+    }
+
+    @isTest
+    public static void getBpCaCreateTst()
+    {
+        List<Account> accList = [SELECT Id FROM Account];
+        List<AccountContactRelation> acrList = [SELECT Id,Roles FROM AccountContactRelation WHERE AccountId= :accList[0].Id];
+
+        acrList[0].Roles = 'Titolare;Legale rappresentante;Amministratore condominio';
+        update acrList;
+        HDT_QR_AccountContactRelation testClass = new HDT_QR_AccountContactRelation();
+        Test.startTest();
+            List<AccountContactRelation> result = testClass.getCreateBpCa(accList[0].Id);
+        Test.stopTest();
+        System.assertEquals(true, !result.isEmpty(), 'Acr non trovato');
     }
     
     

@@ -16,6 +16,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
+    private static final String ERR_TRANSFER_MSG = 'Valorizzare i dati del precedente intestatario (Nome, Cognome e Codice Fiscale o P.IVA e Ragione Sociale)';
 
     @AuraEnabled
     public static Map<String,Object> init(String id){
@@ -100,14 +101,36 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
 
             }
-            if(orderToUpdate.TemporaryConnectionStartDate__c != null 
-            && orderToUpdate.TemporaryConnectionEndDate__c != null
-            && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
+            /* Aggiunto Controllo per verificare che in fase di lavorazione 
+            scarto l'operatore inserisca i dati del precedente intestatario*/
+            if(currentOrder.IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(currentOrder.Phase__c))
+            {
+                HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck trCheck = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+
+                trCheck.firstName = String.isBlank(orderToUpdate.PreviousHolderFirstName__c) ? 
+                    (String.isBlank(currentOrder.PreviousHolderFirstName__c) ? '' : currentOrder.PreviousHolderFirstName__c) : orderToUpdate.PreviousHolderFirstName__c;
+                trCheck.lastName = String.isBlank(orderToUpdate.PreviousHolderLastName__c) ? 
+                    (String.isBlank(currentOrder.PreviousHolderLastName__c) ? '' : currentOrder.PreviousHolderLastName__c) : orderToUpdate.PreviousHolderLastName__c;
+                trCheck.fiscalCode = String.isBlank(orderToUpdate.PreviousHolderFiscalCode__c) ? 
+                    (String.isBlank(currentOrder.PreviousHolderFiscalCode__c) ? '' : currentOrder.PreviousHolderFiscalCode__c) : orderToUpdate.PreviousHolderFiscalCode__c;
+                trCheck.vatNumber = String.isBlank(orderToUpdate.PreviousHolderVatNumber__c) ? 
+                    (String.isBlank(currentOrder.PreviousHolderVatNumber__c) ? '' : currentOrder.PreviousHolderVatNumber__c) : orderToUpdate.PreviousHolderVatNumber__c;
+                trCheck.companyName = String.isBlank(orderToUpdate.PreviousHoldeCompanyName__c) ? 
+                    (String.isBlank(currentOrder.PreviousHoldeCompanyName__c) ? '' : currentOrder.PreviousHoldeCompanyName__c) : orderToUpdate.PreviousHoldeCompanyName__c;
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(trCheck);
+                if(String.isNotBlank(check.result))
+                {
+                    throw new AuraHandledException(check.message);
+                }
+            }
+            if( orderToUpdate.TemporaryConnectionStartDate__c != null 
+                && orderToUpdate.TemporaryConnectionEndDate__c != null
+                && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
             {
                 throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
             }
 
-            if( currentOrder.RecordType.DeveloperName == 'HDT_RT_CambioOfferta' 
+            if( ( currentOrder.RecordType.DeveloperName == 'HDT_RT_CambioOfferta' || currentOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' )
             && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) 
             && orderToUpdate.EffectiveDate__c != null && orderToUpdate.EffectiveDate__c < System.Today() )
             {
@@ -125,12 +148,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if( !( 'Prima Attivazione'.equalsIgnoreCase(currentOrder.ProcessType__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) ) && orderToUpdate.DeferredDate__c != null && (
                 orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) || 
-                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) ){
-
-                throw new AuraHandledException('La data differita popolata erroneamente');
-                
+                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) )
+            {
+                throw new AuraHandledException('La data differita popolata erroneamente');  
             }
 
+            if( 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) && orderToUpdate.Disconnectable__c != null )
+            {
+                orderToUpdate.NotDisconnectabilityCustomer__c = 'Si'.equalsIgnoreCase(orderToUpdate.Disconnectable__c)? 'No' : 'Si';
+            }
+            
             orderSrv.updateRecord(orderToUpdate);
         }
         if(order.getSObjectType().getDescribe().getName() == 'OrderItem')
@@ -145,6 +172,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             quoteLine.Id = currentOrderItem[0].SBQQ__QuoteLine__c;
             quoteLine.OwnerAC__c = ordItem.OwnerAC__c != null ? ordItem.OwnerAC__c : currentOrderItem[0].OwnerAC__c;
             quoteLine.DwellingType__c = ordItem.DwellingType__c != null ? ordItem.DwellingType__c : currentOrderItem[0].DwellingType__c;
+            //TK 986414C @enricodursontt
+            if (ordItem.OccupantsNumber__c  == null) {
+                throw new AuraHandledException('Il campo Numero Occupanti non può essere vuoto');
+            }
             quoteLine.OccupantsNumber__c = ordItem.OccupantsNumber__c != null ? ordItem.OccupantsNumber__c : currentOrderItem[0].OccupantsNumber__c;
             quoteLine.Surface__c = ordItem.Surface__c != null ? ordItem.Surface__c : currentOrderItem[0].Surface__c;
             orderToUpdate.Id = ordItem.OrderId;
@@ -153,7 +184,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             sobjListToUpdate.add(orderToUpdate);
             sobjListToUpdate.add(ordItem);
             sobjListToUpdate.add(quoteLine);
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjListToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
         
     }
@@ -222,10 +256,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
-                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
-                wrp.quoteType = metas[0].QuoteType__c; 
-                wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
-                system.debug(metas);
+                //metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
+                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED];
+                if(!metas?.isEmpty()){
+                    wrp.quoteType = metas[0].QuoteType__c; 
+                    wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
+                    system.debug(metas);
+                }
                 return wrp;
             }
 
@@ -361,6 +398,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
 
     }
+
     @AuraEnabled
     public static Boolean checkPermissionSet(){
 
@@ -371,6 +409,42 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return false;
 
+    }
+
+    @AuraEnabled
+    public static Boolean checkCambioOffertaPermission(){
+        
+        if(FeatureManagement.checkPermission('HDT_CP_CambioOfferta')){
+            return true;
+        }
+        return false;
+    }
+
+    public static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck trCheck)
+    {
+        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck('','');
+
+        String koPers = 'KO_PERSONA_FISICA';
+        //String koComp = 'KO_AZIENDA';
+
+        if(String.isBlank(trCheck.firstName) || String.isBlank(trCheck.lastName) || String.isBlank(trCheck.fiscalCode))
+        {
+            result.result = koPers;
+        }
+        if(String.isNotBlank(trCheck.companyName) && String.isNotBlank(trCheck.vatNumber))
+        {
+            if(String.isNotBlank(result.result))
+            {
+                result.result = '';
+            }
+        }
+
+        if(String.isNotBlank(result.result))
+        {
+            result.message = ERR_TRANSFER_MSG; 
+        }
+
+        return result;
     }
 
 }

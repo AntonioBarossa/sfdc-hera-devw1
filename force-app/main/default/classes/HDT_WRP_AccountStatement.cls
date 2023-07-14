@@ -164,7 +164,7 @@ public class HDT_WRP_AccountStatement {
         public String societa;
         public String fatturaPrescrivibile;
         public String fatturaPrescritta;
-        public String DEL_569;
+        public String del569; 
         public String documentoPareggio;
         /**@frpanico 21/10/2021
          * Added new parameter for "bonusSociale"

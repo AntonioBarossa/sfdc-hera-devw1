@@ -6,5 +6,6 @@
     <externalId>false</externalId>
     <label>Residente</label>
     <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

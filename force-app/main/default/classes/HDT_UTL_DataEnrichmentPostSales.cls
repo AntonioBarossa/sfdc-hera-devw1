@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         HDT_QR_AnagAlignment anagAlignQr = new HDT_QR_AnagAlignment();
-        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+        List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject> positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
         List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigList = new List<HDT_DataEnrichmentTransocode__mdt>();
         Map<String, Object> transcodeMap = new Map<String, Object>();
         String billingProfileCode;
@@ -39,21 +39,15 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
-        String sottoTipologiaDuso;
-
         /*
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
 		*/
-		//String value;
         Decimal decValue;
-
-        positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
-            JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
-
+        HDT_WS_ArrichmentDataEntityResponse resp= (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(serializedResponse, HDT_WS_ArrichmentDataEntityResponse.class);
+        positions = resp.data.posizioni;
         transcodeConfigList = depsQr.getTranscodeConfig();
-
-        for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
+        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject position : positions){
             for(HDT_DataEnrichmentTransocode__mdt transcodeConfig : transcodeConfigList){
                if(position.campo == transcodeConfig.SapField__c){
                     if(transcodeConfig.IsNumber__c){
@@ -124,9 +118,13 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.writeBlockCode(position.valore, currentCase));
                             }
-                            when 'transCodeDoubleOppositeToDecimal' {
+                            /*when 'transCodeDoubleOppositeToDecimal' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.transCodeDoubleOppositeToDecimal(position.valore));
+                            }*/
+                            when 'transCodeSiNo' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.transCodeSiNo(position.valore));
                             }
                             when 'transCodeDoubleToString' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
@@ -135,6 +133,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             when 'alignGaaDate' {
                                 Date dataGaa = depsSrv.alignGaaDate(String.valueOf(transcodeMap.get('DataUltimoAllineamentoGAA__c')), position.valore);
                                 transcodeMap.put(transcodeConfig.SfdcField__c, dataGaa);
+                            }
+                            when 'transCodeSiNoConDescr' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transCodeSiNoConDescr(position.valore));
+                            }
+                            when 'transcodificaInfoDepurazione' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transcodificaInfoDepurazione(position.valore));
                             }
                             
                         }
@@ -239,9 +243,10 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         transcodeMap.put('SalesCompany__c', salesCompany);
         transcodeMap.put('SalesCompanyCode__c', salesCompanyCode);
 
-        //SOTTOTIPOLOGIA D'USO
-        sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
-        transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
+        //SOTTOTIPOLOGIA D'USO e DESTISTANZIONE D'USO
+        AmministrazioneSottotipologiaUso__c sottoTipologiaEDestinazione = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
+        transcodeMap.put('UseSubCategory__c',sottoTipologiaEDestinazione.SottotipologiaUso__c);
+        transcodeMap.put('IntendedUse__c',sottoTipologiaEDestinazione.IntendedUse__c);
        
         dataEnrichmentFields.addAll(transcodeMap.keySet());
         return depsSrv.populateCase(transcodeMap, currentCase);

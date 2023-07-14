@@ -85,6 +85,7 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
             Case caseToUpdate = new Case();
             caseToUpdate.Id = sapIntegration.recordId;
             caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.distributorflowcode__c = 'KO';
             HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
         }

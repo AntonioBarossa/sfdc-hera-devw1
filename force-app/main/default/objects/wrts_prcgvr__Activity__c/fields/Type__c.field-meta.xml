@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
     <externalId>false</externalId>
@@ -51,6 +51,11 @@
                 <label>Anticipo Appuntamento</label>
             </value>
             <value>
+                <fullName>Approvazione Agevolazione</fullName>
+                <default>false</default>
+                <label>Approvazione Agevolazione</label>
+            </value>
+            <value>
                 <fullName>Approvazione Bonus Commerciale</fullName>
                 <default>false</default>
                 <label>Approvazione Bonus Commerciale</label>
@@ -86,44 +91,9 @@
                 <label>Back Office - Catalogo Prodotti</label>
             </value>
             <value>
-                <fullName>Back Office - Contratti</fullName>
-                <default>false</default>
-                <label>Back Office - Contratti</label>
-            </value>
-            <value>
-                <fullName>Back Office - Fatturazione</fullName>
-                <default>false</default>
-                <label>Back Office - Fatturazione</label>
-            </value>
-            <value>
-                <fullName>Back Office - Morosità</fullName>
-                <default>false</default>
-                <label>Back Office - Morosità</label>
-            </value>
-            <value>
-                <fullName>Back Office - Pagamenti</fullName>
-                <default>false</default>
-                <label>Back Office - Pagamenti</label>
-            </value>
-            <value>
-                <fullName>Back Office - Preventivi</fullName>
-                <default>false</default>
-                <label>Back Office - Preventivi</label>
-            </value>
-            <value>
                 <fullName>Back Office - Supporto/Comunicazioni Urgenti</fullName>
                 <default>false</default>
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
-            </value>
-            <value>
-                <fullName>Back Office - Tari/TCP</fullName>
-                <default>false</default>
-                <label>Back Office - Tari/TCP</label>
-            </value>
-            <value>
-                <fullName>Back Office - Vas e HVAC</fullName>
-                <default>false</default>
-                <label>Back Office - Vas e HVAC</label>
             </value>
             <value>
                 <fullName>Blocco Sollecito</fullName>
@@ -134,11 +104,6 @@
                 <fullName>Busta Docusign non consegnata</fullName>
                 <default>false</default>
                 <label>Busta Docusign non consegnata</label>
-            </value>
-            <value>
-                <fullName>Caricamenti contratti</fullName>
-                <default>false</default>
-                <label>Caricamenti contratti</label>
             </value>
             <value>
                 <fullName>Caricamento Manuale Siebel</fullName>
@@ -164,6 +129,11 @@
                 <fullName>Chiamata outbound</fullName>
                 <default>false</default>
                 <label>Chiamata outbound</label>
+            </value>
+            <value>
+                <fullName>Cliente senza Fornitura</fullName>
+                <default>false</default>
+                <label>Cliente senza Fornitura</label>
             </value>
             <value>
                 <fullName>Comfort Call</fullName>
@@ -219,16 +189,6 @@
                 <fullName>Credit Management – affidi ADR</fullName>
                 <default>false</default>
                 <label>Credit Management – affidi ADR</label>
-            </value>
-            <value>
-                <fullName>Credit Management – affidi legale</fullName>
-                <default>false</default>
-                <label>Credit Management – affidi legale</label>
-            </value>
-            <value>
-                <fullName>Credit Management – cessioni</fullName>
-                <default>false</default>
-                <label>Credit Management – cessioni</label>
             </value>
             <value>
                 <fullName>Credit Management – sospensioni</fullName>
@@ -386,6 +346,11 @@
                 <label>Gestione blocco sollecito</label>
             </value>
             <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>
@@ -421,14 +386,9 @@
                 <label>Gestione manuale SAP</label>
             </value>
             <value>
-                <fullName>Gestione processi di Misura</fullName>
+                <fullName>Gestione Misure Energy</fullName>
                 <default>false</default>
-                <label>Gestione processi di Misura</label>
-            </value>
-            <value>
-                <fullName>Gestione processi Ultima Istanza</fullName>
-                <default>false</default>
-                <label>Gestione processi Ultima Istanza</label>
+                <label>Gestione Misure Energy</label>
             </value>
             <value>
                 <fullName>Gestione richiesta social</fullName>
@@ -461,6 +421,11 @@
                 <label>Giro contatore da gestire</label>
             </value>
             <value>
+                <fullName>Green Loyalty</fullName>
+                <default>false</default>
+                <label>Green Loyalty</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta cliente</fullName>
                 <default>false</default>
                 <label>In attesa risposta cliente</label>
@@ -469,6 +434,11 @@
                 <fullName>In gestione</fullName>
                 <default>false</default>
                 <label>In gestione</label>
+            </value>
+            <value>
+                <fullName>Integrazione richiesta social</fullName>
+                <default>false</default>
+                <label>Integrazione richiesta social</label>
             </value>
             <value>
                 <fullName>Inviare Comunicazione Disconoscimento</fullName>
@@ -491,6 +461,11 @@
                 <label>Inviare Preventivo</label>
             </value>
             <value>
+                <fullName>Inviare Resoconto Verifica</fullName>
+                <default>false</default>
+                <label>Inviare Resoconto Verifica</label>
+            </value>
+            <value>
                 <fullName>Inviata comunicazione</fullName>
                 <default>false</default>
                 <label>Inviata comunicazione</label>
@@ -504,6 +479,11 @@
                 <fullName>Invio registrazione</fullName>
                 <default>false</default>
                 <label>Invio registrazione</label>
+            </value>
+            <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
             </value>
             <value>
                 <fullName>Istruttoria creata/Non necessaria</fullName>
@@ -561,9 +541,24 @@
                 <label>Lavorazione Reclamo Post Survey</label>
             </value>
             <value>
+                <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
+                <default>false</default>
+                <label>Legge 80_Istanza EE</label>
+            </value>
+            <value>
+                <fullName>Mancata messa a ruolo contratto</fullName>
+                <default>false</default>
+                <label>Mancata messa a ruolo contratto</label>
+            </value>
+            <value>
                 <fullName>Modifica Contratti PreAttivazione</fullName>
                 <default>false</default>
                 <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
             </value>
             <value>
                 <fullName>Note_di gestione pratica</fullName>
@@ -574,6 +569,16 @@
                 <fullName>Note_il cliente dice</fullName>
                 <default>false</default>
                 <label>Note_il cliente dice</label>
+            </value>
+            <value>
+                <fullName>Order Management MUI</fullName>
+                <default>false</default>
+                <label>Order Management MUI</label>
+            </value>
+            <value>
+                <fullName>PEC da DL</fullName>
+                <default>false</default>
+                <label>PEC da DL</label>
             </value>
             <value>
                 <fullName>Pratica avviata</fullName>
@@ -589,6 +594,11 @@
                 <fullName>Pratica gestita</fullName>
                 <default>false</default>
                 <label>Pratica gestita</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita erroneamente</fullName>
+                <default>false</default>
+                <label>Pratica gestita erroneamente</label>
             </value>
             <value>
                 <fullName>Pratica non gestita</fullName>
@@ -686,6 +696,11 @@
                 <label>Protocollo - Segnalazioni</label>
             </value>
             <value>
+                <fullName>Protocollo - TARI da Ufficio</fullName>
+                <default>false</default>
+                <label>Protocollo - TARI da Ufficio</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Variazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
@@ -706,6 +721,11 @@
                 <label>Protocollo - Voltura</label>
             </value>
             <value>
+                <fullName>Protocollo - Web</fullName>
+                <default>false</default>
+                <label>Protocollo - Web</label>
+            </value>
+            <value>
                 <fullName>Quality Call</fullName>
                 <default>false</default>
                 <label>Quality Call</label>
@@ -719,6 +739,11 @@
                 <fullName>Rapporti con i distributori e SII</fullName>
                 <default>false</default>
                 <label>Rapporti con i distributori e SII</label>
+            </value>
+            <value>
+                <fullName>Reclamo da Riclassificare</fullName>
+                <default>false</default>
+                <label>Reclamo da Riclassificare</label>
             </value>
             <value>
                 <fullName>Recupero contratto da Postel</fullName>
@@ -781,6 +806,16 @@
                 <label>Risposta Motivata Con Allegato</label>
             </value>
             <value>
+                <fullName>Sblocco Processo Post-Vendita</fullName>
+                <default>false</default>
+                <label>Sblocco Processo Post-Vendita</label>
+            </value>
+            <value>
+                <fullName>Sblocco Processo verso SII/DL</fullName>
+                <default>false</default>
+                <label>Sblocco Processo verso SII/DL</label>
+            </value>
+            <value>
                 <fullName>Sblocco Voltura</fullName>
                 <default>false</default>
                 <label>Sblocco Voltura</label>
@@ -804,6 +839,11 @@
                 <fullName>Scarto transitorio</fullName>
                 <default>false</default>
                 <label>Scarto transitorio</label>
+            </value>
+            <value>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
             </value>
             <value>
                 <fullName>Segnalazioni Commissioni Agenzie</fullName>
@@ -866,11 +906,6 @@
                 <label>Supporto emissione SD_massiva</label>
             </value>
             <value>
-                <fullName>Supporto emissione SD_singola</fullName>
-                <default>false</default>
-                <label>Supporto emissione SD_singola</label>
-            </value>
-            <value>
                 <fullName>Supporto Esercizio Sistemi</fullName>
                 <default>false</default>
                 <label>Supporto Esercizio Sistemi</label>
@@ -931,6 +966,11 @@
                 <label>Verifica Back Office</label>
             </value>
             <value>
+                <fullName>Gestione Rimborso</fullName>
+                <default>false</default>
+                <label>Gestione Rimborso</label>
+            </value>
+            <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
                 <default>false</default>
                 <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
@@ -949,11 +989,6 @@
                 <fullName>Verifiche Canone Rai</fullName>
                 <default>false</default>
                 <label>Verifiche Canone Rai</label>
-            </value>
-            <value>
-                <fullName>Verifiche contratti</fullName>
-                <default>false</default>
-                <label>Verifiche contratti</label>
             </value>
             <value>
                 <fullName>Verifiche Credito Business</fullName>

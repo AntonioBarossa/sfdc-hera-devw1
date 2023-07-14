@@ -9,7 +9,6 @@
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        
         <controllingField>CustomerMarking__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
@@ -775,6 +774,7 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>G3 - MMS Azienda</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>

@@ -52,6 +52,7 @@ public inherited sharing class HDT_QR_BillingProfile {
             InvoicingStreetNumber__c,
             InvoicingCityCode__c,
             IbanCountry__c,
+            AccountClass__c,
             ContractAccountCode__c
             FROM BillingProfile__c
             WHERE Id = :billingProfileId
@@ -73,11 +74,27 @@ public inherited sharing class HDT_QR_BillingProfile {
             Name,
             PaymentMethod__c,
             InvoicingAddressFormula__c,
+            PaymentConditions__c,
             BillSendingMethod__c,
             IBAN__c,
             InvoiceEmailAddress__c,
             InvoicingCity__c,
-            IsThirtyDaysDue__c
+            IsThirtyDaysDue__c,
+            CompanyOwner__c,
+            IbanABI__c,
+            IbanCAB__c,
+            IbanCIN_IBAN__c,
+            IbanCIN__c,
+            IbanCodeNumber__c,
+            IbanCountry__c,
+            IbanIsForeign__c,
+            InvoicingStreetName__c,
+            InvoicingStreetNumber__c,
+            InvoicingStreetNumberExtension__c,
+            InvoicingPlace__c,
+            InvoicingProvince__c,
+            InvoicingPostalCode__c,
+            InvoicingCountry__c
             FROM BillingProfile__c
             WHERE Account__c = :accountId
             WITH SECURITY_ENFORCED
@@ -113,6 +130,86 @@ public inherited sharing class HDT_QR_BillingProfile {
         return null;
     }
 
+    public BillingProfile__c getRecordByIdVolturaSol(Id billingProfileId) {
+        return [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c,
+                        BillSendingMethod__c,
+                        InvoiceEmailAddress__c,
+                        InvoiceCertifiedEmailAddress__c,
+                        SendCertifiedEmailConsentDate__c,
+                        DivergentSubject__c,
+                        InvoicingCityCode__c
+                FROM BillingProfile__c
+                WHERE Id=:billingProfileId
+                WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public BillingProfile__c getNewestByAccountId(String accountId){
+        List<BillingProfile__c> bpList = [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c,
+                        BillSendingMethod__c,
+                        InvoiceEmailAddress__c,
+                        InvoiceCertifiedEmailAddress__c,
+                        SendCertifiedEmailConsentDate__c,
+                        DivergentSubject__c,
+                        InvoicingCityCode__c
+                FROM BillingProfile__c
+                WHERE Account__c=:accountId
+                WITH SECURITY_ENFORCED
+                ORDER BY CreatedDate DESC
+                LIMIT 1
+        ];
+        if(bpList.isEmpty()){
+           return null; 
+        }else {
+            return bpList[0];
+        }
+    }
+
+    public List<BillingProfile__c> getRecordByContractAccount(Set<String> contractAccounts) {
+
+        return [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        //InvoicingStreetToponym__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c
+                FROM BillingProfile__c
+                WHERE ContractAccountCode__c IN :contractAccounts
+                WITH SECURITY_ENFORCED
+        ];
+    }
     // FINE SVILUPPI EVERIS
 
 }

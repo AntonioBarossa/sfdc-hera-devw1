@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 03-20-2023
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_CaseValidations {
 
@@ -31,7 +38,17 @@ public inherited sharing class HDT_QR_CaseValidations {
         Description,
         SupplyCity__c,
         InvoicingCity__c,
-        ContractAccountCode__c
+        ContractAccountCode__c,
+        RateCategory__c,
+        BillingIsAddressVerified__c,
+        SalesCompany__c,
+        BillingCountry__c,
+        Caliber__c,
+        Channel__c,
+        DepositPaymentMode__c,
+        UseSubCategory__c,
+        IntendedUse__c,
+        CaliberAvailable__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -66,7 +83,7 @@ public inherited sharing class HDT_QR_CaseValidations {
 
     public String getUserSessionRole(){
 
-        String userId= UserInfo.getSessionId();
+        String userId= UserInfo.getUserId();
         String roleName;
 
         rolename = [SELECT UserRole.Name

@@ -5,6 +5,7 @@ public with sharing class HDT_WRP_DocusignNotify {
         public String outcomeDescription;
         public String envelopeId;
         public String status;
+        public String declinedReason;
         public Datetime sentDateTime;
         public Datetime completedDateTime;
         public List<HDT_WRP_DocusignNotifyData> listOfDataText;

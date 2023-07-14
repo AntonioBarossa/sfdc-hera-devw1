@@ -46,6 +46,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @track openmodel = false;
     @api viewNazione=false;
     @api viewStato=false;
+    @api hideButtonFromFlow;
     tableData = [];
     dataAccountAddress=[];
     dataAddressFornitura=[];
@@ -1542,7 +1543,7 @@ disabledverifyFieldsAddressDisabled(){
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
         console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
         console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
-        if(this.objectapiname=='Account' || this.accountid == null){    //MODIFICA 28/07/22 marco.arci@webresults.it -> se non c'è un contesto di account, non mostrari i due pulsanti
+        if(this.hideButtonFromFlow || this.objectapiname=='Account' || this.accountid == null){    //MODIFICA 28/07/22 - 13/01/23 marco.arci@webresults.it -> se non c'è un contesto di account, non mostrari i due pulsanti
             this.visibleCopiaResidenza=false;
             this.visibleSelezioneIndirizzi=false;
         }else{

@@ -82,12 +82,12 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 			               FROM Sale__c
 			               WHERE Name='testSaleName0'];
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
+			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c,MeterRelation__c
 			                            FROM ServicePoint__c
 			                            WHERE ServicePointCode__c='testServicePointCode'];
 
 
-			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, SupplyCity__c, CommoditySector__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
+			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, SupplyCity__c, CommoditySector__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c,MeterRelation__c
 			                             FROM ServicePoint__c
 			                             WHERE ServicePointCode__c='testServicePointCode2'];
 

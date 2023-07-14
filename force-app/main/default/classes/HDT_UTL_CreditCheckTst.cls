@@ -9,7 +9,7 @@ public with sharing class HDT_UTL_CreditCheckTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.newPhaseTransition('Credit Check KO','Bozza',constants.ORDER_RECORDTYPEID_SUBENTRO,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
 
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','G3 - MMS Azienda','Aziende SME');
         insert accs;
         List<Contact> conts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
         conts[0].Company__c='MMS';
@@ -73,9 +73,9 @@ public with sharing class HDT_UTL_CreditCheckTst {
         data.outcomeDescription = 'Update failed. First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;';
         data.outcoming = null;
         Test.startTest();
-            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
-            update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
+            HDT_UTL_CreditCheck.updateOrderFuture(JSON.serialize(data));
         Test.stopTest();
+        update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
         o = [SELECT Id, IncomingCreditCheckResult__c,Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
         System.assertEquals('KO', o.IncomingCreditCheckResult__c, 'testUpdateOrderIncoming - Esito non Aggiornato');
         System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');

@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Richiesta di informazioni</label>
             </value>
+            <value>
+                <fullName>Richiesta di Rettifica di fatturazione</fullName>
+                <default>false</default>
+                <label>Richiesta di Rettifica di fatturazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

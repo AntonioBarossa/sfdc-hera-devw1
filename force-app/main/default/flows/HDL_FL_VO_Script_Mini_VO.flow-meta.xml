@@ -5,7 +5,7 @@
         <name>categoryAssigment_0</name>
         <label>categoryAssigment</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>categoryAssigmentVariable</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Offerta</name>
         <label>Offerta</label>
         <locationX>270</locationX>
-        <locationY>1190</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>OffertaSingola</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>OffertaVas</name>
         <label>OffertaVas</label>
         <locationX>270</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>OfferteVas</assignToReference>
             <operator>Add</operator>
@@ -67,7 +67,7 @@
         <name>checkIfAzienda</name>
         <label>checkIfAzienda</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniOffertaVas</targetReference>
         </defaultConnector>
@@ -88,12 +88,39 @@
             <label>isAzienda</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>SalesCompanyDec</name>
+        <label>SalesCompanyDec</label>
+        <locationX>182</locationX>
+        <locationY>1358</locationY>
+        <defaultConnector>
+            <targetReference>MinoVO_text1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>MMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Marche Multiservizi S.p.A</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>MMS_Screen</targetReference>
+            </connector>
+            <label>MMS</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>SalesCompanyFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm S.p.A&quot;), &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;, 
+IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Marche Multiservizi S.p.A&quot;), &quot;PESARO, VIA DEI CANONICI 144&quot;, 
  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm Marche&quot;), &quot;HERA COMM MARCHE, SOCIETÀ DI VENDITA GAS CON SEDE A URBINO, VIA SASSO 120 E DI HERA COMM CON SEDE A IMOLA, VIA MOLINO ROSSO 8&quot;, 
-  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;EstEnergy S.p.A&quot;), &quot;ESTENERGY SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A TRIESTE, IN VIA DEI RETTORI 1&quot;, &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;)))</expression>
+  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;EstEnergy S.p.A&quot;), &quot;ESTENERGY SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A TRIESTE, IN VIA DEI RETTORI 1&quot;, &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;))))</expression>
     </formulas>
     <interviewLabel>HDL FL VO Script - Mini VO {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Mini VO</label>
@@ -101,7 +128,7 @@
         <name>LoopOrdiniOfferta</name>
         <label>LoopOrdiniOfferta</label>
         <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationY>950</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -115,7 +142,7 @@
         <name>LoopOrdiniOffertaVas</name>
         <label>LoopOrdiniOffertaVas</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -148,10 +175,10 @@
         <name>Get_Sales_Contact</name>
         <label>Get Sales Contact</label>
         <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationY>1250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>MinoVO_text1</targetReference>
+            <targetReference>SalesCompanyDec</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -169,7 +196,7 @@
         <name>getInfoLegaleRappresentate_0</name>
         <label>getInfoLegaleRappresentate</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopOrdiniOffertaVas</targetReference>
@@ -196,8 +223,8 @@
     <screens>
         <name>MinoVO_text1</name>
         <label>MinoVO_text1</label>
-        <locationX>182</locationX>
-        <locationY>1526</locationY>
+        <locationX>314</locationX>
+        <locationY>1466</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -291,6 +318,37 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>MMS_Screen</name>
+        <label>MMS_Screen</label>
+        <locationX>50</locationX>
+        <locationY>1466</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>MMS_1</name>
+            <fieldText>&lt;p&gt;Chiamo per conto di {!SalesCompanyFormula}, con sede a Pesaro, Via dei Canonici 144, Nell&apos;ambito di questa telefonata ho raccolto la sua richiesta di contrattualizzazione relativamente al servizio idrico.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Mi conferma che Lei è il Sig./ra {!Get_Sales_Contact.Name}&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: Confermo&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Mi autorizza e quindi conferma che desidera ricevere il contratto relativo al servizio idrico, comprensivo di tutti gli allegati necessari, a mezzo mail all&apos;indirizzo indirizzo mail {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ShippingMail__c}(oppure SMS al numero numero {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.PhoneNumber__c})&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: Confermo&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_4</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Bene Sig./ra&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Sales_Contact.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;abbiamo terminato la registrazione, in breve tempo riceverà tutta la documentazione contrattuale che, se lo riterrà, potrà sottoscrivere attraverso il codice che le invieremo via sms.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Prima di terminare mi conferma che oggi è il {!$Flow.CurrentDate}&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Grazie Sig./ra arrivederci&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[FINE REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -303,7 +361,7 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <connector>
             <targetReference>categoryAssigment_0</targetReference>
         </connector>

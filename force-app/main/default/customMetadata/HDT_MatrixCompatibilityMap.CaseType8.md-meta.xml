@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>ServiceRequestType__c</field>
-        <value xsi:type="xsd:string">BP-CA - Errata categoria</value>
+        <value xsi:type="xsd:string">BP/CA - errata categoria</value>
     </values>
     <values>
         <field>Type__c</field>

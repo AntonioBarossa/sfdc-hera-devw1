@@ -10,16 +10,14 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{
         &quot;FieldName&quot;: &quot;Type&quot;,
-        &quot;ReadOnly&quot;:true,
-		&quot;Required&quot;: true,
+        &quot;ReadOnly&quot;: true,
+        &quot;Required&quot;: true,
         &quot;Column&quot;: 1
-    },
-{
+    }, {
         &quot;FieldName&quot;: &quot;Commodity__c&quot;,
         &quot;ReadOnly&quot;: true,
         &quot;Column&quot;: 1
-    },
- {
+    }, {
         &quot;FieldName&quot;: &quot;Subprocess__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
@@ -28,13 +26,22 @@
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
     }, {
+        &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
         &quot;FieldName&quot;: &quot;IntendedUse__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;ReadOnly&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;WrittenReceiptRequestDate__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;SupplyUseType__c&quot;,
         &quot;Required&quot;: true,
-        &quot;Column&quot;: 1
+        &quot;Column&quot;: 2
     }, {
         &quot;FieldName&quot;: &quot;Caliber__c&quot;,
         &quot;Required&quot;: true,
@@ -59,22 +66,15 @@
         &quot;FieldName&quot;: &quot;Taxes__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
-    },
-{
-        &quot;FieldName&quot;: &quot;AlternativeEmail__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    },{
+    }, {
         &quot;FieldName&quot;: &quot;Email__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
-    },
-{
+    }, {
         &quot;FieldName&quot;: &quot;PhoneNumber__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 2
     }
-
 ]</value>
     </values>
     <values>
@@ -83,13 +83,27 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[
-{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;AccountId&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;MeterRelation__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;ShipmentAddressAssign__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }
 ]</value>
     </values>
     <values>
-        <field>ValidateClass__c</field>
+        <field>ReadOnlyRelatedFields__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ValidateClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

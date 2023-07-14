@@ -10,8 +10,12 @@
                         <lightning-input type="search" variant="label-hidden" placeholder="Cercare per nome coda o nome operatore"></lightning-input>
                     </div>
                 </template>
-                <template if:true={searchingWorkGroup}>
+                <template if:true={searchingWorkGroup}>                        
                     <div class="grow" onkeyup={handleWorkGroupSearch}>
+                        <lightning-combobox name="agency" data-id="agency"
+                        label="Agenzia" placeholder="Seleziona Agenzia" onchange={handleAgencyChange}
+                        options={agencyPicklistValues} required></lightning-combobox>
+                        <br><br>
                         <lightning-input type="search" variant="label-hidden" placeholder="Ricerca Gruppo di Lavoro"></lightning-input>
                     </div>
                 </template>

@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Ripristina+Fase&amp;c__accid={!Case.Id}&amp;c__flowName=HDT_FL_PostSalesMasterDispatchSales&amp;c__recordTypeName=HDT_RT_GenericheAttivazioni</url>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Ripristina+fase&amp;c__id={!Case.Id}&amp;c__flowName=HDT_FL_DispatchTari&amp;c__recordTypeName=HDT_RT_GenericheAttivazioni</url>
 </WebLink>

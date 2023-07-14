@@ -126,6 +126,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             order__c,
+            Order__r.Account.Category__c,
             Account__c,
             Type__c,
             DiscardCount__c,
@@ -191,6 +192,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             Order__r.ServicePoint__r.SupplyProvince__c,
             Order__r.ServicePoint__r.SupplyPostalCode__c,
             Order__r.ProcessType__c,
+            Order__r.isVas__c,
             Order__r.Market__c,
             Order__r.Catalog__c,
             Order__r.ServicePoint__r.Account__r.CustomerCode__c
@@ -562,7 +564,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
 
     
         public static List<wrts_prcgvr__Activity__c> getActivityTelesellingOutbound(string ecid){
-            return [select id,createddate from wrts_prcgvr__Activity__c where ecid__c = :ecid and Type__c = 'Chiamata outbound' and wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED order by createddate desc  ];
+            if(String.isBlank(ecid)) return new List<wrts_prcgvr__Activity__c>();
+            return [SELECT Id,CreatedDate FROM wrts_prcgvr__Activity__c WHERE ecid__c = :ecid and Type__c = 'Chiamata outbound' and wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED order by createddate desc  ];
         }
 
         public static List<wrts_prcgvr__Activity__c> getActivityTelesellingOutboundByUser(){
@@ -618,13 +621,17 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return parentActMap;
     }
 
-    /**
-         * @description getRecordByOrderListAndQuality
-         * @param orderList
-         * @return List<wrts_prcgvr__Activity__c>
-        */
-        public static List<wrts_prcgvr__Activity__c> getActivityCreatedByQualityBatch(List<String> orderList){
-            Set<String> activityTypes = new Set<String>{HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL,HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO};
+        public static List<wrts_prcgvr__Activity__c> getActivityByType(String type, Set<Id> objectId){
+            return [
+                SELECT id, Case__c, Order__c,wrts_prcgvr__IsClosed__c,Name FROM wrts_prcgvr__Activity__c
+                WHERE (wrts_prcgvr__Status__c != 'Annullata') AND Type__c = :type AND (Order__c IN :objectId OR Case__c IN :objectId)
+                WITH SECURITY_ENFORCED
+            ];
+
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getContractActivityQualityBatch(List<String> orderList){
+            Set<String> activityTypes = new Set<String>{HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL,HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO,'Quality Scaduta'};
             return [SELECT 
                     Id,
                     Account__c,
@@ -638,8 +645,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     Type__c
                     FROM wrts_prcgvr__Activity__c
                     where 
-                    (RecordType.developername = 'HDT_RT_ComfortQualityCall'
-                    OR Type__c IN :activityTypes)
+                    Type__c IN :activityTypes
                     AND order__C IN :orderList
                     WITH SECURITY_ENFORCED 
             ];

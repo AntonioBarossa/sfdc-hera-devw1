@@ -948,6 +948,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del Processo Verifiche Dati al DL</description>
+    <environments>Default</environments>
     <formulas>
         <name>BlankDate</name>
         <dataType>Date</dataType>
@@ -1778,6 +1779,12 @@
                     <elementReference>Get_Case.Commodity__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1952,6 +1959,12 @@
                 <name>documentRecordId</name>
                 <value>
                     <elementReference>FlowCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

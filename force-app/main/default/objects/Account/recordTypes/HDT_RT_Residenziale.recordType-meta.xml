@@ -343,23 +343,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>G2 - MMS Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G3 - MMS Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G4 - MMS Parti comuni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G5 - MMS Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G6 - MMS Associazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -877,6 +861,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hera ProtezionePiu Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
 			<fullName>Hera Ricarica Business</fullName>
 			<default>false</default>
 		</values>
@@ -958,6 +954,54 @@
         </values>
         <values>
             <fullName>Welcome Hera Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Dual</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2907,6 +2951,10 @@
         </values>
         <values>
             <fullName>Tutele Graduali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutele graduali Microimprese</fullName>
             <default>false</default>
         </values>
     </picklistValues>

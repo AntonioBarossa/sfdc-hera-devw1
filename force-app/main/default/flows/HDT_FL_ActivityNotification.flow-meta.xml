@@ -5,7 +5,7 @@
         <name>mark_new_activity_0</name>
         <label>Marchia Nuova Attività</label>
         <locationX>242</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>Notification.isNew__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>populate_notification</name>
         <label>Popola Notifica</label>
         <locationX>374</locationX>
-        <locationY>911</locationY>
+        <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>Notification.Id__c</assignToReference>
             <operator>Assign</operator>
@@ -72,7 +72,7 @@
         <name>ExistRecord</name>
         <label>ExistRecord?</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>is_insert_0</targetReference>
         </defaultConnector>
@@ -94,7 +94,7 @@
         <name>is_insert_0</name>
         <label>E&apos; Inserimento?</label>
         <locationX>374</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <defaultConnector>
             <targetReference>populate_notification</targetReference>
         </defaultConnector>
@@ -115,6 +115,7 @@
             <label>Si</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>A {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Notifica</label>
     <processMetadataValues>
@@ -140,19 +141,19 @@
         <name>Send_Notification</name>
         <label>Invia Notifica</label>
         <locationX>374</locationX>
-        <locationY>1031</locationY>
+        <locationY>947</locationY>
         <inputReference>Notification</inputReference>
     </recordCreates>
     <recordLookups>
         <name>GetAutomationToggle</name>
         <label>GetAutomationToggle</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ExistRecord</targetReference>
         </connector>
-        <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 AND 5) AND 6</filterLogic>
+        <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 OR 5) AND 6</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>

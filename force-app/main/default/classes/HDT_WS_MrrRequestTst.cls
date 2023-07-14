@@ -238,4 +238,56 @@ public with sharing class HDT_WS_MrrRequestTst {
         System.assertEquals(500, RestContext.response.statusCode, 'should fail throwing a Custom Exception');
     }
 
+    @isTest
+    private static Void postRichiestaNonIdentificata() {
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();   
+		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+        
+        HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
+        
+        Id myOrder = [Select id From Order][0].id;
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+
+        req.requestURI = 'services/apexrest/MRRInboundService';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf('{"header":"","requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"X"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"ATTIVITA","value":"Richiesta non identificata"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}]}]}]}]}');
+
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        HDT_WS_MrrRequest.doPost();
+
+        System.debug(RestContext.response.responseBody.toString());
+        
+        System.assertEquals(null, RestContext.response.statusCode, 'should fail throwing a Custom Exception');
+    }
+
+    @isTest
+    private static Void postCatch() {
+              
+		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+        
+        HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
+        
+        Id myOrder = [Select id From Order][0].id;
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+
+        req.requestURI = 'services/apexrest/MRRInboundService';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":""}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"ATTIVITA","value":"Richiesta non identificata"}],"id":null,"name":null,"objectType":null}]}]}');
+
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        HDT_WS_MrrRequest.doPost();
+
+        System.debug(RestContext.response.responseBody.toString());
+        
+        System.assertEquals(500, RestContext.response.statusCode, 'should fail throwing a Custom Exception');
+    }
+
 }

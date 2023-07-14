@@ -164,7 +164,9 @@ public with sharing class HDT_QR_AnagAlignment {
             CustomerLastName__c,
             CustomerVATNumber__c,
             CustomerFiscalCode__c,
-            Resident__c
+            Resident__c,
+            SalesCompanyCode__c,
+            SalesCompany__c
             FROM Order 
             WHERE DocumentalProcessType__c IN:processTypeSet
             AND ServicePointCodeFormula__c = :servicePointCode

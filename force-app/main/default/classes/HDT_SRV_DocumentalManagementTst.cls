@@ -202,13 +202,15 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     }
     @isTest
     static void testGenerateDiscardDocusignEnvelopeRequest(){
-        
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalMock());
         Test.startTest();
         List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
         String res = HDT_SRV_DocumentalManagement.generateDiscardDocusignEnvelopeRequest((String)dst[0].Id);
+        responseWrap = HDT_SRV_DocumentalManagement.executeDiscardDocusignEnvelopeCalloutRequest(res);
         Test.stopTest();
     }
-    
     
     @isTest
     static void testCreatePublicLinkFuture(){
@@ -302,7 +304,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     @isTest
     static void testHandleRadio1(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1_HC","selected":"true","value":"no"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -316,7 +318,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
       @isTest
     static void testHandleRadio2(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2_HC","selected":"true","value":"no"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -331,7 +333,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
           @isTest
     static void testHandleRadioOrder1(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1_HC","selected":"true","value":"no"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -346,7 +348,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     @isTest
         static void testHandleRadioOrder2(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2_HC","selected":"true","value":"no"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -378,7 +380,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     @isTest
         static void testHandleRadioOrder4(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"},{"groupName":"326_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';

@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     /* Il Metodo Save viene chiamato nelle casistiche in cui non si esegue la Stampa Documentale */
     @AuraEnabled
-    public static void save(Order orderParent){ 
+    public static void save(Order orderParent){
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
         Order orderParentRetreived = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c,WasteCommodityType__c,RequestSource__c,DeliveredDocumentation__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
@@ -29,25 +29,24 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         /**@frpanico 2022-04-29
          * Aggiunta gestione del contratto gia firmato
          */
-        if(orderParentRetreived.SignatureMethod__c != null && orderParentRetreived.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+
+
+        if('Ambiente'.equalsIgnoreCase(wasteCommodityType))
+        {
+            handleTariOrder(orderParentRetreived);
+            return;
+        } else if( 'Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c))
         {
             Order parentOrderToUpdate = new Order();
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            List<Order> childs = [SELECT Id, SignedDate__c FROM Order WHERE ParentOrder__c = :orderParent.Id AND ProcessType__c = 'Switch in Fittizio' WITH SECURITY_ENFORCED];
+            if(!childs.isEmpty())
+            {
+                parentOrderToUpdate.SignedDate__c = childs[0].SignedDate__c;
+            }
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
-            HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
-            return;
-        }
-        //if(rtName.equalsIgnoreCase('HDT_RT_SubentroAmbiente') ||  rtName.equalsIgnoreCase('HDT_RT_AttivazioneAmbiente') || rtName.equalsIgnoreCase('HDT_RT_CambioTariffa')){
-        if(wasteCommodityType != null && wasteCommodityType.equalsIgnoreCase('Ambiente')){
-            Order parentOrderToUpdate = new Order();
-            parentOrderToUpdate.Id = orderParent.Id;
-            if(orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c.equalsIgnoreCase('Y')){
-                parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
-                parentOrderToUpdate.Status = 'Completed';
-            }else{
-                parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
-            }
             HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
             return;
         }
@@ -79,7 +78,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         orderToUpdate.DocumentPackage__c = 'Richiesto';
         Map<id, Order> quoteIdsMap = new Map<id, Order>();
         Set<Id> quoteIdsDuplicates = new Set<Id>();//if quote is in this set and sp!=null, blank quote
-
+        
         for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 Order o = new Order(
@@ -101,13 +100,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
-            /*}else if( 'HDT_RT_AgevolazioniAmbiente'== childOrd.RecordType.DeveloperName || 'HDT_RT_ModificaTariffaRimozione'==childOrd.RecordType.DeveloperName){
-                if('3 - Nessuna'.equalsIgnoreCase(childOrd.ApprovalType__c))    continue;
-                Order o = new Order(
-                    Id=childOrd.Id,
-                    Phase__c = 'In attesa Approvazione'
-                );
-                ordersToUpdate.add( o );*/
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));
@@ -157,21 +149,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         wrpActivityVo.isCommunity = isCommunity == true && campaignPresent == true;
 
         if(ord.Sale__r.CampaignMemberId__c != null){
-            // CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
-            //                         FROM CampaignMember 
-            //                         WHERE CampaignId =: ord.Sale__r.Campaign__c 
-            //                         AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+
             CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
             FROM CampaignMember 
             WHERE Id =: ord.Sale__r.CampaignMemberId__c WITH SECURITY_ENFORCED LIMIT 1];
-            
-            System.debug('ord.Sale__r.CampaignMemberId__c --> '+ord.Sale__r.CampaignMemberId__c);
-            System.debug('cm --> '+cm.Id);
+
             String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
-            System.debug('PositiveOutcomeDefaultStatus__c --> '+myStatus);
             CampaignMember campaignMember = HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
-            System.debug('campaignMember Status -->'+campaignMember.Status);
             wrpActivityVo.campaignMemberStatus = myStatus;
+            wrpActivityVo.campaignMemberId = cm.Id;
         }
 
         List<Order> ordersToUpdate = new List<Order>();
@@ -201,7 +187,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
-        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+        orderParent = [SELECT Id, Sale__r.Channel__c,  Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -229,6 +215,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
         else if(orderParent.Phase__c == 'Registrazione validata'){
+            if((orderParent.Sale__r.Channel__c == 'Telefono' || orderParent.Sale__r.Channel__c == 'Teleselling Inbound') && orderParent.SignatureMethod__c == 'Vocal Order')
+            {
+                orderToUpdate.SignedDate__c = Date.today();
+                orderToUpdate.DocumentalPhase__c = 'Plico firmato';
+            }
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
@@ -252,26 +243,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
         orderToUpdate.SignMode__c = orderParent.SignMode__c;
-      /*  if(isPlicoSend){
-          //  orderToUpdate.Phase__c = 'Plico da inviare';
-          orderToUpdate.Phase__c = 'Documentazione da validare';
-        }
-        else{
-            orderToUpdate.Phase__c = 'Documentazione da validare';
-        }*/
-        // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        for (Order childOrd : childOrders) {
-            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
-                ordersToUpdate.add(
-                    new Order(
-                        Id = childOrd.Id,
-                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
-                    )
-                );
-            }
+        /* L'aggiornamento dello step previene lo sbiancamento della data firma */
+        if('Documentazione Gestita'.equalsIgnoreCase(orderToUpdate.Phase__c))
+        {
+            orderToUpdate.Step__c = 2;
         }
         ordersToUpdate.add(orderToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
@@ -322,9 +300,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     public static Boolean checkRequiredDocs(Order ord){
 
         Boolean check = true;
-
-        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.DocumentPackage__c != null)
-        {
+        if(String.isNotBlank(ord.CommodityFormula__c) && ord.CommodityFormula__c.equalsIgnoreCase('Ambiente') && String.isNotBlank(ord.ProcessType__c) && !ord.ProcessType__c.containsIgnoreCase('Modifica Tariffa')){
+            check = false;
+        }else if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.DocumentPackage__c != null){
            	check = true;
             if(ord.CILegalRepresentative__c != null && !'Validato'.EqualsIgnoreCase(ord.CILegalRepresentative__c)){
                 check = false;
@@ -350,7 +328,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
                 check = false;
             }
-        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
+        }else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
             check = true;
         }
 
@@ -444,6 +422,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         public String orderPhase {get; set;}
         public String campaignMemberStatus {get; set;}
         public Boolean isCommunity {get; set;}
+        public String campaignMemberId {get; set;}
     }
 
     @AuraEnabled
@@ -463,7 +442,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
-        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+        List<Order> orderList =[SELECT Account.Category__c, CommodityFormula__c,ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
                                 FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
         for(Order singleOrder : orderList)
@@ -564,6 +543,14 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();
+        /*@frpanico 2022-11-17 
+        * La list di quoteLine e' necessaria per dividere i chunk
+        * Salesforce ha il limite di 10 chunk
+        * se ho due oggetti A e B e ordino la lista A B A B A B Salesforce li considera singoli chunk andando in errore "Not more than 10 chunks..."
+        * se ordino la lista A A A A A B B B B B Salesforce li considera come due chunk
+        */
+        List<SBQQ__QuoteLine__c> quoteLineToUpdate = new List<SBQQ__QuoteLine__c>();
+        
 
         Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
         /* Build the map that groups orderItems for ServicePointCode of the related order */
@@ -577,7 +564,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
             }
-            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c != null && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
             }
@@ -603,14 +590,50 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
 
             sobjToUpdate.add(offertaCommerciale);
-            sobjToUpdate.add(offertaCommQl);
+            quoteLineToUpdate.add(offertaCommQl);
         }
-
+        if(!quoteLineToUpdate.isEmpty())
+        {
+            sobjToUpdate.addAll(quoteLineToUpdate);
+        }
         if(!sobjToUpdate.isEmpty())
         {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }
 
+    @TestVisible
+    private static void handleTariOrder(Order orderParentRetreived){
+        Order parentOrderToUpdate = new Order();
+        parentOrderToUpdate.Id = orderParentRetreived.Id;
+        if('Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c) || orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c){
+            parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
+            parentOrderToUpdate.Status = 'Completed';
+        }else{
+            parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
+        }
+
+        Map<id, Order> ordersToUpdateMap = new map<id, Order>{parentOrderToUpdate.Id => parentOrderToUpdate};
+
+        for(Order childOrd : orderQr.getChildOrdersByParentId(orderParentRetreived.Id)){
+            if( 
+                'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName 
+                && childOrd.OrderReference__c != null 
+                && !'MMS'.equalsIgnoreCase(childOrd.Account.CompanyOwner__c)
+            ){
+                Order o = new Order(
+                    Id=childOrd.Id,
+                    Surface__c = childOrd.OrderReference__r.Surface__c
+                );
+
+                ordersToUpdateMap.put(childOrd.OrderReference__c, new Order(Id=childOrd.OrderReference__c, BlockOnComputation__c = 'Y'));
+                ordersToUpdateMap.put( o.Id, o );
+            }
+        }
+        orderSrv.updateRecords(ordersToUpdateMap.values());
+    }
 }

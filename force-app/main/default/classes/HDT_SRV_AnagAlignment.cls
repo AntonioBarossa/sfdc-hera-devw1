@@ -100,9 +100,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
         String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
         String herokuCode = herokuWrapper.requestMap.get('requestId');
+        // EDURSO TK 964701C
+        String dataDecorrenza = herokuWrapper.requestMap.get('DATA_DECORRENZA');
         HDT_ENU_AnagAlignmentContext context = codiceServizio.equals('VS2') ? HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_POD : HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_PDR;
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
+        anagAlignCase.CustomerRequestDate__c = System.now();
         switch on codicePrestazione {
             when 'A01', 'A40', 'A03', 'S01', 'S02','A10' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
@@ -115,81 +118,74 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
 
                 if (triggerOrder != null) {
-                    anagAlignCase = createAnagAlignmentCase(triggerOrder);
-                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
-                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
-                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
-                    anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
-                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    if(codicePrestazione != 'A10' && codicePrestazione != 'A40'){
+                        anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                        anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                        anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                        //anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                        anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                        anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
+                        if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                            anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                        }
+                        for (String field : dataEnrichmentFields) {
+                            anagAlignCase.put(field, tempCase.get(field));
+                        }
+                        alignSalesCompany(anagAlignCase,triggerOrder);
+                        System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                        anagAlignCase.Phase__c = 'Da Inviare';
+                        // EDURSO TK 964701C
+                        if (!String.isBlank(dataDecorrenza)) {
+                            anagAlignCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                        }
+                        HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                     }
-                    for (String field : dataEnrichmentFields) {
-                        anagAlignCase.put(field, tempCase.get(field));
-                    }
-                    System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                    anagAlignCase.Phase__c = 'Da Inviare';
-                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
 
-                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
-                updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
-                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-                }
-                for (String field : dataEnrichmentFields) {
-                    anagAlignCase.put(field, tempCase.get(field));
+                if(codicePrestazione == 'N02'){
+                    anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
+                    updateAnagAlignmentCaseCustomerData(anagAlignCase);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    }
+                    for (String field : dataEnrichmentFields) {
+                        anagAlignCase.put(field, tempCase.get(field));
+                    }
+
+                    System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
 
-                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                anagAlignCase.Phase__c = 'Da Inviare';
-                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
             }
-            when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
+            when 'F01', 'F02' { // Casistica 3: Case Ricostruzione Consumi
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, codicePresa);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
-
-                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
-                updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
-                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-                }
-
-                for (String field : dataEnrichmentFields) {
-                    anagAlignCase.put(field, tempCase.get(field));
-                }
-
-
-                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                anagAlignCase.Phase__c = 'Da Inviare';
-                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
 
                 Case ricostruzioneConsumiCase = createCaseRicostruzioneConsumi(codicePresa, herokuCode);
                 for (String field : dataEnrichmentFields) {
@@ -594,7 +590,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         for (Contact c : contacts) {
             contactsMap.put(c.Id, c);
         }
-
+        String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
@@ -608,6 +604,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
 
             // DATI CLIENTE FINALE
+            if(anagAlignCase.Email__c == null || String.isEmpty(anagAlignCase.Email__c)){
+                anagAlignCase.Email__c = emptyEmailDefault;
+            }   
             anagAlignCase.FirstName__c = caseAccount.FirstName__c;
             anagAlignCase.LastName__c = caseAccount.LastName__c;
             anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
@@ -718,10 +717,27 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return transcodedValue;
     }
 
-    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
-    private static String companyCodeTemp(String commodity) {
-        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    private static void alignSalesCompany(Case newCase, Order ord){
+        if (String.isNotBlank(newCase.SalesCompanyCode__c) || String.isNotBlank(newCase.SalesCompany__c)){
+            return;
+        }
+        /* if (String.isNotBlank(ord.SalesCompanyCode__c)){
+            newCase.SalesCompanyCode__c = ord.SalesCompanyCode__c;
+            newCase.SalesCompany__c = ord.SalesCompany__c;
+            return;
+        } */
+        newCase.SalesCompanyCode__c = 'Gas'.equals(ord.CommodityFormula__c) ? '10V0000160' : '13V0000000';
+        if('Gas'.equalsIgnoreCase(ord.CommodityFormula__c) && String.isNotBlank(ord.SalesCompanyCode__c) && '10V0000000'.equalsIgnoreCase(ord.SalesCompanyCode__c)){
+            newCase.SalesCompanyCode__c = ord.SalesCompanyCode__c;
+        }
+        HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
+        newCase.SalesCompany__c = depsSrv.calculateSalesCompany(newCase.SalesCompanyCode__c);
     }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    /* private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    } */
 
     // Fornisce la regione a partire dalla provincia. Per Wave 1 sono gestite solo MARCHE e ABRUZZO.
     // TODO WAVE 3: creare un metadato ad-hoc per configurare tutte le province e tutte le regioni.

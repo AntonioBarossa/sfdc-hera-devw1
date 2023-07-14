@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Gas</value>
+        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
     </values>
 </CustomMetadata>

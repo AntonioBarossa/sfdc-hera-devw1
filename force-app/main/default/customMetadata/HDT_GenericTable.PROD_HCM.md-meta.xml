@@ -4,12 +4,26 @@
     <protected>false</protected>
     <values>
         <field>Mapping__c</field>
-        <value xsi:type="xsd:string">[{
+        <value xsi:type="xsd:string">[
+{
 &quot;nomesocieta&quot;:&quot;Hera Comm Marche&quot;,
 &quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHCM&quot;,
 &quot;existsdefault&quot;:true,
-&quot;defaultusers&quot;: [&quot;marco.germani2@heravendita.com&quot;,&quot;manuela.costantini@heravendita.com&quot;]
-}]</value>
+&quot;defaultusers&quot;: [&quot;marco.germani2@heravendita.com&quot;,&quot;andrea.mara@heravendita.com&quot;]
+},
+{
+&quot;nomesocieta&quot;:&quot;Hera Comm S.p.A.&quot;,
+&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHC&quot;,
+&quot;existsdefault&quot;:true,
+&quot;defaultusers&quot;: [&quot;anna.guidoboni@heravendita.com&quot;]
+},
+{
+&quot;nomesocieta&quot;:&quot;Marche Multiservizi S.p.A&quot;,
+&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataMMS&quot;,
+&quot;existsdefault&quot;:true,
+&quot;defaultusers&quot;: [&quot;andrea.biettini@heravendita.com&quot;,&quot;emanuele.guglielmi@heravendita.com&quot;,&quot;stefano.scotti@heravendita.com&quot;]
+}
+]</value>
     </values>
     <values>
         <field>Object__c</field>

@@ -35,6 +35,7 @@ public inherited sharing class HDT_LC_SaleActions {
     * @param primaryQlSconto 
     * @param allQlSconto 
     **/
+    @TestVisible
     private static void reassignQlSconti(List<SBQQ__QuoteLine__c> primaryQlSconto,  List<SBQQ__QuoteLine__c> allQlSconto){
         Map<id, SBQQ__QuoteLine__c> mapOfferToPrimary = new Map<id, SBQQ__QuoteLine__c>();
         list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();
@@ -59,7 +60,10 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug(json.serialize(listToUpdate));
         if(!listToUpdate.isEmpty()){
             //quoteLineSrv.updateRecords(listToUpdate);//We should Bypass Field security for this test
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             update listToUpdate;
+            HDT_UTL_QuoteProcess.enableCpq();
         }
     }
 
@@ -71,7 +75,10 @@ public inherited sharing class HDT_LC_SaleActions {
      */
     @AuraEnabled
     public static void save(Sale__c sale, String campaignMemberId){
-
+        List<Sale__c> sList = HDT_QR_GenericQuery.getGenericRecords('Id','Sale__c','Id = \''+sale.Id+'\' AND CommercialId__c = null');
+        if(!sList.isEmpty()){
+            throw new AuraHandledException('Attenzione! Non è stato selezionato il campo "Venduto Da".');
+        }
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
         String campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         
@@ -304,11 +311,11 @@ public inherited sharing class HDT_LC_SaleActions {
 
     }
 
-    /**
+/*
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale backup
      * @param sale
-     */
+     
     @AuraEnabled
     public static void saveBackup(Sale__c sale){
         
@@ -409,7 +416,7 @@ public inherited sharing class HDT_LC_SaleActions {
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
         quoteSrv.updateRecords(quoteList);
-    }
+    } */
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
@@ -443,6 +450,7 @@ public inherited sharing class HDT_LC_SaleActions {
         }
 
         //4 - Excecute actions
+        HDT_UTL_QuoteProcess.disableCpq();
         saleSrv.updateRecord(saleToUpdate);
 
         if (!opps.isEmpty()) {
@@ -452,6 +460,6 @@ public inherited sharing class HDT_LC_SaleActions {
         if (!quoteList.isEmpty()) {
             quoteSrv.updateRecords(quoteList);
         }
-
+        HDT_UTL_QuoteProcess.enableCpq();
     }
 }

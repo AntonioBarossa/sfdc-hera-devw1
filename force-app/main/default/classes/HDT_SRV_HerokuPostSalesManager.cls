@@ -77,28 +77,42 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             
             mrrList = removeNonCommoditySubscriptions(mrrList);
             String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            String commodity = obj.get('Commodity__c') != null ? (String)obj.get('Commodity__c') : '';
             System.debug(LoggingLevel.DEBUG, 'processType: ' + processType);
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
             || processType.equalsIgnoreCase('Variazione Domiciliazione')
-            || processType.equalsIgnoreCase('Rimborso')))
+            || processType.equalsIgnoreCase('Rimborso')
+            || processType.equalsIgnoreCase('Attivazione Click&Pay')))
             {
                 mrrList = addIbanCountry(mrrList); 
             }
             if (String.isNotBlank(meterCode)){
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
-            if(String.isNotBlank(processType) && 
-            (processType.equalsIgnoreCase('Modifica Unita Immobiliari Componenti'))){
-                System.debug(LoggingLevel.DEBUG, 'Processo di Modifica Unita -->');
-                Map<String,Object> objFields = new Map<String,Object>();
-                objFields.put('RateCategory__c', obj.get('RateCategory__c'));
-                objFields.put('Unita_Abitative__c', obj.get('Unita_Abitative__c'));
-                mrrList = handleMrrFields(mrrList, objFields);
+            mrrList = supplyTypeTech(mrrList);
+            Map<String,Object> objFields = new Map<String,Object>();
+            if('Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('INVIADATAQC', 'Y');
+                objFields.put('WrittenReceiptRequestDate__c', obj.get('WrittenReceiptRequestDate__c'));
+                objFields.put('CreatedDate', obj.get('CreatedDate'));
             }
-
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Interna') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Type', 'Verifica Interna');
+            }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Integrita Sigilli') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Reason__c', obj.get('Reason__c'));
+                objFields.put('Type', 'Verifica Integrita Sigilli');
+            }
+            if(!objFields.isEmpty()){
+                mrrList = handleMrrFields(mrrList, objFields, currentCase);
+            }
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 20000);
+            arg.put('timeout', 120000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
@@ -197,6 +211,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
         Case caseInsert = new Case();
+        Boolean discardManagement = false;
         try {
             HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
             switch on request.header.requestType{
@@ -206,6 +221,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         //HDT_UTL_DatabaseService.updateSObject(caseUpdate);
                         responseObject.fields.addAll(handleNotifEsResponseField(caseUpdate[0]));
                     }
+                    discardManagement = true;
                 }
                 when 'RICH_PASS'{
                     caseInsert = hpsmUtl.handleRequestRichPass(reqWrp);
@@ -228,7 +244,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
 		
-
+            discardManagement = false;
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'KO';
@@ -246,6 +262,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;
+        }
+        if (discardManagement){
+            HDT_UTL_Scarti.discardManagement(new List<HDT_WRP_MrrRequest.HDT_WRP_Request>{request});
         }
         return responseObject;
     }
@@ -427,42 +446,97 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     }
 
     @TestVisible
-    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields)
+    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields, Case currentCase)
     {
         String fieldName = '';
         for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
         {
-            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case'))
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case') && currentCase != null && obj.Id == currentCase.Id)
             {
 
-                Set<String> afundiRateCategories = new Set<String>{'AITBNDOME0', 'AITMNDOME0', 'ACAUGRUNI0', 'ACINDSTR00', 'ACTINDSTR0'};
-                Set<String> afundaRateCategories = new Set<String>{'ACAGRICO00', 'ACTAGRICO0', 'ACTMAGRIC0'};
-                Set<String> afundcRateCategories = new Set<String>{'ACARTCOMM0', 'ACAUGRUNC0', 'ACTCOMMER0'};
-                Set<String> afundzRateCategories = new Set<String>{'ACAGRIZOO0', 'ACTMZOOTE0', 'ACZOOTECN0'};
-
-                System.debug(LoggingLevel.DEBUG, 'RateCategory: ' + String.valueOf(objFields.get('RateCategory__c')));
-
-                if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDI';
-                }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDA';
-                }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDC';
-                }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDZ';
-                }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUND';
+                if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
+                    Boolean foundQc = false;
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR  - WrittenReceiptRequestDate__c: ' + objFields.get('WrittenReceiptRequestDate__c'));
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - CreatedDate: ' + objFields.get('CreatedDate'));
+                    Datetime foo = System.now();
+                    if (objFields.get('WrittenReceiptRequestDate__c') != null) {
+                        Date receiptDate = Date.valueOf(objFields.get('WrittenReceiptRequestDate__c'));
+                        foo = Datetime.newInstance(receiptDate, System.now().time());
+                    }else{
+                        foo = (Datetime) objFields.get('CreatedDate');
+                    }
+                    String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - dateFinal: ' + dateFinal);
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('QC'))
+                        {
+                            foundQc = true;
+                            f.value = dateFinal;
+                            break;
+                        }
+                    }
+                    if(!foundQc){
+                        wrts_prcgvr.MRR_1_0.Field qcDateField = new wrts_prcgvr.MRR_1_0.Field();
+                        qcDateField.name = 'QC';
+                        qcDateField.fieldType = 'STRING';
+                        qcDateField.value = dateFinal;
+                        obj.fields.add(qcDateField);
+                    }
                 }
 
-                if(!String.isBlank(fieldName))
-                {
-                    wrts_prcgvr.MRR_1_0.Field newField = new wrts_prcgvr.MRR_1_0.Field();
-                    newField.name = fieldName;
-                    newField.fieldType = 'STRING';
-                    newField.value = String.valueOf(objFields.get('Unita_Abitative__c'));
-                    obj.fields.add(newField);
+                if (objFields.get('PhoneNumber__c') != null || 'Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))) {
+                    Boolean foundNote = false;
+                    String concatPhoneNote = '';
+                    if('Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))){
+                        //W2 Concatenazione Recapito Telefonico - Motivazione - Note
+                        concatPhoneNote = (objFields.get('PhoneNumber__c') != null ? String.valueOf(objFields.get('PhoneNumber__c')) : '') + (objFields.get('Reason__c') != null ? ' - ' + String.valueOf(objFields.get('Reason__c')) : '') +(objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                        System.debug(LoggingLevel.DEBUG, 'NOTE A DL: ' + concatPhoneNote);
+                    }else{
+                        //W2 Concatenazione Recapito Telefonico - Note
+                        concatPhoneNote = String.valueOf(objFields.get('PhoneNumber__c')) + (objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                    }
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('ANNOTAZIONI'))
+                        {
+                            f.value = concatPhoneNote;
+                            foundNote = true;
+                            break;
+                        }
+                    }
+
+                    if(!foundNote){
+                        wrts_prcgvr.MRR_1_0.Field dlNoteField = new wrts_prcgvr.MRR_1_0.Field();
+                        dlNoteField.name = 'ANNOTAZIONI';
+                        dlNoteField.fieldType = 'STRING';
+                        dlNoteField.value = concatPhoneNote;
+                        obj.fields.add(dlNoteField);
+                    }
                 }
+            }
+        }
+        return mrrList;
+    }
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest supplyTypeTech(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean fieldChanged = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(fieldChanged)
+            {
                 break;
+            }
+            if(obj.objectType != null && obj.objectType.equalsIgnoreCase('Case'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('CAN_VEND'))
+                    {
+                        f.value = String.isNotBlank(f.value) && (f.value.equalsIgnoreCase('A-Domestico') || f.value.equalsIgnoreCase('Domestico')) ? 'Domestico' : 'Non Domestico';
+                        fieldChanged = true;
+                        break;
+                    }
+                }
             }
         }
         return mrrList;

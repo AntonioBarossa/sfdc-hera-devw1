@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_BpCaVariation {
 	
-	public String numeroSr;
+	public String numeroSR;
 	public String codiceCausale;
 	public String dataCreazione;
 	public String cancellaBpAlternativo;
@@ -22,7 +22,7 @@ public class HDT_WRP_BpCaVariation {
 		public String emailCont;
 		public String marcaturaCliente;
 		public String codiceFiscale;
-		public String modelloCa;
+		public String modelloCA;
 		public String partitaIva;
 		public HDT_WRP_BpCaVariationIndirizzo indirizzo;
 		public HDT_WRP_BpCaVariationGruppoIva gruppoIva;
@@ -92,7 +92,9 @@ public class HDT_WRP_BpCaVariation {
 		public String idOggetto;
 		public String contoContrattuale;
 		public String emailInvioBolletta;
-		public String creaNuovoCa;
+		public String creaNuovoCA;
+		public String cig;
+		public String cup;
 		public String pecInvioBolletta;
 		public String modInvioBolletta;
 		public String emailPec;

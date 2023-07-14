@@ -8,32 +8,23 @@
     </values>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;ResidentMembers__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;NumberMembers__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;CohabitantsNumber__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 2
-}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;CustomerChangeDate__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;ResidentMembers__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;Cohabitation__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;WrittenReceiptRequestDate__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 2
+    }
 ]</value>
     </values>
     <values>
@@ -42,15 +33,48 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot;: &quot;SupplyCity__c&quot;,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;AtoFormula__c&quot;,
-&quot;Column&quot;: 2
-}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;SupplyCity__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;AtoFormula__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;DataUltimoAllineamentoGAA__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;PODPDRFormula__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;ContractCode__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;ResidentMembers__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;AnnualConsumption__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;ContractStartDate__c&quot;,
+        &quot;Column&quot;: 2
+    }
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:type="xsd:string">[{
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
+    }
 ]</value>
     </values>
     <values>

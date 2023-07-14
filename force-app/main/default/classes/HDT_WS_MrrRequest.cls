@@ -50,7 +50,7 @@ global with sharing class HDT_WS_MrrRequest {
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
             HDT_UTL_Scarti.handleMRRInboundRequest(requestBody.requests);//>> 08/10/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
-
+            Boolean discardManagement = false;
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
@@ -59,6 +59,7 @@ global with sharing class HDT_WS_MrrRequest {
                 if (header.fields != null && header.fields.get(0).value == 'sales') {
                     richiestaNonIdentificata = false;
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
+                    discardManagement = true;
                 }
             }
 
@@ -102,7 +103,11 @@ global with sharing class HDT_WS_MrrRequest {
                         mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
                     }
             }
-            HDT_UTL_Scarti.discardManagement(requestBody.requests);
+            //Nel Case crea l'activity anche se l'aggiornamento del case va in errore crea l'activity.  Quindi lo chiamo solo per i processi sales
+            // gestisco i postSales nel metodo hpsmSrv.handleInboundRequest(postSalesRequest);
+            if (discardManagement){
+                HDT_UTL_Scarti.discardManagement(requestBody.requests);
+            }
         } catch (JSONException jsonEx) {
 
             System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));

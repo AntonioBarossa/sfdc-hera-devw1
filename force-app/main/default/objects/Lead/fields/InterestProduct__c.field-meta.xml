@@ -13,6 +13,10 @@
         <valueSetName>HDT_InterestProduct</valueSetName>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Comunita Energetiche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Bebè Dual</valueName>
         </valueSettings>
         <valueSettings>
@@ -38,6 +42,10 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Caldaia Sicura Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Caldaia Ibrida a pompa di calore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
@@ -113,6 +121,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Led Smart</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Led Business</valueName>
         </valueSettings>
         <valueSettings>
@@ -158,6 +170,18 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Placet Variabile Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Luce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
@@ -209,6 +233,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Relax Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Prezzo Netto Special Dual</valueName>
         </valueSettings>
         <valueSettings>
@@ -250,6 +278,54 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Monopattino</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Dual</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

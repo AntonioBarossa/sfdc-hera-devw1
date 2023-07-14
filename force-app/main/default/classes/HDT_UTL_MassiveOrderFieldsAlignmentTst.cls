@@ -40,7 +40,7 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         accList[0].CustomerType__c = 'Organizzazione';
         insert accList;
 
-        List<Account> simpleAccDistributor = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1, false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> simpleAccDistributor = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1, false,'MMS','G3 - MMS Azienda','Aziende SME');
         simpleAccDistributor[0].Name = 'testSimplAccDistr0';
         simpleAccDistributor[0].Code__c = '13D0000082';
         insert simpleAccDistributor;

@@ -10,5 +10,6 @@
     <relationshipName>Service_Points</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

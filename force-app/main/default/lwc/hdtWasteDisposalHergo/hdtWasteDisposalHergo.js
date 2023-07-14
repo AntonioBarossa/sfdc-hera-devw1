@@ -1,6 +1,8 @@
 import {api} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import HdtRecordEditFormFlow from 'c/hdtRecordEditFormFlow';
+import { getFormattedDate } from 'c/hdtChildOrderProcessDetailsUtl';
+
 
 export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow {
 
@@ -35,6 +37,13 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     disableMaterialButton = true;
     _recentWithdrawal = false;
     _withdrawalFee=false;
+    _toastErrorMessage = [
+        'Per informazioni sui costi, consultare il nostro sito',
+        {
+            url: 'https://www.gruppomarchemultiservizi.it/#/ambiente/servizi_di_raccolta_a_domicilio',
+            label: ' www.gruppomarchemultiservizi.it',
+        },
+    ];
 
     get privateAreaPaid(){
         return this._checkResidente? this._withdrawConfiguration?.PayIfIsPrivateAreaDom__c : this._withdrawConfiguration?.PayIfIsPrivateAreaNotDom__c;
@@ -91,6 +100,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         console.log(this._withdrawConfiguration);
 
         if(!this._withdrawConfiguration){
+            this.cubatureLimit=null;
             //if(event.target.fieldName == 'ClientTypology__c' || event.target.fieldName == 'TypeOperation__c'){
                 this.showMessage('Attenzione','Non è stata trovata una corrispondenza tra la combinazione Comune / Tipo Intervento e la tabella di Configurazione Ritiri Gratuiti. Aprire segnalazione per notificare la problematica.','error');
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
@@ -114,14 +124,14 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             var dateSubtracted =  this.getDateSubtracted(new Date(),n);
             console.log('### DataUltimoRitiro-nMesi -> ' + dateSubtracted);
 
-            if(this.lastWithdrawDate > dateSubtracted){
-                this.showMessage('Attenzione', 'Ritiro a pagamento causa ultimo ritiro più recente di '+ n +' mesi','error');
+            if(this.lastWithdrawDate > dateSubtracted ){
+                this.showMessage('Attenzione', 'Ritiro a pagamento causa ultimo ritiro più recente di '+ n +' mesi','error', true);
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
                 this._recentWithdrawal = true;
                 this.cubatureLimit=null;
                 return true;
             }else if(("Y" == this.privateAreaPaid)  && this.template.querySelector("[data-id='WithdrawalPrivateArea__c']").value ){//(Y==Y)==true?
-                this.showMessage('Attenzione', 'Ritiro a pagamento se effettuato in area privata', 'error');
+                this.showMessage('Attenzione', 'Ritiro a pagamento se effettuato in area privata', 'error', true);
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
                 this._recentWithdrawal = true;
                 this.cubatureLimit=null;
@@ -143,24 +153,39 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     handleClose(event){
         console.log('###Close Event >>> ' + JSON.stringify(event.detail));
         this.template.querySelector("[data-id='MaterialDescription__c']").value = event.detail.label;  
-        if(this.cubatureLimit!==null){
+        if(!(this.cubatureLimit==null)){
             const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
             checkPayment.value = event.detail.needPayment;
         }   
     }
 
 
-    showMessage(title, message, variant) {
-        const toastErrorMessage = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant
-        });
+    showMessage(title, message, variant, messageData) {
+        let toastErrorMessage;
+        if (arguments.length == 3){
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant,
+                mode: 'sticky'
+            
+            });
+        }else{
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message + '. {0} {1}',
+                variant: variant,
+                mode: 'sticky',
+                messageData: this._toastErrorMessage
+            });
+        }
         this.dispatchEvent(toastErrorMessage);
     }
 
-    getDateSubtracted(today, numberToSubtract) {
-        let month = '' + (today.getMonth() + 1);
+    getDateSubtracted(dateToChange, numberToSubtract) {
+
+        dateToChange.setMonth(dateToChange.getMonth()-numberToSubtract);
+        /*let month = '' + (today.getMonth() + 1);
         let day = '' + today.getDate();
         let year = today.getFullYear();
 
@@ -169,8 +194,8 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         let monthUpdated = month - numberToSubtract;
 
         if (monthUpdated < 10) 
-            monthUpdated = '0' + monthUpdated;
+            monthUpdated = '0' + monthUpdated;*/
             
-        return [year, monthUpdated, day].join('-');
+        return getFormattedDate(dateToChange);
     }
 }

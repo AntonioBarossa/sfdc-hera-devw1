@@ -133,6 +133,17 @@ public inherited sharing class HDT_QR_Contact {
                 FROM Contact WHERE AccountId IN : accountIds WITH SECURITY_ENFORCED];
     }
 
+    public List<Contact> getContactsFromAcrByAccId(List<String> accountIds)
+    {
+        List<AccountContactRelation> acrList = [SELECT Id,AccountId, ContactId, Contact.IndividualId, Contact.AccountId FROM AccountContactRelation WHERE AccountId IN :accountIds WITH SECURITY_ENFORCED];
+        List<Contact> result = new List<Contact>();
+        for(AccountContactRelation acr : acrList)
+        {
+            result.add(new Contact(Id = acr.ContactId, IndividualId = acr.Contact.IndividualId, AccountId = acr.AccountId));
+        }
+        return result;
+    }
+
     // INIZIO SVILUPPI EVERIS
 
     /**
@@ -253,5 +264,9 @@ public inherited sharing class HDT_QR_Contact {
         qrHelper.setFilter(filter);
         return (List<Contact>)qrHelper.getListSObject();
 
+    }
+
+    public List<Contact> getContactsByFiscalCodes(Set<String> fiscalCodes) {
+        return [SELECT Id,FiscalCode__c FROM Contact WHERE FiscalCode__c IN : fiscalCodes WITH SECURITY_ENFORCED ];
     }
 }

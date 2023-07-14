@@ -1007,6 +1007,13 @@
                     <stringValue>Cambio Conto</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Provenienza_Iban</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IbanItalian</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode</targetReference>
             </connector>
@@ -1022,6 +1029,13 @@
                     <stringValue>Cambio Banca</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Provenienza_Iban</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IbanItalian</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode_0</targetReference>
             </connector>
@@ -1035,6 +1049,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Cambio da Click</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Provenienza_Iban</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IbanItalian</elementReference>
                 </rightValue>
             </conditions>
             <connector>

@@ -45,6 +45,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleAnalisiConsumi(inputs,formParams);
                 }when 'handleOtpSign'{
                     return handleOtpSign(inputs,formParams);
+                }when 'handleWasteProcessCode'{
+                    return handleWasteProcessCode(inputs,formParams);
+                }when 'calculateCommodityArcZeroTwo'{
+                    return calculateCommodityArcZeroTwo(inputs, formParams);
+                }when 'calculatePaymentMethod'{
+                    return calculatePaymentMethod(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -54,6 +60,44 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
         }
         return result;
+    }
+
+    private String handleWasteProcessCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String context = (String) formParams.get('Contesto');
+        String process = '';
+        Map<String, String> tariCodeMap = new Map<String, String>{
+            'Prima Attivazione' => 'CN001', 
+            'Nuovo Contratto' => 'CN001',
+            'Subentro' => 'CS001',
+            'Subentro Cambio Cat.Tariffa' => 'CS002',
+            'Cessazione' => 'CC001',
+            'Superficie' => 'CM001',
+            'DOM_Componenti non residenti' => 'CM020',
+            'NON DOM_ISTAT/Ronchi' => 'CM006',
+            'Cambio Tariffa' => 'CM004',
+            'Modifica Tariffa - Rimozione Agevolazione' =>'CM003',
+            'Modifica Tariffa'=>'CM003',
+            'DOM_Coabitazioni'=>'CM021',
+            'DOM_Componenti residenti'=>'CM022',
+            'Dati catastali'=>'CM030',
+            'Variazione Indirizzo Fornitura'=>'CM023',
+            'Variazione indirizzo di fornitura'=>'CM023',
+            'Domiciliato in nucleo residente'=>'CM021'
+            };
+        if('Order'.equalsIgnoreCase(context)){
+            process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
+        }else if('Case'.equalsIgnoreCase(context)){
+            process = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+            if(!'Cessazione'.equalsIgnoreCase(process) && !'Variazione indirizzo di fornitura'.equalsIgnoreCase(process)){
+                process = HDT_UTL_DocumentalManagement.getValue('Case', 'Subprocess__c', 0, inputs, formParams);
+            }
+        }
+        if(String.isBlank(process))return '';
+        if(tariCodeMap.get(process) != null){
+            return tariCodeMap.get(process);
+        }else{
+            return '';
+        }
     }
 
     private String handleOtpSign(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -231,10 +275,23 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         if (context == 'Order' && isPlicoReitek) { // plico "ex-Reitek", cioè firmato con vocal order
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Order', 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'SI' : 'NO';
+            String commodity = HDT_UTL_DocumentalManagement.getValue('Order', 'Commodity__c', 0, inputs, formParams);
+            String product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'NO':(isResident ? 'SI' : 'NO');
+            //residentTranscoded = isResident ? 'SI' : 'NO';
         } else { // plico "normale"
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue(context, 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'Si' : 'No';
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            String product = '';
+            String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams);
+            if('Order'.equalsIgnoreCase(context)){
+                product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            }
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'No':(isResident ? 'Si' : 'No');
+            //residentTranscoded = isResident ? 'Si' : 'No';
         }
 
         return residentTranscoded;
@@ -248,6 +305,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String distributorName = '';
         String commodity = '';
         String cluster = '';
+        String companyOwner='';
         switch on context {
             when 'Order' {
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
@@ -270,13 +328,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
                 commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
-                if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
-                    if (distributorList != null && distributorList.size()>0) {
-                        companyDesc = 'Hera Comm S.p.A.';
-                    } else {
-                        companyDesc = 'Hera Comm Marche';
+                companyOwner = HDT_UTL_DocumentalManagement.getValue('Case', 'CompanyOwner__c', 0, inputs, formParams);
+                if(cluster != 'Reclami'){ 
+                    List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
+                    if (cityExceptionList != null && cityExceptionList.size()>0) {
+                        List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                        if (distributorList != null && distributorList.size()>0) {
+                            companyDesc = 'Hera Comm S.p.A.';
+                        } else {
+                            companyDesc = 'Hera Comm Marche';
+                        }
                     }
                 }
 
@@ -284,12 +345,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if (companyDesc != 'Marche Multiservizi S.p.A' && companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
                     companyDesc = 'Hera Comm S.p.A.';
                 }
+                if(String.isBlank(companyDesc)){
+                    if('MMS'.equalsIgnoreCase(companyOwner)){
+                        companyDesc = 'Marche Multiservizi S.p.A';
+                    }
+                }
             }
             when 'Account'{
                 //gestire in base al compani owner
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Account', 'CompanyOwner__c', 0, inputs, formParams);
                 if(companyDesc.equalsIgnoreCase('HERA COMM')){
                     companyDesc = 'Hera Comm S.p.A.';
+                }
+                if(companyDesc.equalsIgnoreCase('MMS')){
+                    companyDesc = 'Marche Multiservizi S.p.A';
                 }
             }when 'EC','GC'{
                 return getCompanyAccountStatement(formParams);
@@ -335,9 +404,13 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String hcm = 'HERA COMM MARCHE';
             String newCo = 'ESTENERGY SPA';
             String oldCo = 'HERA COMM NORDEST';
+            String tari = 'Marche Multiservizi TARI';
+            String mms = 'Marche Multiservizi S.p.A';
             Boolean societaTemp = false;
             Boolean newCoTemp = false;
             Boolean oldCoTemp = false;
+            Boolean tariTemp = false;
+            Boolean mmsTemp = false;
             
             for (Object singleRecord : primoLivelloList) {
                 primolivello = (Map<String, Object>) singleRecord;
@@ -358,6 +431,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else {
                     oldCoTemp = false;
                 }
+                if(societa.equalsIgnoreCase(tari)){
+                    tariTemp = true;
+                }else {
+                    tariTemp = false;
+                }
+                if(societa.equalsIgnoreCase(mms)){
+                    mmsTemp = true;
+                }else {
+                    mmsTemp = false;
+                }
             }
             if(societaTemp){
                 result = '2060';
@@ -365,7 +448,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 result = '7030';// 7030 (NewCo)
             } else if(oldCoTemp) { // Migrazione Ascopiave 2019
                 result = '7015'; // 7015 (OldCo)
-            } else {
+            } else if(tariTemp) { // TARI 6001
+                result = '6001'; // 6001 TARI
+            } else if(mmsTemp) { // MMS 8060
+                result = '8060'; // 8060 TARI
+            }else {
                 result = '1070';
             }
         } catch(Exception ex) {
@@ -494,12 +581,32 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     }else if(iva.indexOf('22') > -1){
                         ivaInteger = 22;
                     }
+                    else if(iva.indexOf('20') > -1)
+                    {
+                        ivaInteger = 22;
+                    }
                     if(ivaInteger > 0){
                         ivaAmount = ((amountDouble/100)*ivaInteger);
                     }
                 }
                 totalAmount = amountDouble + ivaAmount;
             }
+            amountDouble = Double.valueOf(amount);
+            if(String.isNotBlank(iva)){
+                if(iva.indexOf('10') > -1){
+                    ivaInteger = 10;
+                }else if(iva.indexOf('22') > -1){
+                    ivaInteger = 22;
+                }
+                else if(iva.indexOf('20') > -1)
+                {
+                    ivaInteger = 22;
+                }
+                if(ivaInteger > 0){
+                    ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
+            }
+            totalAmount = amountDouble + ivaAmount;
             result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
             
         }else {
@@ -881,16 +988,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String[] splittedResponse = plainTextResponse.split('\n');
 
         List<String> cleanedResponseLines = new List<String>();
-        for (Integer i = 0; i < splittedResponse.size(); i++) {
+        /*for (Integer i = 0; i < splittedResponse.size(); i++) {
             String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
             List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
             // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
-            // TK 910361C -- Lunghezza stringa ridotta a 130 caratteri
-            if (cleanResponseLine.length() > 130) {
+            if (cleanResponseLine.length() > 2000) {
                 System.debug(LoggingLevel.DEBUG, 'Riga troppo lunga per Engage1: ' + cleanResponseLine);
                 // https://stackoverflow.com/a/10735971/16766541
                 // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
-                Pattern splitPattern = Pattern.compile('.{1,130}\\b'); 
+                Pattern splitPattern = Pattern.compile('.{1,2000}'); 
                 Matcher splitMatcher = splitPattern.matcher(cleanResponseLine);
                 while (splitMatcher.find()) {
                     splittedLine.add(splitMatcher.group(0).trim());
@@ -903,10 +1009,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             } else {
                 cleanedResponseLines.add(cleanResponseLine);
             }
-        }
+        }*/
 
         // Sezione ricorsiva 310|100 con il corpo della risposta.
-        for (Integer i = 0; i < cleanedResponseLines.size(); i++) {
+        for (Integer i = 0; i < splittedResponse.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
@@ -914,7 +1020,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('100');
             }
 
-            record.add(cleanedResponseLines[i]);
+            record.add(splittedResponse[i].trim());
             record.add(endLine);
 
             payloadSection += String.join(record, div);
@@ -1196,7 +1302,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate, Decimal indemnityDueSendResponse) {
         String boxType = '';
         Boolean isReclamoScritto = complaintClassification.equalsIgnoreCase('Reclamo Scritto');
-        Boolean isRettificaDoppia = complaintClassification.equalsIgnoreCase('Rettifica Doppia Fatturazione');
+        Boolean isRettificaDoppia = complaintClassification.equalsIgnoreCase('Rettifica Doppia Fatturazione') || complaintClassification.equalsIgnoreCase('Richiesta di Rettifica di fatturazione');
         Boolean isRichiestaInformazioni = complaintClassification.equalsIgnoreCase('Richiesta di Informazioni');
         Boolean isIndemnityResponseGtZero = indemnityDueSendResponse > 0;
         Boolean isCorrectionRight = correctionRight.equalsIgnoreCase('Si');
@@ -1410,6 +1516,47 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
+    }
+
+    private static String calculateCommodityArcZeroTwo(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String result = '';
+        String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'CommodityFormula__c', 0, inputs, formParams);
+        commodity = String.isBlank(commodity) ? HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams) : commodity;
+        switch on commodity{
+            when 'Energia Elettrica'    
+            {
+                result = 'ENE';
+            }
+            when 'Gas'
+            {
+                result = 'GAS';
+            }
+            when else
+            {
+                result = '';
+            }
+        }
+        return result;
+    }
+
+    private static String calculatePaymentMethod(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String modpagamento = HDT_UTL_DocumentalManagement.getValue(context, 'DocumentPaymentMethod__c', 0, inputs, formParams);
+        String modpagacconto = HDT_UTL_DocumentalManagement.getValue(context, 'DepositPaymentMode__c', 0, inputs, formParams);
+        String modpagorder = HDT_UTL_DocumentalManagement.getValue(context, 'PaymentMode__c', 0, inputs, formParams);
+
+        if (modpagamento == 'Bollettino Paperless' || modpagacconto == 'Paperless' ) {
+            return 'BOLLETTINO PAPER LESS';       
+        } else if (modpagacconto == 'Bonifico Paperless') {
+            return 'BONIFICO PAPER LESS';   
+        } else if (modpagorder =='') {
+            return 'NULL';  
+        } else {
+            return '';
+        }           
     }
     
 }

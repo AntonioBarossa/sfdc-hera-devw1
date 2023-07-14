@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Attivazioni</value>
+        <value xsi:type="xsd:string">Fatturazione</value>
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Order</value>
+        <value xsi:type="xsd:string">Case</value>
     </values>
     <values>
         <field>Subtype__c</field>
@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Cambio Offerta</value>
+        <value xsi:type="xsd:string">Gestione Bonus Sociale</value>
     </values>
 </CustomMetadata>

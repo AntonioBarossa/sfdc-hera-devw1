@@ -9,11 +9,21 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>Koinè</fullName>
+                <fullName>Covisian</fullName>
                 <default>false</default>
-                <label>Koinè</label>
+                <label>Covisian</label>
+            </value>
+            <value>
+                <fullName>Koinè Bologna Srl</fullName>
+                <default>false</default>
+                <label>Koinè Bologna Srl</label>
+            </value>
+            <value>
+                <fullName>Koinè Srl</fullName>
+                <default>false</default>
+                <label>Koinè Srl</label>
             </value>
             <value>
                 <fullName>Linetech</fullName>

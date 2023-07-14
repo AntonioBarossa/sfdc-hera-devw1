@@ -59,7 +59,7 @@ public with sharing class HDT_BA_PraxidiaFrontTst {
             HDT_WRP_CampaignPraxidia.wrapToIterate cp = new HDT_WRP_CampaignPraxidia.wrapToIterate(orders[0], cases[0]);
             cpList.add(cp);
 
-            HDT_BA_PraxidiaFront pf = new HDT_BA_PraxidiaFront();
+            HDT_BA_PraxidiaFront pf = new HDT_BA_PraxidiaFront('00','24');
 
             Database.executeBatch(pf);
 

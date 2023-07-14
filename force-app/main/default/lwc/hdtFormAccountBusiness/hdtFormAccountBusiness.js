@@ -64,6 +64,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @track companyOptions;
     @track customerTypeOptions;
 
+    @track condominioSelected = false;
+
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
   
@@ -204,9 +206,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     get ruoloOptions() {
         return [
             { label: 'Titolare', value: 'Titolare' },
-            { label: 'Legale rappresentante', value: 'Legale rappresentante' },
+            /*{ label: 'Legale rappresentante', value: 'Legale rappresentante' },
             { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }
+            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }*/
         ];
     }
     closeModal() {
@@ -266,7 +268,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
-        if(this.markingValue=='Ditta individuale'){
+        if(this.markingValue.includes('Ditta individuale')){
         //    this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
@@ -277,27 +279,47 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
+            if(this.condominioSelected)
+            {
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-show');
+            }
             this.customerType='Persona fisica';
             this.makerequired= true;
             this.requiredVat=true; //HRAWRM-776 07/10/2021
-        }
-        else if(this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')  ){
-            this.requiredVat= false;
-            this.makerequired=true;
-
-        }//HRAWRM-776 07/10/2021
-        else{
+        }else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
+         /** TK 978944C quando viene deselezionata la marcatura Ditta Individuale Nome e Cognome vengono sbiancati */
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="firstIndividualName"]').value = '';
+            this.template.querySelector('[data-id="lastIndividualName"]').value = '';
             this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
-            this.makerequired= false;
-            this.requiredVat=true;//HRAWRM-776 07/10/2021
+            /** TK 978944C quando viene selezionata la marcatura condominio la P.Iva viene nascosta */
+            if(this.markingValue.includes('Condominio'))
+            {
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-show');
+                this.template.querySelector('[data-id="vatNumber"]').value = '';
+                this.condominioSelected = true;
+            }
+            else if(this.condominioSelected){
+                this.template.querySelector('[data-id="vatNumber"]').classList.remove('slds-hide');
+                this.template.querySelector('[data-id="vatNumber"]').classList.add('slds-show');
+            }
+            /** TK 978944C quando viene selezionata la marcatura associazione la P.Iva viene sbiancata */
+            if(this.markingValue.includes('Associazione')){
+                this.template.querySelector('[data-id="vatNumber"]').value = '';
+            }
+            //Ticket 977444C
+            let fCodeVat = this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')? true : false;
+            this.makerequired= this.markingValue.includes("Azienda") ? true : fCodeVat;
+            this.requiredVat= !fCodeVat;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
@@ -641,6 +663,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(!lastIndividualName.reportValidity()){
                 isValidated=false;
             }
+            /* TK 951554C -- Anche il Nome deve essere un campo obbligatorio */
+            if(!firstIndividualName.reportValidity()){
+                isValidated=false;
+            }
 
             if(!fiscalCode.reportValidity()){
                 isValidated=false;
@@ -652,6 +678,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 }
             }
         }
+        if(this.markingValue === 'Azienda'){
+            if(!fiscalCode.reportValidity()){
+                isValidated=false;
+            }
+        }
 
         // if(this.birthPlace == undefined || this.birthPlace == ''){
         //     isValidated = false;
@@ -660,27 +691,23 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
         console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }
-            if( String(mobilePhone.value).charAt(0)!='3' ){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
+            if(mobilePhonePrefix.value == '+39'){
+                if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 10){
+                    isValidated=false;
+                    messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare per 3!";
+                }
             }
         }
         if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){
-            if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }            
-            if( String(mobilephoneNumber.value).charAt(0)!='3' ){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
-            }
+            if(prefixMobilePhoneNumber.value == '+39'){
+                if(mobilephoneNumber.value[0] != '3' || mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
+                    isValidated=false;
+                    messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare per 3!";
+                } 
+            }           
         }
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){
-            if(contactPhoneNumber[0] != '0' && (contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11)){
+            if(contactPhoneNumber.value[0] != '0' || contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
@@ -693,12 +720,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-        
-            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
-                isValidated=false;
-                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
-            }
-            if( String(phoneNumber.value).charAt(0)!='0'){
+            if(phoneNumber.value[0] != '0' || phoneNumber.value.length<6 || phoneNumber.value.length > 11){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }

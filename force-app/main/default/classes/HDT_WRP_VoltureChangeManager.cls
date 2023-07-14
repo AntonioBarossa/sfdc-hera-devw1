@@ -54,12 +54,26 @@ public with sharing class HDT_WRP_VoltureChangeManager {
         public String message;
         public SObject sobj;
 
+        public HDT_WRP_ProcessCheck(String result, String message)
+        {
+            this.result = result;
+            this.message = message;
+        }
+
         public HDT_WRP_ProcessCheck(String result, String message, SObject sobj)
         {
             this.result = result;
             this.message = message;
             this.sobj = sobj;
         }
+    }
+    public class HDT_WRP_TransferCheck
+    {
+        public string firstName;
+        public string lastName;
+        public string fiscalCode;
+        public string vatNumber;
+        public string companyName;
     }
 
     public class HDT_WRP_BodyCall

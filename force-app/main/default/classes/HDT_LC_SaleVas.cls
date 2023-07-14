@@ -209,8 +209,9 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
+                // @enricodursontt Aggiunta nella query la condizione IsMigrated__c = false per escludere gli asset migrati TK 953223C
                 Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name,Contract__r.SAPContractCode__c
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND IsMigrated__c = false AND AccountId=:searchString WITH SECURITY_ENFORCED]);
                 
                 //removing assets which already have a deactivation Case
                 List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
@@ -313,6 +314,37 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [SELECT Id, SAPContractCode__c,Status, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
 
             }
+            when 'CONTRACTS_SEGNAL_VAS'{ 
+                Set<Id> contractIds = new Set<Id>();
+                Set<Id> servicePointIds = new Set<Id>();
+                List<SObject> sobjList = new List<SObject>();
+                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.Status, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
+                 SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND SBQQ__Contract__r.Status IN ('Attivo','Cessato')]);
+                sobjList.addAll([SELECT Id, Contract__c, Contract__r.Status, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
+                Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM Asset WHERE AccountId = :searchString AND Contract__r.Status IN ('Attivo','Cessato')]);
+                for(SObject sobj : sobjList)
+                {
+                    String sobjName = sobj.getSObjectType().getDescribe().getName();
+                    String contractId = '';
+                    if(sobjName.equalsIgnoreCase('SBQQ__Subscription__c'))
+                    {
+                        contractId = (String)sobj.get('SBQQ__Contract__c');
+                    }
+                    if(sobjName.equalsIgnoreCase('Asset'))
+                    {
+                        contractId = (String)sobj.get('Contract__c');
+                    }
+                    if(!contractIds.contains(contractId))
+                    {
+                        contractIds.add(contractId);
+                    }
+                }
+                 
+                records = [SELECT Id, SAPContractCode__c,Status, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
+
+            }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString and SBQQ__Product__r.Family like 'VAS%'
@@ -356,7 +388,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     From SBQQ__Subscription__c 
                     WHERE  
                         SBQQ__Contract__r.Status = 'Attivo' AND SBQQ__Account__c=:searchString 
-                        AND ServicePoint__r.CommoditySector__c='Ambiente'
+                        AND SBQQ__Contract__r.ServicePoint__r.CommoditySector__c='Ambiente'
                     WITH SECURITY_ENFORCED
                     Group by SBQQ__Contract__c 
                     HAVING Count(Id)>1
@@ -471,6 +503,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
             CommercialId__c = sale.CommercialId__c,
+            //aggiunto per gestire la riconciliazione delle Subscriptions
+            IsFromVasSection__c = true,
             CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null 
 
         );
@@ -489,9 +523,6 @@ public inherited sharing class HDT_LC_SaleVas {
 
     @AuraEnabled
     public static String handleNotMigratedContract(String contract, Sale__c sale){
-        system.debug('contract --> '+contract);
-        system.debug('sale --> '+sale);
-        system.debug('PUNTO 1');
         sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
         //REQUEST
         String result = '';
@@ -499,7 +530,6 @@ public inherited sharing class HDT_LC_SaleVas {
         HDT_SRV_DataEnrichmentPostSales dataEnrichmentPostSales = new HDT_SRV_DataEnrichmentPostSales(); 
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioniList = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
 
-        system.debug('PUNTO 2');
         String resPosizioni = HDT_WS_ArricchimentoDatiTemp.submitRequest('',contract);
         String dataCessazioneString = '';
         String commodity = '';
@@ -507,37 +537,47 @@ public inherited sharing class HDT_LC_SaleVas {
         String venditore = '';
         String sellerCompany = '';
         Date dataCessazione = null;
-
-        system.debug('PUNTO 3');
-
+        Map<String,String> addressMap = new Map<String,String>{};
 
         if(resPosizioni != null && resPosizioni != ''){
 
-            system.debug('PUNTO 4');
 
             posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
             JSON.deserialize(resPosizioni, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
             // posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>) JSON.deserialize(resPosizioni, HDT_WS_ArricchimentoDatiTemp.class);
-            system.debug('PUNTO 5');
             for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione : posizioniList){
                 if(posizione.campo == 'DATACESSAZIONE'){
-                    system.debug('PUNTO 6');
                     dataCessazioneString = posizione.valore;
                 }
                 if(posizione.campo == 'DESCRCOMM'){
-                    system.debug('PUNTO 6.1');
                     commodity = posizione.valore;
                 }
                 if(posizione.campo == 'MERCATO'){
-                    system.debug('PUNTO 6.1');
                     mercato = posizione.valore;
                     mercato = mercato.substring(0, 1).toUpperCase() + mercato.substring(1).toLowerCase();
-                    system.debug('mercato --> '+mercato);
-
                 }
                 if(posizione.campo == 'VENDITORE'){
-                    system.debug('PUNTO 6.1');
                     venditore = posizione.valore;
+                }
+                if(posizione.campo == 'CAP')
+                {
+                    addressMap.put('SupplyPostalCode__c',posizione.valore);
+                }
+                if(posizione.campo == 'LOCALITA')
+                {
+                    addressMap.put('SupplyCity__c',posizione.valore);
+                }
+                if(posizione.campo == 'VIA')
+                {
+                    addressMap.put('SupplyStreetName__c',posizione.valore);
+                }
+                if(posizione.campo == 'CIVICO')
+                {
+                    addressMap.put('SupplyStreetNumber__c',posizione.valore);
+                }
+                if(posizione.campo == 'REGIONE')
+                {
+                    addressMap.put('SupplyState__c',posizione.valore);
                 }
             }
 
@@ -600,11 +640,17 @@ public inherited sharing class HDT_LC_SaleVas {
                 IsVAS__c = true,
                 IsBillableVas__c = false,
                 IsTransition__c = true,
-                SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                SBQQ__PricebookId__c = commodity.equalsIgnoreCase('Energia Elettrica') ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                /**@frpanico 2022-12-15 Aggiunto in quanto la mancanza sulla commodity manda in errore Postel
+                 * Energia Elettrica dal servizio viene ritornato come "Energia elettrica"
+                 * Ed essendo Commodity__c sull'order un campo picklist andrebbe in errore
+                 */
+                VasCommodity__c = commodity.equalsIgnoreCase('Energia Elettrica') ? 'Energia Elettrica' : commodity,
                 AgencyCode__c = sale.AgencyCode__c,
                 CommercialId__c = sale.CommercialId__c,
                 SapContractCode__c = contract,
-                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
+                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null,
+                VasSupplyAddress__c = !addressMap.isEmpty() ? JSON.serialize(addressMap) : null
                 );
                 // if(order.ContractReference__c != null)
                 // {
@@ -681,6 +727,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
             CommercialId__c = sale.CommercialId__c,
+            //aggiunto per gestire la riconciliazione delle Subscriptions
+            IsFromVasSection__c = true,
             CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 

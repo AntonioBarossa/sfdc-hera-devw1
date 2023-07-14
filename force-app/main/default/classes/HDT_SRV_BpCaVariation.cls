@@ -77,7 +77,7 @@ public with sharing class HDT_SRV_BpCaVariation {
                 }
             }
         }
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA3';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
@@ -151,7 +151,7 @@ public with sharing class HDT_SRV_BpCaVariation {
                 }
             }
         }
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA3';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
@@ -164,7 +164,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('InvoicingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
-        requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
+        //requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
+        requestBody.ordine.indirizzo.presso = caseRecord.get('CareOf__c') == null ? '' : (String) caseRecord.get('CareOf__c');
         requestBody.ordine.emailInvioBolletta = (String) caseRecord.get('InvoiceEmail__c');
         requestBody.ordine.pecInvioBolletta = (String) caseRecord.get('InvoiceCertifiedEmailAddress__c');
         requestBody.ordine.modInvioBolletta = (String) caseRecord.get('BillSendingMethod__c');
@@ -194,7 +195,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         Case caseRecord = (Case) sobjectRecordList[0];
         Account acc = (Account) caseRecord.Account;	
         HDT_WRP_BpCaVariationVatGroup requestBody = new HDT_WRP_BpCaVariationVatGroup();
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MAG';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
@@ -217,7 +218,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,FirstName__c,LastName__c,FiscalCode__c,VatNumber__c,CustomerMarking__c';
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,FirstName__c,LastName__c,FiscalCode__c,VatNumber__c,CustomerMarking__c,PhoneNumber__c,Mobile__c,Fax__c,Email__c';
         fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
@@ -225,7 +226,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         Case caseRecord = (Case) sobjectRecordList[0];
         Account acc = (Account) caseRecord.Account;
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA2';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
@@ -240,9 +241,14 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.account.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.account.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.account.indirizzo.piano = '';
+        requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
+        requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
+        requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';
+        requestBody.account.emailCont = (String) caseRecord.get('Email__c') != null ? (String) caseRecord.get('Email__c') : '';
         System.debug(LoggingLevel.DEBUG, 'requestBody indirizzo ' + requestBody.account.indirizzo);
 
         inputParams.requestBody = JSON.serialize(requestBody);
@@ -256,19 +262,20 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
+        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
         Case caseRecord = (Case) sobjectRecordList[0];
         Account acc = (Account) caseRecord.Account;
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MAI';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         // SAP usa la marcatura cliente solo per fare dei controlli di coerenza per la MAI, ma non la modifica.
-        requestBody.account.marcaturaCliente = (String) acc.get('CustomerMarking__c');
+        // Up 2023-01-18 Sembra invece che SAP usi la marcatura per eseguire la modifica quindi e' opportuno utilizzare la marcatura inserita sul Case
+        requestBody.account.marcaturaCliente = (String) caseRecord.get('CustomerMarking__c');
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
         requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
         requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';
@@ -294,7 +301,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         Contact c = (Contact) caseRecord.Contact;
 
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'CAM';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
@@ -321,7 +328,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         Contact c = (Contact) caseRecord.Contact;
 
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
-        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.numeroSR = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MAA';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.alias = (String) c.get('LastName'); // Non dovrebbe mai essere vuoto.
@@ -334,7 +341,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.civico = (String) caseRecord.Account.BillingStreetNumber__c;
         requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.Account.BillingStreetNumberExtension__c != null? (String) caseRecord.Account.BillingStreetNumberExtension__c:'';
         requestBody.account.indirizzo.cap = (String) caseRecord.Account.BillingPostalCode;
-        requestBody.account.indirizzo.provincia = (String) caseRecord.Account.BillingState;
+       // requestBody.account.indirizzo.provincia = (String) caseRecord.Account.BillingState;
+        requestBody.account.indirizzo.provincia = caseRecord.Account.BillingState.substring(0,2).toUpperCase();
         requestBody.account.indirizzo.via = (String) caseRecord.Account.BillingStreetName__c;
         requestBody.account.indirizzo.piano = '';
 
@@ -348,7 +356,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.destinatarioDivergente.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.ordine.destinatarioDivergente.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.ordine.destinatarioDivergente.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.ordine.destinatarioDivergente.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.ordine.destinatarioDivergente.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.ordine.destinatarioDivergente.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.ordine.destinatarioDivergente.indirizzo.piano = '';
         // L'indirizzo dell'amministratore deve andare nel nodo ordine, come da specifica del webservice as-is.
@@ -357,7 +366,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.ordine.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
 

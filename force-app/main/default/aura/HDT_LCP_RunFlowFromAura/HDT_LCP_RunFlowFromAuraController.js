@@ -1,7 +1,6 @@
 ({
 
     doInit : function(component, event, helper) {
-
         var myPageRef = component.get("v.pageReference");
         var caseId = myPageRef.state.c__recordid;
         var flowName = myPageRef.state.c__flowName;
@@ -66,6 +65,11 @@
         console.log('# isUserActivity -> '                 + isUserActivity);
         //Fine Gestione Owner Activity
 
+        //start gestione sollecito
+        var sObject=myPageRef.state.c__sObjectApi;
+        //end
+        
+
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
         component.set("v.recordid", caseId)
@@ -91,7 +95,7 @@
         console.log('# documentPaymentMethod -> '             + documentPaymentMethod);
         console.log('# documentSendTracking -> '    +documentSendTracking);
         console.log('# ----------------- #');
-        
+
         var workspaceAPI = component.find("workspace");
         var flow = component.find("flowData");
         var subTabToClose;
@@ -191,6 +195,11 @@
                 inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
+            if(processType==$A.get("$Label.c.CaseTypeAmbientali") || processType==$A.get("$Label.c.CaseTypeScontoZona") || processType==$A.get("$Label.c.CaseTypeRifiuti")){
+                inputVariables.push({ name : 'SObjectName', type : 'String', value : sObject });
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
+            }
+
             component.set('v.enableRefresh', true);
         }
         if(recordToCancell != null)
@@ -249,8 +258,19 @@
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
-
-        flow.startFlow(flowName, inputVariables);
+        var firstRun = myPageRef.state.c__firstRun;
+        if(!firstRun){
+            var newState = Object.assign({}, myPageRef.state, {c__firstRun:'true'});
+            component.find("navService").navigate({
+                type: myPageRef.type,
+                attributes: myPageRef.attributes,
+                state: newState
+            });
+            flow.startFlow(flowName, inputVariables);
+        }else{
+            helper.finishFlow(component, null);
+        }
+        
     },
     
     handleStatusChange : function (component, event, helper) {

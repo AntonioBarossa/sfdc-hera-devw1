@@ -7,7 +7,7 @@ RID</description>
     <externalId>false</externalId>
     <label>Modalità pagamento</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -20,14 +20,26 @@ RID</description>
                 <label>Bollettino postale</label>
             </value>
             <value>
-                <fullName>Bonifico bancario</fullName>
+                <fullName>Bonifico</fullName>
                 <default>false</default>
-                <label>Bonifico bancario</label>
+                <label>Bonifico</label>
             </value>
             <value>
                 <fullName>RID</fullName>
                 <default>false</default>
                 <label>RID</label>
+            </value>
+            <value>
+                <fullName>F24</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>F24</label>
+            </value>
+            <value>
+                <fullName>PAGOPA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PAGOPA</label>
             </value>
         </valueSetDefinition>
     </valueSet>

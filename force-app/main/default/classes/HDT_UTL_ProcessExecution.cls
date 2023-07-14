@@ -17,18 +17,37 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
+    public Boolean isTest = false;
+    public Boolean isDiscountAndBonusProcess = false;
+    public Boolean isMucProcess = false;
+    //public Id fileUploadedByUserId;
+    public MassiveLoaderRequest__c currentRequest;
 
     public void setRequestId(Id requestId){
         this.requestId = requestId;
+        currentRequest = [
+            SELECT Id, CreatedById, CreatedBy.CreatorGroup__c, CreatedBy.LoginChannel__c
+            FROM MassiveLoaderRequest__c
+            WHERE Id = :requestId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
         System.debug(LoggingLevel.DEBUG, '>>> set this requestId: ' + this.requestId);
     }
 
     public void setProcess(String processName){
         this.processName = processName;
+        isDiscountAndBonusProcess = (processName.equalsIgnoreCase('TariffeSconti'));
+        isMucProcess = (processName.equalsIgnoreCase('MUC'));
         System.debug(LoggingLevel.DEBUG, '>>> set this process: ' + this.processName);
     }
 
     public void setMassiveLoaderRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
+
+        if(Test.isRunningTest()){
+            isTest = true;
+        }
 
         this.requestItemList = requestItemList;
 
@@ -167,55 +186,19 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     public static MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
         itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
+        itemError.StatusDescription__c = message.abbreviate(250);
         return itemError;
     }
 
+    public static HDT_WRP_SaveResponse databaseUpsertWithKey(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType, String fieldUpsert){
+        return databaseUpsertMethod(sObjectList, requetItems, sObjectType, fieldUpsert);
+    }
+    
     public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
-        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
-        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
-        saveResponse.savedObject = new List<sObject>();
-        saveResponse.itemIdToObjId = new Map<Id, Id>();
-        saveResponse.errorItemMap = new Map<Id, String>();
-
-        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
- 
-        if(objRes.isCreateable()){
-
-            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
-
-            for(Integer n=0; n<upsertResults.size(); n++){
-                Database.UpsertResult sr = upsertResults[n];
-
-                if(sr.isSuccess()) {
-                    requetItems[n].Status__c = 'Chiuso';
-                    saveResponse.reponseItemList.add(requetItems[n]);
-                    saveResponse.savedObject.add(sObjectList[n]);
-                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
-
-                } else {
-                    requetItems[n].Status__c = 'Errore';
-
-                    String errorMessage = '';
-                    for(Database.Error err : sr.getErrors()) {
-                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
-                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
-                    }
-
-                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
-                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
-                    saveResponse.reponseItemList.add(requetItems[n]);
-                    
-                }
-            }
-        }
-
-        return saveResponse;
-
+        return databaseUpsertMethod(sObjectList, requetItems, sObjectType, null);
     }
 
-    public static HDT_WRP_SaveResponse databaseUpsertWithKey(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType,String fieldUpsert){
+    public static HDT_WRP_SaveResponse databaseUpsertMethod(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType, String fieldUpsert){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
@@ -226,11 +209,11 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         Schema.SObjectField ftoken;
         List<Database.UpsertResult> upsertResults;
+
         if(objRes.isCreateable()){
             if(String.isNotBlank(fieldUpsert)){
                 ftoken = objtype.getDescribe().fields.getMap().get(fieldUpsert);
-                //ftoken = objRes.Fields.get(fieldUpsert);
-                upsertResults = Database.upsert(sObjectList, ftoken,false);
+                upsertResults = Database.upsert(sObjectList, ftoken, false);
             }else{
                 upsertResults = Database.upsert(sObjectList, false);
             }
@@ -357,11 +340,15 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     }
 
-    public static Case setCaseField(Case newCase, Id recordTypeId){
-        newCase.RecordTypeId = recordTypeId;
+    public Case setCaseField(Case newCase, Id recordTypeId){
+        if(recordTypeId != null){
+            newCase.RecordTypeId = recordTypeId;
+        }
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
-        newCase.CompanyOwner__c = 'HERA COMM';
+        //Rimosso per W2 
+        //newCase.CompanyOwner__c = 'HERA COMM';
+        newCase.CreatedById = currentRequest.CreatedById;
         return newCase;
     }
 

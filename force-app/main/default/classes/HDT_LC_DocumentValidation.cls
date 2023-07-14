@@ -69,7 +69,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
         if(check){
 
             Order orderRetrive = orderQr.getRecordById(ord.Id);
-            if (!'Credit Check KO'.equalsIgnoreCase(orderRetrive.Phase__c) && !'Attesa Credit Check'.equalsIgnoreCase(orderRetrive.Phase__c)){
+            if ('In Attesa validazione'.equalsIgnoreCase(orderRetrive.Phase__c)){
                 ord.Phase__c = 'Documentazione Validata';
             }
 
@@ -99,10 +99,10 @@ public inherited sharing class HDT_LC_DocumentValidation {
     }
 
     @AuraEnabled
-    public static string getOrderAccountId(Id orderRecordId){
+    public static Order getOrderAccountId(Id orderRecordId){
         
-        Order o = [SELECT Id, AccountId FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
-        return o.AccountId;
+        Order o = [SELECT Id, AccountId,SalesCompany__c FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
+        return o;
     }
 
     @AuraEnabled

@@ -13,6 +13,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
+    private final Map<String,String> APPOINTMENT_METHOD = new Map<String,String>{
+        'Consegna copia chiave GdM' => 'ConsegnaCopiaChiaveGdM',
+        'Sost. contatore cliente' => 'Sost.Contatorec/cliente',
+        'Verifica GDM' => 'VerificaGdM',
+        'Verifica Tensione - Pressione' => 'VerificaPressione'
+    };
+
     public void changeCaseValue(Sobject inputCase){
 
         Case currentCase = (Case) inputCase;
@@ -103,6 +110,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 activity.Case__c = parentCase.Id;
                 activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
+            } else if (parentCase.Type.equalsIgnoreCase('Consumo Anomalo Idrico') && currentCase.Type.equalsIgnoreCase('Verifica Fuga Idrica') && (currentCase.Commodity__c.equalsIgnoreCase('Acqua') || currentCase.CommodityFormula__c.equalsIgnoreCase('Acqua'))) {
+                List<wrts_prcgvr__Activity__c> actElabManualeList = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED];
+                wrts_prcgvr__Activity__c actElabManuale = new wrts_prcgvr__Activity__c();
+                if(actElabManualeList != null && !actElabManualeList.isEmpty()){
+                    actElabManuale = actElabManualeList[0];
+                    if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'KO Definitivo';
+                        parentCase.Status = 'Closed';
+                    }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'Documentazione validata';
+                        parentCase.Status = 'In Lavorazione';
+                    }
+                }
+            } else if ('Ricostruzione Consumi'.equalsIgnoreCase(parentCase.Type) && !'Completata'.equalsIgnoreCase(parentCase.Phase__c) && 'Acqua'.equalsIgnoreCase(parentCase.Commodity__c) &&'Completata'.equalsIgnoreCase(currentCase.Phase__c)){
+                parentCase.Phase__c = 'Completata';
+                parentCase.Status = 'Closed';
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -123,10 +146,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         List<SObject> objToUpdate = new List<SObject>();
 
         List<String> phasesOrder = new List<String>{'Bozza','Da Inviare','In Lavorazione'};
-        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesOrder);
+        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesOrder);
 
         List<String> phasesCase = new List<String>{'Bozza','Da Inviare'};
-        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesCase);
+        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesCase);
 
         System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {
@@ -141,7 +164,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
-                acc.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                /* Gestione indirizzo Estero */
+                Boolean isAddressVerified = (currentCase.BillingCountry__c != null && currentCase.BillingCountry__c.equalsIgnoreCase('Italia')) ? currentCase.BillingIsAddressVerified__c : true;
+                acc.BillingIsAddressVerified__c = isAddressVerified;
                 acc.BillingPlace__c = currentCase.BillingPlace__c;
                 acc.BillingPostalCode = currentCase.BillingPostalCode__c;
                 acc.BillingState = currentCase.BillingProvince__c;
@@ -230,13 +255,20 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
                 for ( Case cs : caseToUpdate )
                 {
-                    if( c.Id != currentCase.Id ){
-                        cs.Email__c = currentCase.Email__c;
-                        cs.PhoneNumber__c = currentCase.PhoneNumber__c;
-                        cs.Mobile__c = currentCase.Mobile__c;
-                        cs.CertifiedEmail__c = currentCase.CertifiedEmail__c;
-                        cs.Fax__c = currentCase.Fax__c;
-                        cs.CustomerMarking__c = currentCase.CustomerMarking__c;
+                    if( cs.Id != currentCase.Id ){
+                        // cs.Email__c = currentCase.Email__c;
+                        // cs.PhoneNumber__c = currentCase.PhoneNumber__c;
+                        // cs.Mobile__c = currentCase.Mobile__c;
+                        // cs.CertifiedEmail__c = currentCase.CertifiedEmail__c;
+                        // cs.Fax__c = currentCase.Fax__c;
+                        // cs.CustomerMarking__c = currentCase.CustomerMarking__c;
+                        cs.Email__c = !String.isBlank(currentCase.Email__c) ? currentCase.Email__c : cs.Email__c;
+                        cs.SuppliedEmail = !String.isBlank(currentCase.SuppliedEmail) ? currentCase.SuppliedEmail : cs.SuppliedEmail;
+                        cs.PhoneNumber__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : !String.isBlank(currentCase.PhoneNumber__c) ? currentCase.PhoneNumber__c : cs.PhoneNumber__c;
+                        cs.Mobile__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : cs.Mobile__c;
+                        cs.CertifiedEmail__c = !String.isBlank(currentCase.CertifiedEmail__c) ? currentCase.CertifiedEmail__c : cs.CertifiedEmail__c;
+                        cs.Fax__c = !String.isBlank(currentCase.Fax__c) ? currentCase.Fax__c : cs.Fax__c;
+                        cs.CustomerMarking__c = !String.isBlank(currentCase.CustomerMarking__c) ? currentCase.CustomerMarking__c : cs.CustomerMarking__c;
                         objToUpdate.add(cs);
                     }
                 }
@@ -338,7 +370,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         // Per tutti i sottoprocessi, tranne la Variaz. Gruppo IVA, inneschiamo il processo di Allineamento Anagrafica.
-        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA')) {
+        /* 2022-11-28 @frpanico TK 930699C Dato che la modifica dati di recapito varia solo dati di fatturazione non e' necessario trasmettere le variazioni al SII */
+        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA') && !currentCase.SubProcess__c.equalsIgnoreCase('Modifica Dati di Recapito')) {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         }
@@ -460,6 +493,14 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void recalculateVoltureEffectiveDate(SObject inputSobj)
+    {
+        if(inputSobj.get('EffectiveDate__c') != null && System.today() > (Date)inputSobj.get('EffectiveDate__c'))
+        {
+            inputSobj.put('EffectiveDate__c', HDT_UTL_Case.addBusinessDay(System.today(), 3));
+        }
+    }
+
     public void sbloccoVoltura(SObject inputCase){
 
         Case currentCase = (Case) inputCase;
@@ -522,6 +563,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         HDT_UTL_DatabaseService.updateSObject(servPoint);
     }
 
+    public static wrts_prcgvr__Activity__c createActivityExternal(String templateName){
+        return createActivity(templateName);
+    }
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
@@ -534,7 +578,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     }
 
     public void sendDocumentFile(SObject inputRecord){
+
+
         Id recordId = (Id)inputRecord.get('Id');
+        
+
+        if('Verifiche'.equalsIgnoreCase((String)inputRecord.get('Cluster__c')) && 
+            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type')) && 
+            'Ammissibiltà OK'.equalsIgnoreCase((String)inputRecord.get('Phase__c'))  ){
+
+            Map<String, Object> inputMap = new Map<String,Object>();
+            HDT_UTL_GestAppAutomaticCreationCase gestAppAutomaticCreationCase = new HDT_UTL_GestAppAutomaticCreationCase();
+        
+            inputMap.put('method', APPOINTMENT_METHOD.get((String)inputRecord.get('Type')));
+            inputMap.put('sender', new Case(Id = (Id)inputRecord.get('Id')));
+            gestAppAutomaticCreationCase.execute(inputMap);
+         }
+
         if(recordId.getSobjectType().getDescribe().getName() == 'Order')
         {
             recordId = (Id)inputRecord.get('ParentOrder__c');
@@ -627,15 +687,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void handleSelfReadings(SObject inputCase)
     {
-        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL'};
-        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata'};
+        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL','Validazione KO da Gestore', 'Esito KO da DBO'};
+        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata','Validazione OK da Gestore', 'Esito OK da DBO'};
         Case currentCase = (Case) inputCase;
         
         try {
             if(currentCase.ParentId != null){
                 Case parentCase = [SELECT Id, Type, Subprocess__c FROM Case where Id =: currentCase.ParentId WITH SECURITY_ENFORCED LIMIT 1];
                 if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiKo.contains(currentCase.Phase__c)){
-                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
                 }else if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiOk.contains(currentCase.Phase__c)){
                     parentCase.Phase__c = 'Da Inviare';
                     update parentCase;
@@ -644,6 +704,114 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
         }
+    }
+
+    //metodo che aggiorna le unità abitative su SP al completamento del case di Modifica unità immobiliari - Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleUpdateUnitServicePoint(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+            try {
+                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c, CommercialHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                if(sp != null && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+                    sp.NotDomesticHousingUnit__c = currentCase.Unita_Abitative__c;
+                    sp.NotResidentDomesticHousingUnit__c = currentCase.NotResidentDomesticHousingUnit__c;
+                    sp.ResidentDomesticHousingUnit__c = currentCase.ResidentDomesticHousingUnit__c;
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    sp.CommercialHousingUnit__c = currentCase.CommercialHousingUnit__c;
+                    update sp;
+                }else if (sp != null && 'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    update sp;
+                }
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+            }
+            
+        }
+    }
+
+    //metodo che gestisce la creazione di una activity per una determinata casistica del processo di Modifica Unità Immobiliari Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation, PMD.CyclomaticComplexity')
+    public void handleCreazioneActivityVariazioni(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+        try {
+            if('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) &&('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+                if(!'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){ //in caso di Promiscuo faccio il check di variazione totale unità abitative
+                    ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                    if(sp != null){
+                        Integer spUnitDomRes = (sp.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.ResidentDomesticHousingUnit__c) : 0;
+                        Integer spUnitDomNonRes = (sp.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.NotResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomRes = (currentCase.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.ResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomNonRes = (currentCase.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.NotResidentDomesticHousingUnit__c) : 0;
+        
+                        Integer totaleUnitServicePoint = spUnitDomRes + spUnitDomNonRes;
+                        Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
+                        if(totaleUnitServicePoint != totaleUnitCase){
+                            HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
+                        }else{ //se non viene variato il totale delle unità abitative, alla ricezione dell'Esito OK da DBO imposto fase Completata
+                            currentCase.Phase__c = 'Completata';
+                            currentCase.Status = 'Closed';
+                            updateFuture(JSON.serialize(currentCase));
+                        }
+                    }
+                }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c)){
+                //BBP W2 4.0 pg. 601 - Creazione Activity Gestione Rimborso in caso di Esito Positivo e Data Retroattiva valorizzata
+                if(currentCase.RetroactiveDate__c != null) {
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                }else{
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+    }
+
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleChiusuraActivitiesPending(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+        Set<String> processTypeSet = new Set<String>{'Ricostruzione Consumi', 'Comunicazione con il Gestore'};
+
+        try {
+            if (processTypeSet.contains(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }else if ('Consumo Anomalo Idrico'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa' AND Type__c = 'Gestione Back Office'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        if ('Documentazione incompleta'.equalsIgnoreCase(currentCase.Phase__c)) {
+                            act.Reason__c = 'Documentazione Incompleta';
+                        }
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+        
     }
 
     @Future

@@ -1,11 +1,18 @@
 <template>
     <lightning-card title={title}>
-
-        <template if:true={rows}>
-            <lightning-datatable key-field="Id" columns={cols} data={rows}></lightning-datatable>
+        <template if:true={showSpinner}>
+            <div class="slds-is-relative">
+                <lightning-spinner alternative-text="Caricamento in corso" size="large"></lightning-spinner>
+            </div>
         </template>
-        <template if:false={rows}>
-            <div class="slds-text-heading_small slds-align_absolute-center">Nessun dato trovato.</div>
+
+        <template if:false={showSpinner}>
+            <template if:true={rows}>
+                <lightning-datatable key-field="Id" columns={cols} data={rows}></lightning-datatable>
+            </template>
+            <template if:false={rows}>
+                <div class="slds-text-heading_small slds-align_absolute-center">Nessun dato trovato.</div>
+            </template>
         </template>
         
         <div slot="footer" style="display: none;"></div>

@@ -20,16 +20,27 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     @track ActType='';
     @track isValidazioneDocumentale=false;
     @track error;
+
+    disableButton = false;
+
+    get approveLabel(){
+        return this.ActType === 'Validazione Documentale'||this.ActType === 'Documenti non validati' ? 'Documenti Validati' : 'Vocal Order Validati';
+    }
+
+    get rejectLabel(){ 
+        return this.ActType === 'Validazione Documentale'||this.ActType === 'Documenti non validati' ? 'Documenti non Validati' : 'Vocal Order Non Validati';
+    }
+
     @wire(getRecord, { recordId: '$recordId', fields: ['wrts_prcgvr__Activity__c.Type__c'] })
     wiredAccount({ error, data }) {
         if (data) {
             this.ActType = data.fields.Type__c.value;
-            this.isValidazioneDocumentale = (this.ActType === 'Validazione Documentale'||this.ActType === 'Documenti non validati')? true:false;//false = Vocal Order
         }
     }
 
     approve(){
         console.log('APPROVE');
+        this.disableButton = true;
         valida({
             recordid : this.recordId,
             validazione : 'Si'
@@ -43,6 +54,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                     variant: 'error',
                 });
                 this.dispatchEvent(event);
+                this.disableButton = false;
             }
             if(result == ''){
                 console.log('User');
@@ -97,6 +109,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
         console.log('REJECTACT');
         console.log('@@@Note: '+this.note);
         this.showModalSpinner=true;
+        this.disableButton = true;
         rejectActivity({
             recordId : this.recordId,
             noteChiusura : this.note
@@ -109,32 +122,32 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                 });
                 this.dispatchEvent(event);
                 this.showModal=false;
-                this.showModalSpinner=false;
-
+                this.disableButton = false;
             }
             else{
                 if(result == 'Creata'){
                     const event = new ShowToastEvent({
                         title: 'Successo',
-                        message: 'Attività Non Validata, è stata generata l\'attivita di Documento non Validato',
+                        message: 'Attività Non Validata',
                         variant: 'success',
                     });
                     this.dispatchEvent(event);
                     this.showModal=false;
                 }
                 updateRecord({ fields: { Id: this.recordId } });
-                this.showModalSpinner=false;
             }
+            this.showModalSpinner=false;
         }).catch(error =>{
             const event = new ShowToastEvent({
                 title: 'Errore',
-                message: 'Attività Non Validata: Non è stato possibile creare l\'attivita di Documento non Validato',
+                message: 'Non è stato possibile gestire l\'Attivita',
                 variant: 'error',
             });
             this.dispatchEvent(event);
             this.showModal=false;
             console.log(error);
             this.showModalSpinner=false;
+            this.disableButton = false;
         });
     }
 

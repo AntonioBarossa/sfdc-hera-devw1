@@ -1,5 +1,8 @@
-import { LightningElement, api, track} from 'lwc';
+import { LightningElement, api, track, wire} from 'lwc';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
+
 
 const CLOSED_CSS = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
 const OPENED_CSS = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open';
@@ -14,11 +17,36 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     @api inputSupplyCity;
     @api required;
     @api outputSupplyCity;
+    @api interviewId;
+
+    @wire(MessageContext)
+	messageContext;
 
     @api validate (){
-        let isValid = this.required ? this.outputSupplyCity != null : true;
-        let msg = isValid? null : 'Selezionare un comune';
-        return { isValid : isValid, errorMessage: msg };
+        console.log("event catched   "+this.eventButton);
+        if('cancel' != this.eventButton && 'previous' != this.eventButton){
+            let isValid = this.required ? this.outputSupplyCity != null : true;
+            let msg = isValid? null : 'Selezionare un comune';
+            return { isValid : isValid, errorMessage: msg };
+        }
+        return { isValid : true, errorMessage: null };
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {if(this.interviewId==mc.sessionid) this.eventButton = mc.message},
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
     @track textInputValue = null;
@@ -45,8 +73,13 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
 
     connectedCallback(){
+        this.subscribeMC();
         this.outputSupplyCity = this.inputSupplyCity;
         this.call_getCities();
+    }
+
+    disconnectedCallback(){
+        this.unsubscribeToMessageChannel();
     }
 
     call_getCities() {

@@ -25,11 +25,15 @@ public with sharing class HDT_UTL_ActiveServicesKpi {
                 updateServicesCount(account, service, (-1));
             }
         }
-
-        update accountMap.values();
+        try {
+            update accountMap.values();
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Error: ' + e.getMessage());
+        }
+        
     }
 
-    private static void updateServicesCount(Account account, String service, Integer delta) {
+    public static void updateServicesCount(Account account, String service, Integer delta) {
         switch on service {
             when 'Energia Elettrica' {
                 if (account.ActiveServicesEle__c == null) {

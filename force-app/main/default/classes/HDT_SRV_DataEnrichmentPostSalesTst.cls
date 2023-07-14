@@ -292,8 +292,8 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
     @isTest
     static void testHandleSubTyp() {
         Test.startTest();
-        String checkHandleSub = HDT_SRV_DataEnrichmentPostSales.handleSubType('Hera S.p.A.','');
-		System.assertEquals('Uso domestico non residente', checkHandleSub , 'testHandleSubTyp FALLITO');
+        AmministrazioneSottotipologiaUso__c checkHandleSub = HDT_SRV_DataEnrichmentPostSales.handleSubType('Hera S.p.A.','');
+		System.assertEquals('Uso domestico non residente', checkHandleSub.SottotipologiaUso__c , 'testHandleSubTyp FALLITO');
 		Test.stopTest();
     }
    

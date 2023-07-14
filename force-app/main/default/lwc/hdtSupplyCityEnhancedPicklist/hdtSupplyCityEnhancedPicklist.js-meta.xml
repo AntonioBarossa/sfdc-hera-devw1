@@ -19,6 +19,7 @@
             <property name="inputSupplyCity" type="String" label="Pre-Selected City" description="Pre-Selected City" role="inputOnly"/>
             <property name="required" type="Boolean" label="Required" description="If the fields has to be required" role="inputOnly"/>
             <property name="outputSupplyCity" type="String" label="Output City" description="Selected city" role="outputOnly"/>
+            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

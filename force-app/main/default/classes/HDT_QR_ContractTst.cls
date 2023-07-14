@@ -31,6 +31,7 @@ public with sharing class HDT_QR_ContractTst {
 
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].SAPContractCode__c = 'SAPCode';
+            spList[0].CommoditySector__c = 'Gas';
             insert spList;
             
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
@@ -43,6 +44,8 @@ public with sharing class HDT_QR_ContractTst {
             contractList[0].ServicePoint__c = spList[0].Id;
             contractList[0].Status = 'Attivo';
             contractList[0].SBQQ__Order__c = orderList[0].Id;
+            contractList[0].StartDate = System.today();
+            contractList[0].EndDate = system.today().addDays(1);
             insert contractList;
         }
     }
@@ -87,15 +90,15 @@ public with sharing class HDT_QR_ContractTst {
         System.runAs(u){
  
             Test.startTest();
-            ServicePoint__c sp = [SELECT ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c='testServicePointCode'];
+            ServicePoint__c sp = [SELECT Id,ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c='testServicePointCode'];
             
             Contract ct = [SELECT Id, Status FROM Contract WHERE Status = 'Attivo'];
-            ct.Status = 'Activated';
+            ct.Status = 'Attivo';
             ct.ServicePoint__c = sp.Id;
             update ct;
 
-            Contract ctFalse = contractQr.getSapContractCode(sp.ServicePointCode__c, false);
-            Contract ctTrue = contractQr.getSapContractCode(sp.ServicePointCode__c, true);
+            Contract ctFalse = contractQr.getSapContractCode(sp.Id, false);
+            Contract ctTrue = contractQr.getSapContractCode(sp.Id, true);
 
             Test.stopTest();
 
@@ -115,10 +118,10 @@ public with sharing class HDT_QR_ContractTst {
             Test.startTest();
             
             Contract ct = [SELECT Id, Status FROM Contract WHERE Status = 'Attivo'];
-            ct.Status = 'Activated';
+            ct.Status = 'Attivo';
             update ct;
 
-            String st = [SELECT ServicePointCode__c FROM ServicePoint__c WHERE Name='testServicePoint0'].ServicePointCode__c;
+            String st = [SELECT Id FROM ServicePoint__c WHERE Name='testServicePoint0'].Id;
             List<String> stringList = new List<String>{st};
             
             List<Contract> ctList = contractQr.getSapContractCode(stringList);

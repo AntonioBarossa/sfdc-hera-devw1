@@ -294,7 +294,8 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             this.addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
             const fields = {};
             fields[ID_FIELD.fieldApiName] = this.recordId;
-            var estensioneCivico = ((this.addressWrapper['Estens.Civico'])? this.addressWrapper['Estens.Civico']:'');
+            console.log("@@@ Address Wrapper --> " + JSON.stringify(this.addressWrapper));
+            let estensioneCivico = ((this.addressWrapper['Estens.Civico'])? this.addressWrapper['Estens.Civico']:'');
             this.address = this.addressWrapper.Via + ' ' + this.addressWrapper.Civico + ' ' + estensioneCivico + ', ' + this.addressWrapper.Comune + ' ' + this.addressWrapper.Provincia + ', ' + this.addressWrapper.CAP + ' ' +this.addressWrapper.Stato;
             if(this.addressType.localeCompare('ServicePoint') == 0){
                 fields[SupplyPostalCode.fieldApiName] = this.addressWrapper.CAP;
@@ -302,7 +303,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[SupplyCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[SupplyStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[SupplyCity.fieldApiName] = this.addressWrapper.Comune;
-                fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'];
+                fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'] ? this.addressWrapper['Estens.Civico'] : '';
                 fields[SupplyIsAddressVerified.fieldApiName] = this.addressWrapper['Flag Verificato'];
                 //fields[SupplyPlace.fieldApiName] = this.addressWrapper.
                 fields[SupplyProvince.fieldApiName] = this.addressWrapper.Provincia;
@@ -316,7 +317,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[InvoicingCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[InvoicingStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[InvoicingCity.fieldApiName] = this.addressWrapper.Comune;
-                fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'];
+                fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'] ? this.addressWrapper['Estens.Civico'] : '';
                 fields[IsInvoicingVerified.fieldApiName] = this.addressWrapper['Flag Verificato'];
                 //fields[InvoicingPlace.fieldApiName] = this.addressWrapper.
                 fields[InvoicingProvince.fieldApiName] = this.addressWrapper.Provincia;

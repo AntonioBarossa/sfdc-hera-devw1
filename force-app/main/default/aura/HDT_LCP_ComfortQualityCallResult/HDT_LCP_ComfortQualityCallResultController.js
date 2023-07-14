@@ -20,7 +20,28 @@
                     var dismissActionPanel = $A.get("e.force:closeQuickAction");
                 	dismissActionPanel.fire();
                 }
-                
+                else{
+                    //Controllo permesso di esitazione C/Q Call
+                    var permAction = component.get("c.checkPermission");
+                    permAction.setCallback(this,function(permResp){
+                        var permState = permResp.getState();
+                        if (permState === "SUCCESS") {
+                            var permRes = permResp.getReturnValue();
+                            if(!permRes){
+                                var permErrorToast = $A.get("e.force:showToast");
+                                permErrorToast.setParams({
+                                    "title": "Error",
+                                    "message": "Non si dispone dei permessi necessari all'Esitazione della Comfort / Quality Call.",
+                                    "type" : "error"
+                                });
+                                permErrorToast.fire();
+                                var closePanel = $A.get("e.force:closeQuickAction");
+                                closePanel.fire();
+                            }
+                        }
+                    });
+                    $A.enqueueAction(permAction);
+                }                
                 // Close the action panel
             }
             component.set("v.HideSpinner",false);

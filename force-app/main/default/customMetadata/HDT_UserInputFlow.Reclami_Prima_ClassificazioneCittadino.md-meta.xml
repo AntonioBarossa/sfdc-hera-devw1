@@ -3,8 +3,22 @@
     <label>Reclami - Prima ClassificazioneCittadino</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
+{
+&quot;FieldName&quot;:&quot;FirstName__c&quot;,
+&quot;Required&quot;:true,
+&quot;Column&quot;:1
+},
+{
+&quot;FieldName&quot;:&quot;LastName__c&quot;,
+&quot;Required&quot;:true,
+&quot;Column&quot;:2
+},
 {
 &quot;FieldName&quot;:&quot;ComplaintType__c&quot;,
 &quot;Required&quot;:true,
@@ -35,6 +49,16 @@
 &quot;FieldName&quot;:&quot;CriticalAttribute__c&quot;,
 &quot;Required&quot;:false,
 &quot;Column&quot;:2
+},
+{
+&quot;FieldName&quot;:&quot;Commodity__c&quot;,
+&quot;Required&quot;:true,
+&quot;Column&quot;:1
+},
+{
+&quot;FieldName&quot;:&quot;Market__c&quot;,
+&quot;Required&quot;:false,
+&quot;Column&quot;:2
 }
 ]</value>
     </values>
@@ -44,10 +68,15 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Commodity__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DistributorName__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+        <value xsi:type="xsd:string">[
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

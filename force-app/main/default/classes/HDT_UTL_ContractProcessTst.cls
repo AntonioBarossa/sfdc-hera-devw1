@@ -126,6 +126,24 @@ public with sharing class HDT_UTL_ContractProcessTst {
     }
 
     @isTest
+    public static void testmoveOutSp() {
+        
+        Test.startTest();
+        setup1();
+        List<Contract> cttList = [SELECT Id,Status,EndDate FROM Contract LIMIT 1];
+        List<Order> orderList = [SELECT Id, ServicePoint__c FROM Order LIMIT 1];
+        
+        HDT_UTL_ContractProcess.moveOutFromServicePoint( orderList[0].ServicePoint__c );
+        
+        cttList = [SELECT Id,Status,EndDate FROM Contract LIMIT 1];
+        
+        System.assertEquals(cttList[0].Status, 'Cessato','Status non in Cessato');
+        System.assertEquals(cttList[0].EndDate, date.Today(), 'Data non aggiornata ad Oggi correttamente');
+        
+        Test.stopTest();
+    }
+
+    @isTest
     public static void testMoveOutNoContrat()
     {   setup2();
         Test.startTest();

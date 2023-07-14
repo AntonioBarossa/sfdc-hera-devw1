@@ -1050,6 +1050,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -1086,6 +1090,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -1095,6 +1103,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2094,7 +2106,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -2656,7 +2669,55 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -7628,7 +7689,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8436,7 +8497,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -8471,7 +8532,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -8541,7 +8602,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -8562,6 +8623,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8936,11 +9001,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10767,7 +10840,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -11825,7 +11899,131 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_SP_Acqualagna_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Apecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cagli_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cantiano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cartoceto_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fermignano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fossombrone_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Gabicce_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Lunano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Macerata_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Orciano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pergola_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Piobbico_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_San_Lorenzo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Sant_Angelo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbania_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>

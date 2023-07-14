@@ -872,6 +872,13 @@
         <scale>2</scale>
     </variables>
     <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>ToLoop</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>

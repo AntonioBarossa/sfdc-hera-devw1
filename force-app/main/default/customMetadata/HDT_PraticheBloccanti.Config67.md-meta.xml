@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Segnalazioni</value>
+        <value xsi:type="xsd:string">Pagamenti</value>
     </values>
     <values>
         <field>Object__c</field>
@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Consumo Anomalo Idrico</value>
+        <value xsi:type="xsd:string">Paperless</value>
     </values>
 </CustomMetadata>

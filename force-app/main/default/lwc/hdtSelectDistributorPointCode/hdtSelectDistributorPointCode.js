@@ -60,9 +60,9 @@ export default class HdtSelectDistributorPointCode extends LightningElement {
         this.openFormDistributor=true;
 
         this.retrieveddistributor.forEach(element=>{
-
+            if(element.Account__c === undefined || element.Account__r.Name === undefined) return;
             console.log('element ---- : ' + JSON.stringify(element));
-
+            
             console.log('element ---- : ' + JSON.stringify(element.Account__r.Name));
             
             distributors.push({'Distributor': element.Account__r.Name});  

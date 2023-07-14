@@ -7,9 +7,6 @@
                     <template if:true={loading}>
                         <lightning-spinner variant="brand" alternative-text="Saving..." size="large"></lightning-spinner>
                     </template>
-                    <template if:true={loadData}>
-                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData} onsetrequiredfield={setDataFirmaRequired}></c-hdt-document-signature-manager>
-                    </template>
                     <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} required={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SignedDate__c" variant="label-stacked" value={actualSignedDate}></lightning-input-field>
@@ -35,6 +32,9 @@
                             </div>
                         </div>
                     </lightning-record-edit-form>
+                    <template if:true={loadData}>
+                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData} onsetrequiredfield={setDataFirmaRequired}></c-hdt-document-signature-manager>
+                    </template>
                 </lightning-layout-item>
             </lightning-layout>
             <div class="slds-clearfix slds-p-around_small">

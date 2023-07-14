@@ -2,10 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DocumentalSystem__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(
+    <formula>IF(ISBLANK(SignatureMethod__c),IF(
 OR(AND(NOT(ISBLANK(Order__c)), CONTAINS(TEXT(Order__r.SignatureMethod__c), &apos;OTP&apos;)),
 AND(NOT(ISBLANK(Case__c)), CONTAINS(TEXT(Case__r.SignMode__c), &apos;OTP&apos;))),
-&apos;Intesa&apos;, &apos;Postel&apos;)</formula>
+&apos;Intesa&apos;, &apos;Postel&apos;),IF(
+CONTAINS(SignatureMethod__c, &apos;OTP&apos;),  
+&apos;Intesa&apos;, &apos;Postel&apos;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Sistema di Archiviazione</label>
     <required>false</required>

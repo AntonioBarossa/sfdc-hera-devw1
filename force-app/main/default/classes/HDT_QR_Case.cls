@@ -49,7 +49,8 @@ public inherited sharing class HDT_QR_Case {
             MinInstallmentAmount__c,
             MandatoryAttachments__c,
             Note__c,
-            SupplyCity__c
+            SupplyCity__c,
+            Distributor__r.Code__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -112,7 +113,10 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id,
         Type,
         Phase__c,
-        DistributorName__c
+        DistributorName__c,
+        Commodity__c,
+        PhaseStory__c,
+        Subprocess__c
         FROM Case
         WHERE Id = :caseId
         WITH SECURITY_ENFORCED
@@ -191,7 +195,8 @@ public inherited sharing class HDT_QR_Case {
             OwnedByUser__c,
             OwnerId,
             wrts_prcgvr__Status__c,
-            wrts_prcgvr__ActivityTemplate__r.Name
+            wrts_prcgvr__ActivityTemplate__r.Name,
+            Type__c
             FROM wrts_prcgvr__Activity__c
             WHERE (wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__Status__c != 'Annullata')
             AND wrts_prcgvr__IsClosed__c = false
@@ -285,7 +290,7 @@ public inherited sharing class HDT_QR_Case {
         List<Case> childCases = new List<Case>();
         try
         {
-            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, CustomerRequestAccomplished__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
         }
         catch(Exception e)
         {
@@ -302,15 +307,24 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
-    public List<Case> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+    public List<Case> getRecordsByAccountIdInPhases(Id senderId, String accountId, List<String> phases ){
         return [
             SELECT
             Id,
-            Phase__c
+            Email__c,
+            Phase__c,
+            SuppliedEmail,
+            PhoneNumber__c,
+            Mobile__c,
+            CertifiedEmail__c,
+            Fax__c,
+            CustomerMarking__c
             FROM
             Case
-            WHERE AccountId = :accountId
+            WHERE Id != :senderId 
+            AND AccountId = :accountId
             AND Phase__c IN :phases
+            AND Type NOT IN ('Variazione Anagrafica Cliente','Informative')
             WITH SECURITY_ENFORCED
         ];
     }

@@ -27,10 +27,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
-
+        //List<Order> upList = new List<Order>();
+        String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + confirmText +' OK.';
         Order orderUpdate = new Order(
             Id = ordId,
-            ConfirmCustomerContract__c = confirmText
+            ConfirmCustomerContract__c = confirmText,
+            WorkedQualityCall__c = qualityMessage
         );
 
         if(confirmtext == 'Comfort call'){
@@ -54,8 +56,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 }
             }
             causalQuality = 'Comfort Call OK';
-            orderUpdate.SignedDate__c = Date.today();
+            //orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
+            /* upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
+            upList.add(orderUpdate); */
+            //Divisione update order padre rispetto al figlio per il calcolo delle date.
+            orderSrv.updateRecord(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -66,11 +72,13 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 if (orderActiveMonitoring[0].SignedDate__c==null) {
                     orderUpdate.SignedDate__c = Date.today();
                 }
+                
             }
             causalQuality = 'Quality Call OK';
-
+            //upList.add(orderUpdate);
         }
-        orderSrv.updateRecord(orderUpdate);
+        //HDT_UTL_DatabaseService.updateSObject(upList);
+        
 
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
@@ -84,6 +92,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        //Cambio fase con date già calcolate.
+        orderSrv.updateRecord(orderUpdate);
         if (campMembList!=null && campMembList.size()>0) {
             return campMembList[0];
         }
@@ -104,9 +114,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             'Errore lavorazione SAP',
             'Completata',
             'Esito OK da SII',
+            'Ammissibilità OK',
             //'Esito KO da SII',
             'KO rilavorato',
-            'KO definitivo'
+            'KO definitivo',
+            'Errore invio a DL/SII',
+            'In Corso caricamento Siebel'
         };
 
         List<String> notCancelNonBillable = new List<String>{
@@ -128,11 +141,16 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         List<Order> allOrders = orderQr.getAllOrdersForComfort(ordToCheck[0].ParentOrder__c);
 
+        Set<Id> allOrdersVas  = new Set<Id>(); 
+        if(ordToCheck[0].Recordtype.Developername !='HDT_RT_VAS'){
+            allOrdersVas = orderQr.getAllOrdersVasForComfort(ordId ,ordToCheck[0].SBQQ__Quote__c);
+        }
+
         if (allOrders!=null && allOrders.size()>0) {
             for (Order currOrd:allOrders){
-                if (currOrd.Id!=ordToCheck[0].Id) {
+                if (currOrd.Id!=ordToCheck[0].Id && (!allOrdersVas.contains(currOrd.Id))) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
-                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) )) {
+                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
                         break;
                     }
@@ -141,15 +159,15 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         
         String result = ordToCheck[0].DateComfortCall__c == null ? 'Annullato Quality Call' : 'Annullato Comfort Call';
-
+        String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + result +'. Causale: ' + causal;
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
-            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
+            if ('Il cliente rinuncia'.equalsIgnoreCase(causal) || 'Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
                 
                 wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId);
                 if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                     act = createActivityToClose(activityId);
                     act.wrts_prcgvr__Status__c = 'Non Esitata';
-                    act.ContactResult__c = 'Annullato'; 
+                    act.ContactResult__c = result; 
                     activitySrv.updateRecord(act);
                 }
                 else if(!checkOk){
@@ -165,23 +183,32 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                         Cluster__c = 'Attivazioni',
                         Type__c = ordToCheck[0].isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO, 
                         Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
-                        Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
+                        Note__c = 'Quality esitata negativamente',
+                        order__c=ordId,
+                        OpeningNote__c = 'Errore invio a DL/SII'.equalsIgnoreCase(ordToCheck[0].Phase__c)? 'Attività creata perchè l\'ordine era in fase Errore invio a DL/SII' : ''
                     ));
                 }
             }
-            if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
+            /*if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
-            }
+            }*/
+            orderSrv.updateRecord(new Order(
+                Id = ordId,
+                Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
+                WorkedQualityCall__c = qualityMessage
+            ));
         }
         else
         {
+            Map<String,String> cancelCode = getCancelCode(ordToCheck[0].ProcessCode__c,causal);
             String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
             String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId);
             if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 act = createActivityToClose(activityId);
                 act.wrts_prcgvr__Status__c = 'Non Esitata';
-                act.ContactResult__c = 'Annullato';
+                act.ContactResult__c = result;
                 activitySrv.updateRecord(act);
             }
             else if(!checkOk){
@@ -195,16 +222,21 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Phase__c = phase,
                 CancellationReason__c = causal,
                 CancellationRequestDate__c = System.today(),
-                Status = status
+                Status = status,
+                CancellationReasonCode__c = cancelCode.get('cCode'),
+                CancellationReasonDescription__c = cancelCode.get('cReason'),
+                WorkedQualityCall__c = qualityMessage
             ));
 
         }
 
         List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
         for(CampaignMember cm : campMembList){
-            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+            cm.Status = 'Rinuncia contratto';
+
+           /* if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
                 cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
-            }
+            }*/
         }
         campMembSrv.updateRecords(campMembList);
         if (campMembList!=null && campMembList.size()>0) {
@@ -213,6 +245,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         else {
             return null;
         }
+    }
+
+    private static Map<String,String> getCancelCode(String cCode, String cReason){
+        Map<String,String> cc = new Map<String,String>();
+        HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason rcrIn = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
+        rcrIn.causalCode = cCode;
+        rcrIn.processCancellationReason = cReason;
+        HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason rcrOut = HDT_UTL_CaseCancellation.getCancellationReason(rcrIn);
+        if ('OK'.equalsIgnoreCase(rcrOut.outcome)){
+            cc.put('cCode', rcrOut.causalCode);
+            cc.put('cReason', rcrOut.cancellationReason);
+        }
+        return cc;
     }
 
     @AuraEnabled
@@ -230,7 +275,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         Map<String,String> processActivityMap = new Map<String,String>{
             'HDT_RT_SwitchIn' => 'Switch In',
             'HDT_RT_CambioOfferta' => 'Cambio offerta',
-            'HDT_RT_VAS' => 'Segnalazioni VAS'
+            'HDT_RT_VAS' => 'Segnalazioni VAS',
+            'HDT_RT_Subentro' => 'Subentro',
+            'HDT_RT_ScontiBonus' => 'Aggiunta Bonus o Vas',
+            'HDT_RT_Attivazione' => 'Prima Attivazione',
+            'HDT_RT_Voltura' => 'Voltura',
+            'HDT_RT_VolturaConSwitch' => 'Voltura con Switch'
         };
 
         return processActivityMap.get(orderRecordType);

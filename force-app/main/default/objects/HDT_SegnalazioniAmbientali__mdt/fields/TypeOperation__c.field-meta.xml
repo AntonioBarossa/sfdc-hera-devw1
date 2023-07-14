@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TypeOperation__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo Intervento</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>CONSEGNA KIT PANNOLINI ECO</fullName><default>true</default><label>CONSEGNA KIT PANNOLINI ECO</label></value>
+            <value><fullName>DISMISSIONE COMPOSTIERA</fullName><default>false</default><label>DISMISSIONE COMPOSTIERA</label></value>
+            <value><fullName>LAMENTELE COMPORTAM OPERATORE</fullName><default>false</default><label>LAMENTELE COMPORTAM OPERATORE</label></value>
+            <value><fullName>ODORI MEZZI/DOTAZIONE/IMPIANTI</fullName><default>false</default><label>ODORI MEZZI/DOTAZIONE/IMPIANTI</label></value>
+            <value><fullName>RUMORI DI MEZZI/IMPIANTI</fullName><default>false</default><label>RUMORI DI MEZZI/IMPIANTI</label></value>
+            <value><fullName>CONSEGNA PANNOLINI</fullName><default>false</default><label>CONSEGNA PANNOLINI</label></value>
+            <value><fullName>RICH. VERIFICA SCONTI RACC.DIF</fullName><default>false</default><label>RICH. VERIFICA SCONTI RACC.DIF</label></value>
+            <value><fullName>RICHIESTA INFORMAZIONI</fullName><default>false</default><label>RICHIESTA INFORMAZIONI</label></value>
+            <value><fullName>RICHIESTA INFORMAZIONI PAP</fullName><default>false</default><label>RICHIESTA INFORMAZIONI PAP</label></value>
+            <value><fullName>SEGNALAZ COMPORTAMEN CITTADINI</fullName><default>false</default><label>SEGNALAZ COMPORTAMEN CITTADINI</label></value>
+            <value><fullName>SOLLEC RITIROGRATUITO CONAPP</fullName><default>false</default><label>SOLLEC RITIROGRATUITO CONAPP</label></value>
+            <value><fullName>SOLLEC RITIROGRATUITO SENZAAPP</fullName><default>false</default><label>SOLLEC RITIROGRATUITO SENZAAPP</label></value>
+            <value><fullName>VERIFICA TARIFFA</fullName><default>false</default><label>VERIFICA TARIFFA</label></value>
+            <value><fullName>CIMITERIALI</fullName><default>false</default><label>CIMITERIALI</label></value>
+            <value><fullName>CONSEGNA/RITIRO TUTTI I CONTEN</fullName><default>false</default><label>CONSEGNA/RITIRO TUTTI I CONTEN</label></value>
+            <value><fullName>RICHIESTA CONTENITORE</fullName><default>false</default><label>RICHIESTA CONTENITORE</label></value>
+            <value><fullName>RIMOZIONE CONTENITORE</fullName><default>false</default><label>RIMOZIONE CONTENITORE</label></value>
+            <value><fullName>SOSTITUZIONE CONTENITORE</fullName><default>false</default><label>SOSTITUZIONE CONTENITORE</label></value>
+            <value><fullName>CANCELLAZIONE SCRITTE MURARIE</fullName><default>false</default><label>CANCELLAZIONE SCRITTE MURARIE</label></value>
+            <value><fullName>LAVAGGIO PORTICI</fullName><default>false</default><label>LAVAGGIO PORTICI</label></value>
+            <value><fullName>PRELIEVO CARCASSE ANIMALI</fullName><default>false</default><label>PRELIEVO CARCASSE ANIMALI</label></value>
+            <value><fullName>PRONTO INTERVENTO</fullName><default>false</default><label>PRONTO INTERVENTO</label></value>
+            <value><fullName>PULIZIA ARENILE</fullName><default>false</default><label>PULIZIA ARENILE</label></value>
+            <value><fullName>PULIZIA CADITOIE</fullName><default>false</default><label>PULIZIA CADITOIE</label></value>
+            <value><fullName>PULIZIA GIARDINI</fullName><default>false</default><label>PULIZIA GIARDINI</label></value>
+            <value><fullName>PULIZIA SUOLO PUBBLICO</fullName><default>false</default><label>PULIZIA SUOLO PUBBLICO</label></value>
+            <value><fullName>RACCOLTA SIRINGHE</fullName><default>false</default><label>RACCOLTA SIRINGHE</label></value>
+            <value><fullName>SERVIZI A FESTE E MANIFESTAZ</fullName><default>false</default><label>SERVIZI A FESTE E MANIFESTAZ</label></value>
+            <value><fullName>SERVIZI DEIEZIONI CANINE</fullName><default>false</default><label>SERVIZI DEIEZIONI CANINE</label></value>
+            <value><fullName>SERVIZIO BORA</fullName><default>false</default><label>SERVIZIO BORA</label></value>
+            <value><fullName>SERVIZIO NEVE</fullName><default>false</default><label>SERVIZIO NEVE</label></value>
+            <value><fullName>SVUOTAMENTO CESTINI STRADALI</fullName><default>false</default><label>SVUOTAMENTO CESTINI STRADALI</label></value>
+            <value><fullName>DISERBO</fullName><default>false</default><label>DISERBO</label></value>
+            <value><fullName>MUSCHIO_ERBA MURELLA</fullName><default>false</default><label>MUSCHIO_ERBA MURELLA</label></value>
+            <value><fullName>CALOTTA_MANUTENZIONE</fullName><default>false</default><label>CALOTTA_MANUTENZIONE</label></value>
+            <value><fullName>CAMBIO VOLUMETRIA PAP</fullName><default>false</default><label>CAMBIO VOLUMETRIA PAP</label></value>
+            <value><fullName>CONSEGNA KIT PORTA A PORTA</fullName><default>false</default><label>CONSEGNA KIT PORTA A PORTA</label></value>
+            <value><fullName>CONSEGNA/RITIRO CASSONE</fullName><default>false</default><label>CONSEGNA/RITIRO CASSONE</label></value>
+            <value><fullName>CONTENITORE ROTTO STRADALE</fullName><default>false</default><label>CONTENITORE ROTTO STRADALE</label></value>
+            <value><fullName>GUASTOCHEIMPEDISCECONFERIMENTO</fullName><default>false</default><label>GUASTOCHEIMPEDISCECONFERIMENTO</label></value>
+            <value><fullName>LAVAGGIO CONTENITORE</fullName><default>false</default><label>LAVAGGIO CONTENITORE</label></value>
+            <value><fullName>MANCATA RACCOLTA PAP</fullName><default>false</default><label>MANCATA RACCOLTA PAP</label></value>
+            <value><fullName>MANUTENZIONE CONTENITORE PAP</fullName><default>false</default><label>MANUTENZIONE CONTENITORE PAP</label></value>
+            <value><fullName>MANUTENZIONECONTENITOREPAP</fullName><default>false</default><label>MANUTENZIONECONTENITOREPAP</label></value>
+            <value><fullName>PSEUDOEDILI</fullName><default>false</default><label>PSEUDOEDILI</label></value>
+            <value><fullName>RICHIESTA COMPOSTIERA</fullName><default>false</default><label>RICHIESTA COMPOSTIERA</label></value>
+            <value><fullName>RICHIESTA CONTENITORE STRADALE</fullName><default>false</default><label>RICHIESTA CONTENITORE STRADALE</label></value>
+            <value><fullName>RICHIESTA SACCHI</fullName><default>false</default><label>RICHIESTA SACCHI</label></value>
+            <value><fullName>RICHIESTACONTENITAGGIUNTIVOPAP</fullName><default>false</default><label>RICHIESTACONTENITAGGIUNTIVOPAP</label></value>
+            <value><fullName>RIFIUTI ATTORNO AL CONTENITORE</fullName><default>false</default><label>RIFIUTI ATTORNO AL CONTENITORE</label></value>
+            <value><fullName>RIMOZIONE CASSONETTO STRADALE</fullName><default>false</default><label>RIMOZIONE CASSONETTO STRADALE</label></value>
+            <value><fullName>RIMOZIONE CONTENITORE PAP</fullName><default>false</default><label>RIMOZIONE CONTENITORE PAP</label></value>
+            <value><fullName>RIMOZIONE CONTENITORE STRADALE</fullName><default>false</default><label>RIMOZIONE CONTENITORE STRADALE</label></value>
+            <value><fullName>SEGNALAZIONE SU CDR</fullName><default>false</default><label>SEGNALAZIONE SU CDR</label></value>
+            <value><fullName>SE_SEGNALAZIONE DISSERVIZI</fullName><default>false</default><label>SE_SEGNALAZIONE DISSERVIZI</label></value>
+            <value><fullName>SOLLECIT_CONSEGNA_CONT_PAP_RD</fullName><default>false</default><label>SOLLECIT_CONSEGNA_CONT_PAP_RD</label></value>
+            <value><fullName>SPOSTAMENTO CASSONETTO</fullName><default>false</default><label>SPOSTAMENTO CASSONETTO</label></value>
+            <value><fullName>SPOSTAMENTO CONTENITORE</fullName><default>false</default><label>SPOSTAMENTO CONTENITORE</label></value>
+            <value><fullName>SVUOTAMENTOCONTENITORESTRADALE</fullName><default>false</default><label>SVUOTAMENTOCONTENITORESTRADALE</label></value>
+            <value><fullName>APERTURAELETTRONICANONFUNZIONA</fullName><default>false</default><label>APERTURAELETTRONICANONFUNZIONA</label></value>
+            <value><fullName>CHIAVETTA ELETTRONICA_CONSEGNA</fullName><default>false</default><label>CHIAVETTA ELETTRONICA_CONSEGNA</label></value>
+            <value><fullName>CHIAVETTA ELETTRONICA_MANUTENZ</fullName><default>false</default><label>CHIAVETTA ELETTRONICA_MANUTENZ</label></value>
+            <value><fullName>MANUTENZIONE CESTINI</fullName><default>false</default><label>MANUTENZIONE CESTINI</label></value>
+            <value><fullName>RESTITUZCONTENITORE PAP</fullName><default>false</default><label>RESTITUZCONTENITORE PAP</label></value>
+            <value><fullName>RESTITUZCONTENITOREPAP</fullName><default>false</default><label>RESTITUZCONTENITOREPAP</label></value>
+            <value><fullName>SOLLECIT_CONSEGNA_CONT_PAP_IND</fullName><default>false</default><label>SOLLECIT_CONSEGNA_CONT_PAP_IND</label></value>
+            <value><fullName>SCARICHI ABUSIVI</fullName><default>false</default><label>SCARICHI ABUSIVI</label></value>
+            <value><fullName>RITIRO ANIMALI MORTI</fullName><default>false</default><label>RITIRO ANIMALI MORTI</label></value>
+            <value><fullName>SOLLECITO RITIRO A PAGAMENTO</fullName><default>false</default><label>SOLLECITO RITIRO A PAGAMENTO</label></value>
+            <value><fullName>NOLEGGIO CASSONI</fullName><default>false</default><label>NOLEGGIO CASSONI</label></value>
+            <value><fullName>RITIRO A PAGAMENTO</fullName><default>false</default><label>RITIRO A PAGAMENTO</label></value>
+            <value><fullName>SMALTIMENTO RIFIUTI SPECIALI</fullName><default>false</default><label>SMALTIMENTO RIFIUTI SPECIALI</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

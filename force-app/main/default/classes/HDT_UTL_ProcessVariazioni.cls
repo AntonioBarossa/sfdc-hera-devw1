@@ -204,11 +204,10 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
             if(String.isNotBlank(contract.ServicePoint__r.ServicePointCode__c)){
                 try{
-                    //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
-                    System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-    
-                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                    if(!Test.isRunningTest()){
+                        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, contract.ServicePoint__r.ServicePointCode__c);
+                        processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), processObj.newCase); 
+                    }
                     caseToInsert.add(processObj.newCase); 
                     requestItemForUpsert.add(processObj.requestItem);
                 } catch(Exception e){
@@ -255,6 +254,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
     }
 
+    @TestVisible
     private static void runAlignment(List<Case> caseList){
 
         HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs input;
@@ -274,6 +274,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
         }
     }
 
+    @TestVisible
     private static String setCorrectContext(String context){
         if(context.equalsIgnoreCase(Label.VARIAZIONI_TARIFFA_RES_NONRES)) {
             return 'VARIAZIONI_TARIFFA_RES_NONRES';
@@ -300,7 +301,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
-            item.StatusDescription__c = message;
+            item.StatusDescription__c = message.abbreviate(250);
         }
         update itemList;
     }

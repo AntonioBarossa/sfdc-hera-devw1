@@ -36,6 +36,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			accounts[0].FiscalCode__c='SXSRLA45H28H6';
 			accounts[0].VATNumber__c='12345689';
 			accounts[0].CustomerCode__c='1003616211';
+            
 
 
 			List<Account> accDist = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME'); 
@@ -46,8 +47,15 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(6, true, accounts[0].Id, 'Attiva');
+            Id pricebookIdSTD = Test.getStandardPricebookId();
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(6, false, accounts[0].Id, sales, pricebook[0].Id);
+            List<ServicePoint__c> sP =HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(6, false, accounts[0].Id, sales, pricebookIdSTD);
+            List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookIdSTD);
+            
+            
+            
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
 			id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
@@ -62,7 +70,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[0].CreditCheckDescription__c='test1';
 			orders[0].ProcessCode__c='PN1';
 			orders[0].QuotationType__c = 'Rapido';
-
+            
+            
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
 			orders[1].ProcessCode__c='PN1';
@@ -103,7 +112,9 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[5].PowerCommitted__c=2;
 
 			insert orders;
-
+			
+            
+            
 			List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, false, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 			childOrders[0].QualityCall__c=true;
 			insert childOrders;
@@ -119,6 +130,19 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			quotes[0].IsVAS__c=false;
 			quotes[0].AmendmentAllowed__c=false;
 			insert quotes;
+            
+            List<SBQQ__QuoteLine__c> qL = HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 1, true);
+            
+            
+            List<OrderItem> orderItems=HDT_UTL_DataFactoryTst.createOrderItem(1, false, orders[0].Id, sP[0].Id, products[0].Id, entries[0].Id);
+            orderItems[0].Description = '1';
+            orderItems[0].OwnerAC__c = 'Si';
+            orderItems[0].DwellingType__c = 'Appartamento';
+            orderItems[0].OccupantsNumber__c = 2;
+            orderItems[0].Surface__c = 50;
+            orderItems[0].SBQQ__QuoteLine__c = qL[0].Id;
+            
+            insert orderItems;
 
 			orders[1].ServicePoint__c=servPoints[1].Id;
 			orders[0].ServicePoint__c=servPoints[0].Id;
@@ -151,6 +175,42 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			insert menageQuoteList;
  
+		}
+	}
+
+	@isTest
+	static void checkPermissionSetTst(){
+
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+			Boolean result = HDT_LC_ChildOrderProcessDetails.checkPermissionSet();
+			Test.stopTest();
+
+			System.assertEquals(false, result, 'checkPermissionSetTst failed');
+		}
+	}
+
+	@isTest
+	static void checkCambioOffertaPermissionTst(){
+
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+			Boolean result = HDT_LC_ChildOrderProcessDetails.checkCambioOffertaPermission();
+			Test.stopTest();
+
+			System.assertEquals(false, result, 'checkCambioOffertaPermissionTst failed');
 		}
 	}
     
@@ -196,19 +256,19 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test1'];
 
-			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, RetroactiveDate__c, Subprocess__c
+			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, RetroactiveDate__c, Subprocess__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test2Voltura'];
 
-			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test3'];
 
-			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test5Conessione1'];
 
@@ -239,7 +299,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.stopTest();
 
-			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c, Subprocess__c
+			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c, Subprocess__c, DeferredDate__c
 			                           FROM Order
 			                           WHERE Name='testOrderName1'
 			                           LIMIT 1];
@@ -263,17 +323,17 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrderConnessione=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderConnessione=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test5Conessione1'
 			                               LIMIT 1];
 
-			List<Order> tOrderAttivConMod=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderAttivConMod=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test4AttivConMod'
 			                               LIMIT 1];
 
-			List<Order> tOrderTemporanea=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderTemporanea=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                              FROM Order
 			                              WHERE CreditCheckDescription__c='test6Temporanea'
 			                              LIMIT 1];
@@ -293,8 +353,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.stopTest();
 
-			System.assertEquals(false, quoteTypeWrp.quoteCode==null, 'quoteTypeWrp return is Wrong');
-			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null, 'getQuoteTypeMtd did not work correctly');
+			System.assertEquals(true, quoteTypeWrp.quoteCode!=null, 'quoteTypeWrp return is Wrong');
+			System.assertNotEquals(false, quoteTypeWrp.quoteCode!=null, 'getQuoteTypeMtd did not work correctly');
 		}
 	}
 
@@ -323,6 +383,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c, 'retrieveOrderCreditCheck did not work correctly');
 		}
 	}
+    
 
 	@isTest
 	static void testvoltureEffectiveDateCheck(){
@@ -349,7 +410,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Integer voltureEffectiveDataCheckKo=HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
 
-
+			
+            
 			Test.stopTest();
 
 			System.assertEquals(0, voltureEffectiveDataCheckKo, 'Effective Date Check is wrong');
@@ -395,7 +457,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder1=[SELECT Id, Name, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder1=[SELECT Id, Name, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 								WHERE RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt'
 								AND ImplantType__c != null
@@ -411,6 +473,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 				System.debug('tOrder updateProcessStep Exception : '+e.getMessage());
 
 			}
+            
 			Test.stopTest();
 
 
@@ -434,5 +497,61 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 			System.assertEquals(true, tipoPreventivo, 'Order non preventivo');
 	}
+    
+    @isTest
+	static void testretrieveOrderCreditCheckTwo(){
 
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+
+			List<OrderItem> tOrderItem=[SELECT id, ServicePoint__c, OrderId, Product2Id, PricebookEntryId, UnitPrice, Quantity, Description, OwnerAC__c, DwellingType__c, Surface__c, OccupantsNumber__c, SBQQ__QuoteLine__c
+			                    FROM OrderItem
+			                    LIMIT 1];
+
+			HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrderItem[0], false, false, false, false, date.today());
+
+			List<Order> orders = [SELECT Id, Step__c FROM Order WHERE Id=:tOrderItem[0].OrderId LIMIT 1];
+
+			Test.stopTest();
+            
+            
+
+			System.assertEquals(1, orders[0].Step__c, 'Wrong Step');
+			//System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c, 'retrieveOrderCreditCheck did not work correctly');
+		}
+	}
+
+	@isTest
+	static void checkTechnicalTransferTst()
+	{
+		HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck testWrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+		HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck testWrpErr = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+
+		testWrp.firstName = 'Nome';
+		testWrp.lastName = 'Cognome';
+		testWrp.fiscalCode = '';
+		testWrp.vatNumber = 'TestVat';
+		testWrp.companyName ='OK';
+
+		testWrpErr.firstName = 'Nome';
+		testWrpErr.lastName = 'Cognome';
+		testWrpErr.fiscalCode = '';
+		testWrpErr.vatNumber = 'TestVat';
+		testWrpErr.companyName ='';
+
+		Test.startTest();
+			HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck resultWrp = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(testWrp);
+			HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck resultWrpErr = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(testWrpErr);
+		Test.stopTest();
+
+		System.assertEquals('', resultWrp.result, 'Check incorretto');
+		System.assertEquals(true, String.isNotBlank(resultWrpErr.result), 'Errore incorretto');
+
+	}
 }

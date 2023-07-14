@@ -6,6 +6,5 @@
 OR(ISPICKVAL(CaseField__c,&apos;&apos;),
 ISPICKVAL(EndCasePhase__c,&apos;&apos;))
 )</errorConditionFormula>
-    <errorDisplayField>Ato__c</errorDisplayField>
     <errorMessage>Per questo tipo di regola devono essere compilati i campi &quot;Campo Case&quot; e &quot;Fine Fase Case&quot;</errorMessage>
 </ValidationRule>

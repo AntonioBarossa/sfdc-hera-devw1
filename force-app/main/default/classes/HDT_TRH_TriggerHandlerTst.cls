@@ -45,9 +45,9 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             Test.startTest();
 
             List<Order> orderList = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Bozza'];
-            orderList[0].Phase__c = 'Documentazione validata';
+            orderList[0].IsArchived__c = true;
             update orderList;
-            List<Order> orders = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Comunicazione verso Heroku'];
+            List<Order> orders = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE IsArchived__c = true];
 
             Test.stopTest();
 
@@ -66,7 +66,7 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             Test.startTest();
 
             List<Order> orderList = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Bozza'];
-            orderList[0].Phase__c = 'Documentazione validata';
+            orderList[0].IsArchived__c = true;
             update orderList;
 
             delete orderList;

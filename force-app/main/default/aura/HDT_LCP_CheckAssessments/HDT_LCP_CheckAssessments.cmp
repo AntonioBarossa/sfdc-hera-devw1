@@ -5,18 +5,21 @@
   @last modified on  : 14-07-2022
   @last modified by  : Giacinto Florio
 -->
-<aura:component implements="lightning:isUrlAddressable" access="global" >
-    
-    <lightning:workspaceAPI aura:id="workspace" />
-    <aura:attribute name="viewLwc" type="Boolean" />
-    <aura:attribute name="fiscalCode" type="String" />
-    <aura:attribute name="supplyCity" type="String" />
-    <aura:attribute name="customerMarking" type="String"/>
+<aura:component implements="lightning:isUrlAddressable" access="global">
 
-    <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
+	<lightning:workspaceAPI aura:id="workspace" />
+	<aura:attribute name="viewLwc" type="Boolean" />
+	<aura:attribute name="fiscalCode" type="String" />
+	<aura:attribute name="supplyCity" type="String" />
+	<aura:attribute name="customerMarking" type="String" />
 
-    <aura:if isTrue="{! v.viewLwc }">
-      <c:hdtCheckAssessments fiscalCode="{! v.fiscalCode }" supplyCity="{!v.supplyCity}" customerMarking="{!v.customerMarking}"></c:hdtCheckAssessments>
-    </aura:if>
+	<aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
 
- </aura:component>
+	<aura:if isTrue="{! v.viewLwc }">
+		<lightning:card title="Verifica Accertamenti">
+				<c:hdtCheckAssessments fiscalCode="{! v.fiscalCode }" supplyCity="{!v.supplyCity}"
+					customerMarking="{!v.customerMarking}"></c:hdtCheckAssessments>
+		</lightning:card>
+	</aura:if>
+
+</aura:component>

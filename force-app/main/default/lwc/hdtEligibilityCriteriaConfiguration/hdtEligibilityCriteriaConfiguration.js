@@ -200,9 +200,27 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
 
     }
 
+    rowActionPredefault(){
+        this.template.querySelectorAll('lightning-input').forEach(li => {
+            if(li.name==='searchRemoved'){
+                li.value = '';
+                li.disabled = false;
+                this.disabledR = '';
+            }
+            if(li.name==='searchAvailable'){
+                li.value = '';
+                li.disabled = false;
+                this.disabled = '';
+            }
+        });
+        this.handleSearchOperation('searchRemoved', '');
+    }
+
     handleRowAction(event) {
         var e = event.currentTarget.dataset.id;
         console.log('# Select row -> ' + e);
+
+        this.rowActionPredefault();
 
         if(!this.showAvailableItems){
             console.log('# enable inpunt search #');
@@ -285,9 +303,12 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     }
 
     handleSearch(event) {
+        this.handleSearchOperation(event.target.name, event.target.value);
+    }
+    handleSearchOperation(searchType, queryTerm){
         console.log('# handleSearch #');
 
-        var searchType = event.target.name;
+        //var searchType = event.target.name;
         console.log('# searchType >> ' + searchType);
 
         var currentOperator = '';
@@ -315,7 +336,8 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
 
         console.log('# this.operator > ' + currentOperator);
 
-        this.queryTerm = event.target.value;
+        //this.queryTerm = event.target.value;
+        this.queryTerm = queryTerm;
         console.log('# search -> ' + this.queryTerm);
 
         
@@ -607,6 +629,10 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             if(!this.cityZipCode.provinceOptions[i].isEnabled || this.cityZipCode.provinceOptions[i].cityRemoved.length > 0){
                 n++;
             }
+
+            //#### 24-02-2023 enhanced eligibleForAllCities
+            //this.cityZipCode.provinceOptions[i].eligibleForAllCities = (this.cityZipCode.provinceOptions[i].cityRemoved.length==0) ? true : false;
+            //#### 24-02-2023 enhanced eligibleForAllCities
             this.cityZipCode.provinceOptions[i].cityRemoved = [];
         }
 
@@ -615,7 +641,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         //this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : this.eligibleForAllCities);
         this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : true);
 
-        console.log(JSON.stringify(this.cityZipCode));
+        //console.log(JSON.stringify(this.cityZipCode));
 
         //saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode.provinceOptions)})
         saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode)})

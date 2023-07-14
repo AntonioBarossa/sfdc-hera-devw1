@@ -559,6 +559,11 @@
                 <label>Subentro su GdM chiuso</label>
             </value>
             <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
                 <fullName>Prima Attivazione</fullName>
                 <default>false</default>
                 <label>Prima Attivazione</label>
@@ -652,6 +657,11 @@
                 <fullName>Annullamento Prestazione</fullName>
                 <default>false</default>
                 <label>Annullamento Prestazione</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -938,6 +948,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Prima Attivazione</valueName>
         </valueSettings>
         <valueSettings>
@@ -999,6 +1013,10 @@
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <!-- <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue> -->
             <valueName>Bonus commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Voltura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Autolettura</controllingFieldValue>

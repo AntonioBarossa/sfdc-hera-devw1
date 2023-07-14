@@ -43,8 +43,13 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                         System.debug(LoggingLevel.DEBUG, 'Response OK: commento da SAP: ' + (String)data.get('commenti'));
                         response.success = true;
                         response.message = 'OK';
+                        if (data.get('commenti') == null) {
+                            okFromSap = false;
+                        }
                     }
-                }
+                } else {
+                    okFromSap = false;
+                } 
             } else {
                 System.debug(LoggingLevel.DEBUG, 'Response OK');
                 response.success = true;
@@ -61,6 +66,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         caseToUpdate.Id = recordId;
         caseToUpdate.SendDate__c = Date.today();
         caseToUpdate.TecnicalPhase__c = okFromSap ? 'Esito OK da SAP' : 'Errore Lavorazione SAP';
+        if (!okFromSap){
+            caseToUpdate.distributorflowcode__c = 'KO';
+        }
 
         // String serializedCase = JSON.serialize(caseToUpdate);
         // updateFuture(serializedCase);

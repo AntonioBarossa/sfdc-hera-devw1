@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             myAccountResidenziale.RecordTypeId = accountResidenziale;
             myAccountResidenziale.Name = 'Test Residenziale';
             myAccountResidenziale.CompanyOwner__c = 'MMS';
-            myAccountResidenziale.CustomerMarking__c = 'MMS Persona fisica';
+            myAccountResidenziale.CustomerMarking__c = 'G1 - MMS Persona fisica';
             myAccountResidenziale.Category__c = 'Famiglie';
             myAccountResidenziale.BillingCityCode__c='Roma';
 			myAccountResidenziale.BillingStreetName__c='via roma';
@@ -77,7 +77,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
             insert contractList;
 
-            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(3, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(4, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
             childOrders[0].RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
             childOrders[0].ContractReference__c = contractList[0].Id;
@@ -157,6 +157,28 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<HDT_AfterthoughtDays__mdt> afterthoughtDays = [SELECT AfterthoughtDays__c FROM HDT_AfterthoughtDays__mdt WHERE Channel__c =: orders[0].Channel__c AND Market__c =: orders[0].Market__c AND AccountType__c =: orders[0].CustomerCategory__c AND SignatureMode__c =: orders[0].SignatureMethod__c AND DocumentSendingMode__c =: orders[0].DocSendingMethod__c];
 
             System.assertEquals(result, afterthoughtDays[0].AfterthoughtDays__c == 0, 'AfterthoughtDays__c not correct');
+
+        }
+    }
+
+    @isTest
+    public static void updateReadingDateTst() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> orders = [SELECT Id, Phase__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c FROM Order LIMIT 1];
+
+            Test.startTest();
+            
+            HDT_UTL_ProcessDateManager.updateReadingDate(orders);
+
+            Test.stopTest();
+            
+            List<Reading__c> resultReading = [SELECT Id, ReadingValueMeter__c, OrderAcqua__c FROM Reading__c WHERE OrderAcqua__c = :orders[0].Id ];
+
+            System.assertEquals(true, resultReading.size() > 0, 'Reading__c not correct');
 
         }
     }
@@ -334,7 +356,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<Order> orders = [SELECT DateSentToSII__c,SignedDate__c,WaiverRightAfterthought__c,ProcessType__c,WizardCompletedDate__c,
                                 MaxAfterthoughtDate__c, IsEarlyActivation__c, Account.RecordType.DeveloperName, Channel__c, Market__c,
                                 CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c, DocumentalProcessType__c, MarketOrigin__c,
-                                CommodityFormula__c, VoltageLevel__c, SupplyType__c, IsActivationDeferred__c
+                                CommodityFormula__c, VoltageLevel__c, SupplyType__c, IsActivationDeferred__c,IsTransition__c
                                 FROM Order WHERE Name = 'childOrder1'];
             
             Test.startTest();

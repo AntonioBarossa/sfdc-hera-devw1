@@ -71,13 +71,23 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             String commercialProduct = (String)obj.get('CommercialProduct__c');
             String commercialProductCode = (String)obj.get('CommercialProductCode__c');
             String commodity = (String)obj.get('CommodityFormula__c');
+            String supplyCity = (String)obj.get('SupplyCity__c');
+            String salesCompany = (String)obj.get('SalesCompany__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
             {
                 Map<String, wrts_prcgvr.MRR_1_0.Field> fieldsToAdd = new Map<String, wrts_prcgvr.MRR_1_0.Field>();
                 wrts_prcgvr.MRR_1_0.WObject processOrder;
                 for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                    if(w.id != null && Id.valueOf(w.id, true) == (Id) obj.get('Id')){
+                    if(w.id != null && Id.valueOf(w.id, true) == (Id) obj.get('Id') && w.objectType == 'Order'){
                         processOrder = w;
+
+                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                            if( f.name.equalsIgnoreCase('QC') && obj.get('SendToDistributorDate__c') != null){
+                                Datetime foo = (Datetime)obj.get('SendToDistributorDate__c');
+                                String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                                f.value = dateFinal;
+                            }
+                        }
                     }
                     else if(w.objectType == 'OrderItem'){
                         boolean find = false;
@@ -94,14 +104,22 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 }
                             }
                             if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
-                                fieldsToAdd.put(codificaAgevolazioni.get(f.value)?.HerokuTag__c, this.createMrrField(codificaAgevolazioni.get(f.value)?.HerokuTag__c, f.value));//Nome Tag dinamico
+                                String metadataName = f.value?.replaceAll('\\s', '_');
+                                fieldsToAdd.put(codificaAgevolazioni.get(metadataName)?.HerokuTag__c, this.createMrrField(codificaAgevolazioni.get(metadataName)?.HerokuTag__c, f.value));//Nome Tag dinamico
                                 //f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
                             }
                         }
                         if(!find){
                             indexOfObjectToRemove.add(count);
                         }
+                    }else if (w.objectType == 'ServicePoint__c'){
+                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                            if( f.name.equalsIgnoreCase('POD') && (String.isBlank(f.value) || f.value == null)){
+                                f.name = 'POD_NON_USARE';
+                            }
+                        }
                     }
+
                     count++;
                 }
                 // for(integer i : indexOffieldToRemove.keyset()){
@@ -224,9 +242,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Amm. Precheck KO SII' {
-                                            ord.PrecheckReasonSII__c = String.isBlank(fieldValueResponse.get('DES_ERR_AEEG')) ? 
-                                                                                        fieldValueResponse.get('TESTO_ERRR') : 
-                                                                                        fieldValueResponse.get('DES_ERR_AEEG');
+                                            String note = String.isNotBlank(fieldValueResponse.get('ANNOTAZIONI'))? fieldValueResponse.get('ANNOTAZIONI') : '';
+                                            String descr = String.isBlank(fieldValueResponse.get('DES_ERR_AEEG')) ? 
+                                                    fieldValueResponse.get('TESTO_ERRR') : 
+                                                    fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.PrecheckReasonSII__c = String.isBlank(descr) || note.containsIgnoreCase(descr)? note : String.isNotBlank(note)? descr + ' - ' + note : descr;
                                             ord.CausalCode__c = String.isBlank(fieldValueResponse.get('CODERR_AEEG')) ? 
                                                                                         fieldValueResponse.get('CODERR_ES') : 
                                                                                         fieldValueResponse.get('CODERR_AEEG');
@@ -236,11 +256,16 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
                                                 ord.IsTechnicalTransfer__c = true;
                                             }
+                                            HDT_UTL_Utils.setFieldsSize(ord);
                                         }
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
-                                            //ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
+                                            if(fieldValueResponse.get('EXT_CABINA_REMI') != null){
+                                                ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
+                                            }
+                                            if(ord.RemiCode__c != null){
+                                                ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(supplyCity, salesCompany, ord.RemiCode__c);
+                                            }
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }
@@ -416,10 +441,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Id contractId = ord.ContractReference__c;
         Id servicePointId = ord.ServicePoint__c;
         Id parentOrderId = ord.ParentOrder__c;
+        Id orderId = ord.Id;
         String commercialProductCode = '';
-        String commercialVersion = '';
+        String commercialVersion = ''; 
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
-            if(String.isNotBlank(contractId)){
+            if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                 HDT_QR_Contract qrContract = new HDT_QR_Contract();
                 SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                 if(subscription != null){

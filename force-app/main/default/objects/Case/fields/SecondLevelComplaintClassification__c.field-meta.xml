@@ -29,6 +29,11 @@
                 <label>Connessioni, lavori e qualità tecnica</label>
             </value>
             <value>
+                <fullName>Contatore</fullName>
+                <default>false</default>
+                <label>Contatore</label>
+            </value>
+            <value>
                 <fullName>Contratti</fullName>
                 <default>false</default>
                 <label>Contratti</label>
@@ -47,6 +52,11 @@
                 <fullName>Impatti Ambientali</fullName>
                 <default>false</default>
                 <label>Impatti Ambientali</label>
+            </value>
+            <value>
+                <fullName>Lavori e prestazioni accessorie su cliente</fullName>
+                <default>false</default>
+                <label>Lavori e prestazioni accessorie su cliente</label>
             </value>
             <value>
                 <fullName>Mercato</fullName>
@@ -77,6 +87,11 @@
                 <fullName>Qualità del Servizio</fullName>
                 <default>false</default>
                 <label>Qualità del Servizio</label>
+            </value>
+            <value>
+                <fullName>Qualità e continuità servizio</fullName>
+                <default>false</default>
+                <label>Qualità e continuità servizio</label>
             </value>
             <value>
                 <fullName>Servizio Clienti</fullName>
@@ -114,7 +129,14 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Impatti Ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Lavori e prestazioni accessorie su cliente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
@@ -146,11 +168,19 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Qualità del Servizio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Qualità e continuità servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Servizio Clienti</valueName>
         </valueSettings>
         <valueSettings>

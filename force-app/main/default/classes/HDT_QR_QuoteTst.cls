@@ -237,4 +237,18 @@ public with sharing class HDT_QR_QuoteTst {
 
         Test.stopTest();
     }
+
+    @isTest
+    public static void testGetQuoteType() {
+
+        Test.startTest();
+
+        Order ord = [SELECT Id, SBQQ__Quote__r.SBQQ__Type__c FROM Order WHERE Name='testOrderName0' LIMIT 1];
+
+        String quoteType = sbqqQuote.getQuoteType(ord.Id);
+
+        System.assertEquals('Amendment', quoteType, 'Quote Id matches');
+
+        Test.stopTest();
+    }
 }

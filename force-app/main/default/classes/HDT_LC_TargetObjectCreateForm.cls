@@ -28,6 +28,12 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
+    public static Boolean canHandleTari(String comune, String commodity){
+        List<City__c> cities = [ SELECT ServiceTari__c FROM City__c WHERE Name = :comune WITH SECURITY_ENFORCED ];
+        return !'Ambiente'.equalsIgnoreCase(commodity) && !cities.isEmpty() ? cities[0].ServiceTari__c : false;
+    }
+
+    @AuraEnabled
     public static ServicePoint__c createServicePoint(ServicePoint__c servicePoint) {
 
         if(servicePoint.MeterStatus__c == 'Bozza'){
@@ -121,7 +127,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
-                        if(resp.result[0].effectiveDate != null){
+                        if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                             servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                         }
                     }
@@ -152,16 +158,41 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                     if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                             servicePo.SwitchInWinback__c = true;
-                            if(resp.result[0].effectiveDate != null){
+                            if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                                 servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                             }
                         }
                     }
                 }
                 //}
+                Set<String> statusMeter = new Set<String>{'Bozza','Inattivo'};
+                Set<String> commoditySet = new Set<String>{'Acqua','Teleriscaldamento'};
+                if(statusMeter.contains(servicePo.MeterStatus__c) && commoditySet.contains(servicePo.CommoditySector__c) && String.isBlank(servicePo.Account__c)){
+                    servicePo.Account__c=sa.Account__c;
+                }
             }
         }
-        serviceSp.createRecord(servicePo);
+        /**
+         * Per la Commodity Ambiente non è possibile cercare la fornitura per Codice Punto ma solo per Codice Contratto
+         * Vi sono delle casistiche in cui il SP è presente in SFDC ma non il contratto poichè "svecchiato"
+         * In queste casistiche la ricerca su SFDC non da risultati, ricercando e salvando il SP da SAP si rischia di creare dei duplicati
+         * che andranno in errore per la GlobalMigrationKey. Pertanto viene introdotta una query preventiva per o utilizzare il record esistente oppure
+         * inserire un nuovo record
+         * 
+         * Esteso anche per tutte le commodity per coprire casistiche di duplicazione dei record
+        **/
+        if(String.isNotBlank(servicePo.SAPImplantCode__c)){
+            String implantCode = servicePo.SAPImplantCode__c;
+            List<ServicePoint__c> spList = servicePointQuery.getRecordByImplantCode(implantCode,'Id');
+            if(!spList.isEmpty()){
+                servicePo.Id = spList[0].Id;
+                serviceSp.updateRecord(servicePo);
+            }else {
+                serviceSp.createRecord(servicePo);
+            }
+        }else {
+            serviceSp.createRecord(servicePo);
+        }
     }
 
     @AuraEnabled
@@ -216,17 +247,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static String getAto(String comune){
+        String toReturn = '';
+        List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
+        toReturn = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : toReturn;
 
-        List<TownATOTable__c> myRecordList = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
-        if(!myRecordList.isEmpty()){
-            if(myRecordList[0].ATO__c !=null ){
-                return myRecordList[0].ATO__C;
-            }else{
-                return '';
-            }
-        }else{
-            return '';
-        }
+        return toReturn;
     }
 
     @AuraEnabled

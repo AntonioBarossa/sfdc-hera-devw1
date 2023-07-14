@@ -18,4 +18,13 @@ public with sharing class HDT_LC_BillingProfileSelection {
         }
         return result;
     }
+    @AuraEnabled
+    public static string handleNewBillingProfile(String billingId,String accountId,String processId){
+        try {
+            HDT_SRV_BpCaCreate srvClass = new HDT_SRV_BpCaCreate();
+            return srvClass.createBillingProfile(billingId, accountId,processId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

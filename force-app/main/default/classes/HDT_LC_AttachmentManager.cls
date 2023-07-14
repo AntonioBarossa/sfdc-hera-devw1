@@ -26,7 +26,7 @@ public with sharing class HDT_LC_AttachmentManager {
     public String  subProcessType {get;set;}
 
     @AuraEnabled
-    public String  productCode {get;set;}
+    public List<String>  productCode {get;set;}
 
     @AuraEnabled
     public String  productDescription {get;set;}
@@ -51,7 +51,7 @@ public with sharing class HDT_LC_AttachmentManager {
                                     String cluster, 
                                     String processType, 
                                     String subProcessType, 
-                                    String productCode,
+                                    List<String> productCode,
                                     String productDescription,
                                     String subscriberType,
                                     String macroTopic){
@@ -65,6 +65,18 @@ public with sharing class HDT_LC_AttachmentManager {
         this.productDescription = productDescription;
         this.subscriberType = subscriberType;
         this.macroTopic = macroTopic;
+    }
+
+    private Boolean checkForLessStrictSearch(){
+        if(this.subscriberType != null) this.subscriberType = null;
+
+        else if(this.contactChannel != null)  this.contactChannel = null;
+
+        else if(this.city != null)  this.city = null;
+
+        else return true;//se arriva qui vuol dire che il loop deve finire
+
+        return false;
     }
 
     
@@ -142,7 +154,7 @@ public with sharing class HDT_LC_AttachmentManager {
                                                                            currOrder.Cluster__c, 
                                                                            currOrder.ProcessType__c, 
                                                                            currOrder.Subprocess__c,
-                                                                           currOrder.CommercialProductCode__c,
+                                                                           new list<String>{currOrder.CommercialProductCode__c},
                                                                            null,
                                                                            currOrder.subscriberType__c,
                                                                            null);
@@ -153,9 +165,108 @@ public with sharing class HDT_LC_AttachmentManager {
     }
 
     @AuraEnabled
+    public static HDT_LC_AttachmentManager getCaseForButton(Id recordId){
+        Case currCase = [   SELECT Id, AccountId, ClientTypology__c, Channel__c, SupplyCity__c, Cluster__c, Type, Subprocess__c, Contract__c, Contract__r.CommercialProduct__c, SubscriberType__c, MacroTopic__c
+                            FROM Case
+                            WHERE Id =: recordId
+                            WITH SECURITY_ENFORCED];
+
+        List<SBQQ__Subscription__c> listSub = [   SELECT Id, ProductCode__c
+                                            FROM SBQQ__Subscription__c
+                                            WHERE SBQQ__Contract__c  =: currCase.Contract__c
+                                            AND SBQQ__Account__c =: currCase.AccountId
+                                            WITH SECURITY_ENFORCED];
+        list<String> productCodes = new list<String>();
+        for(SBQQ__Subscription__c currSub : listSub){
+            productCodes.add(currSub.ProductCode__c);
+        }
+
+        HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager( currCase.ClientTypology__c,
+                                                                            currCase.Channel__c,
+                                                                            currCase.SupplyCity__c,
+                                                                            currCase.Cluster__c,
+                                                                            currCase.Type,
+                                                                            currCase.Subprocess__c,
+                                                                            productCodes,
+                                                                            null,
+                                                                            currCase.SubscriberType__c,
+                                                                            currCase.MacroTopic__c);
+                                                                            
+        
+        system.debug('paramsWrapSelected -> ' + paramsWrap);
+        return paramsWrap;
+    }
+
+    private static String getMandatoryAttachment(HDT_LC_AttachmentManager paramsWrap){
+
+        List<MandatoryAttachments__c> tabellaAllegati = getMandatoryAttachmentRecords(paramsWrap);
+        while(tabellaAllegati.isEmpty()){
+            tabellaAllegati = getMandatoryAttachmentRecords(paramsWrap);
+            if(paramsWrap.checkForLessStrictSearch())   break;
+        }
+        return tabellaAllegati.isEmpty()? '' : tabellaAllegati[0]?.MandatoryAttachments__c ;
+    }
+
+    private static List<MandatoryAttachments__c> getMandatoryAttachmentRecords(HDT_LC_AttachmentManager paramsWrap){
+        String stringQuery = getMandatoryAttachmentQueryString(paramsWrap);
+        system.debug('@@@@: '+stringQuery);
+        List<MandatoryAttachments__c> tabellaAllegati = Database.query(stringQuery);
+        return tabellaAllegati;
+    }
+
+
+    private static String getMandatoryAttachmentQueryString(HDT_LC_AttachmentManager paramsWrap){
+        String stringQuery = 'SELECT Id, MandatoryAttachments__c FROM  MandatoryAttachments__c ';
+        String conditionString = '';
+        if(paramsWrap.accountType != null)
+	        conditionString += 'AccountType__c = \''+paramsWrap.accountType+'\' AND ';
+        if(paramsWrap.contactChannel != null)
+            conditionString += 'Channel__c = \''+paramsWrap.contactChannel+'\' AND ';
+        if(paramsWrap.city != null){
+            conditionString += 'City__c = \''+paramsWrap.city+'\' AND ';
+        }else{
+            conditionString += ' City__c = \'*\' AND ';
+        }
+        if(paramsWrap.cluster != null)
+            conditionString += 'Cluster__c = \''+paramsWrap.cluster+'\' AND ';
+        if(paramsWrap.processType != null)
+            conditionString += 'ProcessType__c = \''+paramsWrap.processType+'\' AND ';
+        if(paramsWrap.subProcessType != null){
+            conditionString += '(SubProcessType__c = \''+paramsWrap.subProcessType+'\' OR SubProcessType__c = null) AND ';
+        }else {
+            conditionString += 'SubProcessType__c = null AND ';
+        }
+        if(paramsWrap.productCode.size() != 0)
+            conditionString += 'ProductCode__c IN (\''+String.join(paramsWrap.productCode,'\',\'')+'\') AND ';
+        if(paramsWrap.productDescription != null)
+            conditionString += 'ProductDescription__c = \''+paramsWrap.productDescription+'\' AND ';
+        if(paramsWrap.subscriberType != null)
+            conditionString += 'SubscriberType__c INCLUDES (\''+paramsWrap.subscriberType+'\') AND ';
+        if(paramsWrap.macroTopic != null)
+            conditionString += 'MacroTopic__c = \''+paramsWrap.macroTopic+'\' AND ';
+
+        conditionString = conditionString.removeEnd('AND ');
+        stringQuery = stringQuery+'WHERE '+conditionString+'WITH SECURITY_ENFORCED ';
+        stringQuery += 'ORDER BY City__c DESC, SubProcessType__c DESC NULLS LAST';
+
+        return stringQuery;
+    }
+
+    @AuraEnabled
     public static String getRequiredAttachment(Id recordId, HDT_LC_AttachmentManager paramsWrap){
         //caso subprocess mancante
         //caso product mancante ->
+
+        if(paramsWrap == null){
+            String nameObject = recordId.getSObjectType().getDescribe().getName();
+            if('Case'.equalsIgnoreCase(nameObject)){
+                paramsWrap = getCaseForButton(recordId);
+            } else if('Order'.equalsIgnoreCase(nameObject)){
+                paramsWrap = getOrderForButton(recordId);
+            }
+        }
+
+        /*
         List<MandatoryAttachments__c> tabellaAllegati = [SELECT Id, MandatoryAttachments__c
                                   FROM  MandatoryAttachments__c 
                                   WHERE Cluster__c =: paramsWrap.cluster
@@ -166,18 +277,20 @@ public with sharing class HDT_LC_AttachmentManager {
                                   WITH SECURITY_ENFORCED
                                   ORDER BY City__c, SubProcessType__c DESC NULLS LAST
                                  ]; 
-        
-        return tabellaAllegati[0]?.MandatoryAttachments__c;
+        */
+        return getMandatoryAttachment(paramsWrap);
         
         //return 'Patente; Modulo Variazione Superficie; Atto di Proprietà';
     }
+
+    
 
     @AuraEnabled
     public static SObject getRecordsToCheck(Id recordId){
         SObject recordToCheck;
         String nameObject = recordId.getSObjectType().getDescribe().getName();
         if('Case'.equalsIgnoreCase(nameObject)){
-            recordToCheck = [SELECT Id, DeclaredArea__c, RequestSource__c, Type, subprocess__c, Surface__c, servicePoint__r.SupplyType__c
+            recordToCheck = [SELECT Id, DeclaredArea__c, MandatoryAttachments__c, RequestSource__c, ModuleFromContributor__c, Type, subprocess__c, Surface__c, servicePoint__r.SupplyType__c
                                         FROM Case
                                         WHERE Id =: recordId
                                         WITH SECURITY_ENFORCED];

@@ -69,26 +69,6 @@ public with sharing class HDT_UTL_CaseProcessTst {
         nonReqContr.RelatedCase__c = caseList[0].Id;
         nonReqContr.Type = 'Contratto Non Richiesto';
         insert nonReqContr;
-
-        //START MODIFICA marco.arci@webresults.it
-        List<Contract> fakeContracts = HDT_UTL_DataFactoryTst.createContract(2, false, accList[0].id);
-        fakeContracts[0].BillingCity = 'casaVar';
-        fakeContracts[0].BillingStreet = 'via testVar';
-
-        fakeContracts[1].BillingCity = 'casaCes';
-        fakeContracts[1].BillingStreet = 'via testCes';
-        insert fakeContracts;
-
-        list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].Id, null, null, null, null);
-        listFakeCases[0].Type = 'Modifica post accertamento';
-        listFakeCases[0].SupplyCity__c = 'casaVar';
-        listFakeCases[0].SupplyStreetName__c = 'via testVar';
-
-        listFakeCases[1].Type = 'Cessazione post accertamento';
-        listFakeCases[1].SupplyCity__c = 'casaCes';
-        listFakeCases[1].SupplyStreetName__c = 'via testCes';
-        insert listFakeCases;
-        //END MODIFICA marco.arci@webresults.it
     }
     
     
@@ -321,11 +301,62 @@ public with sharing class HDT_UTL_CaseProcessTst {
 
     //START MODIFICA marco.arci@webresults.it
     @isTest
-    private static void createActivityFromContractTest(){
-        list<Case> testCases = [SELECT Id, AccountId, ServicePoint__c, SupplyCity__c, SupplyStreetName__c, Type FROM Case WHERE Type IN ('Modifica post accertamento','Cessazione post accertamento')];
+    private static void getMetadataComplaintsTest(){
         Test.startTest();
+            List<HDT_EnvironmentalComplaintsRec__mdt> metas = HDT_QR_ProcessPostSales.getSecondLevelOptions();
+        Test.stopTest();
+        Assert.isFalse(metas.isEmpty(), 'Non sono stati trovati meta');
+        
+    }
+
+    @isTest
+    private static void createActivityFromContractTest(){
+        Test.startTest();
+            List<Account> accList = [SELECT id FROM Account];
+
+            List<ServicePoint__c> servPointList = [SELECT Id, SupplyCity__c, SupplyStreetName__c, CommoditySector__c FROM ServicePoint__c];
+            servPointList[0].SupplyCity__c = 'casaVar';
+            servPointList[0].SupplyStreetName__c = 'via testVar';
+            servPointList[0].CommoditySector__c = 'Ambiente';
+            update servPointList;
+
+            List<Contract> fakeContracts = HDT_UTL_DataFactoryTst.createContract(2, false, accList[0].id);
+            fakeContracts[0].BillingCity = 'casaVar';
+            fakeContracts[0].BillingStreet = 'via testVar';
+            fakeContracts[0].Status = 'Attivo';
+            fakeContracts[0].ServicePoint__c = servPointList[0].Id;
+
+            fakeContracts[1].BillingCity = 'casaCes';
+            fakeContracts[1].BillingStreet = 'via testCes';
+            fakeContracts[1].Status = 'Attivo';
+            fakeContracts[1].ServicePoint__c = servPointList[0].Id;
+            insert fakeContracts;
+
+            list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].Id, null, null, null, null);
+            listFakeCases[0].Type = 'Modifica post accertamento';
+            listFakeCases[0].SupplyCity__c = 'casaVar';
+            listFakeCases[0].SupplyStreetName__c = 'via testVar';
+
+            listFakeCases[1].Type = 'Cessazione post accertamento';
+            listFakeCases[1].SupplyCity__c = 'casaCes';
+            listFakeCases[1].SupplyStreetName__c = 'via testCes';
+            insert listFakeCases;
+            
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(2,false);
+            activityTemplates[0].Name = 'CBS_DIS002__GESTIONE_MANUALE';
+            activityTemplates[0].wrts_prcgvr__Code__c = '62862668-d76f-4426-b330-df8f9f0a47bd';
+            activityTemplates[0].wrts_prcgvr__ObjectType__c = 'Case';
+            activityTemplates[1].Name = 'CBS_VAR005__GESTIONE_MANUALE';
+            activityTemplates[1].wrts_prcgvr__Code__c = '0aa1d286-4c0b-4678-8d44-faa6c4bd5d09';
+            activityTemplates[1].wrts_prcgvr__ObjectType__c = 'Case';
+            insert activityTemplates;
+
+            list<Case> testCases = [SELECT Id, AccountId, ServicePoint__c, SupplyCity__c, SupplyStreetName__c, Type, CreatedDate FROM Case WHERE Type IN ('Modifica post accertamento','Cessazione post accertamento')];
             HDT_UTL_CaseProcess.createActivityFromContract(testCases);
         Test.stopTest();
+        System.assert([SELECT Id FROM wrts_prcgvr__Activity__c WHERE Case__c IN: testCases].size() > 0, 'Non sono state create activity');
+        
     }
     //END MODIFICA marco.arci@webresults.it
+
 }

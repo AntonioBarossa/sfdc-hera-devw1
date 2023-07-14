@@ -10,6 +10,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
+    private static HDT_QR_Quote qrQuote = new HDT_QR_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
@@ -64,12 +65,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
         //Get servicePoint data start
-	servicePointSrv.checkReadAccess('SapContractStatus__c,ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SapContractStatus__c,ImplantTypeTemp__c,ATO__c,RateCategory__c,SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
+	    servicePointSrv.checkReadAccess('SAPContractCode__c,SapContractStatus__c,ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SAPContractCode__c,SapContractStatus__c,ImplantTypeTemp__c,ATO__c,RateCategory__c,SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
 
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
-
+        Set<String> noEnergyCommodity = new Set<String>{'Acqua','Ambiente','Teleriscaldamento'};
+        Boolean isNoEnergy = servicePoint != null && String.isNotBlank(servicePoint.CommoditySector__c) && noEnergyCommodity.contains(servicePoint.CommoditySector__c); 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         Sale__c existingSale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name,Campaign__r.CampaignEligibilityGroup__c');
@@ -135,7 +137,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         Decimal consumptionRangeEle = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.AnnualConsumption__c : null;
         Decimal consumptionRangeGas = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.AnnualConsumption__c : null;
         Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : servicePoint.MaxRequiredPotential__c;
-        String residentDeliveryAddress = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
+        String residentDeliveryAddress = servicePoint.RecordType.DeveloperName != 'HDT_RT_Gas' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
         //calculate fields based on commodity end
 
         //Compare logic to create new quote or not start
@@ -183,15 +185,21 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
+            SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(SBQQ__Opportunity2__c = newOpportunity.Id));
+
+            HDT_UTL_QuoteProcess.amendProcessManagementAfter(new List<SBQQ__Quote__c>{newQuote});
+
+            newQuote = new SBQQ__Quote__c(
+                Id = newQuote.Id,
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
                 Agency__c = sale.agency__c,
-                salesCompany__c = servicePoint.Vendor__c != null && String.isNotBlank(servicePoint.Vendor__c) && isActiveContrat? servicePoint.Vendor__c : agc.get('nomeAgente'),
-                salesCompanyCode__c = servicePoint.SalesCompanyCode__c != null && String.isNotBlank(servicePoint.SalesCompanyCode__c) && isActiveContrat ? servicePoint.SalesCompanyCode__c : agc.get('codiceAgente'),
+                salesCompany__c = servicePoint.Vendor__c != null && String.isNotBlank(servicePoint.Vendor__c) && isActiveContrat && !isNoEnergy? servicePoint.Vendor__c : agc.get('nomeAgente'),
+                salesCompanyCode__c = servicePoint.SalesCompanyCode__c != null && String.isNotBlank(servicePoint.SalesCompanyCode__c) && isActiveContrat && !isNoEnergy? servicePoint.SalesCompanyCode__c : agc.get('codiceAgente'),
+                SapContractCode__c = servicePoint.SAPContractCode__c != null  && String.isNotBlank(servicePoint.SAPContractCode__c)  ? servicePoint.SAPContractCode__c : '',
                 //Market__c = servicePoint.MarketOrigin__c, // TODO WAVE 3: gestire altri tipi di mercato.
                 Market__c = 'Libero',
                 Channel__c = sale.Channel__c,
@@ -243,7 +251,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             /** Andrei Necsulescu - 30/08/2021
              *  Moved actual quote creation to account for profile logic
              */
-            quoteService.createRecord(newQuote);
+            quoteService.updateRecord(newQuote);
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
             opportunityService.updateRecord(newOpportunity);
             newSaleServiceItem = new SaleServiceItem__c(

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 25-08-2022
+ * @last modified on  : 20-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -23,6 +23,16 @@ public with sharing class HDT_LC_ActiveRepentantTst {
         termtable.Subtype__c='Subentro';
         termtable.CriteriaX__c='Xcriteria';
         insert termtable;
+
+        HDT_LC_ActiveRepentant rep = new HDT_LC_ActiveRepentant();
+        rep.dateX = Date.today();
+        rep.dateY = Date.today();
+        rep.dateDecorrenza  = Date.today();
+        rep.dateDichiarazione  = Date.today();
+        rep.missedDue = 0;
+        rep.declineSupport = '';
+        rep.bloccoCalcolo = '';
+
     }
 
     @isTest

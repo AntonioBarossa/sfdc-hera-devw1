@@ -10,6 +10,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
     @api theCase;
     @api interviewId;
     @api hideNavigationButtons = false;
+    @api hideButtonAccountLogic = false;
 
     stopRendered=false;//boolean to check if set indirizzi
 
@@ -231,5 +232,6 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     connectedCallback(){
         this.subscribeMC();
+        this.showButtonAccountLogic = !this.hideButtonAccountLogic;
     }
 }

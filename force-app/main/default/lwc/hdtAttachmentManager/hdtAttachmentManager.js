@@ -32,8 +32,9 @@ export default class HdtAttachmentManager extends LightningElement {
      messageContext;
      //subscribe
 
+
     get acceptedFormats() {
-        return ['.pdf', '.png', '.jpg'];
+        return [];
     }
 
     handleAdditionalChange(event){
@@ -101,7 +102,7 @@ export default class HdtAttachmentManager extends LightningElement {
         let objectToReturn = { 
             isValid: true
         };
-        /*
+        
         if(this.objectName?.toUpperCase() == 'CASE'){
             switch(this.currObject.Type.toUpperCase()) {
                 case 'MODIFICA DATI CONTRATTUALI':
@@ -111,8 +112,32 @@ export default class HdtAttachmentManager extends LightningElement {
                             errorMessage: 'È obbligatorio inserire almeno un allegato' 
                         };  
                     }
-                
+                    break;
                 case 'MODIFICA POST ACCERTAMENTO':
+                    if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                        };  
+                    }
+                    break;
+                case 'PAGAMENTO UNICO ANNUALE TARI':
+                    if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' || this.currObject.ModuleFromContributor__c != false ){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                        };  
+                    }
+                    break;
+                case 'PIANO RATEIZZAZIONE':
+                    if(this.currObject.MandatoryAttachments__c){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                        };
+                    }
+                    break;
+                /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 
                         this.currObject.DeclaredArea__c < this.currObject.Surface__c){
@@ -132,18 +157,12 @@ export default class HdtAttachmentManager extends LightningElement {
                     }
                          
                     break;
-                case 'PIANO RATEIZZAZIONE':
-                    objectToReturn = { 
-                        isValid: false, 
-                        errorMessage: 'È obbligatorio inserire almeno un allegato' 
-                    };
-                    break;
-                
+                */
                 default:
                     break;
             }
         }
-        */
+        
         return objectToReturn;
     }
 
@@ -171,7 +190,7 @@ export default class HdtAttachmentManager extends LightningElement {
         this.unsubscribeToMessageChannel();
         let message, isValid=true;
 
-        if('cancel' != this.eventButton){
+        if('cancel' != this.eventButton && 'draft' != this.eventButton){
             
             if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
                 var checkCustomValidate = this.specificValidate();
@@ -247,20 +266,22 @@ export default class HdtAttachmentManager extends LightningElement {
                 });
         }
 
-        getRequiredAttachment({
-            recordId: this.recordId,
-            paramsWrap: this.paramsWrap
-            })
-            .then(result => {
-                console.log(JSON.stringify(result));
-                if(result.length > 0 )
-                    this.required = result;
-                else
-                    this.required = '';
-            })
-            .catch(error => {
-                this.error = error;
-            });
+        if(!this.required){
+            getRequiredAttachment({
+                recordId: this.recordId,
+                paramsWrap: this.paramsWrap
+                })
+                .then(result => {
+                    console.log(JSON.stringify(result));
+                    if(result.length > 0 )
+                        this.required = result;
+                    else
+                        this.required = '';
+                })
+                .catch(error => {
+                    this.error = error;
+                });
+        }
             //chiamare la tabella degli allegati e chiamare i campi del case
             
     }

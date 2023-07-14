@@ -33,6 +33,7 @@ public class HDT_UTL_GenericSolHandlerTst {
         List<Contract> contracts= HDT_UTL_DataFactoryTst.createContract(1, false, residentialAccount[0].Id);
         contracts[0].ServicePoint__c=servicePoints[0].Id;
         contracts[0].ContractSalesCompany__c=recordMatrice.SellerCompany__c;
+        contracts[0].SAPContractCode__c ='3002221458'; 
         insert contracts;
         List<Product2> productList= HDT_UTL_DataFactoryTst.createProduct2(1, false);
         productList[0].Family= 'Offerta commerciale';
@@ -57,6 +58,10 @@ public class HDT_UTL_GenericSolHandlerTst {
         accContRelation.isActive=true;
         accContRelation.Roles='Titolare';
         insert accContRelation;
+        wrts_prcgvr__ActivityTemplate__c actTemplate3 = new wrts_prcgvr__ActivityTemplate__c();
+        actTemplate3.Name = 'Gestione Manuale';
+        actTemplate3.wrts_prcgvr__Subject__c = 'Gestione Manuale';
+        insert actTemplate3;
     }
 
     /**
@@ -68,7 +73,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     static void createSaleTst(){
         Contact cont=[SELECT Id,AccountId FROM Contact WHERE Account.RecordTypeId=:utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE LIMIT 1];
         Test.startTest();
-        HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id);
+        HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id,'Vendita Analisi Consumi da Web ','Bozza');
         Test.stopTest();
         Sale__c generatedSale=[SELECT Id,Account__c FROM Sale__c WHERE Account__c=:cont.AccountId LIMIT 1];
         System.assertEquals(cont.AccountId, generatedSale.Account__c, 'Sale__c object created successfully');
@@ -124,5 +129,57 @@ public class HDT_UTL_GenericSolHandlerTst {
         Test.stopTest();
         Order ord=[SELECT Id,ProcessType__c FROM Order WHERE Sale__c=:saleRecord.Id AND BillingProfile__c=:billingProfiles[0].Id LIMIT 1];
         System.assertEquals('VAS',ord.ProcessType__c,'order created successfully');
+    }
+
+    /**
+    * @author Cristiano Salvati (c.salvati@key2.it)
+    * @date 20/10/2022
+    * @description HDT_UTL_GenericSolHandlerTst – Test method for createBaseOrder
+    */
+    @isTest
+    static void createBaseOrderVolturaTst(){
+        Sale__c saleRecord=[SELECT Id FROM Sale__c LIMIT 1];
+        List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c,Account__c FROM BillingProfile__c LIMIT 1];
+        List<AccountContactRelation> cntAccContRelations = [SELECT Id,AccountId,ContactId,isActive,Roles FROM AccountContactRelation WHERE  Roles='Titolare' LIMIT 1];
+        Map<String,Object> params = new Map<String,Object>{
+            'contractAccount'=>billingProfiles[0].ContractAccountCode__c,
+            'accountId'=>cntAccContRelations[0].AccountId,
+            'integrationId'=>'volturasol'
+            
+        };
+        Test.startTest();
+        HDT_UTL_GenericSolHandler.createBaseOrderVoltura(params, saleRecord.Id);
+        Test.stopTest();
+    }
+
+    /**
+    * @author Cristiano Salvati (c.salvati@key2.it)
+    * @date 20/10/2022
+    * @description HDT_UTL_GenericSolHandlerTst – Test method for createBaseOrder
+    */
+    @isTest
+    static void handleServiceRequestVoltura(){
+        Sale__c saleRecord=[SELECT Id FROM Sale__c LIMIT 1];
+        List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c,Account__c FROM BillingProfile__c LIMIT 1];
+        List<AccountContactRelation> cntAccContRelations = [SELECT Id,AccountId,ContactId,isActive,Roles FROM AccountContactRelation WHERE  Roles='Titolare' LIMIT 1];
+        Map<String,Object> params = new Map<String,Object>{
+            'contractAccount'=>billingProfiles[0].ContractAccountCode__c,
+            'accountId'=>cntAccContRelations[0].AccountId,
+            'integrationId'=>'volturasol',
+            'contractNumber'=>'3002221458'
+        };
+        
+        Order ord = new Order();
+        ord.AccountId = billingProfiles[0].Account__c;
+        ord.integrationId__c = 'volturasol';
+        ord.EffectiveDate = Date.today();
+        ord.Status = 'Draft';
+        ord.Phase__c='Bozza';
+        insert ord;
+        List<Order> ordList = [select id,OrderNumber from order where id =:ord.Id];
+        params.put('serviceRequest',ordList[0].OrderNumber);
+        Test.startTest();
+        HDT_UTL_GenericSolHandler.handleServiceRequestVoltura(params);
+        Test.stopTest();
     }
 }

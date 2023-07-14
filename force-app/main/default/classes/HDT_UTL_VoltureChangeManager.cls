@@ -407,6 +407,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             {
                 message = 'Valorizzare campi obbligatori';
                 result='KO';
+                return new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
             }
             /**@frpanico 31/01/2022
              * Aggiunto controllo
@@ -448,10 +449,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
-            {
-                if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
-                {
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit){
+                if(!currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
                     if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
                     {
                         message = 'Impossibile inserire una data inferiore a 3 gg lavorativi';
@@ -467,7 +466,17 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                         order.RetroactiveDate__c = order.EffectiveDate__c;
                         order.Subprocess__c = 'Retroattiva';
                     }
-                } 
+                }else if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < System.today()){
+
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
+                        message = 'Non hai i permessi per eseguire una voltura retroattiva';
+                        result='KO';
+                    }else {
+                        order.RetroactiveDate__c = order.EffectiveDate__c;
+                        order.Subprocess__c = 'Retroattiva';
+                    }
+                }
                 else 
                 {
                     order.RetroactiveDate__c = null;
@@ -508,6 +517,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     public static void cancelTechnicalVolture(List<Order> switchOrders)
     {
         Set<String> orderIds = new Set<String>();
+        Map<Id, String> orderMapPhase = new Map<Id, String>();
         for(Order switchOrder: switchOrders)
         {    
             if(switchOrder.ProcessType__c != null && switchOrder.Phase__c != null && 
@@ -517,6 +527,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             }
             orderIds.add(switchOrder.Id);
         }
+        for(Order o : switchOrders)
+        {
+            if(orderMapPhase.get(o.Id) == null && orderIds.contains(o.Id))
+            {
+                orderMapPhase.put(o.Id, o.Phase__c);
+            }
+        }
         /* If OrderIds are empty 
         * exits the methos to prevent
         * querying unwanted
@@ -525,13 +542,18 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         {
             return;
         }
-        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status, Order__c FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
         if(!techincalVoltures.isEmpty())
         {
             for(Case c : techincalVoltures)
             {
-                c.Phase__c = 'Annullato';
-                c.Status = 'Closed';
+                /* Check aggiuntivo per assicurarsi che l'order sia effettivamente in fase annullato */
+                if(c.Order__c != null && orderMapPhase.get(c.Order__c) != null && orderMapPhase.get(c.Order__c).equalsIgnoreCase('Annullato'))
+                {
+                    c.Phase__c = 'Annullato';
+                    c.Status = 'Closed';
+                    c.CancellationNote__c = 'Annullato a seguito di annullamento Switch correlato in fase ' + orderMapPhase.get(c.Order__c);
+                }
             }
             HDT_UTL_DatabaseService.updateSObject(techincalVoltures);
         }

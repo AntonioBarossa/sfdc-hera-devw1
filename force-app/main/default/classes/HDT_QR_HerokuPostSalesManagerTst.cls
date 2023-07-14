@@ -10,6 +10,7 @@ public class HDT_QR_HerokuPostSalesManagerTst {
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
         accList[1].Name = 'testName2';
+        accList[1].CustomerCode__c = '1003616211';
         insert accList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servPointList[0].Account__c = accList[0].Id;
@@ -156,16 +157,32 @@ public class HDT_QR_HerokuPostSalesManagerTst {
     static void getContact(){
 
         Account acc = [SELECT Id FROM Account WHERE Name = 'testName2' WITH SECURITY_ENFORCED LIMIT 1];
+
+        List<Account> accTest = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'Persona fisica', 'Famiglie');
+        accTest[0].CustomerCode__c = '1000000010';
+        insert accTest;
+        List<Contact> cTest = HDT_UTL_DataFactoryTst.createContact(1, true, accTest[0].Id);
         
+        List<AccountContactRelation> acr = [SELECT Id, Roles FROM AccountContactRelation WHERE AccountId = :accTest[0].Id];
+
+        acr[0].Roles = 'Familiare';
+        update acr;
+
+        AccountContactRelation acrTest = HDT_UTL_DataFactoryTst.createAccountContactRelation(false, acc.Id, cTest[0].Id);
+
+        acrTest.Roles = 'Legale rappresentante';
+        insert acrTest;
+
         Test.startTest();
-
-        HDT_QR_HerokuPostSalesManager hpsm = new HDT_QR_HerokuPostSalesManager();
-        Contact returnedContact = hpsm.getContact(acc.Id);
-
-        System.assertNotEquals(null, returnedContact, 'returnedContact = null');
-
+            HDT_QR_HerokuPostSalesManager hpsm = new HDT_QR_HerokuPostSalesManager();
+            
+            Contact returnedContact = hpsm.getContact(acc.Id);
+            Contact testContact = hpsm.getContact(accTest[0].Id);
         Test.stopTest();
         
+        System.assertNotEquals(null, returnedContact, 'returnedContact = null');
+        System.assertEquals(true, testContact != null, 'testContact = null');
+
     }
 
     @IsTest
@@ -220,7 +237,8 @@ public class HDT_QR_HerokuPostSalesManagerTst {
         Test.startTest();
     
         HDT_QR_HerokuPostSalesManager hpsm = new HDT_QR_HerokuPostSalesManager();
-        Case returnedCase = hpsm.getRelatedCase(parentCase.Id);
+
+        List<Case> returnedCase = hpsm.getRelatedCase(parentCase.Id);
 
         System.assertNotEquals(null, returnedCase, 'returnedCase = null');
 
