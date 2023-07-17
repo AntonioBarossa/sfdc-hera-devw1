@@ -726,7 +726,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Boolean checkSalesTari(String saleId, String method)
     {
-        Boolean res = false;
         Boolean checkTari = false;
         Boolean checkStandard = false;
         List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c,SBQQ__Quote__c, SBQQ__Quote__r.SapContractCode__c, SBQQ__Product__r.Service__c
@@ -735,30 +734,16 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         WITH SECURITY_ENFORCED];
 
         for(SBQQ__QuoteLine__c quoteLine : quoteLines)
-        {
-            if(quoteLine.ServicePoint__c != null && quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
-            {
+        {   
+            // Gestione No-Energy
+            if('Ambiente'.equalsIgnoreCase(quoteLine.SBQQ__Product__r.Service__c)){
                 checkTari = true;
-            }
-            else if(quoteLine.ServicePoint__c != null && !quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
-            {
+            //Gestione Energy
+            }else{
                 checkStandard = true;
-            }
-            else if(quoteLine.ServicePoint__c == null && quoteLine.SBQQ__Quote__c != null && quoteLine.SBQQ__Quote__r.SapContractCode__c != null && !'Ambiente'.equalsIgnoreCase(quoteLine.SBQQ__Product__r.Service__c))
-            {
-                checkStandard = true;
-            }
-            
+            }            
         }
 
-        if(method.equalsIgnoreCase('tari') && checkTari)
-        {
-            res = true;
-        }
-        else if(method.equalsIgnoreCase('standard') && checkStandard)
-        {
-            res = true;
-        }
-        return res;
+        return (method.equalsIgnoreCase('tari') && checkTari) || (method.equalsIgnoreCase('standard') && checkStandard);
     }
 }
