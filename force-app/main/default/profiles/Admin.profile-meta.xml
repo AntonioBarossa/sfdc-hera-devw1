@@ -2581,6 +2581,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.VirtualSAPIban__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Vulnerability__c</field>
         <readable>true</readable>
     </fieldPermissions>
