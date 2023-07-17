@@ -7,6 +7,7 @@
     <label>Case Correlato</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 AND ((3 AND 4) OR (2 AND 5))</booleanFilter>
         <filterItems>
             <field>Case.Id</field>
             <operation>notEqual</operation>
@@ -16,6 +17,21 @@
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <valueField>$Source.RecordTypeId</valueField>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reclami - Verifica Dati al DL</value>
+        </filterItems>
+        <filterItems>
+            <field>Case.AccountId</field>
+            <operation>equals</operation>
+            <valueField>$Source.AccountId</valueField>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Reclami - Verifica Dati al DL</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

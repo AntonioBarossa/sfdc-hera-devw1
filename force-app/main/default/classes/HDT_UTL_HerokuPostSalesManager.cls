@@ -452,6 +452,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
 
+            if(String.isNotBlank(reqWrp.requestMap.get('ZCOM_ATTACHMENTS_DA_PI')) && reqWrp.requestMap.get('ZCOM_ATTACHMENTS_DA_PI').equalsIgnoreCase('SI')){
+                currentCase.AttachmentManagement__c=true;
+            }
+
         }else if(method.equalsIgnoreCase('esito_finale')){
             //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             noteSap = reqWrp.requestMap.get('NOTA_HK');

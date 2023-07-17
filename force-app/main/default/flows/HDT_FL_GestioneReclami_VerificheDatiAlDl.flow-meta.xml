@@ -2069,6 +2069,12 @@
                     <elementReference>FlowCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2202,6 +2208,12 @@
                     <stringValue>Processo M03 Ele</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2291,6 +2303,12 @@
                 <name>labelSaveButton</name>
                 <value>
                     <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

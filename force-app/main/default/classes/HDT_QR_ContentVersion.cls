@@ -46,4 +46,15 @@ public with sharing class HDT_QR_ContentVersion {
                 'AND IsLatest = true ' +
                 'LIMIT 1';
     }
+
+    public List<ContentVersion> getContentVersionByParentId(String recordId){
+        if(String.isBlank(recordId))return new List<ContentVersion>();
+        HDT_QR_ContentDocumentLink cdlQr = new HDT_QR_ContentDocumentLink();
+        List<ContentDocumentLink> cdLink = cdlQr.getRecordsByEntity(recordId);
+        if(!cdLink.isEmpty()){
+            return [SELECT Id, VersionData,ContentDocument.FileExtension,ContentDocument.ContentSize FROM ContentVersion WHERE ContentDocumentId =:cdLink[0].ContentDocumentId];
+        }else {
+            return new List<ContentVersion>();
+        }
+    }
 }

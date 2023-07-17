@@ -93,6 +93,10 @@
                 <behavior>Readonly</behavior>
                 <field>PhoneNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AttachmentManagement__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
