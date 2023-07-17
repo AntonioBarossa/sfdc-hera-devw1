@@ -6,11 +6,6 @@
         <label>Verifica Integrita Sigilli - ACQ</label>
     </customValue>
     <customValue>
-        <fullName>Verifica Rottura Impianto Cliente - ACQ</fullName>
-        <default>false</default>
-        <label>Verifica Rottura Impianto Cliente - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Verifica GDM - ACQ</fullName>
         <default>false</default>
         <label>Verifica GDM - ACQ</label>
@@ -309,6 +304,11 @@
         <fullName>Documentale/Copia contratto firmato o non ricevuto</fullName>
         <default>false</default>
         <label>Documentale/Copia contratto firmato o non ricevuto</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppi pagamenti/Incassi</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi</label>
     </customValue>
     <customValue>
         <fullName>Doppi pagamenti/Incassi - EE</fullName>
@@ -838,6 +838,7 @@
     <customValue>
         <fullName>Switch in  - GAS</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Switch in  - GAS</label>
     </customValue>
     <customValue>
@@ -914,6 +915,11 @@
         <fullName>Unificazione/ Separazione CA e Bolletta - EE</fullName>
         <default>false</default>
         <label>Unificazione/ Separazione CA e Bolletta - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - ACQ</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione BP-CA-Bolletta - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Variazione anagrafica cliente</fullName>
@@ -1089,6 +1095,11 @@
         <fullName>VOTIVE Intervento Riattivazione luce - EE</fullName>
         <default>false</default>
         <label>VOTIVE Intervento Riattivazione luce - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Nuovo contratto</label>
     </customValue>
     <customValue>
         <fullName>Votive Modena / Cessazione - EE</fullName>
@@ -1276,16 +1287,21 @@
         <label>Nuovo Impianto - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Richiesta domiciliazione - EE</fullName>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - AMB</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Richiesta domiciliazione - EE</label>
+        <label>Unificazione/Separazione BP-CA-Bolletta - AMB</label>
     </customValue>
     <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Richiesta domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborso - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rimborso - EE</label>
     </customValue>
     <customValue>
         <fullName>Rimborso - GAS</fullName>
@@ -1360,16 +1376,16 @@
         <label>Verifica Generica GDM - ACQ</label>
     </customValue>
     <customValue>
-        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Errore di Fatturazione - ACQ</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Errore di Fatturazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Lettura Acqua Avviso al Cliente</fullName>
@@ -1404,7 +1420,6 @@
     <customValue>
         <fullName>Switch in - GAS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Switch in - GAS</label>
     </customValue>
     <customValue>
@@ -1744,16 +1759,16 @@
         <label>Revoca Domiciliazione - EE</label>
     </customValue>
     <customValue>
-        <fullName>Rimborso - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Rimborso - EE</label>
-    </customValue>
-    <customValue>
         <fullName>Revoca Domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Revoca Domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - EE</label>
     </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>

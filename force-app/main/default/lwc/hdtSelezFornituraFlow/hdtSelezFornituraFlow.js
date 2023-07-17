@@ -51,7 +51,6 @@ const DATA_ACCESS_MAP = {
         columns: [
             {label: 'Codice Contratto Sap', fieldName: 'SAPContractCode__c', type: 'text'},
             {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
-            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
@@ -175,6 +174,23 @@ const DATA_ACCESS_MAP = {
             {label: 'Numero Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'CONTRACTS_SEGNAL_VAS':{
+        label : 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono contratti',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Codice Contratto SAP', fieldName: 'SAPContractCode__c', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'},
+            {label: 'Stato Contratto', fieldName: 'Status', type: 'text'}
         ]
     },
     //Segnalazioni VAS - START

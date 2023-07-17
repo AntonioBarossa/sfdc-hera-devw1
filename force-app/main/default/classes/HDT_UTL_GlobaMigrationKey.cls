@@ -6,8 +6,20 @@ public with sharing class HDT_UTL_GlobaMigrationKey {
             String fieldToCheck = getSapCodeField(recordId);
             String newCodiceSap = obj.get(fieldToCheck) != null ? (String) obj.get(fieldToCheck) : '';
             String oldCodiceSap = (String) oldObjMap.get(recordId).get(fieldToCheck);
-            if  (!newCodiceSap.equalsIgnoreCase(oldCodiceSap)){
+            /* Aggiunta casistica in cui i codici sap old/new non sono differenti ma la global migration key e' nulla */
+            if  (!newCodiceSap.equalsIgnoreCase(oldCodiceSap) || (String.isNotBlank(newCodiceSap) && obj.get('GlobalMigrationKey__c') == null)){
                 obj.put('GlobalMigrationKey__c',setMigrationKey(recordId, newCodiceSap));
+            }
+        }
+    }
+
+    /**
+     * Metodo che aggiorna la chiave di migrazione sugli Account di tipo distributore**/
+    public static void setGlobalMigrationKeyDistributor(List<Account> newAccountList){
+        for(Account singleAccount : newAccountList){
+            //If is distributor
+            if(String.isNotBlank(singleAccount.Code__c)){
+                singleAccount.GlobalMigrationKey__c = singleAccount.Code__c;
             }
         }
     }

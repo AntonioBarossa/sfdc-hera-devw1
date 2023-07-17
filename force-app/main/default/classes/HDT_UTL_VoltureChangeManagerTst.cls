@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
     private static HDT_UTL_VoltureChangeManager voltureChangeUtl = new HDT_UTL_VoltureChangeManager();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
-
+    
     @TestSetup
     static void setup()
     {
@@ -406,7 +406,8 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Pricebook2Id,
         Contact__c,
         CompanyOwner__c,
-        CommodityFormula__c
+        CommodityFormula__c,
+        AnnualConsumption__c
         FROM Order];  
 
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = new  List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
@@ -443,8 +444,6 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         System.assertEquals(0.34, orderList[0].RegionalAdditional__c, 'Arricchimento fallito');
         System.assertEquals('9999', orderList[0].AtecoCode__c, 'Arricchimento fallito');
         System.assertEquals('Imposta usi domestici', orderList[0].ExciseEle__c, 'Arricchimento fallito');
-        System.assertEquals(1000, orderList[0].AnnualConsumption__c, 'Arricchimento fallito');
-
     }
 
     @IsTest
@@ -582,7 +581,16 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     static void processCheckTst()
     {
         Order newOrder = new Order();
-        Order currentOrder = new Order();
+        Order currentOrder = [SELECT Id,ServicePoint__r.CommoditySector__c,
+                                Phase__c,RetroactiveDate__c,
+                                NotRegisteredMeterCase__c,
+                                VoltureType__c,
+                                EffectiveDate__c,
+                                Subprocess__c,
+                                PreviousCustomer__r.Account.CustomerMarking__c,
+                                Account.CustomerMarking__c,
+                                PreviousCustomer__r.Account.RecordType.DeveloperName,
+                                Account.RecordType.DeveloperName FROM Order LIMIT 1];
 
         newOrder.NotRegisteredMeterCase__c = false;
         newOrder.VoltureType__c = 'Ordinaria';

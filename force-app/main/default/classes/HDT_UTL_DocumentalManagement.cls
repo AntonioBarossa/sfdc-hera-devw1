@@ -186,58 +186,72 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context,String formParams){
+		SObject rec = processRecord.getSObjectType().newSObject();
+		rec.put('Id',processRecord.get('Id'));
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
 		String quotationType = '';
 		Boolean isMassive = false;
 		String signatureMethod = '';
+		String signMode='';
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String tipoPlico = formParamsMap.get('TipoPlico') != null? (String)formParamsMap.get('TipoPlico'):'';
 		if(context.equalsIgnoreCase('Order')){
 			isMassive = (Boolean) processRecord.get('isMassive__c');
 		}
 		if(result == '000'){
 			if(archive != 'Y'){
-				processRecord.put('DocumentalPhase__c','Preview');
+				rec.put('DocumentalPhase__c','Preview');
 			}else{
 				if(isSignNeeded(response)){
-					processRecord.put('DocumentalPhase__c','Plico in firma');
+					rec.put('DocumentalPhase__c','Plico in firma');
+				}else if(String.isNotBlank(tipoPlico) && tipoPlico.equalsIgnoreCase('Sollecito')){
+					rec.put('DocumentalPhase__c','Plico sollecitato');
 				}else {
-					processRecord.put('DocumentalPhase__c','Plico inviato');
+					rec.put('DocumentalPhase__c','Plico inviato');
 				}
+				
 				if(context.equalsIgnoreCase('Case')){
+					signMode = (String) processRecord.get('SignMode__c');
 					cluster = (String) processRecord.get('Cluster__c');
 					quotationType = (String) processRecord.get('QuotationType__c');
 					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
-						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
+						rec.put('Phase__c','Attesa conferma preventivo cliente');
 					}
+				} else {
+					signMode = (String) processRecord.get('SignatureMethod__c');
 				}
 				// Oltre alla DocusignExpirationDate__c, settiamo anche il campo DocusignExpirationDate__c se necessario.
-				String signMode = (String) processRecord.get('SignMode__c');
+			
 				if (signMode != null && signMode.containsIgnoreCase('OTP')) {
 					List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
 					if (!daysToExpiration.isEmpty()) {
 						Integer numberOfDays = Integer.valueOf(daysToExpiration[0].NumberOfDays__c);
 						if (numberOfDays > 0) {
 							Date expirationDate = Date.today().addDays(numberOfDays);
-							processRecord.put('DocusignExpirationDate__c', expirationDate);
+							rec.put('DocusignExpirationDate__c', expirationDate);
 						}
 					}
 				}
 				if(isMassive){
 					signatureMethod = (String) processRecord.get('SignatureMethod__c');
 					if(!signatureMethod.equalsIgnoreCase('Contratto già firmato')){
-						processRecord.put('Phase__c', 'Documentazione da inviare');
+						rec.put('Phase__c', 'Documentazione da inviare');
 					}
 				}
 			}
 		}else {
-			processRecord.put('DocumentalPhase__c','Errore composizione');
+			rec.put('DocumentalPhase__c','Errore composizione');
 			if(isMassive){
-				processRecord.put('Phase__c', 'Comunicazione EngageOne KO');
+				rec.put('Phase__c', 'Comunicazione EngageOne KO');
 			}
 		}
-		return HDT_UTL_DatabaseService.updateSObject(processRecord);
+		for (String field : rec.getPopulatedFieldsAsMap().keySet()){
+			processRecord.put(field,rec.get(field));
+		}
+		return HDT_UTL_DatabaseService.updateSObject(rec);
 	}
 	
 	//SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
@@ -280,6 +294,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SignatureMethod__c = (String) processRecord.get('SignMode__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
 					documentalSendTracking.Type__c = 'Plico';
 				}
@@ -288,6 +303,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
+					documentalSendTracking.SignatureMethod__c = (String) processRecord.get('SignatureMethod__c');
 					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
@@ -314,25 +330,32 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String activityType;
 		if ('35'.equals(errorMessage)){
 			errorMessage = 'Indirizzo Email non valido.';
-			activityType = 'Busta Docusign non consegnata.';
+			activityType = 'Busta Docusign non consegnata';
 			try{
 				String sObjName = requestId.getSObjectType().getDescribe().getName();
 				wrts_prcgvr__Activity__c activityBusta = new wrts_prcgvr__Activity__c ();
 				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+				String conditionById = '';
 				switch on sObjName {
 					when 'Case' {
 						activityBusta.Case__c = (Id) requestId;
+						conditionById = 'Case__c = \''+requestId+'\'';
 					}
 					when 'Order' {
+						conditionById = 'Order__c = \''+requestId+'\'';
 						activityBusta.Order__c = (Id) requestId;
 					}
 				}
 				activityBusta.RecordTypeId=actRecordTypeId;
 				activityBusta.wrts_prcgvr__Description__c='Indirizzo Email non valido.';
 				activityBusta.DiscardCategory__c = 'Scarto complesso';
-				activityBusta.Type__c='Busta Docusign non consegnata';
-				HDT_UTL_DatabaseService.insertSObject(activityBusta);
-				
+				activityBusta.Type__c=activityType;
+				List<wrts_prcgvr__Activity__c> actToUpdate = String.isBlank(conditionById)? 
+					new List<wrts_prcgvr__Activity__c>() :
+					HDT_QR_GenericQuery.getGenericRecords('Id, wrts_prcgvr__Status__c', 'wrts_prcgvr__Activity__c', 'Type__c = \''+activityType+'\' AND wrts_prcgvr__IsClosed__c = false AND ' + conditionById);
+				if (actToUpdate.isEmpty()){
+					HDT_UTL_DatabaseService.insertSObject(activityBusta);
+				}
 			} catch (Exception ex) {
 				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 			}
@@ -411,8 +434,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		listAccount.add(accountObject);
 		List<sObject> listContact = new List<sObject>();
 		listContact.add(contactObject);
+		//DATI CATASTALI
+		List<LandRegistry__c> landList = new List<LandRegistry__c>();
+		for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) caseObject.Dati_Catastali__r){
+			landList.add(singleLandRegistry);
+		}
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
-			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList,'LandRegistry'=> landList
 		};
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		toReturn.add(mapStringObjectRecords);
@@ -496,6 +524,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
 			mapStringObjectRecords.put('Order', orderList);
+
+			//DATI CATASTALI
+			List<LandRegistry__c> landList = new List<LandRegistry__c>();
+			for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) singleOrder.Dati_Catastali__r){
+				landList.add(singleLandRegistry);
+			}
+			mapStringObjectRecords.put('LandRegistry', landList);
 			
 			//PROCESSING ORDER ITEMS
 			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){
@@ -1041,4 +1076,190 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 		return transcoded;
 	}
+
+	/*
+	* NOTA: Docusign non restituisce l'informazione dell'order a cui fa riferimento un radiobutton.
+	*/
+
+	public static Map<String, String> manageRadioBtns(List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, List<Order> orderList, Map<String, Object> extraParams)
+	{
+		Map<String, String> result = new Map<String, String>();
+		String valueOne = '';
+		String valueTwo = '';
+		Boolean hcOneFound = false;
+		Boolean hcTwoFound = false;
+		Set<String> moduliOpzionaliMancanti = new Set<String>();
+		List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
+		Map<String,Order> orderMap = new Map <String,Order>();
+		Integer counterLeggeOttanta = 1;
+		Integer counterIstanza = 1;
+		SObject record = (SObject) extraParams.get('record');
+		String envelopeId = (String) extraParams.get('envelopeId');
+		//creo una mappa di strnga,order che è utile a tracciate quali ordini necessitano della L80 o dell'istanza. La stringa utilizza un contatore
+		//perchè posso avere più ordini che necessitano dello stesso modulo
+		for(Order singleOrder : orderList){
+			String leggeOttanta = singleOrder.DocumentLow80__c;
+			String istanza = singleOrder.Instance326__c;
+			if ('Richiesto'.equalsIgnoreCase(leggeOttanta)) {
+				orderMap.put('L80_'+counterLeggeOttanta, singleOrder);
+				counterLeggeOttanta++;
+			}
+			if ('Richiesto'.equalsIgnoreCase(istanza)) {
+				orderMap.put('Istanza326_'+counterIstanza, singleOrder);
+				counterIstanza++;
+			}
+		}
+		for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio)
+		{
+			if(!singleRadio.selected.equalsIgnoreCase('true')) { continue; }
+			/** Allegati opzionali per order */
+			if(!orderList.isEmpty())
+			{
+				if (singleRadio.groupName.contains('DTC_radio1')){
+					String actDescription = 'Ritornato correttamente';
+					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+						if(singleRadio.groupName.contains('_1')){
+							actDescription  = actDescription + ' su ordine '+ orderList[0].get('OrderNumber');
+						}else {
+							actDescription  = actDescription + ' su ordine '+ orderList[1].get('OrderNumber');
+						}
+						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+						if (documentalActivity != null){
+							documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+							documentalActivity.ActivityType__c = 'Allegati ricevuti';
+							documentalActivity.AttachmentDescription__c = actDescription;
+							activitiesToCreate.add(documentalActivity);
+						}
+						continue;
+					} else {
+						moduliOpzionaliMancanti.add(singleRadio.groupName);
+						continue;
+					}
+				}
+				if('Y'.equalsIgnoreCase(System.Label.HDT_EnableRadioButton) || Test.isRunningTest()){
+					//Aggiungo l'act solo sull'order che necessita della L80
+					if (singleRadio.groupName.contains('L80_radio')){
+						String[] splitString = singleRadio.groupName.split('_');
+						String incrementale = splitString[splitString.size() - 1];
+						if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+							String actDescriptionLeggeOtt = 'Ritornato correttamente';
+							Order orderToUpdate = orderMap.get('L80_'+incrementale);
+							if(orderToUpdate != null){
+								actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderToUpdate.get('OrderNumber');
+								orderToUpdate.put('DocumentLow80__c','Validato');
+							}
+							/*if(singleRadio.groupName.contains('_1')){
+								actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[0].get('OrderNumber');
+								orderList[0].put('DocumentLow80__c','Validato');
+							}else {
+								actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[1].get('OrderNumber');
+								orderList[1].put('DocumentLow80__c','Validato');
+							}*/
+							DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+							if (documentalActivity != null){
+								documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+								documentalActivity.ActivityType__c = 'Allegati ricevuti';
+								documentalActivity.AttachmentDescription__c = actDescriptionLeggeOtt;
+								activitiesToCreate.add(documentalActivity);
+							}
+							continue;
+						} else {
+							moduliOpzionaliMancanti.add(singleRadio.groupName);
+							continue;
+						}
+					}
+					if (singleRadio.groupName.contains('326_radio')){
+						if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+							String[] splitString = singleRadio.groupName.split('_');
+							String incrementale = splitString[splitString.size() - 1].trim();
+							String actDescriptionIstanza = 'Ritornato correttamente';
+							Order orderToUpdate = orderMap.get('Istanza326_'+incrementale);
+							if(orderToUpdate != null){
+								actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderToUpdate.get('OrderNumber');
+								orderToUpdate.put('Instance326__c','Validato');
+							}
+							/*if(singleRadio.groupName.contains('_1')){
+								actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[0].get('OrderNumber');
+								orderList[0].put('Instance326__c','Validato');
+							}else {
+								actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[1].get('OrderNumber');
+								orderList[1].put('Instance326__c','Validato');
+							}*/
+							DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+							if (documentalActivity != null){
+								documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+								documentalActivity.ActivityType__c = 'Allegati ricevuti';
+								documentalActivity.AttachmentDescription__c = actDescriptionIstanza;
+								activitiesToCreate.add(documentalActivity);
+							}
+							continue;
+						} else {
+							moduliOpzionaliMancanti.add(singleRadio.groupName);
+							continue;
+						}
+					}
+				}
+			}
+			switch on singleRadio.groupName {
+				when  'radio1_HC'{
+					hcOneFound = true;
+					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';	
+				}
+				when  'radio2_HC'{
+					hcTwoFound = true;
+					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}
+				when 'radio1_HCM','radio1_NS','radio1_EST','radio1_EBT','radio1_HC_vas'{
+					if(hcOneFound) {continue;} 
+					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}
+				when 'radio2_HCM','radio2_NS','radio2_EST','radio2_EBT','radio2_HC_vas'{
+					if(hcTwoFound) {continue;}
+					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}				
+				when else {
+					continue;
+				}
+			}
+		}
+
+		if('N'.equalsIgnoreCase(System.Label.HDT_EnableRadioButton)) {
+			//tutti i moduli sono obbligatori come da richiesta del BSN su thread R: Firma OTP: modifica a moduli legge 80 e istanza EE
+			for(Order singleOrder : orderList){
+				String leggeOttanta = singleOrder.DocumentLow80__c;
+				String istanza = singleOrder.Instance326__c;
+				if ('Richiesto'.equalsIgnoreCase(leggeOttanta)) {
+					String actDescriptionLeggeOtt  = 'Ritornato correttamente su ordine '+ singleOrder.get('OrderNumber');
+					singleOrder.put('DocumentLow80__c','Validato');
+					DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+					if (documentalActivity != null){
+						documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+						documentalActivity.ActivityType__c = 'Allegati ricevuti';
+						documentalActivity.AttachmentDescription__c = actDescriptionLeggeOtt;
+						activitiesToCreate.add(documentalActivity);
+					}
+				}
+				if ('Richiesto'.equalsIgnoreCase(istanza)) {
+					String actDescriptionIstanza  = 'Ritornato correttamente su ordine '+ singleOrder.get('OrderNumber');
+					singleOrder.put('Instance326__c','Validato');
+					DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+					if (documentalActivity != null){
+						documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+						documentalActivity.ActivityType__c = 'Allegati ricevuti';
+						documentalActivity.AttachmentDescription__c = actDescriptionIstanza;
+						activitiesToCreate.add(documentalActivity);
+					}
+				}
+			}
+		}
+
+		result.put('radio1', valueOne);
+		result.put('radio2', valueTwo);
+		result.put('activitiesToCreate', JSON.serialize(activitiesToCreate));
+		result.put('moduliOpzionaliMancanti', JSON.serialize(moduliOpzionaliMancanti));
+		result.put('orderList', JSON.serialize(orderList));
+
+		return result;
+	}
+
 }

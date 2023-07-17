@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ImmobileSurface__c</fullName>
+    <description>Contiene il valore derivante da Arricchimento dati e migrazione (ambito TARI) relativo all&apos;operando SAP TFSC000000 TIA - S Rilevante per Calcolo </description>
     <externalId>false</externalId>
-    <label>Superficie immobile</label>
+    <label>Superficie rilevante per il calcolo</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

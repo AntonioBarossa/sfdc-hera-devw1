@@ -8,7 +8,9 @@ public with sharing class HDT_UTL_AppointmentSettingTest {
         System.assertEquals(null, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','Distributore non presente','commidity non presente',null), 'Il metodo non ha restituito vero vero');
  //aggiunto:
         System.assertEquals(true, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','MARCHE MULTISERV.-10R0000212','Gas','10V0000160').Flag__c, 'Il metodo non ha restituito vero vero'); 
-     
+       
+        //E' necessario che siano presenti nella org i record del custom metadata "HDT_AppointmentSetting__mdt" opportuni (guardare dev 6 e dev w2) 
+        System.assertEquals(true, HDT_UTL_AppointmentSetting.getAtoaFlag('test','test','test','test').Flag__c, 'Il metodo non ha restituito vero vero'); 
         
         Test.stopTest();
         

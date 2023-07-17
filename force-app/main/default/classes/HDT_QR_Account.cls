@@ -100,9 +100,13 @@ public inherited sharing class HDT_QR_Account {
      * @return List<Account>
      */
     public List<Account> getAccountByFiscalCode(String fiscalCode) {
+        if(STRING.isBlank(fiscalCode)){     return new List<Account>();     }
+        
         return [
             SELECT
-            Id
+                Id, Name,
+                Phone, MobilePhone__c, OtherPhone__c, CustomerCode__c,
+                CompanyOwner__c, BillingPlace__c
             FROM Account 
             WHERE FiscalCode__c = :fiscalCode
             WITH SECURITY_ENFORCED
@@ -189,6 +193,19 @@ public inherited sharing class HDT_QR_Account {
             FROM Account 
             WHERE CustomerCode__c = :customerCode
             WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountByCustomerCodeSet(Set<String> customerCodes){
+        return [
+                SELECT
+                        Id,
+                        Name,
+                        Category__c,
+                        CustomerCode__c
+                FROM Account
+                WHERE CustomerCode__c IN :customerCodes
+                WITH SECURITY_ENFORCED
         ];
     }
 }

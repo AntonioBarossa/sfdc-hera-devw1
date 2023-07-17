@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
     public static DocumentalActivity__c getDocumentalActivityById(String recordId){
 
         List<DocumentalActivity__c> activities = [
-            SELECT Id, AttachmentCode__c, EnvelopeId__c, PostelTimestamp__c
+            SELECT Id, AttachmentCode__c, EnvelopeId__c, PostelTimestamp__c,DocumentalSystem__c
             FROM DocumentalActivity__c
             WHERE Id = :recordId
             WITH SECURITY_ENFORCED
@@ -143,6 +143,18 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         }else {
             return null;
         }
+    }
+
+    public static DocumentSendTracking__c getEnvelopeToCancel(Id oId, String docSyst, String sMode){
+        List<DocumentSendTracking__c> dst = getEnvelopesToCancel(new Set<Id>{oId},docSyst,sMode);
+        if (dst.isEmpty()){
+            return null;
+        }
+        return dst[0];
+    }
+
+    public static List<DocumentSendTracking__c> getEnvelopesToCancel(Set<Id> oIds, String docSyst, String sMode){
+        return [SELECT Id FROM DocumentSendTracking__c WHERE Order__c IN: oIds AND EnvelopeId__c != null AND DocumentalSystem__c = :docSyst AND SendMode__c = :sMode WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC];
     }
 
 }

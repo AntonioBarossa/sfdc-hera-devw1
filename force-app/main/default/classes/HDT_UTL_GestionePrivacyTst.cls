@@ -13,11 +13,11 @@ public class HDT_UTL_GestionePrivacyTst {
     static void myData(){
         
         List<Lead> leadsList = HDT_UTL_DataFactoryTst.createLead(2,false);
-        leadsList[0].MobilePhone ='069565852';
+        leadsList[0].MobilePhone ='3359641201';
         leadsList[0].MobilePhonePrefix__c ='+39';
         leadsList[0].PhonePrefix__c='+39';
         leadsList[0].Phone ='0035555777';
-        leadsList[0].VATNumber__c = '12345678100';
+        leadsList[0].VATNumber__c = '00675030423';
         leadsList[0].CustomerMarking__c= 'Azienda';
         leadsList[0].CompanyOwner__c ='HERA COMM';
         leadsList[0].Category__c ='Aziende SME';
@@ -215,7 +215,7 @@ public class HDT_UTL_GestionePrivacyTst {
         Map<Id,Map<String,Object>> mapLeadFieldsValues= new Map<Id,Map<String,Object>>();
         Map<String, Object> leadfields= new Map<String, Object> ();
         Lead l = [SELECT Id FROM Lead limit 1];
-        leadfields.put('MobilePhone','004448883');
+        leadfields.put('MobilePhone','3364411254');
         leadfields.put('CompanyOwner__c','MMS');
         mapLeadFieldsValues.put(l.Id,leadfields);
 

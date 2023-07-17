@@ -181,6 +181,21 @@
                 <label>Hera Placet Variabile Lavoro Luce</label>
             </value>
             <value>
+                <fullName>Hera ProtezionePiu Casa Dual</fullName>
+                <default>false</default>
+                <label>Hera ProtezionePiu Casa Dual</label>
+            </value>
+            <value>
+                <fullName>Hera ProtezionePiu Casa Gas</fullName>
+                <default>false</default>
+                <label>Hera ProtezionePiu Casa Gas</label>
+            </value>
+            <value>
+                <fullName>Hera ProtezionePiu Casa Luce</fullName>
+                <default>false</default>
+                <label>Hera ProtezionePiu Casa Luce</label>
+            </value>
+            <value>
                 <fullName>Hera Scaldacqua</fullName>
                 <default>false</default>
                 <label>Hera Scaldacqua</label>
@@ -196,9 +211,29 @@
                 <label>Hera Thermo</label>
             </value>
             <value>
+                <fullName>Prezzo Netto Relax Casa Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Relax Casa Gas</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Special Dual</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Special Dual</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Dual</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Gas</label>
             </value>
             <value>
                 <fullName>Prezzo Netto Special Gas</fullName>

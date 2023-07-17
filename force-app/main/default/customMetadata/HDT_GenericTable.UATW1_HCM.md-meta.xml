@@ -4,16 +4,30 @@
     <protected>false</protected>
     <values>
         <field>Mapping__c</field>
-        <value xsi:type="xsd:string">[{
+        <value xsi:type="xsd:string">[
+{
 	&quot;nomesocieta&quot;:&quot;Hera Comm Marche&quot;,
 	&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHCM&quot;,
 	&quot;existsdefault&quot;:false,
 	&quot;defaultusers&quot;: []
-}]</value>
+},
+{
+	&quot;nomesocieta&quot;:&quot;Hera Comm S.p.A.&quot;,
+	&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHC&quot;,
+	&quot;existsdefault&quot;:true,
+	&quot;defaultusers&quot;:[&quot;anna.guidoboni@heravendita.com.uatw1&quot;]
+},
+{
+&quot;nomesocieta&quot;:&quot;Marche Multiservizi S.p.A&quot;,
+&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataMMS&quot;,
+&quot;existsdefault&quot;:false,
+&quot;defaultusers&quot;: []
+}
+]</value>
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">00D3N0000008mto</value>
+        <value xsi:type="xsd:string">00D1l0000000vCV</value>
     </values>
     <values>
         <field>TableName__c</field>

@@ -94,7 +94,9 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
         /*
@@ -139,30 +141,34 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     @AuraEnabled
     public static string getEligibleQuoteLinesToApply(Map<String, Object> inputs)
     {
-
         String saleId = (String) inputs.get('saleId');
         BillingProfile__c selectedBillingProfile = (BillingProfile__c) JSON.deserialize((String)inputs.get('selectedBillingProfile'), BillingProfile__c.class);
-        String paymentMethod = selectedBillingProfile.get('PaymentMethod__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
-        String sendingBillMode = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
-        //String invoicingCity = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
-        Boolean isDueThirtyDays = selectedBillingProfile.get('IsThirtyDaysDue__c') != null && ((String)selectedBillingProfile.get('IsThirtyDaysDue__c')).equalsIgnoreCase('Si');
+        String paymentMethod    = selectedBillingProfile.get('PaymentMethod__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
+        String paymentCondition = selectedBillingProfile.get('PaymentConditions__c') != null ? (String) selectedBillingProfile.get('PaymentConditions__c') : '';
+        String sendingBillMode  = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
+        String invoicingCity    = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
+        
         List<SBQQ__QuoteLine__c> quoteLineWater = new List<SBQQ__QuoteLine__c>();
         //List<SBQQ__QuoteLine__c> quoteLineWaste = new List<SBQQ__QuoteLine__c>();
         List<HDT_WRP_QuoteLineWrp> quoteLineToApply = new List<HDT_WRP_QuoteLineWrp>();
         /* La query recupera tutte le quotline "child" associate alle quote create */
         List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, Name,SBQQ__Product__r.Name, SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,
         SBQQ__RequiredBy__r.SBQQ__Product__c, SBQQ__RequiredBy__r.SBQQ__Product__r.Name,  SBQQ__ProductFamily__c,
-        SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name,
-        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c,
+        SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name, SBQQ__Quote__r.ContractReference__r.Status,
+        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c, ServicePoint__r.SupplyCity__c, SBQQ__Quote__r.SBQQ__Account__c, SBQQ__Quote__r.ContractReference__r.AccountId,
         SBQQ__Quote__r.ContractReference__c, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name
         FROM SBQQ__QuoteLine__c
         WHERE SBQQ__Quote__r.Sale__c = :saleId
         AND 
         (
             (
-            SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
-            AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod  OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
-            AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
+                SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura TLR','Punto Fornitura')
+                AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod  OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
+                AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
+            )
+            OR
+            (
+                SBQQ__Product__r.Name IN ('Punto Fornitura Ambiente')
             )
             OR
             (
@@ -174,70 +180,66 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
                     )
                 )
-            AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
-            AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
-         )
+                AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura TLR','Punto Fornitura','Punto Fornitura Ambiente')
+                AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
+            )
         )
         AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected') 
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC];
 
-        
-        for(SBQQ__QuoteLine__c quoteLine : quoteLines)
-        {
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines){
+            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua') || quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura TLR') ){
+                // Caso del cambio offerta la riga non è selezionabile
+                if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
+                    quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId ){
+                    continue;
+                }
 
-            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua'))
-            {
-                quoteLineWater.add(quoteLine);
-                continue;
+                if(quoteLine.ServicePoint__c == null){
+                    continue;
+                }
+
+               if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura TLR')){
+						HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
+						quoteLineToApply.add(singleApply);
+				}
+
+                HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
+                singleApply.isDueThirtyDays = 'Si';
+                quoteLineToApply.add(singleApply);
+                
+            } else {
+                quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
             }
-            quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-        }
-
-        /**Logica per acqua
-         * Si controlla l'ATO della quoteLine
-         * Se non e' pari ad ATO1 o ATO9 viene controllato il campo 'Scadenza 30 gg' sul BillingProfile se e' a 'Si' la QL non e' selezionabile
-         * Se e' pari ad ATO1 o ATO9 viene impostato un flag sull'oggetto di ritorno in modo che all'applicazione venga impostato a 'Si' il campo 'Scandeza 30 gg'
-         */
-        if(!quoteLineWater.isEmpty())
-        {
-            for(SBQQ__QuoteLine__c quoteLine : quoteLineWater)
-            {
-                if(quoteLine.ServicePoint__c == null)
-                {
-                    continue;
-                }
-                String ato = quoteLine.ServicePoint__r.ATO__c != null ? quoteLine.ServicePoint__r.ATO__c : '';
-                Boolean isAtoOneAtoNine = ato.containsIgnoreCase('ATO1') || ato.containsIgnoreCase('ATO9');
-                if(isAtoOneAtoNine && !isDueThirtyDays)
-                {
-                    HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
-                    singleApply.isDueThirtyDays = 'Si';
-                    continue;
-                }
-                if(isAtoOneAtoNine && isDueThirtyDays)
-                {
-                    quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-                    continue;
-                }
-                if(!isAtoOneAtoNine && !isDueThirtyDays)
-                {
-                    quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-                    continue;
-                }
-
-            }
+           
         }
 
         return JSON.serialize(quoteLineToApply);
     }
 
+/*     public static Map<String,String> getPaymentForCities(List<SBQQ__QuoteLine__c> quoteLines){
+        List<String> cities = new List<String>();
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines){
+            if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
+                cities.add(quoteLine.ServicePoint__r.SupplyCity__c);
+            }
+        }
+        List<City__c> paymentForCities = [SELECT Name, PaymentMethod__c FROM City__c WHERE Name IN :cities WITH SECURITY_ENFORCED ];
+        Map<String, String> paymentForCitiesMap = new Map<String, String>();
+        if( paymentForCities != null && !paymentForCities.isEmpty() ){
+            for( City__c city : paymentForCities ){
+                paymentForCitiesMap.put( city.Name, city.PaymentMethod__c );
+            }
+        }
+        return paymentForCitiesMap;
+    } */
 
-    class HDT_WRP_QuoteLineWrp
+    public class HDT_WRP_QuoteLineWrp
     {
         public HDT_WRP_QuoteLineWrp(SBQQ__QuoteLine__c quoteLine)
         {
-            Boolean isVas = quoteLine.SBQQ__ProductFamily__c.containsIgnoreCase('Vas') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi');
+            Boolean isVas = quoteLine.SBQQ__ProductFamily__c.containsIgnoreCase('Vas') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi TLR');
 
             this.id = isVas ? quoteLine.Id : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__c : quoteLine.Id;
             this.name = isVas ? quoteLine.Name : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__r.Name : quoteLine.Name;

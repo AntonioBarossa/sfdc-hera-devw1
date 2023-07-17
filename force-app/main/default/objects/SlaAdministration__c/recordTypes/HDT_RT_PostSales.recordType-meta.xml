@@ -10,6 +10,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Amm%2E Precheck KO SII</fullName>
             <default>false</default>
         </values>
@@ -22,11 +26,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento Allineamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento processo transitorio Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Anticipo Appuntamento</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Gestione Fuga</fullName>
             <default>false</default>
         </values>
         <values>
@@ -50,35 +70,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Tari%2FTCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Vas e HVAC</fullName>
+            <fullName>Blocco Sollecito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -86,7 +82,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
+            <fullName>Caricamento Manuale Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -103,6 +99,14 @@
         </values>
         <values>
             <fullName>Chiamata outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente senza Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort Call</fullName>
             <default>false</default>
         </values>
         <values>
@@ -130,19 +134,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto non richiesto da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correzione dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Creare Istruttoria</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 affidi legale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 cessioni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -170,6 +174,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Comunicazione e-BDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Consu%2E e-BDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -178,7 +190,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore e-BDM gestito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico SDD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico interno</fullName>
             <default>false</default>
         </values>
         <values>
@@ -187,6 +211,10 @@
         </values>
         <values>
             <fullName>Esito Da Gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -214,6 +242,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito non elaborato</fullName>
             <default>false</default>
         </values>
@@ -222,11 +262,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Back Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Gestione M01%2FM02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione M02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione M03</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Misure Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -242,7 +302,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione blocco sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione contratto colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione manuale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -250,15 +322,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
+            <fullName>Gestione richiesta social</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi di Misura</fullName>
+            <fullName>Gestire fuga</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Giro contatore da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In gestione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integrazione richiesta social</fullName>
             <default>false</default>
         </values>
         <values>
@@ -278,11 +362,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare Resoconto Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata comunicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Invio Contratto</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Invio registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Back Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria creata%2FNon necessaria</fullName>
             <default>false</default>
         </values>
         <values>
@@ -298,6 +398,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Motore VAS da gestire</fullName>
             <default>false</default>
         </values>
@@ -306,11 +410,75 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO creazione BP CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO gestito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata messa a ruolo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Indirizzo Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Note_di gestione pratica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Note_il cliente dice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order Management MUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEC da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica Fuori Flusso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica avviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita erroneamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -370,6 +538,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Protocollo - Reclami Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Post Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Segnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - TARI da Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Protocollo - VAS</fullName>
             <default>false</default>
         </values>
@@ -386,7 +570,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Protocollo - Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Scaduta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rapporti con i distributori e SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo da Riclassificare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -402,11 +602,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riaperture urgenti errori DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta informazioni appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta non identificata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -422,6 +634,26 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Risposta Motivata Con Allegato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco Processo Post-Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco Processo verso SII%2FDL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarti Documentali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scarto Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -431,6 +663,10 @@
         </values>
         <values>
             <fullName>Scarto transitorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
             <default>false</default>
         </values>
         <values>
@@ -451,6 +687,14 @@
         </values>
         <values>
             <fullName>Sollecito Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito cli da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito gestito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -482,10 +726,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto emissione SD_singola</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto legale</fullName>
             <default>false</default>
         </values>
@@ -498,11 +738,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Validazione Firma OTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Validazione Vocal Order</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Valori non corrispondenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Valutazione Penale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita - Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Venditore Non Definito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Back Office</fullName>
             <default>false</default>
         </values>
         <values>
@@ -527,10 +787,6 @@
         </values>
         <values>
             <fullName>Verifiche Morosità Business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche contratti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -596,15 +852,15 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate__c</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PaymentDate__c</fullName>
+            <fullName>PaymentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WrittenReceiptRequestDate__c</fullName>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -668,6 +924,10 @@
         </values>
         <values>
             <fullName>Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1638,6 +1898,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -1810,19 +2074,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Profiles Chamber</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Quality Call KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Quality Call OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Quicklinks</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1921,6 +2177,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta di Rettifica di fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
@@ -1928,19 +2188,19 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>EffectiveDate__c</fullName>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendCertifiedEmailConsentDate__c</fullName>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendRequestDate__c</fullName>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeStartDate__c</fullName>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2027,6 +2287,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contenzioso In Corso</fullName>
             <default>false</default>
         </values>
@@ -2099,6 +2363,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HVAC</fullName>
             <default>false</default>
         </values>
@@ -2123,7 +2391,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Interventi con Verifica - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inversione del Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura Acqua Avviso al Cliente - Acqua</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2311,6 +2587,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Segnalazioni Varie %2F Ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sollecito Emissione Bolletta</fullName>
             <default>false</default>
         </values>
@@ -2423,7 +2703,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Verifica Fuga Idrica - Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica GDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Integrita Sigilli - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Pressione - ACQ</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2473,11 +2765,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Hera Comm NordEst</fullName>
+            <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3419,6 +3715,10 @@
         </values>
         <values>
             <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>

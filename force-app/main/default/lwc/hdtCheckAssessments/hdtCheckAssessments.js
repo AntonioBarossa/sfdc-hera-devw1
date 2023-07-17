@@ -1,21 +1,22 @@
 import { LightningElement, api, track } from 'lwc';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 import handleSearch from '@salesforce/apex/HDT_LC_CheckAssessments.handleSearch';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, //OK
-                  { label: 'Data Atto', fieldName: 'DataAtto', sortable: "true"},
-                  { label: 'Tipo Tributo', fieldName: 'TipoTributo'},
-                  { label: 'Accertamento per', fieldName: 'AccertamentoPer' },
-                  { label: 'Stato', fieldName: 'Stato' },
-                  { label: 'Base Dati', fieldName: 'BaseDati'},
-                  { label: 'Data Inizio', fieldName: 'DataInizio', sortable: "true"},
-                  { label: 'Data Fine', fieldName: 'DataFine' },
-                  { label: 'Soggetto', fieldName: 'Soggetto'},
-                  { label: 'Indirizzo', fieldName: 'Indirizzo'},
-                  { label: 'Civico', fieldName: 'Civico'},
-                  { label: 'Contratto', fieldName: 'Contratto'},
-                  { label: 'Superficie Accertata', fieldName: 'SuperficieAccertata'},
-                  { label: 'Categoria Accertata', fieldName: 'CategoriaAccertata'}];
+const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true", initialWidth: 100}, //OK
+                  { label: 'Data Atto', fieldName: 'DataAtto', sortable: "true", initialWidth: 100},
+                  { label: 'Tipo Tributo', fieldName: 'TipoTributo', initialWidth: 135},
+                  { label: 'Accertamento per', fieldName: 'AccertamentoPer', initialWidth: 150},
+                  { label: 'Stato', fieldName: 'Stato', initialWidth: 100 },
+                  { label: 'Base Dati', fieldName: 'BaseDati', initialWidth: 100},
+                  { label: 'Data Inizio', fieldName: 'DataInizio', sortable: "true", initialWidth: 120},
+                  { label: 'Data Fine', fieldName: 'DataFine', initialWidth: 100 },
+                  { label: 'Soggetto', fieldName: 'Soggetto', initialWidth: 100},
+                  { label: 'Indirizzo', fieldName: 'Indirizzo', initialWidth: 100},
+                  { label: 'Civico', fieldName: 'Civico', initialWidth: 100},
+                  { label: 'Contratto', fieldName: 'Contratto', initialWidth: 100},
+                  { label: 'Superficie Accertata', fieldName: 'SuperficieAccertata', initialWidth: 175},
+                  { label: 'Categoria Accertata', fieldName: 'CategoriaAccertata', initialWidth: 175}];
 
 
 function equalsIgnoreCase(str1, str2){
@@ -41,6 +42,8 @@ export default class HdtCheckAssessments extends LightningElement {
         this._customerMarking=value;
     }
     @track data;
+    @track isVisible = false;
+    @track message;
     _supplyCityCode;
     _customerMarking;
     columns = columns;
@@ -80,11 +83,13 @@ export default class HdtCheckAssessments extends LightningElement {
 
         handleSearch({
             cfPiva : this.fiscalCode,
-            comuneFornitura : this.supplyCity,
-            tipoPersona : this.customerMarking,
+            //comuneFornitura : this.supplyCity,
+            //tipoPersona : this.customerMarking,
+            comuneFornitura : null,
+            tipoPersona : null
         }).then(result =>{
             if (!result){
-                console.log('result ->' + this.result);
+                this.handleKo();
             }else{
                 //let data = JSON.parse(result);
                 let data = result;
@@ -92,7 +97,8 @@ export default class HdtCheckAssessments extends LightningElement {
                 try{
                     slots = data.data;
                     this.data = [];
-                    if(slots.length == 0){
+                    if(slots.length == 1 && slots[0].messaggio != null){
+                        this.message = slots[0].messaggio;
                         const navigateNextElement = new FlowNavigationNextEvent();
                         this.dispatchEvent(navigateNextElement);
                     }
@@ -114,18 +120,29 @@ export default class HdtCheckAssessments extends LightningElement {
                                 SuperficieAccertata : element.SuperficieAccertata,//OP
                                 CategoriaAccertata : element.CategoriaAccertata//OP
                             });
+                            if(element.tipoAccertamento == 'Infedele Dich.'){
+                                this.showAlert('Attenzione','Una infedele dichiarazione è stata riscontrata in corso di accertamenti','error');
+                                this.isVisible = true;
+                            }
                         });
-                        this.data.sort(this.sortBy('NrAtto', -1));
+                        if(!(this.isVisible || this.message))   this.message="In corso di accertamenti non sono state riscontrate infedeli dichiarazioni";
+                        else this.data.sort(this.sortBy('NrAtto', -1));
                     }
                 }catch(e){
                     console.error(e);
-                    this.showAlert('Attenzione','Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
+                    this.handleKo();
                 }
             } 
         }).catch(error =>{
-            this.showAlert('Attenzione',error.body.message,'error');
+            this.handleKo();
         });
     }
+
+    handleKo(){
+        this.showAlert('Attenzione','Servizio di verifica accertamenti temporaneamente non disponibile','error');
+        this.message = 'Servizio di verifica accertamenti temporaneamente non disponibile';
+    }
+
 
     addRecord(element){
         this.data = [...this.data,element];

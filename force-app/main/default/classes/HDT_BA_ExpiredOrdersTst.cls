@@ -22,10 +22,11 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id); 
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         for(Order o : ordList){
-            o.DocusignExpirationDate__c = Date.today().addDays(5);
             o.RecordTypeId = recTypeId;
             o.Contact__c = conList[0].Id;
+            o.DocusignExpirationDate__c=System.today().addDays(-10);
         }
+        ordList[1].SignatureMethod__c='OTP Remoto';
         insert ordList;
         /* Set parent order on first order */
         ordList[0].ParentOrder__c = ordList[1].Id;

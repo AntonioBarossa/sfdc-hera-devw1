@@ -4,17 +4,27 @@
     <externalId>false</externalId>
     <formula>AND (
 				 RecordType.DeveloperName == &quot;HDT_RT_Scarto&quot;,   
-				ISPICKVAL(DiscardCategory__c, &quot;Scarto complesso&quot;), 
+				 ISPICKVAL(DiscardCategory__c, &quot;Scarto complesso&quot;), 
 				 NOT(wrts_prcgvr__IsClosed__c),
 					OR(
-				     ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Esito KO da SII&quot;) ,
-								ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
-								ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;),
-								ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;),
-								ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Esito KO da SII&quot;),
-								ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
-								ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;),
-								ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;)
+								AND(
+								    ISPICKVAL(Type__c, &quot;Ammissibilità KO&quot;),
+												OR(
+																ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
+								        ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;),
+								        ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
+																ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;)
+												)
+								),
+								AND(
+								    ISPICKVAL(Type__c, &quot;Esito KO da DL/SII&quot;),
+												OR(
+																ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Esito KO da DL/SII&quot;) ,
+								        ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;),
+								        ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Esito KO da DL/SII&quot;),
+								        ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;)
+												)
+								)
 				)	
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

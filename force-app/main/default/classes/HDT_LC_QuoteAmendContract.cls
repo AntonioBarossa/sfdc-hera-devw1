@@ -29,7 +29,10 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
             for(SBQQ__QuoteLine__c ql :quoteLine ){
                 qlToUpdate.add(new SBQQ__QuoteLine__c(Id=ql.id, BillingProfile__c=contract[0].BillingProfile__c) );
             }
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             quoteLineSrv.updateRecords(qlToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         } else {
             system.debug('HDT_LC_QuoteAmendContract - assocBillingProfileFromContract - nessun contract o quoteLine trovato');
         }
@@ -51,10 +54,14 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         Map<id, List<id>> podToChilds = new Map<id, List<id>>(); //id pod to other QL with the same father as the pod
         Map<id, id> podToFather = new Map<id, id>(); // this map connect father with pod, I use to increase efficiency on mapping podToChilds 
         List<SBQQ__QuoteLine__c> quoteLinePods = new List<SBQQ__QuoteLine__c>(); //this contains just the ql pod/pdr
-        
+        Set<String> spProductNameSet = new Set<String>();
+        spProductNameSet.add('POD');
+        spProductNameSet.add('PDR');
+        spProductNameSet.add('Punto Fornitura Acqua');
+        spProductNameSet.add('Punto Fornitura Ambiente');
 
         for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
-            if(ql.SBQQ__Product__r.Name=='POD' || ql.SBQQ__Product__r.Name=='PDR'){
+            if(String.isNotBlank(ql.SBQQ__Product__r.Name) && spProductNameSet.contains(ql.SBQQ__Product__r.Name)){
                 quoteLinePods.add(ql);
                 podToChilds.put(ql.id, new List<Id>());
                 podToFather.put(ql.SBQQ__RequiredBy__c, ql.id);
@@ -117,8 +124,10 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
                         ));
                     }
                 }
-
+                /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+                HDT_UTL_QuoteProcess.disableCpq();
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
+                HDT_UTL_QuoteProcess.enableCpq();
 
             } else {
                 system.debug('HDT_LC_QuoteAmendContract - assocPodToQuoteLine - All Service Points have been assigned!');

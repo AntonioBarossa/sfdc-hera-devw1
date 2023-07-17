@@ -1,13 +1,13 @@
 public with sharing class HDT_UTL_Reclami
 {
-    public Map<String,String> setExpirationDate(Case inputCase, String supplyCity)
+    public Map<String,String> setExpirationDate(Case inputCase, String supplyCity, String commodity)
     {
-        return calculateExpirationDate(inputCase, supplyCity);
+        return calculateExpirationDate(inputCase, supplyCity, commodity);
     }   
 
-    private Map<String,String> calculateExpirationDate(Case inputCase, String supplyCity)
+    private Map<String,String> calculateExpirationDate(Case inputCase, String supplyCity, String commodityCase)
     {
-        String commodity = [ SELECT ServicePoint__r.CommoditySector__c FROM Case WHERE ( ParentId = :inputCase.ParentId OR ParentId = :inputCase.Id ) AND ServicePoint__c != null WITH SECURITY_ENFORCED ][0].ServicePoint__r.CommoditySector__c;
+        String commodity = !String.isBlank(commodityCase) ? commodityCase : inputCase.CommodityFormula__c;
         Map<String,String> result = new Map<String,String>();
 
         if ( 'Acqua'.equalsIgnoreCase(commodity) )
@@ -24,14 +24,12 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDatesWater(Case inputCase, String ato)
     {
         Map<String,String> result = new Map<String,String>();
-        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
-        Integer suspensionDays;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) || 'Reclamo Scritto Da Cittadino'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
 
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,'Acqua');
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
-            SuspensionDays = Integer.valueOf(config.SuspensionDays__c);
             if( ( process.equalsIgnoreCase('Richiesta Parere') && String.isNotBlank(ato) && config.ObjectName__c.containsIgnoreCase(ato) && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
                 ( String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato) ) ||
                  config.ObjectName__c.equalsIgnoreCase('Default') )
@@ -45,7 +43,7 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDates( Case inputCase, String commodity )
     {
         Map<String,String> result = new Map<String,String>();
-        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) || 'Reclamo Scritto Da Cittadino'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,commodity);
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
@@ -66,14 +64,18 @@ public with sharing class HDT_UTL_Reclami
 
     private Map<String,String> setDates(Case inputCase, HDT_IndemnitiesDays__mdt config)
     { 
-        Date startDate = inputCase.SendDate__c;
+        Date startDate = 'Richiesta Parere'.equalsIgnoreCase(inputCase.Type) ? Date.today() : inputCase.SendDate__c;
         Date firstDate;
         Date secondDate;
         Date thirdDate;
         Map<String,String> result = new Map<String,String>();
+        Set<String> onlyEndDateProcess = new Set<String>{'Ricostruzione Consumi', 'Esenzione Modifica Fognatura Depurazione', 'Errore di Fatturazione'};
         if( 'W'.equalsIgnoreCase(config.ComputeType__c ) )
         {
             result.put('EndDate__c', String.valueof(addBusinsessDaysWithHolidays( Integer.valueOf(config.SuspensionDays__c), startDate) ));
+            if(onlyEndDateProcess.contains(inputCase.Parent.Type) && 'Acqua'.equalsIgnoreCase(inputCase.Parent.Commodity__c)){
+                return result;
+            }
             result.put('CompletedDocumentationDate__c', String.valueof(addBusinsessDaysWithHolidays( 2*Integer.valueOf(config.SuspensionDays__c), startDate) ));
             result.put('DepositExpirationDate__c', String.valueof(addBusinsessDaysWithHolidays( 3*Integer.valueOf(config.SuspensionDays__c), startDate) ));
             firstDate = addBusinsessDaysWithHolidays( Integer.valueOf(config.SuspensionDaysRectification__c), startDate);
@@ -146,7 +148,7 @@ public with sharing class HDT_UTL_Reclami
         return result;
     }
 
-    private Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
+    public Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
     {
         Set<Date> holidays = getHolidaysDate();
         Date finalDate = startDate;

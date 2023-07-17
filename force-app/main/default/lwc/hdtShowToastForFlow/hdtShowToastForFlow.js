@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { FlowNavigationNextEvent } from 'lightning/flowSupport';
+import { FlowNavigationBackEvent, FlowNavigationNextEvent } from 'lightning/flowSupport';
 
 export default class HdtShowToastForFlow extends LightningElement {
 
@@ -8,6 +8,7 @@ export default class HdtShowToastForFlow extends LightningElement {
     @api message;
     @api variant;
     @api mode;
+    @api isBlocking;
 
 
     showMessage(title, message, variant, mode) {
@@ -21,12 +22,17 @@ export default class HdtShowToastForFlow extends LightningElement {
         this.dispatchEvent(toastMessage);
     }
 
+
     connectedCallback(){
 
         this.showMessage(this.title, this.message, this.variant, this.mode);
-        const navigateNextEvent = new FlowNavigationNextEvent();
-        this.dispatchEvent(navigateNextEvent);
-
+        if(this.message && this.isBlocking){
+            const navigateBackEvent = new FlowNavigationBackEvent();
+            this.dispatchEvent(navigateBackEvent);
+        }else{
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNextEvent);
+        }
     }
 
 }

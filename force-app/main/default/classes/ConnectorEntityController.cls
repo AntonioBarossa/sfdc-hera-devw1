@@ -7,6 +7,7 @@ global with sharing class ConnectorEntityController {
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 		Map<String,String> result = new Map<String,String>();
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+		HDT_SRV_LogService logs = new HDT_SRV_LogService('ConnectorEntityController');
 
 		try {
 			if((Integer) message.get('ErrorCode') > 0) {
@@ -81,7 +82,7 @@ global with sharing class ConnectorEntityController {
 			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
-
+			logs.insertSingleLog('ConnectorEntityController', 'createActivity', jsonMessage, null,e.getMessage()+' '+e.getStackTraceString()+' Activity : ' + JSON.serialize(activity), activity.Id, null, null);
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
 			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
@@ -102,22 +103,24 @@ global with sharing class ConnectorEntityController {
 	global static String closeActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
+		HDT_SRV_LogService logs = new HDT_SRV_LogService('ConnectorEntityController');
 		System.debug('#message ' +message);
 		System.debug('#message JSON ' + jsonMessage);
 		System.debug('#attachdata JSON ' + json.serialize(attachdata));
 		System.debug('#attachdata ' + attachdata);
+		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+			wrts_prcgvr__Status__c = 'Chiusa',
+			ActivityEndTime__c = Datetime.now(),
+			CallEndTime__c = Datetime.now(),
+			WaitingTime__c = 0 // WIP
+		);
 		try {
 			Decimal callDuration = (Decimal) message.get('Duration');
 			callDuration = callDuration != null? callDuration/60:0;
-			wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-				Id = (String) attachdata.get('sf_activity_id'),
-				wrts_prcgvr__Status__c = 'Chiusa',
-				ActivityEndTime__c = Datetime.now(),
-				CallEndTime__c = Datetime.now(),
-				CallDuration__c = callDuration,
-				RecordingLink__c = (String) attachdata.get('URLREC'),
-				WaitingTime__c = 0 // WIP
-			);
+			activity.Id = (String) attachdata.get('sf_activity_id');
+			activity.CallDuration__c = callDuration;
+			activity.RecordingLink__c = (String) attachdata.get('URLREC');
+
 
 			handleCrmChangeFlag(message, activity);
 
@@ -129,6 +132,7 @@ global with sharing class ConnectorEntityController {
 			update activity;
 		} catch (Exception e) {
 			// WIP
+			logs.insertSingleLog('ConnectorEntityController', 'closeActivity', jsonMessage, null,e.getStackTraceString() + ' '+ e.getMessage() +' Activity: '+ JSON.serialize(activity), activity.Id, null, null);
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
 			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);

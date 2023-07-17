@@ -15,18 +15,14 @@
                                     onsuccess={handleFormSuccess}
                                     onerror={handleFormError}>
             
-            <lightning-input-field class="slds-hide" field-name="RegistryCategory__c"></lightning-input-field>         
-            <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
-            <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
-
-            <lightning-input-field class="slds-hide" field-name="RegistryCategory__c"></lightning-input-field>         
+            <lightning-input-field class="slds-hide" data-name="RegistryCategory__c" field-name="RegistryCategory__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
             
             <lightning-layout multiple-rows>
 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-input-field variant="label-stacked" disabled={disableForm} field-name="CodeMissingRegistryData__c" onchange={handleFieldChange}></lightning-input-field>
+                    <lightning-input-field variant="label-stacked" data-name="CodeMissingRegistryData__c" disabled={disableForm} field-name="CodeMissingRegistryData__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -34,7 +30,8 @@
                 </lightning-layout-item>
                 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-combobox required={_required}
+                    <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="RegistryCityLookup__c" onchange={handleFieldChange}></lightning-input-field>
+                    <!--<lightning-combobox required={_required}
                                         disabled={disableForm}
                                         field-level-help="Digitare un comune per selezionarlo"
                                         name="RegistryCity__c"
@@ -42,7 +39,7 @@
                                         value={registryCityValue}
                                         options={cityOptions}
                                         onchange={handleFieldChange}>
-                    </lightning-combobox>
+                    </lightning-combobox>-->
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -50,7 +47,8 @@
                 </lightning-layout-item>
                 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-combobox required={_required}
+                    <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} data-name="LegalCityLookup__c" field-name="LegalCityLookup__c" onchange={handleFieldChange}></lightning-input-field>
+                    <!--<lightning-combobox required={_required}
                                         disabled={disableForm}
                                         field-level-help="Digitare un comune per selezionarlo"
                                         name="LegalCity__c"
@@ -58,7 +56,7 @@
                                         value={legalCityValue}
                                         options={cityOptions}
                                         onchange={handleFieldChange}>
-                    </lightning-combobox>
+                    </lightning-combobox>-->
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -70,7 +68,7 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="UrbanSection__c" onchange={handleFieldChange}></lightning-input-field>
+                    <lightning-input-field variant="label-stacked" disabled={disableForm} field-name="UrbanSection__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -82,7 +80,7 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-input-field data-id="Subaltern__c" variant="label-stacked" required={_required} disabled={disableForm} field-name="Subaltern__c" onchange={handleFieldChange}></lightning-input-field>
+                    <lightning-input-field data-id="Subaltern__c" variant="label-stacked" disabled={disableForm} field-name="Subaltern__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
                 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -104,11 +102,11 @@
                 <lightning-layout-item size="4" padding="around-medium">
                     <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="Title__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
-
+                <!--
                 <lightning-layout-item size="4" padding="around-medium">
                     <lightning-input-field variant="label-stacked" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field>
                 </lightning-layout-item>
-
+                -->
                 <lightning-layout-item size="12" padding="around-medium">
                     <lightning-layout horizontal-align="end">
                         <lightning-layout-item>
@@ -123,10 +121,17 @@
                                 </div>
                             </lightning-layout-item>
                         </template>
+                        <template if:true={modify}>
+                            <lightning-layout-item if:true={_recordId}>
+                                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                                    <lightning-button variant="neutral" icon-name="utility:loop" disabled={_readonly} label="Ripristina" title="Ripristina" onclick={handleRestore}></lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
                         <template if:true={_showDelete}>
                             <lightning-layout-item>
                                 <div class="slds-m-horizontal_xxx-small slds-text-align_center">
-                                    <lightning-button variant="destructive" icon-name="utility:delete" disabled={_readonly} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
+                                    <lightning-button variant="destructive" icon-name="utility:delete" disabled={disableDelete} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
                                 </div>
                             </lightning-layout-item>
                         </template>

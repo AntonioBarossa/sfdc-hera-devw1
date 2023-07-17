@@ -16,6 +16,11 @@
         <label>Info modulistica</label>
     </customValue>
     <customValue>
+        <fullName>genHERAZIONI</fullName>
+        <default>false</default>
+        <label>genHERAZIONI</label>
+    </customValue>
+    <customValue>
         <fullName>Info su stato pratica</fullName>
         <default>false</default>
         <label>Info su stato pratica</label>
@@ -94,6 +99,23 @@
         <fullName>Info servizi</fullName>
         <default>false</default>
         <label>Info servizi</label>
+    </customValue>
+    <customValue>
+        <fullName>Info servizi altri Enti</fullName>
+        <default>false</default>
+        <label>Info servizi altri Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>Info procedure/modulistica</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Info procedure/modulistica</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione di non accettazione preventivo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazione di non accettazione preventivo</label>
     </customValue>
     <masterLabel>Macro Argomento</masterLabel>
     <sorted>false</sorted>

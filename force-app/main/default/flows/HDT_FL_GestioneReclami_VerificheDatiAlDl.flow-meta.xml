@@ -955,6 +955,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del Processo Verifiche Dati al DL</description>
+    <environments>Default</environments>
     <formulas>
         <name>BlankDate</name>
         <dataType>Date</dataType>

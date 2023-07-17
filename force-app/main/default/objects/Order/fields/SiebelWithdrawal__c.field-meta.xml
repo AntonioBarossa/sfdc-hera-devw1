@@ -5,12 +5,12 @@
     <formula>IF(
 	OR( 
 	IsActivationDeferred__c = true,
- ISPICKVAL(WaiverRightAfterthought__c,&apos;Si&apos;) 
-	),
+ ISPICKVAL(WaiverRightAfterthought__c,&quot;Si&quot;),
+ NOT(ISBLANK(RecessNotice__c))
+	),  
 	true,
 	false
 	)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Siebel Recesso</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>

@@ -2,10 +2,26 @@
 public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
+        HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, null);
         HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
-        HDT_UTL_CaseProcess.predefaultCaseValues((List<Case>)Trigger.new,null);
+        //HDT_UTL_CaseProcess.predefaultCaseValues((List<Case>)Trigger.new,null);
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
     }
 
  	//public override void beforeDelete(){}
@@ -14,14 +30,21 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
+        Boolean skipForSap = false;
         try{
+            skipForSap = HDT_UTL_Scarti.changeSapPhaseHandler(Trigger.newMap, Trigger.oldMap);
+            HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
+                if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
+                    caseNew.CancellationNote__c = caseNew.CancellationNote__c.substring(0,255);
+                }
                 HDT_UTL_CaseProcess.setCloseStatus(caseNew);
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
                 
                 //AF W2 Inserito controllo sulla fase Bozza
                 if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido' && caseNew.Phase__c != 'Bozza' && caseNew.Phase__c != 'Da Inviare'){
                     caseNew.QuotationType__c = 'Predeterminabile';
+                    caseNew.PaymentDetails__c = 'Change Quotation';
                 }
                 //Inserito questo controllo per gestire la casistica di un Preventivo Analitico che riceve più ammissibilità causa esecuzione lavori.
                 //pertanto se il Preventivo è Analitico, ho già ricevuto un ammissibilità OK e sto ricevendo un importo, non devo riclassificare.
@@ -33,6 +56,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     caseNew.Phase__c = caseNew.TecnicalPhase__c;
                     caseNew.TecnicalPhase__c = null;
                 }
+
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                    DateTime dt = caseNew.CreatedDate;
+                    caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
+                }
             }   
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
@@ -43,7 +71,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         Boolean skipForExportSie = HDT_UTL_CaseProcess.checkSkipExportSie(trigger.new,Trigger.oldMap);
         //EVERIS: Gestione Scarti SAP
-        Boolean skipForGestioneScarti = HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
+        Boolean skipForGestioneScarti = skipForSap || HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
 	    if(!skipForCancellation && !skipForGestioneScarti && !skipForExportSie){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
@@ -71,10 +99,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             /*sostituito dal metodo sotto che esclude eventuali chiamate doppie eseguite negli ultimi 30 secondi 
             ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                     .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old}); */
-            HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Case');
+            if(HDT_UTL_CaseProcess.isChangedPhase(trigger.new,Trigger.oldMap)){
+                HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Case');
+            }
         }
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
-
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
         HDT_UTL_CaseProcess.caseBpcaSieManagement(Trigger.newMap, Trigger.oldMap);
         //***INIZIO SVILUPPO CAMPAGNE */
@@ -88,6 +117,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
         HDT_UTL_Scarti.closeActivityOnCompleted(Trigger.new, Trigger.oldMap);
+        HDT_UTL_CaseProcess.handleAfterUpdate(Trigger.new, Trigger.oldMap);
         
     }
 

@@ -5,7 +5,7 @@
         <name>Aggiornamento_Fase_Case</name>
         <label>Aggiornamento Fase Case</label>
         <locationX>209</locationX>
-        <locationY>528</locationY>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Chiusura_case</name>
         <label>Chiusura case</label>
         <locationX>473</locationX>
-        <locationY>648</locationY>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Fase_Case_Cliente_contattato</name>
         <label>Fase Case = &quot;Cliente contattato&quot;?</label>
         <locationX>605</locationX>
-        <locationY>528</locationY>
+        <locationY>492</locationY>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Fase_Case_Cliente_contattato_SI</name>
@@ -66,7 +66,7 @@
         <name>Fase_Case_Documentazione_incompleta</name>
         <label>Fase Case &quot;Documentazione incompleta&quot;?</label>
         <locationX>407</locationX>
-        <locationY>408</locationY>
+        <locationY>384</locationY>
         <defaultConnector>
             <targetReference>Fase_Case_Cliente_contattato</targetReference>
         </defaultConnector>
@@ -87,6 +87,7 @@
             <label>SI</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>Gestione Case Documentazione Incompleta {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Documentazione Incompleta Case</label>
     <processMetadataValues>
@@ -108,31 +109,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Creazione_Activity_Custom_Contattare_cliente</name>
-        <label>Creazione Activity Custom &quot;Contattare cliente&quot;</label>
-        <locationX>209</locationX>
-        <locationY>768</locationY>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Contattare il cliente</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>407</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Fase_Case_Documentazione_incompleta</targetReference>
@@ -153,17 +134,14 @@
         <name>Aggiornamento_Case</name>
         <label>Aggiornamento Case</label>
         <locationX>209</locationX>
-        <locationY>648</locationY>
-        <connector>
-            <targetReference>Creazione_Activity_Custom_Contattare_cliente</targetReference>
-        </connector>
+        <locationY>600</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiornamento_Case_0</name>
         <label>Aggiornamento Case</label>
         <locationX>473</locationX>
-        <locationY>768</locationY>
+        <locationY>708</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <start>

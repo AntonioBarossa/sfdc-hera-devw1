@@ -4,17 +4,17 @@ public inherited sharing class HDT_QR_AmountQuote {
     public static List<AdminPriceQuote__c> queryAmount(String distributor, String city, String caliber, Boolean hasCorrector, String market, String commodity, String processType,String year,String supplyUseType,String intendedUse){
          List<AdminPriceQuote__c> priceQuoteList =  [SELECT Amount__c FROM AdminPriceQuote__c 
                     WHERE
-                    Distributor__r.Name = :distributor
-                    AND City__c = :city
-                    AND Caliber__c = :caliber
-                    AND HasCorrector__c = :hasCorrector
-                    AND Market__c = :market
+                    (Distributor__r.Name = :distributor OR Distributor__r.Name = null)
+                    AND (City__c = :city OR City__c = null)
+                    AND (Caliber__c = :caliber OR Caliber__c = null)
+                    AND (HasCorrector__c = :hasCorrector OR HasCorrector__c = null)
+                    AND (Market__c = :market OR Market__c = null)
                     AND Name != 'Default'
                     AND Commodity__c =: commodity
                     AND Name =: processType
-                    AND MeterManufactureYear__c =: year
-                    AND SupplyUseType__c =: supplyUseType
-                    AND IntendedUse__c =: intendedUse
+                    AND (MeterManufactureYear__c =: year OR MeterManufactureYear__c = null)
+                    AND (SupplyUseType__c =: supplyUseType OR SupplyUseType__c = null)
+                    AND (IntendedUse__c =: intendedUse OR IntendedUse__c = null)
                     WITH SECURITY_ENFORCED
                     LIMIT 1
                 ];

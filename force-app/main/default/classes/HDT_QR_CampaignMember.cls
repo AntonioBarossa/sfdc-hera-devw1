@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT Id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE ContactId = :contactId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE ContactId = :contactId AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED]; //AND Campaign.isActive = true
     }
 
     /**
@@ -386,7 +386,11 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return CampaignMember
     */
     public CampaignMember getByEcid(String ecid) {
-        List<CampaignMember> cmList = [
+        if (string.isBlank(ecid)) {
+            return null;
+        }
+        else{
+            List<CampaignMember> cmList = [
             SELECT
             Id, 
             Status  
@@ -394,8 +398,10 @@ public inherited sharing class HDT_QR_CampaignMember {
             WHERE Ecid__c = :ecid
             AND isToSendStatusReitek__c = true
             WITH SECURITY_ENFORCED
-        ];
-        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+            ];
+            return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+        }
+
     }
 
     /**
@@ -480,7 +486,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT Id,
             Contact.AccountId,
-            CampaignId,
+            CampaignId, Campaign.PositiveOutcomeDefaultStatus__c,
             Status
             FROM CampaignMember 
             WHERE HasResponded = false 
@@ -627,6 +633,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             ContactId,
             Contact.AccountId,
             CampaignId,
+            RelatedActivity__c,
+            NumberingValidityStartDate__c,
             Status
             FROM CampaignMember 
             WHERE ContactId IN :contact
@@ -680,8 +688,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT
             Id,
-            ContactId, 
-            LeadId
+            ContactId,
+            PhoneNumber__c,
+            Ecid__c, 
+            LeadId,
+            Campaign.Tipology__c
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
@@ -690,7 +701,7 @@ public inherited sharing class HDT_QR_CampaignMember {
 
     public static List<CampaignMember> getCampMembByActivity(String actId){
 
-        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
+        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c, Ecid__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
         return campMembList;
     }
     

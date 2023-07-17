@@ -37,9 +37,9 @@ public inherited sharing class HDT_UTL_Dependencies {
         }
         if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
             for(Order order : (List<Order>)newSObjectMap.values()){
-                Order oldOrder = (Order)oldSObjectMap.get(order.ID);
-                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCs.contains(order.Phase__c)){
-                    orders.put(order.ID, order);
+                Order oldOrder = (Order)oldSObjectMap.get(order.Id);
+                if(String.isNotBlank(oldOrder.Phase__c) && !oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCs.contains(order.Phase__c)){
+                    orders.put(order.Id, order);
                 }
             }
             if(orders.size()>0){
@@ -203,6 +203,8 @@ public inherited sharing class HDT_UTL_Dependencies {
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
                             singleIncomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
                             singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:singleIncomingServicePoint;
+                            //TARI non ha codice pod
+                            singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ServicePoint__c:singleIncomingServicePoint;
                             incomingServicePoint.put(sr.Id, singleIncomingServicePoint);
                             matchValueServicePoints.add(incomingServicePoint.get(sr.Id));
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){

@@ -166,7 +166,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             //System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + processObj.newCase);
             
             Contract contract;
-            if(podContractMap.containsKey(processObj.csvSplitted[contractIndex])){
+            if(podContractMap.containsKey(processObj.csvSplitted[contractIndex])){                
                 contract = podContractMap.get(processObj.csvSplitted[contractIndex]);
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
@@ -177,6 +177,11 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 continue;
             }
             
+            if(!contract.status.equalsIgnoreCase('Attivo')){
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Il contratto non è attivo'));
+                continue;
+            }
+
             String accountId = contract.AccountId;
             processObj.newCase.AccountId = accountId;
 
@@ -217,8 +222,10 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             //}
 
             try{
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
-                processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                if(!Test.isRunningTest()){
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, contract.ServicePoint__r.ServicePointCode__c);
+                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), processObj.newCase); 
+                }
                 caseToInsert.add(processObj.newCase); 
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
@@ -296,7 +303,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
-            item.StatusDescription__c = message;
+            item.StatusDescription__c = message.abbreviate(250);
         }
         update itemList;
     }

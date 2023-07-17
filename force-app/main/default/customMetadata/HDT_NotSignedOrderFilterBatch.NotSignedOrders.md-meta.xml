@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>OrdiniNonFirmati</label>
+    <protected>false</protected>
+    <values>
+        <field>ChildOrdersStatus__c</field>
+        <value xsi:type="xsd:string">Completata
+Annullato
+Voltura Rifiutata</value>
+    </values>
+    <values>
+        <field>ParentOrdersStatus__c</field>
+        <value xsi:type="xsd:string">Documentazione Gestita
+Annullato
+Completata</value>
+    </values>
+    <values>
+        <field>SignatureMethod__c</field>
+        <value xsi:type="xsd:string">OTP Remoto</value>
+    </values>
+</CustomMetadata>

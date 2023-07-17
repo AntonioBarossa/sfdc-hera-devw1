@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>501</locationX>
-        <locationY>1574</locationY>
+        <locationX>336</locationX>
+        <locationY>1694</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -15,6 +15,12 @@
             <name>cluster</name>
             <value>
                 <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.Commodity__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -40,8 +46,8 @@
     <actionCalls>
         <name>redirectToRecord</name>
         <label>redirectToRecord</label>
-        <locationX>182</locationX>
-        <locationY>2750</locationY>
+        <locationX>50</locationX>
+        <locationY>2534</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -55,26 +61,10 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>AssegnaValori</name>
+        <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
         <locationY>2294</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Si</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AssegnaValori_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaValori_0_0</name>
-        <label>AssegnaValori</label>
-        <locationX>182</locationX>
-        <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -103,15 +93,123 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SalesCompanyPicklistValues</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>MMS</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.CityOrInstitution__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ATO</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <description>Valorizzazione dell&apos;indirizzo di recapito per il documentale</description>
+        <name>AssignDeliveryAddress</name>
+        <label>AssignDeliveryAddress</label>
+        <locationX>336</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.DeliveryAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DeliveryAddressFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAfterAddress</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>501</locationX>
-        <locationY>1694</locationY>
+        <locationX>336</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +245,7 @@
     <assignments>
         <name>AssignNewAddress</name>
         <label>AssignNewAddress</label>
-        <locationX>589</locationX>
+        <locationX>424</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>getPostClassification.SupplyCity__c</assignToReference>
@@ -205,14 +303,28 @@
                 <elementReference>newAddressLwc.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>updateAfterAddress</targetReference>
+            <targetReference>AssignDeliveryAddress</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
-        <locationX>646</locationX>
+        <locationX>226</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -225,10 +337,18 @@
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>SalesCompanyPicklistValues</name>
+        <choiceText>Marche Multiservizi S.p.A</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Marche Multiservizi S.p.A</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>alternativeAddress</name>
         <label>alternativeAddress</label>
-        <locationX>501</locationX>
+        <locationX>336</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress</targetReference>
@@ -245,7 +365,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Input_Case_Aggiornato</targetReference>
+                <targetReference>AssignDeliveryAddress</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -253,11 +373,10 @@
     <decisions>
         <name>Ambiente</name>
         <label>Ambiente?</label>
-        <locationX>501</locationX>
-        <locationY>1814</locationY>
+        <locationX>336</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>redirectToRecord</targetReference>
+            <targetReference>Calcola_ATO</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -279,7 +398,7 @@
     <decisions>
         <name>Annullamento_postAddress</name>
         <label>Annullamento</label>
-        <locationX>187</locationX>
+        <locationX>105</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>alternativeAddress</targetReference>
@@ -323,62 +442,15 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Rettifica_Doppia_Fatturazione</name>
-        <label>Rettifica Doppia Fatturazione?</label>
-        <locationX>182</locationX>
-        <locationY>2174</locationY>
-        <defaultConnector>
-            <targetReference>AssegnaValori_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Si</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Input_Case_Aggiornato.FirstLevelComplaintClassification__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Rettifica Doppia Fatturazione</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssegnaValori</targetReference>
-            </connector>
-            <label>Si</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>646</locationX>
+        <locationX>226</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>redirectToRecord</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
-        <rules>
-            <name>Conferma</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>getPostClassification</targetReference>
-            </connector>
-            <label>Conferma</label>
-        </rules>
         <rules>
             <name>Annulla</name>
             <conditionLogic>and</conditionLogic>
@@ -401,12 +473,34 @@
             </connector>
             <label>Annulla</label>
         </rules>
+        <rules>
+            <name>Conferma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getPostClassification</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
     </decisions>
     <decisions>
         <name>tariManaged</name>
         <label>tariManaged</label>
-        <locationX>336</locationX>
-        <locationY>2054</locationY>
+        <locationX>182</locationX>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
         </defaultConnector>
@@ -422,11 +516,18 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
+                <targetReference>AssegnaValori_0_0</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Concatenazione dell&apos;indirizzo da visualizzare nel campo &quot;Indirizzo di Spedizione&quot; nel component del documentale</description>
+        <name>DeliveryAddressFormula</name>
+        <dataType>String</dataType>
+        <expression>{!getPostClassification.SupplyStreetName__c} + &apos; &apos; + {!getPostClassification.SupplyStreetNumber__c} + &apos; &apos; + {!getPostClassification.SupplyStreetNumberExtension__c} + &apos;, &apos; + {!getPostClassification.SupplyCity__c} + &apos; &apos; + {!getPostClassification.SupplyProvince__c} + &apos;, &apos; + {!getPostClassification.SupplyPostalCode__c} + &apos; &apos; + {!getPostClassification.SupplyCountry__c}</expression>
+    </formulas>
     <formulas>
         <name>SupplyCityFormula</name>
         <dataType>String</dataType>
@@ -454,10 +555,35 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <description>Ricerca del ATO di appartenenza in base al comune</description>
+        <name>Calcola_ATO</name>
+        <label>Calcola ATO</label>
+        <locationX>490</locationX>
+        <locationY>2054</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Town__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <object>TownATOTable__c</object>
+        <outputAssignments>
+            <assignToReference>ATO</assignToReference>
+            <field>ATO__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
-        <locationX>501</locationX>
-        <locationY>1454</locationY>
+        <locationX>336</locationX>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Calculate_Expiration_Date</targetReference>
@@ -477,7 +603,7 @@
     <recordLookups>
         <name>getPostClassification</name>
         <label>getPostClassification</label>
-        <locationX>187</locationX>
+        <locationX>105</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -498,8 +624,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>182</locationX>
-        <locationY>2630</locationY>
+        <locationX>50</locationX>
+        <locationY>2414</locationY>
         <connector>
             <targetReference>redirectToRecord</targetReference>
         </connector>
@@ -508,8 +634,8 @@
     <recordUpdates>
         <name>updateAfterAddress</name>
         <label>updateAfterAddress</label>
-        <locationX>589</locationX>
-        <locationY>1238</locationY>
+        <locationX>336</locationX>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>Get_Input_Case_Aggiornato</targetReference>
         </connector>
@@ -518,7 +644,7 @@
     <screens>
         <name>Advice</name>
         <label>Advice</label>
-        <locationX>646</locationX>
+        <locationX>226</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -532,12 +658,12 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
-        <locationX>646</locationX>
+        <locationX>226</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -648,7 +774,7 @@
     <screens>
         <name>selezioneIndirizzo</name>
         <label>selezioneIndirizzo</label>
-        <locationX>187</locationX>
+        <locationX>105</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -660,6 +786,14 @@
             <name>headerAddress</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!InputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SalesCompanyPicklist</name>
+            <choiceReferences>SalesCompanyPicklistValues</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Società di Vendita</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>checkAddress</name>
@@ -691,6 +825,12 @@
                 <name>theCase</name>
                 <value>
                     <elementReference>getPostClassification</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>hideButtonAccountLogic</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -795,7 +935,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>520</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Advice</targetReference>
@@ -805,8 +945,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>646</locationX>
-        <locationY>3374</locationY>
+        <locationX>226</locationX>
+        <locationY>3158</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -830,8 +970,8 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>336</locationX>
-        <locationY>1934</locationY>
+        <locationX>182</locationX>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>tariManaged</targetReference>
         </connector>
@@ -856,6 +996,14 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <description>Contiene l&apos;ATO di appartenenza del comune della segnalazione</description>
+        <name>ATO</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>DirittoRettifica</name>
         <dataType>Boolean</dataType>
@@ -884,5 +1032,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

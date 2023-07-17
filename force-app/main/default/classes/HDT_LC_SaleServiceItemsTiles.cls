@@ -59,10 +59,14 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
         Sale__c sale = new Sale__c();
 
         Opportunity opp = opportunityQuery.getRecordById(opportunityId);
-
         sale.Id = opp.Sale__c;
         sale.IsTransition__c = false;
-
+        /* IsTransition a false sulla vendita va messo solo ed esclusivamente se non vi sono altre quote con IsTransition a true*/
+        List<SBQQ__Quote__c> otherQuotes = [SELECT Id, IsTransition__c FROM SBQQ__Quote__c WHERE Id != :opp.SBQQ__PrimaryQuote__c AND SBQQ__Status__c NOT IN ('Cancelled','Rejected') AND Sale__c = :opp.Sale__c AND IsTransition__c = true WITH SECURITY_ENFORCED];
+        if(!otherQuotes.isEmpty())
+        {
+            sale.IsTransition__c = true;
+        }
         SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
             Id = opp.SBQQ__PrimaryQuote__c,
             CancellationReason__c = cancellationReason

@@ -149,8 +149,8 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
 
         getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
-            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
-            console.log('processType XXX'+ JSON.stringify(this.processtype));
+            // console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
+            // console.log('processType XXX'+ JSON.stringify(this.processtype));
             this.hiddenSearchBarMod=false;
             if(data==='List is populated'){
                 this.hiddenSearchBarMod=true;
@@ -515,31 +515,52 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.confirmButtonDisabled = true;
             });
         }
+        this.apiSearchButtonStatus = true;
     }
 
     callApi(event, isFrom){
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
-            this.searchInputValue = event;
-            console.log('#Length Event >>> ' + this.searchInputValue.length);
-            let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
-            let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
+            this.searchInputValue = event
+            /**
+             * NTT 02112022
+             * Introdotto check sul queryType (checkbox) in quanto per l'h2o il pod ha una lunghezza inferiore ai 14
+             * E' possibile modificare il codice valorizzando il contractCode solo se il valore inizia per 3
+            */
+            let contractCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("3") ? this.searchInputValue : '';
+            let servicePointCode = !this.searchInputValue.startsWith("3") && !this.searchInputValue.startsWith("4") ? this.searchInputValue : '';
             let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
+            // if(this.queryType != null){
+            //     if(this.queryType.includes('pod')){
+            //         contractCode = '';
+            //         servicePointCode = this.searchInputValue;
+            //     }
+            // }
+            //let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
+            //let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
+            //let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             }));
             callService({contratto:contractCode, pod:servicePointCode,impianto:implantCode}).then(data =>{            
+                console.log('XXX callService (dataEnrichment): data --> '+JSON.stringify(data));
                 if(data.statusCode=='200' || this.postSales === true){
                     if(data.statusCode != '200')
                     {
-                        resolve();
+                        if (isFrom != 'searchSap'){
+                            resolve();
+                        }else{
+                            this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                            this.preloading = false;
+                        }
                         return;
                     }
                     this.responseArriccData = data;
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
                         let sp = datas;
                         this.sp=sp;
+                        console.log('XXX extractDataFromArriccDataServiceWithExistingSp: datas --> '+JSON.stringify(datas));
                         if(sp!= undefined|| sp != null){
                             this.rowToSend = datas;
                             this.preloading = false;
@@ -578,7 +599,9 @@ export default class HdtAdvancedSearch extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali: JSON.stringify(this.datiCatastali)}).then(data => {
+    
+        console.log('XXX getServicePoints: parameter:'+this.searchInputValue+';queryType:'+this.queryType+';additionalFilter:'+this.additionalFilterFinal+';isSuperUser:'+this.isSuperUser+';datiCatastali:'+JSON.stringify(this.datiCatastali));
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalFilterFinal,isSuperUser:this.isSuperUser, datiCatastali: JSON.stringify(this.datiCatastali)}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 
@@ -660,6 +683,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }else{
                             this.confirmButtonDisabled = false;
                         }
+                        found = false;
                     }
                 }
                 console.log('this.originalData >>> ' + this.originalData);
@@ -710,7 +734,8 @@ export default class HdtAdvancedSearch extends LightningElement {
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
         let implantCode = servPoint['Impianto SAP'];
-        let codeCallApi = servPoint['Codice Punto'] !== null && servPoint['Codice Punto'] !== undefined && servPoint['Codice Punto'] !== ''?pointCode:!implantCode ? '' : implantCode;
+        let contractCode = servPoint['Codice Contratto'];
+        let codeCallApi = servPoint['Codice Punto'] !== null && servPoint['Codice Punto'] !== undefined && servPoint['Codice Punto'] !== '' ? pointCode : (implantCode ? implantCode : (contractCode ? contractCode : ''));
         this.callApi(codeCallApi, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();

@@ -27,7 +27,7 @@ public with sharing class HDT_LC_ContactSelection {
             for (AccountContactRelation acr : primaryRelations) {
                 // Rimuoviamo i contatti che sono Titolari per altri Account.
                 // Per modificare questi contatti il processo va innescato dall'Account per cui sono titolari.
-                if (acr.AccountId != accountId) {
+                if (acr.AccountId != accountId && !'Titolare'.equalsIgnoreCase(rolesMap.get(acr.ContactId))) {
                     contactIds.remove(acr.ContactId);
                     rolesMap.remove(acr.ContactId);
                 }

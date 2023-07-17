@@ -27,11 +27,11 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-            List<Account> accDistr = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accDistr = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','G3 - MMS Azienda','Aziende SME');
 
-            List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
+            List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(3,false);
             points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
             points[0].Account__c = accs[1].id;
             points[0].PlugPresence__c = 'Si';
@@ -41,6 +41,26 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             points[0].SapContractStatus__c = 'Attivo';
             points[0].CommoditySector__c = 'Energia Elettrica';
             points[0].Distributor__c = accDistr[0].Id;
+
+            points[1].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
+            points[1].Account__c = accs[1].id;
+            points[1].PlugPresence__c = 'Si';
+            points[1].isReseller__c = false;
+            points[1].ServicePointCode__c = 'codicepunto';
+            points[1].MeterStatus__c = 'Bozza';
+            points[1].SapContractStatus__c = 'Attivo';
+            points[1].CommoditySector__c = 'Acqua';
+            points[1].Distributor__c = accDistr[0].Id;
+
+            points[2].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
+            points[2].Account__c = accs[1].id;
+            points[2].PlugPresence__c = 'Si';
+            points[2].isReseller__c = false;
+            points[2].ServicePointCode__c = 'codicepunto';
+            points[2].MeterStatus__c = 'Bozza';
+            points[2].SapContractStatus__c = 'Attivo';
+            points[2].CommoditySector__c = 'Gas';
+            points[2].Distributor__c = accDistr[0].Id;
             insert points;
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,false,accs[0].id);
@@ -59,7 +79,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
             List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pbList[0].Id);
             
-            List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(2, false, accs[0].id, 'Bozza');
+            List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(4, false, accs[0].id, 'Bozza');
             orders[0].ServicePoint__c = points[0].id;
             orders[0].VoltageLevel__c ='MT';
             orders[0].MarketOrigin__c ='Libero';
@@ -76,10 +96,18 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             orders[1].ServicePoint__c = points[0].id;
             orders[1].IsVas__c = true;
             orders[1].Pricebook2Id = pbList[0].id;
+            
+            orders[2].ServicePoint__c = points[1].id;
+            orders[2].Commodity__c = 'Acqua';
+            orders[2].RateCategory__c = 'ACDOMRESP0';
+            orders[2].ImplantType__c = '1106-Cantiere';
+            
+            orders[3].ServicePoint__c = points[2].id;
+            orders[3].Commodity__c = 'Gas';
             insert orders;
 
             List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orders[1].id, points[0].id, productList[0].id, priceBookEntryList[0].id);
-            ordersItems[0].ConsumptionAnnual__c = 10;
+            ordersItems[0].ConsumptionAnnualVAS__c = 10;
             insert ordersItems;
             
             List<Order> childOrders =  HDT_UTL_DataFactoryTst.createChildOrder(2, false, accs[0].id, sales, orders[0].id, null);
@@ -124,14 +152,21 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             processObj.CasualCode__c = '';
             //processObj.CreatedById = '';
             processObj.ExistActivityDatiDiscordanti__c = false;
+            processObj.ExistActivityDatiDiscordantiNew__c = 'All';
             processObj.ExistActivitySwitchRipristinatorio__c = false;
+            processObj.ExistActivitySwitchRipristinatorioNew__c = 'All';
             processObj.IsAmendment__c = false;
             processObj.IsChangeUse__c = false;
+            processObj.IsChangeUseNew__c = 'All';
             processObj.isOwnAccount__c = 'No';
+            processObj.isOwnAccountNew__c = 'All';
             processObj.IsReseller__c = false;
+            processObj.IsResellerNew__c = 'All';
             processObj.IsSameAccount__c = false;
             processObj.isSTG__c = false;
+            processObj.isSTGNew__c = 'All';
             processObj.OngoingSwitchOut__c = false;
+            processObj.OngoingSwitchOutNew__c = 'All';
             //processObj.OwnerId = '';
             processObj.PlugPresence__c = true;
             processObj.PowerChange__c = true;
@@ -169,7 +204,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         VasSubtype__c,
                         ServicePoint__r.SapContractStatus__c,
                         ServicePoint__r.CommoditySector__c,
-                        isSTG__c
+                        isSTG__c,
+                        RateCategory__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -208,7 +244,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SupplyCity__c,
                      	AccountId,
                      	Account.RecordType.DeveloperName,
-                        SupplyType__c
+                        SupplyType__c,
+                        RateCategory__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -265,7 +302,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          CommodityFormula__c,
                      	 Account.RecordType.DeveloperName,
                          SupplyCity__c,
-                         SupplyType__c                          
+                         SupplyType__c,
+                         RateCategory__c                          
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -324,7 +362,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -383,7 +422,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      CommodityFormula__c,
                      SupplyCity__c,
                      Account.RecordType.DeveloperName,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -441,7 +481,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -508,7 +549,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -729,7 +771,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         try{
             String getConsumAnForVas = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(ord.id);
-            System.assertEquals('10.00', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
+            System.assertEquals('10', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
 
         } catch (Exception e) {
 
@@ -778,7 +820,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -815,6 +858,127 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
 
+    @isTest 
+    static void next8(){
+        
+        Id accId = [Select id from Account LIMIT 1].id;
+        
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
+        activities[0].type__c = 'Gestione Switch in Ripristinatorio';
+        activities[0].wrts_prcgvr__Status__c = 'Creata';
+        activities[0].Account__c = accId;
+        activities[0].ServicePointCode__c = 'codicepunto';
+        insert activities;
+        
+        Order ord = [SELECT id, ServicePoint__c, VoltageLevel__c, AccountId, MarketOrigin__c, PowerRequested__c, PowerCommitted__c, IsWinback__c, SAPImplantCode__c, 
+                     ServicePoint__r.MeterStatus__c, ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c, ServicePoint__r.ServicePointCode__c,
+                     ServicePoint__r.RecordType.DeveloperName, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c, ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName, CommodityFormula__c, SupplyType__c, RateCategory__c, SalesCompany__c, ImplantType__c
+                     FROM Order
+                     WHERE CommodityFormula__c = 'Acqua'];
+            
+        ServiceRequest__c srRequest = [SELECT id, ServicePointCode__c, Status__c, Order__c, CommoditySector__c, Type__c, ServicePoint__c, ProcessType__c, Account__c, BillingProfile__c
+                                       FROM ServiceRequest__c];
+        srRequest.ServicePoint__c = null;
+       
+        Map<String,String> selectedProcessObject = new Map<String,String>();
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_Default');
+        selectedProcessObject.put('ProcessName__c','Connessione con Attivazione');
+        selectedProcessObject.put('processType','Connessione con Attivazione');
+        selectedProcessObject.put('processCode','somecode');
+        Map<String,String> extraParams = new Map<String,String>();
+        extraParams.put('servicePointType','HDT_RT_Gas');
+        
+        String deliberate = 'dontknow';
+        
+        Test.startTest();
+        
+        String result = HDT_LC_ChildOrderProcessPrecheck.next(ord,ord.id,selectedProcessObject,deliberate,extraParams,srRequest);
+        
+        Test.stopTest();
+        
+        System.assertEquals('', result, 'next did not work correctly');
+        System.assertNotEquals(null, result, 'next did not work correctly');
+    }
 
+    @isTest 
+    static void next9(){
+        
+        Id accId = [Select id from Account LIMIT 1].id;
+        
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
+        activities[0].type__c = 'Gestione Switch in Ripristinatorio';
+        activities[0].wrts_prcgvr__Status__c = 'Creata';
+        activities[0].Account__c = accId;
+        activities[0].ServicePointCode__c = 'codicepunto';
+        insert activities;
+        
+        Order ord = [SELECT id, ServicePoint__c, VoltageLevel__c, AccountId, MarketOrigin__c, PowerRequested__c, PowerCommitted__c, IsWinback__c, SAPImplantCode__c, 
+                     ServicePoint__r.MeterStatus__c, ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c, ServicePoint__r.ServicePointCode__c,
+                     ServicePoint__r.RecordType.DeveloperName, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c, ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName, CommodityFormula__c, SupplyType__c, RateCategory__c, SalesCompany__c, ImplantType__c
+                     FROM Order
+                     WHERE CommodityFormula__c = 'Gas'];
+            
+        ServiceRequest__c srRequest = [SELECT id, ServicePointCode__c, Status__c, Order__c, CommoditySector__c, Type__c, ServicePoint__c, ProcessType__c, Account__c, BillingProfile__c
+                                       FROM ServiceRequest__c];
+        srRequest.ServicePoint__c = null;
+       
+        Map<String,String> selectedProcessObject = new Map<String,String>();
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_Default');
+        selectedProcessObject.put('ProcessName__c','Connessione con Attivazione');
+        selectedProcessObject.put('processCode','somecode');
+        Map<String,String> extraParams = new Map<String,String>();
+        extraParams.put('servicePointType','HDT_RT_Gas');
+        
+        String deliberate = 'dontknow';
+        
+        Test.startTest();
+        
+        String result = HDT_LC_ChildOrderProcessPrecheck.next(ord,ord.id,selectedProcessObject,deliberate,extraParams,srRequest);
+        
+        Test.stopTest();
+        
+        System.assertEquals('', result, 'next did not work correctly');
+        System.assertNotEquals(null, result, 'next did not work correctly');
+    }
+
+    @isTest
+    static void getProcessDriverTst()
+    {
+        Order ord = [Select id,
+                        ServicePoint__c,
+                        VoltageLevel__c,
+                        MarketOrigin__c,
+                        PowerRequested__c,
+                        PowerCommitted__c,
+                        IsWinback__c,
+                        SAPImplantCode__c,
+                        ServicePoint__r.MeterStatus__c,
+                        ServicePoint__r.Account__c,
+                        ServicePoint__r.PlugPresence__c,
+                        ServicePoint__r.ServicePointCode__c,
+                        ServicePoint__r.RecordType.DeveloperName,
+                        SBQQ__Quote__r.AllowChangeUse__c,
+                        SBQQ__Quote__r.AmendmentAllowed__c, 
+                        ServicePoint__r.isReseller__c,
+                        CommodityFormula__c,
+                        ServicePoint__r.CommoditySector__c,
+                        SupplyCity__c,
+                     	AccountId,
+                     	Account.RecordType.DeveloperName,
+                        SupplyType__c,
+                        ServicePoint__r.SapContractStatus__c,
+                        isSTG__c
+                        From Order
+                        WHERE Name = 'testOrderName0'];
+        Test.startTest();
+            String resultOne = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(ord);
+            String resultTwo = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(null);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(resultOne), 'Driver Non Calcolati');
+        System.assertEquals(true, !String.isNotBlank(resultTwo), 'Errore non gestito correttamente');
+
+    }
     
 }

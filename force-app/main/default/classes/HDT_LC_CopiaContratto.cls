@@ -8,12 +8,12 @@ public with sharing class HDT_LC_CopiaContratto {
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
     public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
+    
     @AuraEnabled
     public static List<Order> getAccountOrder(String accountId,String tipo){
         HDT_QR_Order orderQr = new HDT_QR_Order();
         List<Order> listRes = new List<Order>();
-        if(tipo == 'Copia contratto firmato'){
-            
+        if(tipo == 'Copia contratto firmato'){            
             listRes = orderQr.getRecordsByAccountIdCopContrattoFirmato(accountId);
         }else if(tipo == 'Copia contratto non firmato'){
             listRes = orderQr.getRecordsByAccountIdCopContrattoNonFirmato(accountId);
@@ -21,17 +21,15 @@ public with sharing class HDT_LC_CopiaContratto {
             listRes = orderQr.getRecordsByAccountIdCopContrattoSignatureMethod(accountid,'Vocal Order');
         }
 
-        return listRes;
-         
-        
+        return listRes;       
     }
+
     @AuraEnabled
     public static List<Order> getOrderChild(String orderId){
         System.debug('***:' + orderId);
         HDT_QR_Order orderQr = new HDT_QR_Order();
 
-        return orderQr.getChildOrdersByParentId(orderId);
-        
+        return orderQr.getChildOrdersByParentId(orderId);       
     }
 
     @AuraEnabled
@@ -64,40 +62,39 @@ public with sharing class HDT_LC_CopiaContratto {
                 res = 'NoDocumenti';
             }
         }else{
-            List<DocumentSendTracking__c> listDocument = getDocumentTracking(orderParentId);
-            if((listDocument == null ||listDocument.isEmpty()) && tipoSend.equalsIgnoreCase('Posta Cartacea') ){
+            List<DocumentSendTracking__c> listDocument = new List<DocumentSendTracking__c>();
+            listDocument = getDocumentTracking(orderParentId);
+            if('Posta Cartacea'.equalsIgnoreCase(tipoSend) && listDocument.isEmpty()){
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Recupero contratto da Postel');
                 activitySrv.createRecord(activity);
                 c.phase__c = 'In Lavorazione';
                 res = 'Recupero contratto da Postel';
-            }else{
-                if('Inbound'.equalsIgnoreCase(tipoAttivita) && 'Posta Cartacea'.equalsIgnoreCase(tipoSend)){
-                    wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio Contratto');
-                    activitySrv.createRecord(activity);
-                    res = 'Invio Contratti';
-                    c.phase__c = 'In Lavorazione';
-                }
-                else{
-                    c.phase__c = 'In Lavorazione';
-                }
+            }else if(('Telefono Inbound'.equalsIgnoreCase(tipoAttivita) || 'Sportello'.equalsIgnoreCase(tipoAttivita) ) && 'Posta Cartacea'.equalsIgnoreCase(tipoSend)){
+                wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio Contratto');
+                activitySrv.createRecord(activity);
+                res = 'Invio Contratti';
+                c.phase__c = 'In Lavorazione';
+            }else if('E-Mail'.equalsIgnoreCase(tipoSend) && !listDocument.isEmpty()){
+                res = 'DocId:' + listDocument[0].Id;
+                c.phase__c = 'In Lavorazione';
+            }
+            else{
+                c.phase__c = 'In Lavorazione';
             }
         }
         caseSRV.updateRecord(c); 
         return res;
     }
+
     @AuraEnabled
-    public static string confirmActionDraft(Case c,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){
-        
+    public static string confirmActionDraft(Case c,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){       
         Id recTypeId= null;
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        //case c = new case();
         String res = '';
-        //c.id = caseId;
         c.CopyType__c = tipoFirma;
         c.sendmode__c = tipoSend; 
         c.Channel__c = tipoAttivita;
         c.order__c = orderParentId;  
-       // c.Status='In Lavorazione'; //HRAWRM-344 01/09/2021
         if(rc !=null){
             recTypeId= rc.Id;
         }
@@ -141,7 +138,7 @@ public with sharing class HDT_LC_CopiaContratto {
     @AuraEnabled
     public static List<DocumentSendTracking__c> getDocumentTracking(String orderId){
         SObjectAccessDecision securityDecision = 
-            Security.stripInaccessible(AccessType.READABLE, [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId]);
+            Security.stripInaccessible(AccessType.READABLE, [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId order by createddate desc limit 1]);
         return securityDecision.getRecords();
     }
 

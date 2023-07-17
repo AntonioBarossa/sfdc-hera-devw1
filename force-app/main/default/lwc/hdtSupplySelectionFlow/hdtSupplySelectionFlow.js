@@ -21,7 +21,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
 
     handleServicePointSelection(event){
 
-        this.selectedServicePointFlow = event.detail["Codice Punto"];
+        this.selectedServicePointFlow = event.detail["ServicePointId"];
         this.serviceRequestId = event.detail["serviceRequestId"];
         this.isCompatible = event.detail["isCompatible"];
 

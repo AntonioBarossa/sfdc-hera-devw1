@@ -28,7 +28,10 @@ public inherited sharing class HDT_TRH_Knowledge extends HDT_TRH_TriggerHandler 
                         
                         //System.debug('News Notification Center Start');
                         
-                        HDT_UTL_NewsNotificationCenter.sendNotification(article);
+                        if(article.ToPublishDate__c == null || (article.ToPublishDate__c != null && article.ToPublishDate__c < System.now()))
+                        {
+                            HDT_UTL_NewsNotificationCenter.sendNotification(article);
+                        }
                         
                         //System.debug('News Notification Center End');
 

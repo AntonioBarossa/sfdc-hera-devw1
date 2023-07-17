@@ -251,6 +251,7 @@
         <locationY>1094</locationY>
         <inputReference>activity_get</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>210</locationX>
         <locationY>0</locationY>

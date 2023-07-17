@@ -163,7 +163,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Tabelle Periodi</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Tabella_Periodi</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

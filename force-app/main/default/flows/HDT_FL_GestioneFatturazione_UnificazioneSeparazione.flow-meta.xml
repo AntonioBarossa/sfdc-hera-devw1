@@ -773,14 +773,14 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <leftValueReference>Refresh_Case.OperationType__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Unificazione bolletta</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <leftValueReference>Refresh_Case.OperationType__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Separazione bolletta</stringValue>

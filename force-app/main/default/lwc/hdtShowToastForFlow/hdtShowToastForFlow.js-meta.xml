@@ -11,6 +11,7 @@
             <property name="message" type="String" label="message" description="message" role="inputOnly"/>             
             <property name="variant" type="String" label="variant" description="variant" role="inputOnly"/>             
             <property name="mode" type="String" label="mode" description="mode" role="inputOnly"/>  
+            <property name="isBlocking" type="Boolean" label="isBlocking" description="il toast deve essere bloccante? true o false" role="inputOnly"/> 
         </targetConfig>       
     </targetConfigs>
 </LightningComponentBundle>

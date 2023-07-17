@@ -3,8 +3,8 @@
     <actionCalls>
         <name>check_Resulting_Orderitems</name>
         <label>check Resulting Orderitems</label>
-        <locationX>226</locationX>
-        <locationY>1334</locationY>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -28,8 +28,8 @@
     <actionCalls>
         <name>checkCommunity</name>
         <label>checkCommunity</label>
-        <locationX>226</locationX>
-        <locationY>734</locationY>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -45,17 +45,42 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>RedirectToCase</name>
-        <label>RedirectToCase</label>
-        <locationX>226</locationX>
-        <locationY>2726</locationY>
+        <name>getSalesCompany</name>
+        <label>getSalesCompany</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <actionName>HDT_UTL_RimozioneAgevolazione</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>CreatingOrders</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>customerMarking</name>
+            <value>
+                <elementReference>GetQuote.SBQQ__Account__r.CustomerMarking__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>servicePoint</name>
+            <value>
+                <elementReference>Get_SP</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>RedirectToOrder</name>
+        <label>RedirectToOrder</label>
+        <locationX>314</locationX>
+        <locationY>2606</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>theCase.Id</elementReference>
+                <elementReference>redirectId</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -64,8 +89,8 @@
     <assignments>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>490</locationX>
-        <locationY>2054</locationY>
+        <locationX>842</locationX>
+        <locationY>1958</locationY>
         <assignmentItems>
             <assignToReference>Annulla_Ordini.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -87,31 +112,29 @@
                 <elementReference>getRecordTypeChild.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Annulla_Ordini.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>childOrdersToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Annulla_Ordini</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Annulla_Ordini</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>AssignFornitura</name>
-        <label>AssignFornitura</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>theCase.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>selezFornituraAgevolazione.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>insert_the_case_rimozioneAgev</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Populate_ChildOrder</name>
         <label>Populate ChildOrder</label>
-        <locationX>138</locationX>
-        <locationY>2174</locationY>
+        <locationX>490</locationX>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>Assign_Parent_Order.ParentOrder__c</assignToReference>
             <operator>Assign</operator>
@@ -140,16 +163,48 @@
                 <elementReference>ContrattoAgevolazione.ServicePoint__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>childOrdersToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Assign_Parent_Order</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Parent_Order</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <name>Check_If_Quote_Found</name>
+        <label>Check If Quote Found</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>getSalesCompany</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OK</defaultConnectorLabel>
+        <rules>
+            <name>QuoteIdNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetQuote</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>schermata_errore</targetReference>
+            </connector>
+            <label>QuoteId null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Amend solo negativo</description>
         <name>Is_Amendment_Valid</name>
         <label>Is Amendment Valid</label>
-        <locationX>226</locationX>
-        <locationY>1814</locationY>
+        <locationX>578</locationX>
+        <locationY>1718</locationY>
         <defaultConnector>
             <targetReference>Annulla_Ordini</targetReference>
         </defaultConnector>
@@ -160,6 +215,9 @@
             <conditions>
                 <leftValueReference>check_Resulting_Orderitems.isCompatible</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>CreateParentOrder</targetReference>
@@ -167,50 +225,24 @@
             <label>Amend Ok</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>riprendi_processo</name>
-        <label>riprendi processo</label>
-        <locationX>226</locationX>
-        <locationY>158</locationY>
-        <defaultConnector>
-            <targetReference>Selezione_Contratto_Agev</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Selezione Fornitura</defaultConnectorLabel>
-        <rules>
-            <name>Riprendi</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>theCase.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>theCase.Id</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>checkCommunity</targetReference>
-            </connector>
-            <label>Riprendi</label>
-        </rules>
-    </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>OrderDossierName</name>
         <dataType>String</dataType>
         <expression>&quot;Ordine Rimozione &quot;&amp;{!ContrattoAgevolazione.ContractNumber}</expression>
+    </formulas>
+    <formulas>
+        <name>redirectId</name>
+        <dataType>String</dataType>
+        <expression>BLANKVALUE({!CreateParentOrder}, {!theCase.AccountId})</expression>
     </formulas>
     <interviewLabel>HDT_FL_RimozioneAgevolazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RimozioneAgevolazione</label>
     <loops>
         <name>Annulla_Ordini</name>
         <label>Annulla Ordini</label>
-        <locationX>402</locationX>
-        <locationY>1934</locationY>
+        <locationX>754</locationX>
+        <locationY>1838</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -223,8 +255,8 @@
     <loops>
         <name>Assign_Parent_Order</name>
         <label>Assign_Parent_Order</label>
-        <locationX>50</locationX>
-        <locationY>2054</locationY>
+        <locationX>402</locationX>
+        <locationY>1958</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -256,15 +288,21 @@
     <recordCreates>
         <name>CreateParentOrder</name>
         <label>CreateParentOrder</label>
-        <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationX>402</locationX>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Assign_Parent_Order</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>theCase.AccountId</elementReference>
+                <elementReference>ContrattoAgevolazione.Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Channel__c</field>
+            <value>
+                <elementReference>$User.SalesChannel__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -277,6 +315,12 @@
             <field>EffectiveDate</field>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LoginChannel__c</field>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -300,27 +344,38 @@
         <inputAssignments>
             <field>Step__c</field>
             <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>1.0</numberValue>
             </value>
         </inputAssignments>
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>insert_the_case_rimozioneAgev</name>
-        <label>insert the case</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
-        <connector>
-            <targetReference>checkCommunity</targetReference>
-        </connector>
-        <inputReference>theCase</inputReference>
-    </recordCreates>
     <recordLookups>
         <name>ContrattoAgevolazione</name>
         <label>ContrattoAgevolazione</label>
-        <locationX>226</locationX>
-        <locationY>854</locationY>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_SP</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>selezFornituraAgevolazione.recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_SP</name>
+        <label>Get SP</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>amendContract</targetReference>
@@ -330,18 +385,18 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>theCase.Contract__c</elementReference>
+                <elementReference>ContrattoAgevolazione.ServicePoint__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Contract</object>
+        <object>ServicePoint__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>getOrdersCreated</name>
         <label>getOrdersCreated</label>
-        <locationX>226</locationX>
-        <locationY>1454</locationY>
+        <locationX>578</locationX>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeChild</targetReference>
@@ -361,18 +416,18 @@
     <recordLookups>
         <name>GetQuote</name>
         <label>GetQuote</label>
-        <locationX>226</locationX>
-        <locationY>1094</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CreatingOrders</targetReference>
+            <targetReference>Check_If_Quote_Found</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SBQQ__Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>theCase.AccountId</elementReference>
+                <elementReference>ContrattoAgevolazione.Account.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -396,8 +451,8 @@
     <recordLookups>
         <name>getRecordTypeChild</name>
         <label>getRecordTypeChild</label>
-        <locationX>226</locationX>
-        <locationY>1574</locationY>
+        <locationX>578</locationX>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeParent</targetReference>
@@ -424,8 +479,8 @@
     <recordLookups>
         <name>getRecordTypeParent</name>
         <label>getRecordTypeParent</label>
-        <locationX>226</locationX>
-        <locationY>1694</locationY>
+        <locationX>578</locationX>
+        <locationY>1598</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Amendment_Valid</targetReference>
@@ -452,8 +507,8 @@
     <recordUpdates>
         <name>CreatingOrders</name>
         <label>CreatingOrders</label>
-        <locationX>226</locationX>
-        <locationY>1214</locationY>
+        <locationX>578</locationX>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>check_Resulting_Orderitems</targetReference>
         </connector>
@@ -476,6 +531,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <elementReference>getSalesCompany.salesCompanyCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompany__c</field>
+            <value>
+                <elementReference>getSalesCompany.salesCompany</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>allowNegativeQuantity__c</field>
             <value>
                 <booleanValue>true</booleanValue>
@@ -484,60 +551,31 @@
         <object>SBQQ__Quote__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>In_Lavorazione</name>
-        <label>In Lavorazione</label>
-        <locationX>50</locationX>
-        <locationY>2510</locationY>
-        <connector>
-            <targetReference>RedirectToCase</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>theCase.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Order__c</field>
-            <value>
-                <elementReference>CreateParentOrder</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_orders</name>
         <label>Update orders</label>
-        <locationX>50</locationX>
-        <locationY>2390</locationY>
+        <locationX>402</locationX>
+        <locationY>2294</locationY>
         <connector>
-            <targetReference>In_Lavorazione</targetReference>
+            <targetReference>RedirectToOrder</targetReference>
         </connector>
-        <inputReference>getOrdersCreated</inputReference>
+        <inputReference>childOrdersToUpdate</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_orders_KO</name>
         <label>Update orders KO</label>
-        <locationX>402</locationX>
-        <locationY>2270</locationY>
+        <locationX>754</locationX>
+        <locationY>2174</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>schermata_errore</targetReference>
         </connector>
-        <inputReference>getOrdersCreated</inputReference>
+        <inputReference>childOrdersToUpdate</inputReference>
     </recordUpdates>
     <screens>
         <name>amendContract</name>
         <label>amendContract</label>
-        <locationX>226</locationX>
-        <locationY>974</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -557,7 +595,7 @@
             <inputParameters>
                 <name>contractId</name>
                 <value>
-                    <elementReference>theCase.Contract__c</elementReference>
+                    <elementReference>selezFornituraAgevolazione.recordId</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -570,13 +608,13 @@
     <screens>
         <name>schermata_errore</name>
         <label>schermata errore</label>
-        <locationX>402</locationX>
-        <locationY>2390</locationY>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>RedirectToCase</targetReference>
+            <targetReference>RedirectToOrder</targetReference>
         </connector>
         <fields>
             <name>errore</name>
@@ -590,12 +628,12 @@
         <name>Selezione_Contratto_Agev</name>
         <label>Selezione Contratto Agev</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AssignFornitura</targetReference>
+            <targetReference>checkCommunity</targetReference>
         </connector>
         <fields>
             <name>selezFornituraAgevolazione</name>
@@ -621,13 +659,21 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>100</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>riprendi_processo</targetReference>
+            <targetReference>Selezione_Contratto_Agev</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>childOrdersToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order</objectType>
+    </variables>
     <variables>
         <name>theCase</name>
         <dataType>SObject</dataType>

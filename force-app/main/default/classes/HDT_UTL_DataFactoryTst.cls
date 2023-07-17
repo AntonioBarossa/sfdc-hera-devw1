@@ -138,7 +138,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.IsArchived__c = true;
 			
 			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
-				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+				acc.FiscalCode__c='12345678' + String.valueOf(100 + i);
 			} else {
 				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			}
@@ -707,7 +707,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
 	}
-	
+
+	public static List<Case> createCaseAnomaloIdricoBulk(Integer amount, Boolean doInsert, Id accId, Id servPointId, Id contractId,id billingProfileId,String signMode, String sendMode){
+		List<Case> caseList=new List<Case>();
+		Id consumoAnomaloRTId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
+		for (Integer i=0; i<amount; i++){
+			caseList.add(new Case(
+					AccountId=accId,
+					ServicePoint__c=servPointId,
+					Contract__c=contractId,
+					BillingProfile__c=billingProfileId,
+					Status='In Lavorazione',
+					Phase__c='in attesa processo doc massivo',
+					Type='Consumo Anomalo Idrico',
+					Cluster__c='Segnalazioni',
+					RecordTypeId=consumoAnomaloRTId,
+					SignMode__c=signMode,
+					SendMode__c=sendMode
+			));
+		}
+		if(doInsert){
+			insert caseList;
+		}
+		return caseList;
+	}
 	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		
 		List<Case> caseList=new List<Case>();
@@ -2894,7 +2917,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 
 			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
-				Name = 'Vendita',
+				Name = type,
 				NumberOfDays__c = numberOfDays,
 				Type__c = type
 			);
@@ -3594,4 +3617,143 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pushTrackings;
 	}
 	
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
+	* @param1 - amount EmailMessage 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailMessage just created
+    */
+	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
+	
+		List<EmailMessage> emailMessageList = new List<EmailMessage>();
+
+		for(Integer i = 0; i<amount; i++){
+			EmailMessage temp = new EmailMessage();
+			temp.status = '3';
+			temp.fromAddress = 'test' + i + '@test.com';
+			temp.fromName = 'test' + i;
+			temp.toAddress = 'toTest' + i + '@test.com';
+			temp.Subject = 'Hello ' + temp.ToAddress;
+			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
+			
+			emailMessageList.add(temp);
+		}
+
+		if (doInsert){
+
+			insert emailMessageList;
+		}
+
+		return emailMessageList;
+
+	}
+
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailTemplate instances/records
+	* @param1 - amount EmailTemplate 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailTemplate just created
+    */
+
+	public static List<EmailTemplate> createEmailTemplate(Integer amount, Boolean doInsert){
+		List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+		System.runAs (new User(Id = UserInfo.getUserId()) ){
+
+			for(Integer i = 0; i<amount; i++){
+				EmailTemplate temp = new EmailTemplate();
+				temp.isActive = true;
+				temp.Name = 'name'+ i;
+				temp.DeveloperName = 'unique_name_addSomethingSpecialHere' + i;
+				temp.TemplateType = 'text';
+				temp.FolderId = UserInfo.getUserId();
+				
+				emailTemplateList.add(temp);
+			}
+
+			if (doInsert){
+
+				insert emailTemplateList;
+			}
+		}
+
+		return emailTemplateList;
+
+	}
+
+	public static List<SlaAdministration__c> createSlaAdministration(Integer amount, Boolean doInsert, Map<String,Object> fieldsValue){
+		List<SlaAdministration__c> slaAdminRules= new List<SlaAdministration__c>();
+		for(Integer i = 0; i<amount; i++){
+			SObject slaRule=new SlaAdministration__c();
+			for(String field:fieldsValue.keySet()){
+				slaRule.put(field,fieldsValue.get(field));
+			}
+			slaRule.put('StartDate__c',Date.today());
+			slaRule.put('EndDate__c',Date.today().addDays(3));
+			slaAdminRules.add((SlaAdministration__c)slaRule);
+		}
+		if (doInsert){
+			insert slaAdminRules;
+		}
+		return slaAdminRules;
+
+	}
+
+	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
+		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
+		for(Integer i = 0; i<amount; i++){
+			SlaTracking__c slaTrack =new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,SlaValue__c=slaValue,Status__c=status);
+			if(String.isNotBlank(caseId)){
+				slaTrack.Case__c=caseId;
+			}
+			if(String.isNotBlank(orderId)){
+				slaTrack.Order__c=orderId;
+			}
+			slaList.add(slaTrack);
+		}
+		if(doInsert){
+			insert slaList;
+		}
+		return slaList;
+
+	}
+
+	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, ServicePoint__c servicePoint, Boolean doInsert) {
+
+		List<LandRegistry__c> landRegistries = new List<LandRegistry__c>();
+
+		for(String city : legalCities) {
+
+			landRegistries.add(new LandRegistry__c(LegalCity__c = city, ServicePoint__c = servicePoint.Id));
+
+		}
+
+		if(doInsert) {
+
+			insert landRegistries;
+			
+		}
+
+		return landRegistries;
+
+	}
+
+	public static List<FreeWithdraw__c> createFreeWithdraws(Id servicepointId, Date lastWithdrawDate, Integer amount, Boolean doInsert) {
+
+		List<FreeWithdraw__c> results = new List<FreeWithdraw__c>();
+
+		for(Integer i = 0; i < amount; i++){
+			results.add(new FreeWithdraw__c(ServicePoint__c = servicepointId, LastFreeWithdrawDate__c = lastWithdrawDate));
+		}
+
+		if(doInsert){
+			insert results;
+		}
+
+		return results;
+		
+	}
 }

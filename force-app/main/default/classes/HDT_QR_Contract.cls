@@ -30,21 +30,17 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public Contract getSapContractCode(String code,Boolean isSuperUser) {
-        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        String filter = 'Activated';
+        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status');
+        String filter = 'Attivo';
         List<Contract> con= new List<Contract>();
         Contract c = new Contract();
         if(code==null){
             code = '';
         }
         if(isSuperUser==true){
-            // fixed because throws error: no viable alternative at character '\'
-            // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
-            con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1');
+           con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1');
         }else{
-            // fixed because throws error: no viable alternative at character '\'
-            // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED';
-            con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED');
+           con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED');
         }
 
         if(con != null && con.size()> 0){
@@ -55,14 +51,11 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public List<Contract> getSapContractCode(List<String> codes) {
-        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        String filter = 'Activated';
-        //changed because throws error: no viable alternative at character '\'
-        // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED';
+        contractSrv.checkReadAccess('Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
+        String filter = 'Attivo';       
+        List<Contract> contractList = Database.query('SELECT Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED');
 
-        List<Contract> con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED');
-
-        return con;
+        return contractList;
 	}
 
     public List<Contract> getRecordById(String contractId){
@@ -71,6 +64,7 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
+            SAPContractCode__c,
             Status,
             BillingProfile__c,
             SBQQ__Order__r.BillingProfile__c,
@@ -108,6 +102,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
+            AND CommoditySectorFormula__c IN ('Energia Elettrica', 'Gas')
             WITH SECURITY_ENFORCED
         ];
     }
@@ -119,6 +114,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
+        Date maxDate = Date.newInstance(2099, 1, 1);
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
@@ -134,7 +130,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
-            AND SBQQ__Order__r.ProcessType__c = 'Temporanea - Nuova Attivazione'
+            AND EndDate < :maxDate
             WITH SECURITY_ENFORCED
         ];
     }
@@ -272,9 +268,42 @@ public inherited sharing class HDT_QR_Contract {
         LIMIT 1];
     }
 
+    public List<SBQQ__Subscription__c>  getSubscriptionsFromContract(String contractId){
+        return [SELECT Id,
+                SBQQ__Product__c,
+                ProductCode__c,
+                SBQQ__ProductName__c,
+                CategoryFamily__c,
+                VersionFormula__c,
+                SBQQ__Product__r.Family,
+                SBQQ__Product__r.ProductCode
+        FROM SBQQ__Subscription__c
+        WHERE SBQQ__Contract__c =:contractId
+        WITH SECURITY_ENFORCED];
+    }
+
     public static Contract getContractWithSubscriptions(Id servicePointId){
         if(String.isBlank(servicePointId))return null;
         return [SELECT Id,EndDate, StartDate,(select Id,SBQQ__RequiredById__c from SBQQ__Subscriptions__r) FROM Contract WHERE ServicePoint__c =:servicePointId AND Status='Attivo' LIMIT 1];
+    }
+
+    public List<Contract> getContractByContractCodeConsumoAnomaloIdrico(Set<String> sapCodes){
+        return [SELECT Id,SAPContractCode__c,ContractSalesCompany__c,Market__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.JointBottomAdhesion__c,
+                ServicePoint__r.PaySewer__c, ServicePoint__r.PayPurification__c, ServicePoint__r.MeterSN__c, ServicePoint__r.CommoditySector__c,
+                ServicePoint__r.Distributor__c, ServicePoint__r.SupplyType__c, Contact__c,AccountId,Account.PrimaryEmail__c,
+                Account.SAPIntegrationID__c ,BillingProfile__r.InvoicingAddressFormula__c,BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c,
+                BillingProfile__r.InvoicingPlace__c, BillingProfile__r.InvoicingPostalCode__c, BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c,
+                BillingProfile__r.InvoicingStreetNumberExtension__c,BillingProfile__r.InvoiceEmailAddress__c,BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c ,ServicePoint__r.AnnualConsumption__c, ServicePoint__r.MeterClass__c,
+                ServicePoint__r.Disconnectable__c, ServicePoint__r.Distributor__r.Code__c, ServicePoint__r.MarketOrigin__c, ServicePoint__r.PurificationInfoOnTheInvoice__c, ServicePoint__r.RateCategory__c,
+                ServicePoint__r.ResidentDomesticHousingUnit__c, ServicePoint__r.NotDomesticHousingUnit__c, ServicePoint__r.ImplantTypeTemp__c,
+                ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplySAPCityCode__c, ServicePoint__r.SupplyCountry__c, ServicePoint__r.SupplyPostalCode__c, ServicePoint__r.SupplyProvince__c,
+                ServicePoint__r.SupplySAPStreetCode__c, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c, ServicePoint__r.SAPImplantCode__c
+                FROM Contract
+                WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
+    }
+
+    public List<Contract> getContractBySapCodeBpManagementBulk(Set<String> sapCodes){
+        return [SELECT Id,BillingProfile__c,AccountId,Account.Category__c,ServicePoint__c,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED ];
     }
 
 }

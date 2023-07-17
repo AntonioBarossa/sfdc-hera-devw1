@@ -46,7 +46,10 @@ public inherited sharing class HDT_LC_EditQuote {
             
             if(!quoteLineToUpdate.isEmpty())
             {
+                /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+                HDT_UTL_QuoteProcess.disableCpq();
                 HDT_UTL_DatabaseService.updateSObject(quoteLineToUpdate);
+                HDT_UTL_QuoteProcess.enableCpq();
             }
             /*quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
                 Id = quoteLine[0].Id,
@@ -67,10 +70,13 @@ public inherited sharing class HDT_LC_EditQuote {
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
 
         if (order != null && !quoteLine.isEmpty()) {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
                 Id = quoteLine[0].Id,
                 BillingProfile__c = order.BillingProfile__c
             ));
+            HDT_UTL_QuoteProcess.enableCpq();
         } else {
             system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
         }
@@ -99,8 +105,10 @@ public inherited sharing class HDT_LC_EditQuote {
             }
 
             system.debug('manualAssocPodToQuoteLine - quoteLinesToUpdate: ' + quoteLinesToUpdate);
-
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             quoteLineSrv.updateRecords(quoteLinesToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }
@@ -155,8 +163,10 @@ public inherited sharing class HDT_LC_EditQuote {
                         ServicePoint__c = availableServicePoints[i]
                     ));
                 }
-
+                /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+                HDT_UTL_QuoteProcess.disableCpq();
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
+                HDT_UTL_QuoteProcess.enableCpq();
 
                 bonusScontiNotAmend(quoteId);
 
@@ -194,9 +204,10 @@ public inherited sharing class HDT_LC_EditQuote {
             }
             
         }
-
+        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+        HDT_UTL_QuoteProcess.disableCpq();
         quoteLineSrv.updateRecords(listToUpdate);
-
+        HDT_UTL_QuoteProcess.enableCpq();
 
     }
 
@@ -223,8 +234,10 @@ public inherited sharing class HDT_LC_EditQuote {
                 Id = quoteId,
                 AmendmentAllowed__c = false
             );
-
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             quoteSrv.updateRecord(quote);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
     }
 
@@ -237,6 +250,8 @@ public inherited sharing class HDT_LC_EditQuote {
 
         if (haveProductsBeenCreated(quoteId)) {
             List<Opportunity> oppToUpdate = oppQr.getRecordByQuote(quoteId);
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             oppSrv.updateRecord(new Opportunity(
                 Id = oppToUpdate[0].Id,
                 StageName = 'Negotiation'
@@ -245,6 +260,7 @@ public inherited sharing class HDT_LC_EditQuote {
                 Id = quoteId,
                 SBQQ__Status__c = 'In Review'
             ));
+            HDT_UTL_QuoteProcess.enableCpq();
         }
     }
 

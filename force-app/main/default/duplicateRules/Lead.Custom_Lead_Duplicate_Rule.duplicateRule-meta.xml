@@ -16,7 +16,7 @@
         <duplicateRuleFilterItems>
             <field>LeadSource</field>
             <operation>notEqual</operation>
-            <value>Creazione manuale, DBU, Other</value>
+            <value>Creazione manuale, DBU, Other, Webform callback</value>
             <sortOrder>2</sortOrder>
             <table>Lead</table>
         </duplicateRuleFilterItems>
@@ -38,6 +38,10 @@
         <matchingRule>Contact_Matching_2</matchingRule>
         <objectMapping>
             <inputObject>Lead</inputObject>
+            <mappingFields>
+                <inputField>Phone</inputField>
+                <outputField>Phone</outputField>
+            </mappingFields>
             <mappingFields>
                 <inputField>FiscalCode__c</inputField>
                 <outputField>FiscalCode__c</outputField>
@@ -69,10 +73,6 @@
             <mappingFields>
                 <inputField>VATNumber__c</inputField>
                 <outputField>VATNumber__c</outputField>
-            </mappingFields>
-            <mappingFields>
-                <inputField>Phone</inputField>
-                <outputField>Phone</outputField>
             </mappingFields>
             <outputObject>Contact</outputObject>
         </objectMapping>

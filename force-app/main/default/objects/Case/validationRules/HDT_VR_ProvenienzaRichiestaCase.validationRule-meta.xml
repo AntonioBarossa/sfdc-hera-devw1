@@ -10,7 +10,7 @@
 		RecordType.DeveloperName = &apos;HDT_RT_DisattivazioniTari&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_ErroreFatturazione_TARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_GenericheTari&apos;,
-		RecordType.DeveloperName = &apos;HDT_RT_PagamentoUnicoAnnuale_TARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_PagamentoUnicoAnnualeTARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_ReclamiScrittiTARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_StornoRateizzazione_TARI&apos;,
 		RecordType.DeveloperName = &apos;HDT_RT_VariazioniTari&apos;

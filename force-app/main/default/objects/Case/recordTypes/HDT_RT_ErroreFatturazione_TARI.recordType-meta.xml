@@ -3,7 +3,8 @@
     <fullName>HDT_RT_ErroreFatturazione_TARI</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_ErroreFatturazione_TARI</label>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
+    <label>Errore di Fatturazione Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -2332,7 +2333,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD -->
+    <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -2786,7 +2788,55 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues> -->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -7814,7 +7864,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8830,7 +8880,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -8865,7 +8915,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -8943,7 +8993,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -9575,14 +9625,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOLLEC_Amianto%2FEtern-IURD0026</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLEC_Verde-IURD0043</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Scarichi abusivi-IUPS0000</fullName>
             <default>false</default>
         </values>
@@ -9680,6 +9722,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IVR</fullName>
             <default>false</default>
         </values>
@@ -9755,6 +9801,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -9796,91 +9846,15 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Accettato Motore VAS</fullName>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Accettazione Voltura Tecnica</fullName>
+            <fullName>Elaborazione Manuale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Acconto Paperless Non Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acconto Paperless Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Allineamento RCU Concluso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Extra Sistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento SII - Ricezione</fullName>
+            <fullName>Chiuso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9888,67 +9862,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullato SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Info da Banca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Lavorazione BO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Modulo Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Monitoraggio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa check preliminari</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa risposta cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa risposta fornitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Avvenuta Riduzione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Blocco Effettuato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Blocco Non Effettuato</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9957,478 +9871,6 @@
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Check preliminari KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Check preliminari OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiuso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione EngageOne KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Motore VAS KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Motore VAS OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazioni con il DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da Inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da inviare a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da lavorare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data Esecuzione Prevista</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dati Tecnici Ricevuti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattivato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Non Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Manuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Risposta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore invio a DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore tecnico invio a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO Riduzione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SAP simulato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO pre-MDM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO tentativo riattivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK Riduzione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura messa a perdita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flusso bloccato in assenza del precedente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Procedurale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento RCU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Approvazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa possibile contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Classificazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa Data Decorrenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa Documentazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa risposta Mail</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa risposta parere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa validazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo ricalcolato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Istruttoria Creata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Istruttoria non necessaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Definitivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Rilavorato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lavorazione Sap</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lavori Sospesi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Motore VAS KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Applicabile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Approvata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Non Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piano Rata Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pratica In Attesa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pratica Riclassificata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pratica non gestita per il DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prescrizione concessa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prescrizione non concessa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presenza Atti Autorizzativi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo scaduto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta Preventivo Extra Sistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rifiutata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensato KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta Parere Ricevuta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta ricevuta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Non Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sequenzializzato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospesa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospeso manualmente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospeso parere interno</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospeso per richiesta parere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospeso per verifica DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione OK DL simulata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10519,21 +9961,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11538,17 +10965,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SignMode__c</picklist>
         <values>
             <fullName>Cartacea</fullName>
@@ -11852,7 +11268,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD -->
+    <!-- <picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -12582,7 +11999,131 @@
             <fullName>Team 1</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_SP_Acqualagna_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Apecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cagli_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cantiano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cartoceto_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fermignano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fossombrone_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Gabicce_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Lunano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Macerata_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Orciano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pergola_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Piobbico_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_San_Lorenzo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Sant_Angelo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbania_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues> -->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>
@@ -13262,10 +12803,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione_RestituzContenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiavetta elettronica_consegna</fullName>
             <default>false</default>
         </values>
@@ -13294,19 +12831,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contenitore danneggiato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Diserbo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Dismissione compostiera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FE - MO - Spazzamento meccaniz</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13338,15 +12867,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavaggio strade</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Manutenzione Cestini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manutenzione contenitore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13363,10 +12884,6 @@
         </values>
         <values>
             <fullName>Odori Mezzi%2FDotazione%2FImpianti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13410,10 +12927,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RestituzContenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Rich%2E verifica sconti racc%2Edif</fullName>
             <default>false</default>
         </values>
@@ -13431,10 +12944,6 @@
         </values>
         <values>
             <fullName>Richiesta sacchi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RichiestaContenitAggiuntivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13514,15 +13023,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Spazzamento meccaniz</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spostamento Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Svuotamento cestini%2Fcestoni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13578,23 +13079,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>raccolta porta a porta</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>rifiuti attorno al contenitore</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>rimozione Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>spostamento contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>svuotamento contenitore</fullName>
             <default>false</default>
         </values>
     </picklistValues>

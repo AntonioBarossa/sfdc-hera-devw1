@@ -6,6 +6,19 @@ public with sharing class HDT_UTL_SaleActions
 
     private static final Set<String> COMMODITY_PRODUCT_SET = new Set<String>{'POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente'};
     private static final Set<String> VAS_PRODUCT_SET = new Set<String>{'VAS Fatturabili','VAS Prodotto','VAS Servizio'};
+    private static final Set<String> FAMILY_PROD_SET = new Set<String>{'Bonus Percentuale',
+    'Bonus Eur/Giorno',
+    'Bonus Eur/Mese',
+    'Bonus Eur/kWh',
+    'Contributo Eur/kWh',
+    'Contributo Eur/Mese',
+    'Contributo Eur/Giorno',
+    'Contributo Eur/kW',
+    'Offerta commerciale',
+    'Promozione',
+    'Bonus Eur/SMC',
+    'Contributo Eur/SMC'
+    };
     private static final String NON_TARI_KEY = 'nonTari';
     private static final String QUOTE_PROCESS_NAME = 'Vendita Guidata Offerte';
 
@@ -25,6 +38,7 @@ public with sharing class HDT_UTL_SaleActions
             ServicePoint__r.CommoditySector__c,
             SBQQ__ProductFamily__c,
             SBQQ__RequiredBy__c,
+            SBQQ__ProductCode__c,
             SBQQ__Product__r.Service__c,
             SBQQ__Product__r.ApprovalType__c,
             SBQQ__Product__r.IntegratedSAP__c,
@@ -33,14 +47,17 @@ public with sharing class HDT_UTL_SaleActions
             SBQQ__Quote__r.ContractReference__c,
             SBQQ__Quote__r.OrderReference__c,
             SBQQ__Quote__r.AllowChangeUse__c,
+            SBQQ__Product__r.Family,
             SBQQ__Quote__r.AmendmentAllowed__c,
             SBQQ__Quote__r.Sale__r.Account__c,
             SBQQ__RequiredBy__r.BillingProfile__c,
             SBQQ__RequiredBy__r.Name,
             SBQQ__RequiredBy__r.SBQQ__RequiredBy__r.Name,
-            SBQQ__RequiredBy__r.ServicePoint__c
+            SBQQ__RequiredBy__r.SBQQ__RequiredBy__c,
+            SBQQ__RequiredBy__r.ServicePoint__c,
+            SBQQ__Quote__r.SBQQ__Type__c
             FROM SBQQ__QuoteLine__c 
-            WHERE SBQQ__Quote__r.Sale__c = :saleId 
+            WHERE SBQQ__Quote__r.Sale__c = :saleId AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED];
         /* Identifies primary quote lines (see method for further information) */
         Map<String, List<SBQQ__QuoteLine__c>> groupingMap = identifyPrimaryQuoteLines(allQuoteLines);
@@ -94,14 +111,17 @@ public with sharing class HDT_UTL_SaleActions
                  * All quotelines with the same combination of ApprovalType__c and IntegratedSap__c belongs to the same group
                  * The group "identifier" is generated as "ApprovalType__c" + "IntegratedSap__c"
                  */
-                String key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+                String key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
                 if(!result.containsKey(key))
                 {
                     result.put(key, new List<SBQQ__QuoteLine__c>());
                 }
                 (result.get(key)).add(quoteLine);
-            }
-            else
+            }else if ('Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c) && quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c != null){
+                continue;
+            }else 
             {
                 /** NON TARI Order Split
                  * Energy and Water order split is performed based on the presence of the main quote line
@@ -109,15 +129,19 @@ public with sharing class HDT_UTL_SaleActions
                  * The Key is generated based on the quoteLine name if the Billing Profile is populated on the quote line
                  * Otherwise it is based on the RequiredBy__c field of the quote line
                  */
-                String key = quoteLine.BillingProfile__c != null ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
+                Boolean isAnaconsNoEnergy = 'ACQ_DIARIO_CONSUMI'.equalsIgnoreCase(quoteline.SBQQ__ProductCode__c) || 'TLR_DIARIO_CONSUMI'.equalsIgnoreCase(quoteline.SBQQ__ProductCode__c) ? true : false;
+                String key = quoteLine.BillingProfile__c != null && !isAnaconsNoEnergy ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
                 if(!result.containsKey(key))
                 {
                     result.put(key, new List<SBQQ__QuoteLine__c>());
                 }
                 /* If the quoteLine is of the type "Punto Fornitura" a group is created putting the RequiredBy__c as main quote line */
-                if(COMMODITY_PRODUCT_SET.contains(quoteLine.SBQQ__Product__r.Name))
+                // ticket 986654C
+                if(COMMODITY_PRODUCT_SET.contains(quoteLine.SBQQ__Product__r.Name) && !'Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c))
                 {
                     (result.get(key)).add(quoteLineMap.get(quoteLine.SBQQ__RequiredBy__c));
+                }else if (('Amendment'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.SBQQ__Type__c))&& FAMILY_PROD_SET.contains(quoteLine.SBQQ__ProductFamily__c)){
+                    (result.get(key)).add(quoteLineMap.get(quoteLine.SBQQ__RequiredBy__c == null ? quoteLine.Id : quoteLine.SBQQ__RequiredBy__c));
                 }
                 /* This branch identifies those quote lines "VAS" and "Cambio Offerta" using the same check performed to associate the Billing Profile
                 * Check HDT_LC_ApplyBillingProfileModal.getEligibleQuoteLinesToApply for further information
@@ -139,7 +163,7 @@ public with sharing class HDT_UTL_SaleActions
                 }
             }
         }
-
+        
         return result;
     }
 
@@ -256,7 +280,7 @@ public with sharing class HDT_UTL_SaleActions
             quoteLineGroups.add((result.get(key)).groupLine);
         }
         HDT_UTL_DatabaseService.insertSObject(quoteLineGroups);
-
+        
         return result;
     }
     
@@ -274,11 +298,14 @@ public with sharing class HDT_UTL_SaleActions
             Boolean isTari = quoteLine.SBQQ__Product__r.Service__c != null && quoteLine.SBQQ__Product__r.Service__c.equalsIgnoreCase('Ambiente');
             if(isTari)
             {
-                key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+                key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
             }
             else
             {
-                key = quoteLine.BillingProfile__c != null ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
+                Boolean isAnaconsNoEnergy = 'ACQ_DIARIO_CONSUMI'.equalsIgnoreCase(quoteLine.SBQQ__ProductCode__c) || 'TLR_DIARIO_CONSUMI'.equalsIgnoreCase(quoteLine.SBQQ__ProductCode__c) ? true : false;
+                key = quoteLine.BillingProfile__c != null && !isAnaconsNoEnergy ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
             }
             if(quoteLineGroupObj.get(key) == null)
             {
@@ -323,7 +350,9 @@ public with sharing class HDT_UTL_SaleActions
             {
                 continue;
             }
-            String key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+            String key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
             if((quoteLineGroupObj.get(key)).mainQuoteLineId == quoteLine.Id && quoteLine.ServicePoint__c == null)
             {
                 quoteLine.ServicePoint__c = quoteLineServicePointMap.get(quoteLine.SBQQ__RequiredBy__c);

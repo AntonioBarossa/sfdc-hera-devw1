@@ -7,7 +7,7 @@
 public with sharing class HDT_UTL_BpCaCreate
 {
 
-    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate();
+    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate(); 
     public final String SOBJ_KEY = 'sobj';
     public final String EVT_KEY = 'evt';
     /** This method simply calls the private method
@@ -16,6 +16,10 @@ public with sharing class HDT_UTL_BpCaCreate
     public String generateRequest(Order inputOrder, String causalCode)
     {
         return generateBpCaCreateRequest(inputOrder);
+    }
+    public String generateRequest(Id billingId, Id accountId)
+    {
+        return generateBpCaCreateRequest(billingId,accountId);
     }
     /** This method is responsible of instancing Sobjects to be updated if the response is successful (Check the private method handleSobjectToUpdate)
      * Create the KO Activity if the response fails
@@ -70,6 +74,9 @@ public with sharing class HDT_UTL_BpCaCreate
                 {
                     newOrder.ContractAccountCode__c = (String) sobj.get('ContractAccountCode__c');
                 }
+                if(sobj.get('BillingProfile__c') != null){
+                    newOrder.BillingProfile__c = (String) sobj.get('BillingProfile__c');
+                }
                 evt.SerializedSobj__c = JSON.serialize(newOrder);
                 platEvents.add(evt);
             }
@@ -103,19 +110,45 @@ public with sharing class HDT_UTL_BpCaCreate
             HDT_WRP_BpCaVariation request = generateMainBodyRequest(infoOrder[0]);
             result = JSON.serialize(request);
         }
+        System.debug('Request JSON Body ' + result);
+        return result;
+    }
+    private String generateBpCaCreateRequest(Id billingId,Id accountId)
+    {
+        String result = '';
+        List<BillingProfile__c> billingInfo = bpCaQuery.getBillingProfileFromId(billingId);
+        if(!billingInfo.isEmpty())
+        {
+            HDT_WRP_BpCaVariation request = generateMainBodyRequest(billingInfo[0]);
+            result = JSON.serialize(request);
+        }
+        System.debug('Request JSON Body ' + result);
         return result;
     }
     /* This method creates the main JSONObject of the request */
     private HDT_WRP_BpCaVariation generateMainBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation request = new HDT_WRP_BpCaVariation();
-        request.numeroSr = infoOrder.Id;
+        request.numeroSR = infoOrder.ParentOrder__c;
         request.codiceCausale = '';
-        request.dataCreazione = tryParse(System.today());
+        request.dataCreazione = String.valueOf(System.today()).Substring(0,4)+ String.valueOf(System.today()).Substring(5,7) + String.valueOf(System.today()).Substring(8,10);
         request.cancellaBpAlternativo = '';
         request.nomeContatto = '';
         request.account = generateAccountBodyRequest(infoOrder);
         request.ordine = generateBillingProfileBodyRequest(infoOrder);
+
+        return request;
+    }
+    private HDT_WRP_BpCaVariation generateMainBodyRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation request = new HDT_WRP_BpCaVariation();
+        request.numeroSR = billing.Id;
+        request.codiceCausale = '';
+        request.dataCreazione = String.valueOf(System.today()).Substring(0,4)+ String.valueOf(System.today()).Substring(5,7) + String.valueOf(System.today()).Substring(8,10);
+        request.cancellaBpAlternativo = '';
+        request.nomeContatto = '';
+        request.account = generateAccountBodyRequest(billing);
+        request.ordine = generateBillingProfileBodyRequest(billing);
 
         return request;
     }
@@ -126,7 +159,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.nome = tryParse(infoOrder.Account.FirstName__c);
         request.alias = tryParse(infoOrder.Account.LastName__c);
         request.partner = tryParse(infoOrder.Account.CustomerCode__c);
-        request.tipoAccount =  transcodeCustomerType(tryParse(infoOrder.Account.CustomerCode__c));
+        request.tipoAccount =  transcodeCustomerType(tryParse(infoOrder.Account.CustomerType__c));
         request.categoria = tryParse(infoOrder.Account.Category__c);
         request.cellulare = tryParse(infoOrder.Contact__r.MobilePhone);
         request.fax = tryParse(infoOrder.Contact__r.Fax);
@@ -136,8 +169,32 @@ public with sharing class HDT_UTL_BpCaCreate
         request.marcaturaCliente = tryParse(infoOrder.Account.CustomerMarking__c);
         request.codiceFiscale = tryParse(infoOrder.Account.FiscalCode__c);
         request.partitaIva = tryParse(infoOrder.Account.VATNumber__c);
+        request.modelloCA = tryParse(infoOrder.Account.Category__c);
         request.indirizzo = generateAccountAddressBodyRequest(infoOrder);
         request.gruppoIva = generateAccountVatBodyRequest(infoOrder);
+
+        return request;
+    }
+    /* This method creates the Account JSONObject of the request */
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount generateAccountBodyRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount();
+        request.nome = tryParse(billing.Account__r.FirstName__c);
+        request.alias = tryParse(billing.Account__r.LastName__c);
+        request.partner = tryParse(billing.Account__r.CustomerCode__c);
+        request.tipoAccount =  transcodeCustomerType(tryParse(billing.Account__r.CustomerType__c));
+        request.categoria = tryParse(billing.Account__r.Category__c);
+        //request.cellulare = tryParse(infoOrder.Contact__r.MobilePhone);
+        //request.fax = tryParse(infoOrder.Contact__r.Fax);
+        //request.telefono = tryParse(infoOrder.Contact__r.Phone);
+        request.email = tryParse(billing.Account__r.PrimaryEmail__c);
+        //request.emailCont = tryParse(infoOrder.Contact__r.Email);
+        request.marcaturaCliente = tryParse(billing.Account__r.CustomerMarking__c);
+        request.codiceFiscale = tryParse(billing.Account__r.FiscalCode__c);
+        request.partitaIva = tryParse(billing.Account__r.VATNumber__c);
+        request.modelloCA = tryParse(billing.Account__r.Category__c);
+        //request.indirizzo = generateAccountAddressBodyRequest(billing);
+        //request.gruppoIva = generateAccountVatBodyRequest(billing);
 
         return request;
     }
@@ -146,15 +203,15 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo();
         request.comune =  tryParse(infoOrder.Account.BillingCity);
-        request.nazione =  tryParse(infoOrder.Account.BillingCountry);
+        request.nazione =  tryParse(infoOrder.Account.BillingCountry?.Substring(0,2)).toUpperCase();
         request.toponimo =  '';
         request.frazione =  '';
         request.piano =  tryParse(infoOrder.Account.BuildingFloor__c);
         request.civico =  tryParse(infoOrder.Account.BillingStreetNumber__c);
         request.suffissoCivico =  tryParse(infoOrder.Account.BillingStreetNumberExtension__c);
         request.cap =  tryParse(infoOrder.Account.BillingPostalCode);
-        request.provincia =  tryParse(infoOrder.Account.BillingState);
-        request.via =  tryParse(infoOrder.Account.BillingStreet);
+        request.provincia =  tryParse(infoOrder.Account.BillingState?.Substring(0,2)).toUpperCase();
+        request.via =  tryParse(infoOrder.Account.BillingStreetName__c);
         
         return request;
     }
@@ -175,7 +232,10 @@ public with sharing class HDT_UTL_BpCaCreate
         request.idOggetto = '';
         request.contoContrattuale = tryParse(infoOrder.BillingProfile__r.ContractAccountCode__c);
         request.emailInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceEmailAddress__c);
-        request.creaNuovoCa = '';
+        //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
+        request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(infoOrder.BillingProfile__r.CUP__c);
+        request.cig = tryParse(infoOrder.BillingProfile__r.CIG__c);
         request.pecInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(infoOrder.BillingProfile__r.BillSendingMethod__c);
         request.emailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
@@ -184,6 +244,28 @@ public with sharing class HDT_UTL_BpCaCreate
         request.indirizzo = generateBillingProfileAddressBodyRequest(infoOrder);
         request.destinatarioDivergente = generateBillingProfileDivergenteSubjectRequest(infoOrder);
         request.fattura = generateBillingProfileFatturaRequest(infoOrder);
+
+        return request;
+    }
+    /* This method creates the body for the Billing Profile JSONObject*/
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine generateBillingProfileBodyRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine request = new  HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine();
+        request.idOggetto = '';
+        request.contoContrattuale = tryParse(billing.ContractAccountCode__c);
+        request.emailInvioBolletta = tryParse(billing.InvoiceEmailAddress__c);
+        //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
+        request.creaNuovoCA = billing.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(billing.CUP__c);
+        request.cig = tryParse(billing.CIG__c);
+        request.pecInvioBolletta = tryParse(billing.InvoiceCertifiedEmailAddress__c);
+        request.modInvioBolletta = tryParse(billing.BillSendingMethod__c);
+        request.emailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
+        request.flagAttivazPec = transcodeFlagAttivazPec(tryParse(billing.ContractAccountCode__c));
+        request.datiBancari = generateBillingProfileBankBodyRequest(billing);
+        request.indirizzo = generateBillingProfileAddressBodyRequest(billing);
+        request.destinatarioDivergente = generateBillingProfileDivergenteSubjectRequest(billing);
+        request.fattura = generateBillingProfileFatturaRequest(billing);
 
         return request;
     }
@@ -196,13 +278,32 @@ public with sharing class HDT_UTL_BpCaCreate
         request.contoCorrente = tryParse(infoOrder.BillingProfile__r.IbanCodeNumber__c);
         request.codiceFiscale = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFiscalCode__c);
         request.cin = tryParse(infoOrder.BillingProfile__r.IbanCIN__c);
-        request.iban = tryParse(infoOrder.BillingProfile__r.IBAN__c);
-        request.cognome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.nome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.metodoPagamento = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.metodoPagamentoAlternativo = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-
+        request.iban = tryParse(infoOrder.BillingProfile__r.IbanCIN_IBAN__c);
+        request.cognome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryLastName__c);
+        request.nome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFirstName__c);
+        request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.PaymentConditions__c);
+        request.metodoPagamento = '';//tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
+        request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
+        request.banca.nazione = tryParse(infoOrder.BillingProfile__r.IbanCountry__c).toUpperCase();
+        request.banca.nazione = String.isNotBlank(request.contoCorrente) && String.isBlank(request.banca.nazione)?'IT': request.banca.nazione;
+        return request;
+    }
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari generateBillingProfileBankBodyRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari();
+        request.abi = tryParse(billing.IbanABI__c);
+        request.cab = tryParse(billing.IbanCAB__c);
+        request.contoCorrente = tryParse(billing.IbanCodeNumber__c);
+        request.codiceFiscale = tryParse(billing.BankAccountSignatoryFiscalCode__c);
+        request.cin = tryParse(billing.IbanCIN__c);
+        request.iban = tryParse(billing.IbanCIN_IBAN__c);
+        request.cognome = tryParse(billing.BankAccountSignatoryLastName__c);
+        request.nome = tryParse(billing.BankAccountSignatoryFirstName__c);
+        request.terminiPagamento = tryParse(billing.PaymentConditions__c);
+        request.metodoPagamento = '';//tryParse(billing.PaymentMethod__c);
+        request.metodoPagamentoAlternativo = '';//tryParse(billing.IbanABI__c);
+        request.banca.nazione = tryParse(billing.IbanCountry__c).toUpperCase();
+        request.banca.nazione = String.isNotBlank(request.contoCorrente) && String.isBlank(request.banca.nazione)?'IT': request.banca.nazione;
         return request;
     }
     /* This method creates the body for the Address information of the Billing Profile JSONObject */
@@ -210,14 +311,29 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.InvoicingCity__c);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c);
+        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.InvoicingPostalCode__c);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.InvoicingStreetName__c);
         request.presso = tryParse(infoOrder.BillingProfile__r.CareOf__c);
+
+        return request;
+    }
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt generateBillingProfileAddressBodyRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
+        request.comune = tryParse(billing.InvoicingCity__c);
+        request.nazione = tryParse(billing.InvoicingCountry__c?.Substring(0,2)).toUpperCase();
+        request.piano = '';
+        request.civico = tryParse(billing.InvoicingStreetNumber__c);
+        request.suffissoCivico = tryParse(billing.InvoicingStreetNumberExtension__c);
+        request.cap = tryParse(billing.InvoicingPostalCode__c);
+        request.provincia = tryParse(billing.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
+        request.via = tryParse(billing.InvoicingStreetName__c);
+        request.presso = tryParse(billing.CareOf__c);
 
         return request;
     }
@@ -241,18 +357,52 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente generateBillingProfileDivergenteSubjectRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente();
+        if(billing.DivergentSubject__c == null)
+        {
+            return request;
+        }
+        request.nome = tryParse(billing.DivergentSubject__r.FirstName);
+        request.codiceFiscale = tryParse(billing.DivergentSubject__r.FiscalCode__c);
+        request.fax = tryParse(billing.DivergentSubject__r.Fax);
+        request.email = tryParse(billing.DivergentSubject__r.Email);
+        request.partitaIva = tryParse(billing.DivergentSubject__r.VATNumber__c);
+        request.telefono = transcodeDivergentSubjectPhone(tryParse(billing.DivergentSubject__r.MobilePhone), tryParse(billing.DivergentSubject__r.Phone)); 
+        request.idIntegrazione = tryParse(billing.DivergentSubject__r.ContactCode__c);
+        request.cognome = tryParse(billing.DivergentSubject__r.LastName);
+        request.indirizzo = generateBillingProfileDivergenteSubjectAddressRequest(billing);
+
+        return request;
+    }
      /* This method creates the body for the Divergent Subject Address information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt generateBillingProfileDivergenteSubjectAddressRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCity);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry);
+        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingPostalCode);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetName__c);
+        request.comune = '';
+
+        return request;
+    }
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt generateBillingProfileDivergenteSubjectAddressRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
+        request.comune = tryParse(billing.DivergentSubject__r.MailingCity);
+        request.nazione = tryParse(billing.DivergentSubject__r.MailingCountry?.Substring(0,2)).toUpperCase();
+        request.piano = '';
+        request.civico = tryParse(billing.DivergentSubject__r.MailingStreetNumber__c);
+        request.suffissoCivico = tryParse(billing.DivergentSubject__r.MailingStreetNumberExtension__c);
+        request.cap = tryParse(billing.DivergentSubject__r.MailingPostalCode);
+        request.provincia = tryParse(billing.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
+        request.via = tryParse(billing.DivergentSubject__r.MailingStreetName__c);
         request.comune = '';
 
         return request;
@@ -261,10 +411,21 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
-        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.OfficeSubjectCode__c);
+        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.SubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(infoOrder.BillingProfile__r.XMLType__c));
         request.mailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
         request.modello = transcodeModelloFattura(tryParse(infoOrder.BillingProfile__r.ElectronicInvoicingMethod__c));
+
+        return request;
+
+    }
+    private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(BillingProfile__c billing)
+    {
+        HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
+        request.codiceUfficio = tryParse(billing.SubjectCode__c);
+        request.fatturaXml = transcodeFatturaXml(tryParse(billing.XMLType__c));
+        request.mailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
+        request.modello = transcodeModelloFattura(tryParse(billing.ElectronicInvoicingMethod__c));
 
         return request;
 
@@ -370,21 +531,30 @@ public with sharing class HDT_UTL_BpCaCreate
         if(inputOrder.CustomerCode__c == null)
         {
             orderToUpdate.CustomerCode__c = response.data.codiceBP;
-            orderToUpdate.ContractAccountCode__c = response.data.codiceBPAlternativo;
+            orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
             Account accountToUpdate = new Account(Id = inputOrder.AccountId, CustomerCode__c = response.data.codiceBP);
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBPAlternativo);
+            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
             result.add(accountToUpdate);
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }
-        /* Otherwise only the Billing Profile needs to be updated */
+        /* Otherwise only the Billing Profile needs to be updated.
+         * In this use case SAP could return a ContractAccount already existing, we need to query it before update.
+         */
         else
         {
-            orderToUpdate.ContractAccountCode__c = response.data.codiceBP;
+            orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBP);
-            result.add(billingProfileToUpdate);
+            HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+            BillingProfile__c billingProfile = bpQr.getRecordByContractAccount(response.data.codiceContatto);
+            //Id bpId = billingProfile != null? billingProfile.Id:inputOrder.BillingProfile__c;
+            if(billingProfile != null){
+                orderToUpdate.BillingProfile__c = billingProfile.Id;
+            }else{
+                BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
+                result.add(billingProfileToUpdate);
+            }
             result.add(orderToUpdate);
         }
         /* Other orders in progress with same Account and Billing Profile which have CustomerCode and ContractAccount fields blank need to be updated */
@@ -399,6 +569,10 @@ public with sharing class HDT_UTL_BpCaCreate
             if(otherChild.ContractAccountCode__c == null)
             {
                 otherChildToUpdate.ContractAccountCode__c = orderToUpdate.ContractAccountCode__c;
+            }
+            if(String.isNotBlank(otherChild.BillingProfile__c) && otherChild.BillingProfile__c != orderToUpdate.BillingProfile__c)
+            {
+                otherChild.BillingProfile__c = orderToUpdate.BillingProfile__c;
             }
             result.add(otherChildToUpdate);
         }
@@ -421,6 +595,68 @@ public with sharing class HDT_UTL_BpCaCreate
         HDT_UTL_DatabaseService.insertSObject(activity);
 
         return;
+    }
+    public String executeRequest(String body){
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        HttpResponse response = new HttpResponse();
+        String result = '';
+        try
+        {
+            request.setHeader('Accept','application/json');
+            request.setHeader('Content-Type','application/json');
+            request.setEndpoint('Callout:MulesoftBasePath/customer-data/billing-profile');
+            request.setMethod('POST');
+            request.setBody(body);
+            request.setTimeout(120000);
+            response = http.send(request);
+            result = response.getBody();
+        }catch(CalloutException ex){
+            result = '';
+        }
+        return result;
+    }
+
+    public String handleResponse(String bodyResponse){
+        HDT_WRP_BpCaCreateResponse responseWrp = (HDT_WRP_BpCaCreateResponse) JSON.deserialize(bodyResponse, HDT_WRP_BpCaCreateResponse.class);
+        if(responseWrp.data != null){
+            return JSON.serialize(responseWrp.data);
+        }else {
+            HDT_WRP_Data data = new HDT_WRP_Data();
+            data.commenti = responseWrp.errorDetails[0].message;
+            return JSON.serialize(data);
+        }
+    }
+    public String updateBillingProfile(String dataString, Id billingId,Id processId){
+        HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        Id bpId = null;
+        if(String.isNotBlank(data.codiceContatto)){
+            BillingProfile__c newBp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
+            try {
+                update newBp;
+                bpId = newBp.Id;
+            } catch (Exception ex) {
+                String error = ex.getMessage();
+                if(String.isNotBlank(error) && error.containsIgnoreCase('duplicates value')){
+                    HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+                    BillingProfile__c bp  = bpQr.getRecordByContractAccount(data.codiceContatto);
+                    if(bp != null){
+                        bpId = bp.Id;
+                        //Case caseToUpdate = new Case(Id=processId,BillingProfile__C=bp.Id);
+                        //update CaseToUpdate;
+                    }
+                }
+            }
+        }
+        data.id = bpId;
+        return JSON.serialize(data);
+    }
+    public void updateAccount(String dataString, Id accountId){
+        HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        if(String.isNotBlank(data.codiceBP)){
+            Account acc = new Account(Id=accountId,CustomerCode__c=data.codiceBP);
+            update acc;
+        }
     }
     /* Wrapper Object for the Web Service Response */
     public class HDT_WRP_BpCaCreateResponse
@@ -448,5 +684,7 @@ public with sharing class HDT_UTL_BpCaCreate
         public String tipoAttivita {get;set;}
         public String commenti {get;set;}
         public String codiceBP {get;set;}
+        public String esito {get;set;}
+        public String id {get;set;}
     }
 }

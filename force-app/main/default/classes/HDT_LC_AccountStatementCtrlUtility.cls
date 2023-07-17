@@ -69,10 +69,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Visualizza Esito
                 when 'viewResult' {
-                    dbr.applicativo = null;
-                    dbr.codiceCliente = null;
-                    dbr.tipoEstrattoConto = null;
-                    dbr.loginId = null;
+                    dbr.applicativo = 'ML';
+                    dbr.aggregazione = '03';
                     dbr.tipoTransazione = 'EC4';
                 }
                 //Tasto Scaduto
@@ -305,7 +303,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             socialBonusMap.put(record.bonusSociale,record.dataScadenza);
         }
 
-        if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') && String.isEmpty(record.DEL_569) ){
+        if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') && String.isNotBlank(record.del569) ){
             serviceCatalog.IsPrescribable__c = true;
         } else {
             serviceCatalog.IsPrescribable__c = false;

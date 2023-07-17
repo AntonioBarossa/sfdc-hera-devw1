@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Caricamento_Iniziativa_Dgrer</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>labelField__c</columns>
+    <columns>nameField__c</columns>
+    <columns>objectType__c</columns>
+    <columns>processType__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>DeveloperName</field>
+        <operation>startsWith</operation>
+        <value>CarInizDgrer</value>
+    </filters>
+    <label>Caricamento Iniziativa DGRER</label>
+    <language>en_US</language>
+</ListView>

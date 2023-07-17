@@ -5,6 +5,7 @@
     <aura:attribute name="sortedBy" type="String" />
     <aura:attribute name="searchKey" type="String" />
     <aura:attribute name="value" type="String" />
+    <aura:attribute name="silosValue" type="String" /><!-- 25/10/2022 costanzo.lomele@webresults.it Wave 2 (new attribute)-->
 
     <aura:attribute name="columnsHeader" type="List" />
     <aura:attribute name="searchDisabled" type="Boolean" default="true" />
@@ -13,6 +14,7 @@
     <aura:attribute name="message" type="String" />
     <aura:attribute name="data" type="List" />
     <aura:attribute name="forcedvaluesAA" type="List" />
+    <aura:attribute name="silosOptions" type="List" /><!-- 25/10/2022 costanzo.lomele@webresults.it Wave 2 (new attribute)-->
     <aura:attribute name="columns" type="List" />
     <aura:attribute name="showTable" type="Boolean" default="false" />
     <aura:attribute name="noResults" type="Boolean" default="false" />
@@ -21,8 +23,18 @@
     <c:hdt_spinner aura:id="spinner" size="large" />
     <lightning:workspaceAPI aura:id="workspace" />
     <div class="slds-box slds-theme_default">
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_4-of-12">
+        <div class="slds-grid slds-gutters slds-wrap">
+            <!--START 25/10/2022 costanzo.lomele@webresults.it Wave 2-->
+            <div class="slds-col slds-size_3-of-12">
+                <lightning:combobox aura:id="comboboxSilosId" 
+                                    name="silosCombo" 
+                                    options="{!v.silosOptions}"
+                                    value="{!v.silosValue}" 
+                                    placeholder="Select Silos" 
+                                    label="Silos"/>
+            </div>
+            <!--END 25/10/2022 costanzo.lomele@webresults.it Wave 2-->
+            <div class="slds-col slds-size_3-of-12">
                 <lightning:combobox aura:id="comboboxId" name="progress" options="{!v.forcedvaluesAA}"
                     value="{!v.value}" placeholder="Select Codice fiscale/Partita Iva/Codice Cliente" label="Selezione"
                     onchange="{!c.handleInputChange}" />
@@ -32,7 +44,7 @@
                     value="{!v.searchKey}" disabled="{!v.picklistDisabled}" onchange="{!c.handleKeyChange}"
                     messageWhenBadInput="{!v.message}" />  <!--MODIFICA 25/03/2022 marco.arci@webresult.it eliminato onblur="{!c.handleKeyBlur}" - fix -->
             </div>
-            <div class="slds-col slds-size_4-of-12">
+            <div class="slds-col slds-size_2-of-12"> <!-- 25/10/2022 costanzo.lomele@webresults.it Wave 2 (changed size from 4 to 12)-->
                 <button class="slds-button slds-button_brand" disabled="{!v.searchDisabled}" onclick="{!c.handleSearch}"
                     style=" margin-top: 20px;">
                     Ricerca

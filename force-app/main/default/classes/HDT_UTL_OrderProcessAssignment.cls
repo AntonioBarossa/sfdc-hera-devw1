@@ -132,44 +132,6 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             PowerChange__c
             FROM ProcessMatrix__c 
             WITH SECURITY_ENFORCED];
-
-        /*          return new List<HDT_WRP_Process>{
-            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione', 'HDT_RT_Attivazione','', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
-            // new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
-            // new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', null, false, false, true, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
-            //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),//Processo Amend
-            //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),//Processo Amend
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Ele', true, false, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
-            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
-            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false, true, false),
-            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, true, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, true, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, true, false),
-            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false), // Disattivato Stato SP Attivo HRAWRM-862
-            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, false),// Disattivato Stato SP Attivo HRAWRM-862
-            */      /**@frpanico 25/01/2022
-             * Add Voltura con Switch Reseller
-             */
-            /*     new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, true), // Disattivato Stato SP Attivo HRAWRM-862
-            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, true),// Disattivato Stato SP Attivo HRAWRM-862
-            new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', null, false, false, false, null, false, false, true),//temporarily commented
-            new HDT_WRP_Process('Voltura', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Voltura', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false, false)
-        }; */
     }
 
     private static String getTempNewActivationCode(){
@@ -185,6 +147,55 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
         return 'SG1';
     }
+    /**
+     * @Author NTTData
+     * @Description: Check if is an Amendment Quote or if is an Order with only Opzioni TARI
+     * 
+     **/
+    private static Boolean checkAmendmentOrder(Order ord){
+        if(ord.SBQQ__Quote__r.AmendmentAllowed__c) return true;
+        if(String.isNotBlank(ord.ServicePoint__r.CommoditySector__c) && 'Ambiente'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c)){
+            List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+            if(!items.isEmpty()){
+                for(OrderItem oi : items){
+                    //product Family è sempre valorizzato
+                    if(String.isNotBlank(oi.Product2.Family) && !'Opzioni TARI'.equalsIgnoreCase(oi.Product2.Family	)){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false; 
+        }
+        return false;
+    }
+    /**
+     * Le sospensioni TARI sono mutuamente esclusive pertanto se ho una sospensione attiva e la voglio sostituire
+     * il CPQ genera due Order Item, uno con quantità negativa e uno con quantità positiva.
+     * Per questo motivo il metodo verifica la somma delle quantity. Se negativa è solo rimozione, se positiva o 0 allora è
+     * un caso ibrido di aggiunta e rimozione e va considerata come Aggiunta.
+    */
+    private static Boolean isRemoveSubscriptions(Order ord){
+        Double quantity = 0;
+        if(String.isNotBlank(ord.ServicePoint__r.CommoditySector__c) && 'Ambiente'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c)){
+            List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+            
+            if(!items.isEmpty()){
+                for(OrderItem oi : items){
+                    //product Family è sempre valorizzato
+                    if(oi.Quantity != null){
+                        quantity = quantity +oi.Quantity;
+                    }
+                }
+            }
+        }
+        if(quantity < 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
     /**
      * @description getAvailableProcesses
@@ -208,45 +219,61 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String isSwitchInRipr = isSwitchInRipristinatorio(ord) ? 'Si' : 'No';
         String datiDiscordanti = 'No';
         String isWinback = ord.IsWinback__c ? 'Si' : 'No';
-        Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
+        Boolean isAmendmentAllowed = checkAmendmentOrder(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
 		String commodity = ord.ServicePoint__r.CommoditySector__c;
+        Boolean isRemoveSubscriptions = isRemoveSubscriptions(ord);
         
-        for (ProcessMatrix__c process : allProcesses) {
-            if(commodity == 'Ambiente' && process.Commodity__c == 'Ambiente'){
-                availableProcesses.add(process);
-            }     
-            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+        for (ProcessMatrix__c process : allProcesses){
+            /* 
+            System.debug( process.ProcessName__c + ': ');
+            System.debug( 'ContractStatus__c: expected \'' +                        process.ContractStatus__c + '\', effective \'' + sapContractStatus +'\'' );
+            System.debug( 'isSTGNew__c: expected \'' +                              process.isSTGNew__c + '\', effective \'' + isStg +'\'' );
+            System.debug( 'marketOrigin__c: expected \'' +                          process.MarketOrigin__c + '\', effective \'' + marketOrigin +'\'' );
+            System.debug( 'plugPresence__c: expected \'' +                          process.PlugPresence__c + '\', effective \'' + plugPresence +'\'' );
+            System.debug( 'IsOwnAccountNew__c: expected \'' +                       process.IsOwnAccountNew__c + '\', effective \'' + isOwnAccount +'\'' );
+            System.debug( 'isResellerNew__c: expected \'' +                         process.IsResellerNew__c + '\', effective \'' + isReseller +'\'' );
+            System.debug( 'isChangeUseNew__c: expected \'' +                        process.IsChangeUseNew__c + '\', effective \'' + isChangeUse +'\'' );
+            System.debug( 'ExistActivitySwitchRipristinatorioNew__c: expected \'' + process.ExistActivitySwitchRipristinatorioNew__c + '\', effective \'' + isSwitchInRipr +'\'' );
+            System.debug( 'OngoingSwitchOutNew__c: expected \'' +                   process.OngoingSwitchOutNew__c + '\', effective \'' + isWinback +'\'' );
+            System.debug( 'PowerChange__c: expected \'' +                           process.PowerChange__c + '\', effective \'' + isPowerChange +'\'' );
+            System.debug( 'commodity__c: expected \'' +                             process.Commodity__c + '\', effective \'' + commodity +'\'' );
+            System.debug( 'IsAmendment__c: expected \'' +                           process.IsAmendment__c + '\', effective \'' + isAmendmentAllowed +'\'' ); 
+            */
+            if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
             {
                 availableProcesses.add(process);
+            }
+            else if( process.ProcessName__c == 'Voltura - Subentro Scarico produttivo' && 'Marche Multiservizi S.p.A'.equalsIgnoreCase(ord.SalesCompany__c) ){
+                continue;
             }
             else if(
                     /* Controllo Stato Contratto */
                     (process.ContractStatus__c.containsIgnoreCase(sapContractStatus))
                     /* Controllo IsStg */
-                &&  (process.isSTGNew__c == isStg || process.isSTGNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsSTGNew__c.containsIgnoreCase(isStg) || process.isSTGNew__c.equalsIgnoreCase('All'))
                     /* Controllo Market Origin */
-                &&  (process.marketOrigin__c.contains(marketOrigin))
+                &&  (process.MarketOrigin__c.contains(marketOrigin))
                     /* Controllo Presenza Allaccio */
-                &&  (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas'))
+                &&  (process.PlugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas'))
                     /* Controllo Stesso Account */
-                &&  (process.isOwnAccountNew__c == isOwnAccount || process.isOwnAccountNew__c.equalsIgnoreCase('All') || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
+                &&  (process.IsOwnAccountNew__c.equalsIgnoreCase(isOwnAccount) || process.isOwnAccountNew__c.equalsIgnoreCase('All') || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
                     /* Controllo Reseller */
-                &&  (process.isResellerNew__c == isReseller || process.isResellerNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsResellerNew__c.containsIgnoreCase(isReseller) || process.isResellerNew__c.equalsIgnoreCase('All'))
                     /* Controllo Cambio Uso */
-                &&  (process.isChangeUseNew__c == isChangeUse || process.isChangeUseNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsChangeUseNew__c.containsIgnoreCase(isChangeUse) || process.isChangeUseNew__c.equalsIgnoreCase('All'))
                     /* Controllo Switch Ripristinatorio */
-                &&  (process.ExistActivitySwitchRipristinatorioNew__c == isSwitchInRipr || process.ExistActivitySwitchRipristinatorioNew__c.equalsIgnoreCase('All'))
+                &&  (process.ExistActivitySwitchRipristinatorioNew__c.containsIgnoreCase(isSwitchInRipr) || process.ExistActivitySwitchRipristinatorioNew__c.equalsIgnoreCase('All'))
                     /* Controllo Dati Discordanti */
-                &&  (process.ExistActivityDatiDiscordantiNew__c == datiDiscordanti || process.ExistActivityDatiDiscordantiNew__c.equalsIgnoreCase('All'))
+                &&  (process.ExistActivityDatiDiscordantiNew__c.containsIgnoreCase(datiDiscordanti) || process.ExistActivityDatiDiscordantiNew__c.equalsIgnoreCase('All'))
                     /* Controllo WinBack */
-                &&  (process.OngoingSwitchOutNew__c == isWinback || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
+                &&  (process.OngoingSwitchOutNew__c.containsIgnoreCase(isWinback) || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
                     /* Controllo Variazione Potenza */
                 &&  (process.PowerChange__c == isPowerChange)
                     /* Controllo Commodity */
-                &&  ((process.commodity__c == commodity || process.commodity__c == null))
+                &&  ((process.Commodity__c.containsIgnoreCase(commodity) || process.Commodity__c == null))
                     /* Controllo Amendment */
-                &&  (process.isAmendment__c == isAmendmentAllowed)
+                &&  (process.IsAmendment__c == isAmendmentAllowed)
             ) {
                 if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_TemporaneaNuovaAtt'))
                 {
@@ -256,7 +283,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 {
                     process.CasualCode__c = 'RI6';
                 }
-                availableProcesses.add(process);
+               //escludo il processo di modifica tariffa se si sta eseguendo una rimozione sconto
+                if((!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione'))
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione') && isRemoveSubscriptions)){
+                    availableProcesses.add(process);
+                }
             }
         }
 
@@ -314,6 +346,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 famils.add((String) ag.get('fam'));
         }
         famils.add('Promozione');
+        //aggiunto per gestire il link degli order in caso di Amend di aggiunta agevolazione
+        famils.add('Opzioni TARI');
         return famils;
     }
 
@@ -403,7 +437,6 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
         Boolean checkEnergy = false;
         Boolean checkNonEnergy = true;
-        System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,
             // String sub = 'Subentro';
@@ -438,7 +471,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 saleSrv.updateRecord(s);
             }
             res = String.join(listRes,',');
-            if(r){
+            /**@frpanico 2022-12-14 nel caso di Service Point non innescabile per transitorio e punto gas innescabile a transitorio
+             * Verrebbe sovrascritto la stringa res perdendo traccia della non innescabilita' del punto
+             */
+            if(r && (res == null || String.isBlank(res))){
                 res = 'Subentro';
             }
         }
@@ -465,75 +501,113 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 } 
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
-            Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
-            Map<String,String> mapRemi = new Map<String,String>();
-            Set<String> comuniToUdb = new set<String>(); 
-            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiConfiguration();
-            for(MatriceRemiCode__c m : remiList){
-                if(mapRemi.get(m.Comune__c.toUpperCase()) == null){
-                    mapRemi.put(m.Comune__c.toUpperCase(),m.RemiCode__c);
-                }
-            }
-
-            for(ServicePoint__c sr :spList){
-               /* String remi = '';
-                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
-                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
-                    sr.RemiCode__c = remi;
-                }
-                else{
-                    res += '_Remi';
-                }*/
-                comuniToUdb.add(sr.SupplyCity__c);
-                /*if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
-                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
-                   // sr.RemiCode__c = wrp.remiCode;
-                    sr.VATNumberUdb__c = wrp.vatUbd;
-                    system.debug(wrp);
-                    system.debug('SP to Update '+sr.VATNumberUdb__c);
-                }
-                else{
-                    sr.VATNumberUdb__c = '02060500390';
-                   // res += '_Remi';
-                }*/
-            }
-            List<MatriceRemiCode__c> partitaUdbList = HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(comuniToUdb);
-            
-            for(MatriceRemiCode__c m : partitaUdbList){
-                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
-                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
-                mapRemiCode.put(m.RemiCode__c.toUpperCase() + '_' + m.Comune__c.toUpperCase() + '_' + m.SalesCompany__c, wrp);
+            Set<String> comuni = new set<String>(); 
+            for(ServicePoint__c sp : spList){
+                comuni.add(sp.SupplyCity__c.toUpperCase());
             }
 
             Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+            Set<String> companies = new Set<String>();
+            //String company = serviceSocieta.get(sr.id); //-> passare al nostro metodo
+            
             for(ServicePoint__c sr :spList){
-                String remi = '';
-                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
-                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
-                    sr.RemiCode__c = remi;
-                }
-                else{
-                    res += '_Remi';
-                }
-                if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
-                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
-                   // sr.RemiCode__c = wrp.remiCode;
-                    sr.VATNumberUdb__c = wrp.vatUbd;
-                    system.debug(wrp);
-                    system.debug('SP to Update '+sr.VATNumberUdb__c);
-                }
-                else{
-                    sr.VATNumberUdb__c = '02060500390';
-                   // res += '_Remi';
+                companies.add(serviceSocieta.get(sr.id).toUpperCase());
+            }
+
+            // chiamare metodo per calcolo remicode/vatNumber
+            Map<String, MatriceRemiCode__c> remiCodeMap = HDT_UTL_OrderProcess.calculateRemiCodeVatNumberServicePoint(comuni, companies);
+
+            system.debug('remiCodeMap --> '+remiCodeMap);
+            if(!remiCodeMap.isEmpty()){
+                for(ServicePoint__c sr :spList){
+                    if(remiCodeMap.containsKey(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase())){
+                        if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c)){
+                            sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c;
+                        }
+                        else{
+                            res += '_Remi';            
+                        }
+                        if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c)){
+                            sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c;                    
+                        }
+                        else{
+                            sr.VATNumberUdb__c = '02060500390';        
+                        }
+                    }
+                    else{
+                        sr.VATNumberUdb__c = '02060500390';      
+                    }
                 }
             }
-           // if(res != '_Remi' && res !='Subentro_Remi'){
-                servicePointSrv.updateRecordRemiCode(spList);
-           // }
+
+            HDT_UTL_DatabaseService.updateSObject(spList);
         }
+        //     Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
+        //     Map<String,String> mapRemi = new Map<String,String>();
+        //     Set<String> comuniToUdb = new set<String>(); 
+        //     List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiConfiguration();
+        //     for(MatriceRemiCode__c m : remiList){
+        //         if(mapRemi.get(m.Comune__c.toUpperCase()) == null){
+        //             mapRemi.put(m.Comune__c.toUpperCase(),m.RemiCode__c);
+        //         }
+        //     }
 
+        //     for(ServicePoint__c sr :spList){
+        //        /* String remi = '';
+        //         if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+        //             remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+        //             sr.RemiCode__c = remi;
+        //         }
+        //         else{
+        //             res += '_Remi';
+        //         }*/
+        //         comuniToUdb.add(sr.SupplyCity__c);
+        //         /*if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+        //             HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+        //            // sr.RemiCode__c = wrp.remiCode;
+        //             sr.VATNumberUdb__c = wrp.vatUbd;
+        //             system.debug(wrp);
+        //             system.debug('SP to Update '+sr.VATNumberUdb__c);
+        //         }
+        //         else{
+        //             sr.VATNumberUdb__c = '02060500390';
+        //            // res += '_Remi';
+        //         }*/
+        //     }
+        //     List<MatriceRemiCode__c> partitaUdbList = HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(comuniToUdb);
+            
+        //     for(MatriceRemiCode__c m : partitaUdbList){
+        //         //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+        //         HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
+        //         mapRemiCode.put(m.RemiCode__c.toUpperCase() + '_' + m.Comune__c.toUpperCase() + '_' + m.SalesCompany__c, wrp);
+        //     }
 
-        System.debug('*****VUOIANNA2:' + res);
+        //     Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+        //     for(ServicePoint__c sr :spList){
+        //         String remi = '';
+        //         if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+        //             remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+        //             sr.RemiCode__c = remi;
+        //         }
+        //         else{
+        //             res += '_Remi';
+        //         }
+        //         if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+        //             HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+        //            // sr.RemiCode__c = wrp.remiCode;
+        //             sr.VATNumberUdb__c = wrp.vatUbd;
+        //             system.debug(wrp);
+        //             system.debug('SP to Update '+sr.VATNumberUdb__c);
+        //         }
+        //         else{
+        //             sr.VATNumberUdb__c = '02060500390';
+        //            // res += '_Remi';
+        //         }
+        //     }
+        //    // if(res != '_Remi' && res !='Subentro_Remi'){
+        //         servicePointSrv.updateRecordRemiCode(spList);
+        //    // }
+        //}
         return res;
     }
 
@@ -610,5 +684,45 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         System.debug('toReturn :' + toReturn);
 
         return toReturn;
+    }
+
+    public static String getProcessDriver(Order ord)
+    {
+        Map<String, List<Map<String,String>>> result = new Map<String,List<Map<String,String>>>(); 
+        /* Column Header */
+        result.put('columnsObj',new List<Map<String,String>>{new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverLabel'}, new Map<String,String>{'label' => 'Valore', 'fieldName' => 'driverValue'}});
+        /* Stato Contratto SAP */
+        List<Map<String,String>> infoList = new List<Map<String,String>>();
+        infoList.add(addDriver('Stato Contratto SAP', 'sapContractStatus', ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'Nullo'));
+        /* STG */
+        infoList.add(addDriver('STG','isStg',ord.isSTG__c ? 'Si' : 'No'));
+        /* Mercato Provenienza */
+        infoList.add(addDriver('Mercato Provenienza','marketOrigin',ord.MarketOrigin__c));
+        /* Presenza Allaccio */
+        infoList.add(addDriver('Presenza Allaccio','plugPresence',ord.ServicePoint__r.PlugPresence__c == null ? 'N/A' : ord.ServicePoint__r.PlugPresence__c));
+        /* Stesso Account */
+        infoList.add(addDriver('Stesso Account','sameAccount',ord.AccountId == ord.ServicePoint__r.Account__c ? 'Si' : 'No'));
+        /* Reseller */
+        infoList.add(addDriver('Reseller','isReseller',ord.ServicePoint__r.isReseller__c ? 'Si' : 'No'));
+        /* Cambio Uso */
+        infoList.add(addDriver('Cambio Uso','isChangeUse', ord.SBQQ__Quote__r.AllowChangeUse__c ? 'Si' : 'No'));
+        /* Switch In Ripristinatorio */
+        infoList.add(addDriver('Switch Ripristinatorio','switchRipr',isSwitchInRipristinatorio(ord) ? 'Si' : 'No'));
+        /* Dati Discordanti */
+        infoList.add(addDriver('Dati Discordanti','datiDiscordanti','No'));
+        /* Presenza SwitchOut */
+        infoList.add(addDriver('Presenza Switchout','isWinback',ord.isWinback__c ? 'Si' : 'No'));
+        /* Modifica Potenza */
+        infoList.add(addDriver('Modifica Potenza','isPowerChange',isAttivazioneConModifica(ord) ? 'Si' : 'No'));
+        /* Servizio */
+        infoList.add(addDriver('Servizio','commodity',ord.ServicePoint__r.CommoditySector__c));
+        
+        result.put('infoObj', infoList);
+
+        return JSON.serialize(result);
+    }
+    private static Map<String,String> addDriver(String label, String name, String value)
+    {
+        return new Map<String,String>{'driverLabel' => label, 'driverName' => name, 'driverValue' => value};
     }
 }

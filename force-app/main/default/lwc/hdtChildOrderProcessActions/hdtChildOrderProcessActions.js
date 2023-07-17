@@ -16,19 +16,32 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api lastStepData;
     loading = false;
     isDialogVisible = false;
+    blockDoubleClick = false;
 
     //Modifiche Gestione Scarti Complessi
     @api discardRework;
     @api activityIdToClose;
     
     handleResubmission(event){
+        this.blockDoubleClick = true;
+        if (this.invalidRequestPhase(this.order)){
+            this.blockDoubleClick = false;
+            return;
+        }
         console.log('@@@Entro in risottomissione ' +this.activityIdToClose);
         console.log('@@@Entro in risottomissione ' +this.order.Id);
+        let orderToSave = this.order;
+        if (this.lastStepData != null) {
+            if (!this.validateLastStepFields(this.lastStepData)) {
+                this.blockDoubleClick = false;
+                return;
+            }
+        }
+
         resubmission({
-            orderId : this.order.Id,
+            ord : orderToSave,
             activityId : this.activityIdToClose,
-            processType : this.order.ProcessType__c,
-            phase : this.order.Phase__c
+            lastStepData : this.lastStepData
         }).then(response => {
             let _message = 'Risottomissione avvenuta con successo';
             let _title = 'Success';
@@ -37,6 +50,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                _message = response;
                _title = 'Error';
                _variant = 'error'; 
+               this.blockDoubleClick = false;
             }else{
                 this.loading = false;
 
@@ -59,6 +73,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 message: error.body.message,
                 variant: 'error'
             });
+            this.blockDoubleClick = false;
             this.dispatchEvent(toastSuccessMessage);
         });
     }
@@ -148,6 +163,11 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     handleSave(){
         this.loading = true;
 
+        if (this.invalidRequestPhase(this.order)){
+            this.loading = false;
+            return;
+        }
+        
         let orderToSave = {};
 
         console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
@@ -363,5 +383,26 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         } else {
             this.isDialogVisible = false;
         }
+    }
+
+
+
+    invalidRequestPhase(ord){
+        let response = (
+            this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+            || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
+            || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+            ) && this.order.ServicePoint__r?.RecordType.DeveloperName === 'HDT_RT_Ele' 
+            && !this.order.RequestPhase__c;
+        if (response) {
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Attenzione! Il campo Fase Richiesta è obbligatorio',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+        }
+        return response;
     }
 }

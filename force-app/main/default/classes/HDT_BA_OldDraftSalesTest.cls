@@ -41,20 +41,11 @@ public with sharing class HDT_BA_OldDraftSalesTest {
         }
 
         for(Sale__c sale : [SELECT Id from Sale__c WHERE Id IN :saleIds]) {
-            quotes.add(new SBQQ__Quote__c(SBQQ__Status__c='Annullata', Sale__c=sale.Id));
-            opps.add(new Opportunity(name='TestOpp', StageName='Chiusa/Annullata', Sale__c=sale.Id, CloseDate=Date.today()));
+            quotes.add(new SBQQ__Quote__c(SBQQ__Status__c='In Review', Sale__c=sale.Id));
+            opps.add(new Opportunity(name='TestOpp', StageName='Proposal', Sale__c=sale.Id, CloseDate=Date.today()));
         }
         insert quotes;
         insert opps;
-
-        system.debug(sales);
-        system.debug(saleIds);
-
-        system.debug(quotes);
-        system.debug(opps);
-
-        /* List<Sale__c> myList = [SELECT Id, Status__c, CreatedDate, (SELECT Id, SBQQ__Status__c from Quotes__r), (SELECT Id, StageName from Opportunities__r) from Sale__c where Status__c='Bozza'];
-        system.debug(myList); */
     }
 
     @isTest
@@ -73,11 +64,11 @@ public with sharing class HDT_BA_OldDraftSalesTest {
 
            for(SBQQ__Quote__c quote : s.Quotes__r) {
                system.debug(quote);
-               system.assertEquals('Annullata', quote.SBQQ__Status__c, 'value of parameter is matching');
+               system.assertEquals('Cancelled', quote.SBQQ__Status__c, 'value of parameter is matching');
            }
            for(Opportunity opp : s.Opportunities__r) {
                system.debug(opp);
-               system.assertEquals('Chiusa/Annullata', opp.StageName, 'value of parameter is matching');
+               system.assertEquals('Closed Lost', opp.StageName, 'value of parameter is matching');
            }
        }
     }

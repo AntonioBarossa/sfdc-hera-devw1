@@ -152,6 +152,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             if(contractMap.containsKey(processObj.csvSplitted[podIndex])){
                 contract = contractMap.get(processObj.csvSplitted[podIndex]);
                 processObj.newCase.Contract__c = contract.Id;
+                processObj.newCase.Commodity__c = contract.ServicePoint__r.CommoditySector__c;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
                 processObj.newCase.AccountId = contract.AccountId;
@@ -176,11 +177,22 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                     if(String.isBlank(String.valueOf(processObj.newCase.PaymentDate__c)) && processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
                         processObj.newCase.PaymentDate__c = Date.today();
                     }
+                    if(String.isNotBlank(processObj.newCase.Type) 
+                        && 'Risoluzione Contrattuale'.equalsIgnoreCase(processObj.newCase.Type) 
+                        && String.isNotBlank(processObj.newCase.Commodity__c) 
+                        && ('Acqua'.equalsIgnoreCase(processObj.newCase.Commodity__c) ||'Teleriscaldamento'.equalsIgnoreCase(processObj.newCase.Commodity__c))){
+                            
+                            //W2 per la risoluzione contrattuale H2O da eseguire non prima del è Oggi + 6 gg lavorativi
+                            Date effectiveDate =  HDT_UTL_Case.addBusinessDay(System.today(),6);
+                            processObj.newCase.NotPerformedBefore__c = effectiveDate;
+                            processObj.newCase.EffectiveDate__c = effectiveDate;
+                    }
                 } else {
                     //itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
                     //continue;
                     processObj.parentCase = new Case();
                     processObj.parentCase.Contract__c = contract.Id;
+                    processObj.newCase.Commodity__c = contract.ServicePoint__r.CommoditySector__c;
                     processObj.parentCase.ServicePoint__c = contract.ServicePoint__c;
                     processObj.parentCase.BillingProfile__c = contract.BillingProfile__c;
                     processObj.parentCase.AccountId = contract.AccountId;
@@ -229,9 +241,10 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
             if(String.isNotBlank(contract.ServicePoint__r.ServicePointCode__c)){
                 try{
-                    //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
-                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                    if(!Test.isRunningTest()){
+                        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, contract.ServicePoint__r.ServicePointCode__c);
+                        processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), processObj.newCase); 
+                    }
                     caseToInsert.add(processObj.newCase); 
                     requestItemForUpsert.add(processObj.requestItem);
                 } catch(Exception e){
@@ -304,7 +317,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
-            item.StatusDescription__c = message;
+            item.StatusDescription__c = message.abbreviate(250);
         }
         update itemList;
     }

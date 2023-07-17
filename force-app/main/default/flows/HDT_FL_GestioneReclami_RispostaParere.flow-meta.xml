@@ -5,7 +5,7 @@
         <name>AssegnaStatoAcitivty</name>
         <label>AssegnaStatoAcitivty</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>GetActivityRichiestaParere.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
-        <locationX>314</locationX>
-        <locationY>1454</locationY>
+        <locationX>446</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -80,7 +80,7 @@
     <assignments>
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
-        <locationX>50</locationX>
+        <locationX>116</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeEditForm</assignToReference>
@@ -96,7 +96,7 @@
     <assignments>
         <name>Assign_Process_Type_0</name>
         <label>Assign Process Type</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeEditForm</assignToReference>
@@ -135,8 +135,8 @@
     <assignments>
         <name>Assign_To_Collection_0</name>
         <label>Assign To Collection</label>
-        <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <locationX>446</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
@@ -166,7 +166,7 @@
     <decisions>
         <name>Parent_Process</name>
         <label>Parent Process?</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assign_Process_Type_0</targetReference>
@@ -191,7 +191,7 @@
     <decisions>
         <name>Parent_Process_0</name>
         <label>Parent Process?</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>GetActivityRichiestaParere</targetReference>
@@ -213,6 +213,31 @@
             <label>Esercizio Diritti Privacy</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>thereAreAct</name>
+        <label>thereAreAct?</label>
+        <locationX>446</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_act</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetActivityRichiestaParere</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaStatoAcitivty</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione della Risposta Parere</description>
     <dynamicChoiceSets>
         <name>MotivoNonFondato</name>
@@ -222,6 +247,7 @@
         <picklistField>NotJustMotivation__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>GestioneReclami_RispostaParere {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Risposta Parere</label>
     <processMetadataValues>
@@ -246,7 +272,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -267,11 +293,11 @@
     <recordLookups>
         <name>GetActivityRichiestaParere</name>
         <label>GetActivityRichiestaParere</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaStatoAcitivty</targetReference>
+            <targetReference>thereAreAct</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -288,7 +314,7 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -309,7 +335,7 @@
     <recordLookups>
         <name>GetParentCase</name>
         <label>GetParentCase</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -331,7 +357,7 @@
         <name>AggiornaActivity</name>
         <label>AggiornaActivity</label>
         <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </connector>
@@ -340,14 +366,14 @@
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
-        <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationX>248</locationX>
+        <locationY>2006</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <screens>
         <name>Inserimento_Risposta</name>
         <label>Inserimento Risposta</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -444,7 +470,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>

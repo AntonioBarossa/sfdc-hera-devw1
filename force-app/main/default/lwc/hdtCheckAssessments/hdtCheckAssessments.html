@@ -2,13 +2,14 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 15-06-2022
+  @last modified on  : 28-10-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
 
         <div style="width: auto;">
             <template if:true={data}>
+              <template if:true={isVisible}>
                 <lightning-datatable
                                     key-field="id"
                                     columns={columns}
@@ -19,6 +20,11 @@
                                     sorted-by={sortedBy}
                                     onsort={onHandleSort}>
                 </lightning-datatable>
+              </template>
+            </template>
+
+            <template if:false={isVisible}>
+              <b>{message}</b>
             </template>
         </div>
 

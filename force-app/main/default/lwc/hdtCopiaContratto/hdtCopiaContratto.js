@@ -1,14 +1,14 @@
-import { LightningElement, api, track , wire} from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
+import { FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import { NavigationMixin } from 'lightning/navigation';
 import cancelCase from '@salesforce/apex/HDT_LC_RecordEditFormSales.cancelCase';
 import getActivity from '@salesforce/apex/HDT_LC_RecordEditFormSales.getActivity';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getParent from '@salesforce/apex/HDT_LC_CopiaContratto.getAccountOrder';
 import getChild from '@salesforce/apex/HDT_LC_CopiaContratto.getOrderChild';
-import confirmAction2 from '@salesforce/apex/HDT_LC_CopiaContratto.confirmAction';
+import confirmAction from '@salesforce/apex/HDT_LC_CopiaContratto.confirmAction';
 import confirmAction2Draft from '@salesforce/apex/HDT_LC_CopiaContratto.confirmActionDraft';
-import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 
 class fieldData{
     constructor(label, apiname,cssClass, required, disabled, value, name) {
@@ -63,6 +63,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @track disableConfirmButton= false;
     @track preloading= false;
     @api selectedActivity;
+    @api documentSendTrackingLwc;
+    @api availableActions = [];
     @track tipoCopiaOptions =
     [
         {label:"Copia contratto firmato", value:"Copia contratto firmato"},
@@ -142,7 +144,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             this.tipoCopia = result.c.CopyType__c;
             this.orderIdPre = result.c.Order__c;
             this.selectedSend = result.c.SendMode__c;
-            this.selectedActivity = result.c.Channel__c;
+            this.selectedActivity = result.c.Origin;
             this.caseRecord = {Id : this.recordid, AccountId : this.accountId};
             if(result.c.channel__c == 'Sportello'){
                 this.showButtonPreview = true;
@@ -193,7 +195,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     changeValueTipo(event){
         this.tipoCopia = event.detail.value;
-        //this.getMapFields();
         console.log('*****:' + event.detail.value);
         this.selectedOrder = null;
         this.showParentList = false;
@@ -233,14 +234,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                     Case[element.name]= element.value;
                 }
             })
-        /*this.template.querySelectorAll('lightning-input-field').forEach(elem=>{
-            //console.log(JSON.stringify(elem));
-            console.log('#data-id value: ' + elem.value);
-            if(elem.getAttribute("data-id")!=null){
-                Case[elem.getAttribute("data-id")]= elem.value;
-            }
-            console.log(JSON.stringify(Case));
-        });*/
         console.log(Case);
         let address = this.getAddress();
         if(address){
@@ -415,7 +408,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     }
 
     handleConfirm(){
-
         console.log('*****:' + this.tipoCopia);
         let Case = this.catchFieldsToSave({Id: this.recordid});
         if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
@@ -426,7 +418,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 });
                 this.dispatchEvent(event);
         }else{
-                confirmAction2({
+                confirmAction({
                     c : Case,
                     accountId : this.accountId,
                     orderParentId : this.selectedOrder.Id,
@@ -436,21 +428,13 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 }).then(response =>{
                     if(response == null || response == ''){
                         const event = new ShowToastEvent({
-                            message: 'Puoi Continuare la lavorazione in autonomia',
+                            message: 'Processo confermato con successo',
                             variant: 'success',
                             mode: 'dismissable'
                             });
-                            this.dispatchEvent(event);
-                            this[NavigationMixin.Navigate]({
-                                type: 'standard__recordPage',
-                                attributes: {
-                                    recordId: this.recordid,
-                                    objectApiName: 'Case',
-                                    actionName: 'view'
-                                }
-                            });
-                        const closeclickedevt = new CustomEvent('closeaction');
-                        this.dispatchEvent(closeclickedevt); 
+                        this.dispatchEvent(event);
+                        const navigateNextEvent = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextEvent);
                     }
                     else if(response == 'NoDocumenti'){
                         const event = new ShowToastEvent({
@@ -458,25 +442,22 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                             variant: 'warning',
                             mode: 'dismissable'
                             });
-                            this.dispatchEvent(event);
+                        this.dispatchEvent(event);
                     }
-                    else{
-                        /*const event = new ShowToastEvent({
-                            message: 'è stata creata la seguente activity :' + response    ,
-                            variant: 'warning',
+                    else if(response?.includes('DocId:')){
+                        const event = new ShowToastEvent({
+                            message: 'Processo confermato con successo',
+                            variant: 'success',
                             mode: 'dismissable'
                             });
-                            this.dispatchEvent(event);*/
-                            this[NavigationMixin.Navigate]({
-                                type: 'standard__recordPage',
-                                attributes: {
-                                    recordId: this.recordid,
-                                    objectApiName: 'Case',
-                                    actionName: 'view'
-                                }
-                            });
-                        const closeclickedevt = new CustomEvent('closeaction');
-                        this.dispatchEvent(closeclickedevt);
+                        this.dispatchEvent(event);
+                        this.documentSendTrackingLwc = response.split("DocId:")[1];
+                        const navigateNextEvent = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextEvent);
+                    }
+                    else{
+                        const navigateNextEvent = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextEvent);
                     }
                 });
             }
@@ -493,19 +474,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             tipoAttivita : this.selectedActivity,
             tipoFirma : this.tipoCopia,
             tipoSend : this.selectedSend
-                }).then(response =>{
-                    this[NavigationMixin.Navigate]({
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: this.recordid,
-                            objectApiName: 'Case',
-                            actionName: 'view'
-                        }
-                    });
-                        const closeclickedevt = new CustomEvent('closeaction');
-                        this.dispatchEvent(closeclickedevt); 
-        });
-    
+            }).then(response =>{
+                    const navigateNextEvent = new FlowNavigationNextEvent();
+                    this.dispatchEvent(navigateNextEvent);
+        });   
     }
 
 
@@ -519,7 +491,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             console.log('entra in if ind estero');
             if (!address['Flag Verificato']) {
                 console.log('entra in flag verificato false ');
-                //this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
                 errorMessages.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
         } else {
@@ -592,29 +563,17 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     handleAnnull(){
         cancelCase({caseId: this.recordid}).then(result => {
-            console.log(result);
+            console.log('*** handleAnnull(): '+result);
             const event = new ShowToastEvent({
                 message: 'Case Annullato!',
                 variant: 'success',
                 mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
-                this[NavigationMixin.Navigate]({
-                    type: 'standard__recordPage',
-                    attributes: {
-                        recordId: this.recordid,
-                        objectApiName: 'Case',
-                        actionName: 'view'
-                    }
-                });
-                    const closeclickedevt = new CustomEvent('closeaction');
-                    this.dispatchEvent(closeclickedevt); 
+            const navigateNext = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNext);     
             }).catch(error => {
-                console.log(error);
+                console.log('*** handleAnnull(): '+error);
             });
     }
-
-
-
-
 }

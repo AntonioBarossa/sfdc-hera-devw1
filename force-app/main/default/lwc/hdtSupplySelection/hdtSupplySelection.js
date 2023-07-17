@@ -143,14 +143,14 @@ export default class hdtSupplySelection extends LightningElement {
     }
 
     handleIsRicercaInSap(event){
-        console.log('handleIsRicercaInSap START' + JSON.stringify(event));
+        console.log('XXX handleIsRicercaInSap: event -> ' + JSON.stringify(event));
         this.isRicercainSAP = event.detail;
     }
     /**
      * Get selected service point
      */
     handleServicePointSelection(event){
-        
+        console.log('XXX handleServicePointSelection: event -> ' + JSON.stringify(event));
         this.isCompatible = event.detail.isCompatible;
         this.serviceRequestId = event.detail.serviceRequestId;
         this.selectedServicePoint = event.detail;

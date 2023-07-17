@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CraftsmenRegisterNumberC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>CraftsmenRegisterNumberC</description>
+    <externalDeveloperName>CraftsmenRegisterNumberC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>N. Iscrizione albo artigiani</label>
+    <type>Checkbox</type>
+</CustomField>

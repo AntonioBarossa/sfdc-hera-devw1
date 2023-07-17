@@ -253,12 +253,27 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             HDT_UTL_OrderProcess.checkSatisfationIndex(mapNew, mapOld);
 
-            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account0'];
+            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account bsn0'];
  
             Test.stopTest();
 
             System.assertEquals(orders[0].PraxidiaOverrallSatisfaction__c, acc.SatisfactionIndexCtrl__c, 'Account Updated.');
             System.assertNotEquals(null, acc.SatisfactionIndexCtrl__c, 'Account update failed.');
+        }
+    }
+
+    @isTest
+    public static void testCancellAllEligibleOrder() {
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+        System.runAs(u){
+            List<Order> orders = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+            Contact__c, ParentOrder__c, PhaseStory__c 
+            FROM Order WHERE ParentOrder__c = null];
+            Test.startTest();
+            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id,'Test message');
+            Test.stopTest();
+            System.assertEquals(false, ordChildList.isEmpty(), 'child returned');
         }
     }
 
@@ -307,7 +322,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'Documentazione validata';
@@ -315,7 +330,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, VasSubtype__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -345,7 +360,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             Test.startTest();
 
-            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersOld = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                         Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
@@ -353,7 +368,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'In attesa di quality call';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersNew = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order 
@@ -418,7 +433,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, ConfirmCustomerContract__C
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'In attesa validazione';
@@ -426,7 +441,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -705,6 +720,72 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             System.assertEquals(false, assertList.isEmpty(), 'Something done');
             System.assertNotEquals(true, assertList.isEmpty(), 'Something not done.');
+        }
+    }
+
+    @isTest
+    public static void testModificaTariffaChildPhase() {
+        Pricebook2 pricebook = HDT_UTL_DataFactoryTst.activeStandardPricebook();
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+ 
+            Test.startTest();
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Da Inviare', constants.ORDER_RECORDTYPEID_MODIFICATARI, constants.ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Documentazione Validata', constants.ORDER_RECORDTYPEID_MODIFICATARI, constants.ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI);
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
+                                            IsSequanzialized__c, BillingProfile__c, TecnicalPhase__c, (Select sale__c from Orders__r)
+                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(2, true);
+            List<PricebookEntry> pricebookEntries = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebook.Id);
+ 
+
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, ordersOld[0].AccountId, 'Da Inviare');
+            orderList[0].ProcessType__c = 'Modifica Tariffa';
+            orderList[0].ApprovalType__c ='2 - Attività';
+            orderList[0].Commodity__c ='Ambiente';
+            orderList[0].ParentOrder__c = ordersOld[0].Id;
+            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[0].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[0].CIAccoutn__c = 'Validato';
+            orderList[0].QuickQuote__c = 'Validato';
+            orderList[0].ChamberCommerceRegistration__c = 'Validato';
+            orderList[0].Instance326__c = 'Validato';
+            orderList[0].DocumentLow80__c = 'Validato';
+            orderList[0].pricebook2Id = pricebook.Id;
+
+            orderList[1].ProcessType__c = 'Modifica Tariffa';
+            orderList[1].ApprovalType__c ='2 - Attività';
+            orderList[1].Commodity__c ='Ambiente';
+            orderList[1].Phase__c ='Documentazione Validata';
+            orderList[1].ParentOrder__c = ordersOld[0].Id;
+            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[1].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[1].CIAccoutn__c = 'Validato';
+            orderList[1].QuickQuote__c = 'Validato';
+            orderList[1].ChamberCommerceRegistration__c = 'Validato';
+            orderList[1].Instance326__c = 'Validato';
+            orderList[1].DocumentLow80__c = 'Validato';
+            orderList[1].pricebook2Id = pricebook.Id;
+
+            insert orderList;
+            
+            List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].id, null, products[0].id, pricebookEntries[0].id);
+            HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[1].id, null, products[1].id, pricebookEntries[1].id);
+
+            ordersOld[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            ordersOld[0].Phase__c = 'Documentazione Gestita';
+            update ordersOld; 
+            Test.stopTest();
+
+            List<Order> results = [Select id, Status from Order WHERE ID IN (:orderList[0].Id, :orderList[1].Id) AND Status ='Activated'];
+            System.assert(!results.isEmpty(), 'L\'ordine di modifica tariffa non si è attivato');
         }
     }
 
@@ -998,6 +1079,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.stopTest();
 
             System.assertEquals('Documentazione Validata', newOrderList[0].Phase__c, 'Activity Custom created');
+        }
+    }
+
+    @isTest
+    public static void testCreditCheckActivityManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newOrderList = [SELECT Id 
+                                        FROM Order WHERE IsTransition__c = false LIMIT 2];
+        
+            newOrderList[0].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[1].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[0].CreditCheckDescription__c = 'TEST';
+            newOrderList[1].CreditCheckDescription__c = 'TEST';
+
+            Set<Id> ordersId = new Set<Id>{newOrderList[0].Id,newOrderList[1].Id};
+
+            update newOrderList;
+
+            System.assertEquals(2, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non sono state create');
+
+            Test.startTest();
+
+            newOrderList[0].Phase__c = 'Annullato';
+            newOrderList[1].Phase__c = 'Annullato';
+            update newOrderList;
+            
+            Test.stopTest();
+
+            System.assertEquals(0, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non si sono chiuse');
         }
     }
 

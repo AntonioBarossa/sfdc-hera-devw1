@@ -2,12 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PurificationInfoOnTheInvoice__c</fullName>
     <externalId>false</externalId>
-    <label>Info depurazione in fattura</label>
+    <label>Info Depurazione in Fattura</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_BillingType</valueSetName>
+        <valueSetName>HDT_InfoDepurazioneInFattura</valueSetName>
     </valueSet>
 </CustomField>

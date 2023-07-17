@@ -1,11 +1,12 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.OperationWithLimitsInLoop')
-public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
+public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject>, Database.Stateful {
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
         'SAPStep__c' => 'SAPStep__c IN (###)',
         'Type__c' => 'Type__c IN (###)',
         'Priority__c' => 'wrts_prcgvr__Priority__c IN (###)',
-        'CompanyOwner__c' => 'Account__r.CompanyOwner__c IN (###)',
+        //'CompanyOwner__c' => '(Account__r.CompanyOwner__c IN (###) OR Interaction__r.CompanyOwner__c IN (###))',
+        'CompanyOwner__c' => 'CompanyOwner__c IN (###)',
         'ClientCategory__c' => 'Account__r.Category__c IN (###)',
         'ClientMarking__c' => 'Account__r.CustomerMarking__c IN (###)',
         'ComplaintSeverity__c' => 'Case__r.CriticalAttribute__c IN (###)',
@@ -29,10 +30,24 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.Process__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
         'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Case__r.CommodityFormula__c IN (###) OR Order__r.CommodityFormula__c IN (###))',
-        'ATO__c' => '(Case__r.AtoFormula__c IN (###) OR Order__r.ATO__c IN (###))'
+        'ATO__c' => '(Case__r.AtoFormula__c IN (###) OR Order__r.ATO__c IN (###))',
+        'RequestSource__c' => '(Case__r.RequestSource__c IN (###) OR Order__r.RequestSource__c IN (###))',
+        'SupplyCity__c' => '(Case__r.SupplyCity__c IN (###) OR Order__r.SupplyCity__c IN (###))'
     };
 
+    public Integer counterKo = 0;
+    public Integer counterOk = 0;
+    Datetime start = null;
+    private static HDT_SRV_BatchExecutionKpi srvBatchEx = new HDT_SRV_BatchExecutionKpi();
+    BatchExecutionKpiConfiguration__mdt kpiMeta = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_ActivityDispatcher');
+    BatchExecutionKpi__c kpiTrack=new BatchExecutionKpi__c();
+
     public List<AssignmentRule__c> start(Database.BatchableContext bc) {
+        //creo record di tracciamento KPI
+        if(kpiMeta!=null && kpiMeta.EnableTracking__c){
+            kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_ActivityDispatcher');
+        }
+
         return [
             SELECT
                 Id,
@@ -66,7 +81,10 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 Type__c,
                 UserCreatorChannel__c,
                 UserCreatorGroup__c,
-                Vendor__c
+                Vendor__c,
+                RequestSource__c,
+                SupplyCity__c,
+                ATO__c
             FROM AssignmentRule__c
             WHERE
                 Deactivated__c = false AND
@@ -132,7 +150,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                     if(queue.DailyCapacity__c != null) {
                         queueUsageMap.put(queue.Id, ++queueUsage);
                     }
-                    processedActivitiesMap.put(processedActivity.Id, processedActivity);
+                    if (!processedActivitiesMap.containsKey(processedActivity.Id)) {
+                        processedActivitiesMap.put(processedActivity.Id, processedActivity);
+                    }
                 }
                 
                 // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
@@ -152,6 +172,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             for(Database.SaveResult result : results) {
                 if(!result.isSuccess()) {
                     System.debug(LoggingLevel.DEBUG, result.getId() + ' | ' + result.getErrors());
+                    counterKo++;
+                }else if (result.isSuccess()){
+                    counterOk++;
                 }
             }
         }
@@ -162,6 +185,21 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         //RESCHEDULE
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_ActivityDispatcher - finished job: ' + a);
+
+        if(kpiMeta!=null && kpiMeta.EnableEmailSend__c){
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' LIMIT 1];
+            mail.setOrgWideEmailAddressId(owea[0].Id);
+            mail.setToAddresses(new String[]{kpiMeta.DesiredEmail__c});
+            mail.setSubject('Batch HDT_BA_ActivityDispatcher execution KPI');
+            String body='number of records: ' + (counterKo+counterOk) + '\nsuccessful assignments: ' + counterOk + '\nunsuccessful assignments ' + counterKo ;
+            mail.setPlainTextBody (body);
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        }
+
+        if(kpiMeta!=null && kpiMeta.EnableTracking__c){
+            srvBatchEx.updateRecord(kpiTrack.Id,counterOk, counterKo, counterKo + counterOk);
+        }
         
     }
 
@@ -192,11 +230,12 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             } else  {
                 mapping = MAPPINGS.get(key);
                 if(mapping != null) {
-                    value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+                    value = '\'' + (String.escapeSingleQuotes((String) ruleMap.get(key)).replace(';','\',\'')) + '\'';
                     query.add(mapping.replace(PLACEHOLDER, value));
                 }
             }
         }
+        system.debug('kkk Query: '+String.join(query, ' AND ') + ' LIMIT 10000');
         // RETURN THE UNIFIED VALUES
         return String.join(query, ' AND ') + ' LIMIT 10000';
     }

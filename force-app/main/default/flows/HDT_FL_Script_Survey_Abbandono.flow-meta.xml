@@ -74,6 +74,46 @@
         </value>
     </choices>
     <choices>
+        <name>ARGOS</name>
+        <choiceText>ARGOS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ARGOS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AUDAX_ENERGIA_SRL</name>
+        <choiceText>AUDAX ENERGIA SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AUDAX ENERGIA SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AXO</name>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;AXO&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AXO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>BLUENERGY</name>
+        <choiceText>BLUENERGY</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BLUENERGY</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>CENTRO_VENETA_ENERGIA</name>
+        <choiceText>CENTRO VENETA ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CENTRO VENETA ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Choice_No</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -114,6 +154,14 @@
         </value>
     </choices>
     <choices>
+        <name>DOLOMITI_SPA</name>
+        <choiceText>DOLOMITI SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DOLOMITI SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>DOMESTIKA_ENERGIA</name>
         <choiceText>DOMESTIKA ENERGIA</choiceText>
         <dataType>String</dataType>
@@ -146,6 +194,14 @@
         </value>
     </choices>
     <choices>
+        <name>E_DI_ENERGIA</name>
+        <choiceText>E&apos;-DI ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>E&apos;-DI ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>EDISON_ENERGIA_SPA</name>
         <choiceText>EDISON ENERGIA SPA</choiceText>
         <dataType>String</dataType>
@@ -159,6 +215,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>EDISON PER VOI </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENEGAN</name>
+        <choiceText>ENEGAN</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENEGAN</stringValue>
         </value>
     </choices>
     <choices>
@@ -191,6 +255,22 @@
         <dataType>String</dataType>
         <value>
             <stringValue>ENIT GAS E LUCE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENJOY_ENERGY_SRL</name>
+        <choiceText>ENJOY ENERGY SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENJOY ENERGY SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EON</name>
+        <choiceText>EON</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EON</stringValue>
         </value>
     </choices>
     <choices>
@@ -250,6 +330,14 @@
         </value>
     </choices>
     <choices>
+        <name>IN_ENERGIE</name>
+        <choiceText>IN ENERGIE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IN ENERGIE</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>IREN_MERCATO</name>
         <choiceText>IREN MERCATO</choiceText>
         <dataType>String</dataType>
@@ -258,11 +346,75 @@
         </value>
     </choices>
     <choices>
+        <name>ITALIA_GAS_E_LUCE</name>
+        <choiceText>ITALIA GAS E LUCE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ITALIA GAS E LUCE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>MET_GROUP</name>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;MET GROUP&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MET GROUP</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>MINERVA_ENERGIA</name>
+        <choiceText>MINERVA ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MINERVA ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NEN</name>
+        <choiceText>NEN</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NEN</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>OPTIMA</name>
+        <choiceText>OPTIMA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OPTIMA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PASSUELLO_LUCE_E_GAS</name>
+        <choiceText>PASSUELLO LUCE E GAS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PASSUELLO LUCE E GAS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PEF_POWER</name>
+        <choiceText>PEF POWER</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PEF POWER</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>PLT_PUREGREEN_SPA</name>
         <choiceText>PLT PUREGREEN SPA</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>PLT PUREGREEN SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>POSTE_ENERGIA</name>
+        <choiceText>POSTE ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>POSTE ENERGIA</stringValue>
         </value>
     </choices>
     <choices>
@@ -386,6 +538,14 @@
         </value>
     </choices>
     <choices>
+        <name>SINECOM</name>
+        <choiceText>SINECOM</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SINECOM</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>SORGENIA_SPA</name>
         <choiceText>SORGENIA SPA</choiceText>
         <dataType>String</dataType>
@@ -393,31 +553,23 @@
             <stringValue>SORGENIA SPA</stringValue>
         </value>
     </choices>
-    <decisions>
-        <name>isResponseExistDecision</name>
-        <label>isResponseExistDecision</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <defaultConnector>
-            <targetReference>CreateSurveyResponse_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isNotResponseExist</defaultConnectorLabel>
-        <rules>
-            <name>isResponseExist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetSurveyResponse</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>UpdateSurveyResponse</targetReference>
-            </connector>
-            <label>isResponseExist</label>
-        </rules>
-    </decisions>
+    <choices>
+        <name>WEKIWI</name>
+        <choiceText>WEKIWI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WEKIWI</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>WIND3</name>
+        <choiceText>WIND3</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WIND3</stringValue>
+        </value>
+    </choices>
+    <environments>Default</environments>
     <interviewLabel>HDT FL Script - Survey Abbandono {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT FL Script - Survey Abbandono</label>
     <processMetadataValues>
@@ -442,8 +594,8 @@
     <recordCreates>
         <name>CreateSurveyResponse_0</name>
         <label>CreateSurveyResponse</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
         <inputAssignments>
             <field>Campaign__c</field>
             <value>
@@ -454,6 +606,12 @@
             <field>Contact__c</field>
             <value>
                 <elementReference>GetCampaignMember.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>GetCampaignMember.LeadId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -534,7 +692,7 @@
     <recordLookups>
         <name>GetCampaignMember</name>
         <label>GetCampaignMember</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -555,7 +713,7 @@
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -576,11 +734,11 @@
     <recordLookups>
         <name>GetSurvey</name>
         <label>GetSurvey</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetSurveyResponse</targetReference>
+            <targetReference>CreateSurveyResponse_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -594,126 +752,10 @@
         <object>SurveyCRM__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetSurveyResponse</name>
-        <label>GetSurveyResponse</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>isResponseExistDecision</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Contact__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCampaignMember.ContactId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Campaign__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCampaignMember.Campaign.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>SurveyCRM__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetSurvey.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>SurveyResponse__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>UpdateSurveyResponse</name>
-        <label>UpdateSurveyResponse</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetSurveyResponse.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Response10__c</field>
-            <value>
-                <elementReference>RB4</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response11__c</field>
-            <value>
-                <elementReference>Rb6</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response12__c</field>
-            <value>
-                <elementReference>Rb8</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response1__c</field>
-            <value>
-                <elementReference>RB1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response2__c</field>
-            <value>
-                <elementReference>RB2_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response3__c</field>
-            <value>
-                <elementReference>RB3_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response4__c</field>
-            <value>
-                <elementReference>RB4_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response5__c</field>
-            <value>
-                <elementReference>RB5_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response6__c</field>
-            <value>
-                <elementReference>Energia_Elettrica_1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response7__c</field>
-            <value>
-                <elementReference>Gas_1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response8__c</field>
-            <value>
-                <elementReference>RB2</elementReference>
-            </value>
-        </inputAssignments>
-        <object>SurveyResponse__c</object>
-    </recordUpdates>
     <screens>
         <name>Screen1</name>
         <label>Screen1</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1035,6 +1077,28 @@
             <choiceReferences>A_S_M_VOGHERA</choiceReferences>
             <choiceReferences>GREEN_NETWORK_SPA</choiceReferences>
             <choiceReferences>DOMESTIKA_ENERGIA</choiceReferences>
+            <choiceReferences>AXO</choiceReferences>
+            <choiceReferences>MET_GROUP</choiceReferences>
+            <choiceReferences>ARGOS</choiceReferences>
+            <choiceReferences>BLUENERGY</choiceReferences>
+            <choiceReferences>MINERVA_ENERGIA</choiceReferences>
+            <choiceReferences>CENTRO_VENETA_ENERGIA</choiceReferences>
+            <choiceReferences>PEF_POWER</choiceReferences>
+            <choiceReferences>WIND3</choiceReferences>
+            <choiceReferences>WEKIWI</choiceReferences>
+            <choiceReferences>DOLOMITI_SPA</choiceReferences>
+            <choiceReferences>OPTIMA</choiceReferences>
+            <choiceReferences>NEN</choiceReferences>
+            <choiceReferences>ITALIA_GAS_E_LUCE</choiceReferences>
+            <choiceReferences>PASSUELLO_LUCE_E_GAS</choiceReferences>
+            <choiceReferences>AUDAX_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>ENEGAN</choiceReferences>
+            <choiceReferences>IN_ENERGIE</choiceReferences>
+            <choiceReferences>ENJOY_ENERGY_SRL</choiceReferences>
+            <choiceReferences>E_DI_ENERGIA</choiceReferences>
+            <choiceReferences>SINECOM</choiceReferences>
+            <choiceReferences>EON</choiceReferences>
+            <choiceReferences>POSTE_ENERGIA</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Energia Elettrica</fieldText>
@@ -1081,6 +1145,28 @@
             <choiceReferences>AEG_ENERGIA_GAS</choiceReferences>
             <choiceReferences>ACAM_Gas</choiceReferences>
             <choiceReferences>ESTRA_ENERGIE_SRL</choiceReferences>
+            <choiceReferences>AXO</choiceReferences>
+            <choiceReferences>MET_GROUP</choiceReferences>
+            <choiceReferences>ARGOS</choiceReferences>
+            <choiceReferences>BLUENERGY</choiceReferences>
+            <choiceReferences>MINERVA_ENERGIA</choiceReferences>
+            <choiceReferences>CENTRO_VENETA_ENERGIA</choiceReferences>
+            <choiceReferences>PEF_POWER</choiceReferences>
+            <choiceReferences>WIND3</choiceReferences>
+            <choiceReferences>WEKIWI</choiceReferences>
+            <choiceReferences>DOLOMITI_SPA</choiceReferences>
+            <choiceReferences>OPTIMA</choiceReferences>
+            <choiceReferences>NEN</choiceReferences>
+            <choiceReferences>ITALIA_GAS_E_LUCE</choiceReferences>
+            <choiceReferences>PASSUELLO_LUCE_E_GAS</choiceReferences>
+            <choiceReferences>AUDAX_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>ENEGAN</choiceReferences>
+            <choiceReferences>IN_ENERGIE</choiceReferences>
+            <choiceReferences>ENJOY_ENERGY_SRL</choiceReferences>
+            <choiceReferences>E_DI_ENERGIA</choiceReferences>
+            <choiceReferences>SINECOM</choiceReferences>
+            <choiceReferences>EON</choiceReferences>
+            <choiceReferences>POSTE_ENERGIA</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Gas</fieldText>
@@ -1359,7 +1445,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCampaignMember</targetReference>

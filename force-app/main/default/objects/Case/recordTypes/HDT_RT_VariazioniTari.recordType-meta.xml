@@ -3,7 +3,8 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_VariazioniTari</label>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
+    <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -2280,7 +2281,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD -->
+    <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -2734,7 +2736,55 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues> -->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -7762,7 +7812,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8778,7 +8828,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -8813,7 +8863,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -8891,7 +8941,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -9523,14 +9573,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOLLEC_Amianto%2FEtern-IURD0026</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLEC_Verde-IURD0043</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Scarichi abusivi-IUPS0000</fullName>
             <default>false</default>
         </values>
@@ -9628,6 +9670,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IVR</fullName>
             <default>false</default>
         </values>
@@ -9703,6 +9749,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -9748,6 +9798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per decorrenza dei termini</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -9789,6 +9843,14 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione BO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione validata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9887,21 +9949,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10906,17 +10953,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SignMode__c</picklist>
         <values>
             <fullName>Cartacea</fullName>
@@ -11220,7 +11256,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD -->
+    <!-- <picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -11950,13 +11987,133 @@
             <fullName>Team 1</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>MMS_SP_Acqualagna_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Apecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cagli_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cantiano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cartoceto_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fermignano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fossombrone_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Gabicce_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Lunano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Macerata_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Orciano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pergola_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Piobbico_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_San_Lorenzo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Sant_Angelo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbania_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues> -->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
-		<values>
-			<fullName>Agevolazione</fullName>
-			<default>false</default>
-		</values>
 		<values>
 			<fullName>Dati catastali</fullName>
 			<default>false</default>
@@ -12538,10 +12695,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione_RestituzContenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiavetta elettronica_consegna</fullName>
             <default>false</default>
         </values>
@@ -12570,19 +12723,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contenitore danneggiato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Diserbo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Dismissione compostiera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FE - MO - Spazzamento meccaniz</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12614,15 +12759,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavaggio strade</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Manutenzione Cestini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manutenzione contenitore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12639,10 +12776,6 @@
         </values>
         <values>
             <fullName>Odori Mezzi%2FDotazione%2FImpianti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12686,10 +12819,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RestituzContenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Rich%2E verifica sconti racc%2Edif</fullName>
             <default>false</default>
         </values>
@@ -12707,10 +12836,6 @@
         </values>
         <values>
             <fullName>Richiesta sacchi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RichiestaContenitAggiuntivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12790,15 +12915,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Spazzamento meccaniz</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spostamento Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Svuotamento cestini%2Fcestoni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12854,23 +12971,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>raccolta porta a porta</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>rifiuti attorno al contenitore</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>rimozione Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>spostamento contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>svuotamento contenitore</fullName>
             <default>false</default>
         </values>
     </picklistValues>

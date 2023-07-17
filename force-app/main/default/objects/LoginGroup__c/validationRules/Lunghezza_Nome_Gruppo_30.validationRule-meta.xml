@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lunghezza_Nome_Gruppo_30</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN(NameGroup__c)&gt;= 30</errorConditionFormula>
+    <errorMessage>Il nome non può contenere più di 30 caratteri</errorMessage>
+</ValidationRule>

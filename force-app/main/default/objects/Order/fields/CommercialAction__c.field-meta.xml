@@ -61,6 +61,11 @@
                 <label>CORE PL AZ</label>
             </value>
             <value>
+                <fullName>FEDELTA'</fullName>
+                <default>false</default>
+                <label>FEDELTA'</label>
+            </value>
+            <value>
                 <fullName>Lampadine kit doppio</fullName>
                 <default>false</default>
                 <label>Lampadine kit doppio</label>
@@ -99,6 +104,11 @@
                 <fullName>UPGRADE OFFERTA</fullName>
                 <default>false</default>
                 <label>UPGRADE OFFERTA</label>
+            </value>
+            <value>
+                <fullName>verifica winback</fullName>
+                <default>false</default>
+                <label>verifica winback</label>
             </value>
             <value>
                 <fullName>XLISTA AZ</fullName>

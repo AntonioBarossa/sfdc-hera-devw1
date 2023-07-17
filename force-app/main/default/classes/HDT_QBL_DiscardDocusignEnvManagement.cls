@@ -1,5 +1,7 @@
 public with sharing class HDT_QBL_DiscardDocusignEnvManagement implements Queueable,  Database.AllowsCallouts{
     private String recordId;
+    private Set<Id> oIds;
+    private DocumentSendTracking__c dst;
         
     public HDT_QBL_DiscardDocusignEnvManagement(String recordId,String caseId,String orderId) {
         this.recordId = recordId;
@@ -12,6 +14,14 @@ public with sharing class HDT_QBL_DiscardDocusignEnvManagement implements Queuea
         this.updateRecord(objToUpdate);
     }
 
+    public HDT_QBL_DiscardDocusignEnvManagement(Set<Id> oids) {
+        this.oIds = oids;
+    }
+
+    public HDT_QBL_DiscardDocusignEnvManagement(DocumentSendTracking__c dst) {
+        this.dst = dst;
+    }
+
     public void execute(System.QueueableContext qc) {
         if (String.isNotEmpty(this.recordId)){
             String responseJson = HDT_SRV_DocumentalManagementFacade.discardDocusignEnvelope(this.recordId);
@@ -19,6 +29,16 @@ public with sharing class HDT_QBL_DiscardDocusignEnvManagement implements Queuea
             if (response.containsKey('outcome') && 'OK'.equalsIgnoreCase(response.get('outcome'))){
                 HDT_UTL_DatabaseService.deleteSObject(this.recordId);
             }
+            return;
+        }
+        List<DocumentSendTracking__c> dstList = new List<DocumentSendTracking__c>();
+        if(this.oIds != null && !this.oIds.isEmpty()){
+            dstList = HDT_QR_DocumentalConfiguration.getEnvelopesToCancel(this.oids,'Intesa','E-Mail');    
+        }else if (this.dst!= null){
+            dstList.add(dst);
+        }
+        for (DocumentSendTracking__c dst : dstList){
+            HDT_SRV_DocumentalManagementFacade.discardDocusignEnvelope(dst.Id);
         }
     }
 

@@ -108,7 +108,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reassign</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
@@ -123,13 +123,18 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.ForwardToAgency</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
@@ -144,6 +149,11 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Validazione Documentale</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -244,63 +254,38 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4  AND 10 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
+                                <booleanFilter>(1 AND 2) OR (3 AND 4 AND 5)</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <leftValue>{!Record.ShowEdit__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Scarto complesso</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_Morosita</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Votive Modena Pagamenti Morosità</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Gestione Disalimentabilità</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Riattivazione Fornitura</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_Morosita</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DBO</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.annullaPratica</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND  4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND  4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -322,24 +307,9 @@
                                     <rightValue>false</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Case__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -367,7 +337,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_Resume_Activity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -377,11 +347,6 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -460,17 +425,23 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Commodity__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Acqua</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
+                                <booleanFilter>(1 OR ( 2 AND 3 ) OR 4 OR 5 OR (6 AND 7)) AND 8</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ShowcompletedActivity__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -485,6 +456,31 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Vocal Order non validato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto SMS Marketing Cloud</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto EMAIL Marketing Cloud</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -544,8 +540,14 @@
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.HDT_RipristinaFase</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -594,7 +596,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_Suspend_Activity</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
@@ -1003,6 +1005,23 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Sale__c</fieldItem>
+                <identifier>RecordSale__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Caricamento Manuale Siebel</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Case__c</fieldItem>
                 <identifier>RecordCase__cField</identifier>
             </fieldInstance>
@@ -1146,6 +1165,51 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ContactResult__c</fieldItem>
+                <identifier>RecordContactResult_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NoteRicontattoCliente__c</fieldItem>
+                <identifier>RecordNoteRicontattoCliente_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ParentActivity__c</fieldItem>
@@ -1166,6 +1230,38 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
                 <identifier>RecordActivityDurationFormula__cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SMS_Tracking__c</fieldItem>
+                <identifier>RecordSMS_Tracking__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.SMS_Tracking__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Individual_Email_Result__c</fieldItem>
+                <identifier>RecordIndividual_Email_Result__c</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Individual_Email_Result__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
@@ -1434,6 +1530,85 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Reason__c</fieldItem>
+                <identifier>RecordReason_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Case__r.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Consumo Anomalo Idrico</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Gestione Back Office</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Channel__c</fieldItem>
+                <identifier>RecordChannel_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_ComfortQualityCall</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SignMode__c</fieldItem>
+                <identifier>RecordSignMode_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_ComfortQualityCall</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3009,6 +3184,10 @@
                     <value>Facet-abfead25-7b3b-4e1b-97c8-9efd4dda98a7</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Principale</value>
                 </componentInstanceProperties>
@@ -3032,6 +3211,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3059,6 +3242,10 @@
                     <value>Facet-ea0824b3-936d-4e27-b411-96cb51d300ec</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Integrazione Genesys</value>
                 </componentInstanceProperties>
@@ -3077,6 +3264,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-236d0c71-35c0-4b1a-8ad6-96c5912f3fd4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3100,6 +3291,10 @@
                     <value>Facet-cd708223-3bfb-4cfe-b534-cfde45a95a08</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Informazioni Comunicazione Distributore</value>
                 </componentInstanceProperties>
@@ -3121,6 +3316,10 @@
                     <value>Facet-04bdcb90-d514-454f-9739-893304ff9b28</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Dati Appuntamento</value>
                 </componentInstanceProperties>
@@ -3140,6 +3339,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-abc13f34-1276-4e08-99d8-94b8f75d4523</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3169,6 +3372,10 @@
                     <value>Facet-acf547ff-952f-4198-a2d8-4fe8d2aba460</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Informazioni Scarto</value>
                 </componentInstanceProperties>
@@ -3194,6 +3401,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-3261c2c2-fddf-4932-ba41-9e3235d067de</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3241,6 +3452,10 @@
                     <value>Facet-48968a13-7701-4552-96ac-41cace52848f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Assegnazione</value>
                 </componentInstanceProperties>
@@ -3281,6 +3496,10 @@
                     <value>Facet-6950295a-6426-4e69-8c1b-ffe9478cbc5d</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Altre informazioni</value>
                 </componentInstanceProperties>
@@ -3306,6 +3525,10 @@
                     <value>Facet-ae0fbe87-2330-479b-816e-288f306c5521</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Migrazione</value>
                 </componentInstanceProperties>
@@ -3325,6 +3548,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-40c6e09a-e894-4792-bb3d-29b399a3ca7d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3703,6 +3930,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>

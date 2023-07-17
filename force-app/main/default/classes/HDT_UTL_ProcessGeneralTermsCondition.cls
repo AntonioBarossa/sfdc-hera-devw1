@@ -86,9 +86,21 @@ public inherited sharing class HDT_UTL_ProcessGeneralTermsCondition extends HDT_
             itemList.add(processObj.requestItem);
         }
         HDT_WRP_SaveResponse saveResponse = databaseUpsertWithKey(cgcList,itemList,'GeneralTermsCondition__c','CgcCode__c');
+        
+        System.debug(LoggingLevel.DEBUG, '>>>>>> reponseItemList ' + saveResponse.reponseItemList);
+        System.debug(LoggingLevel.DEBUG, '>>>>>> savedObject ' + saveResponse.savedObject);
+        System.debug(LoggingLevel.DEBUG, '>>>>>> itemIdToObjId ' + saveResponse.itemIdToObjId);
+        
+        
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         itemsToSave.addAll(saveResponse.reponseItemList);
 
+        for(MassiveLoaderRequestItem__c i : itemsToSave){
+            if(saveResponse.itemIdToObjId.containsKey(i.Id)){
+                i.Result__c = saveResponse.itemIdToObjId.get(i.Id);
+            }
+        }
+        
     }
 
     public override void finalUpdate(){

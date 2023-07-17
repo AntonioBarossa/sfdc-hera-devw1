@@ -11,7 +11,7 @@ public class HDT_WS_CreditCheck {
 
     @AuraEnabled
     public static HDT_WS_CreditCheckResponse callService(HDT_WS_CreditCheckRequest req){
-        
+        List<SObject> myOrd = HDT_QR_GenericQuery.getGenericRecords('Id', 'Order', 'Id = \''+req.crmId+'\' AND CreditCheckInProgress__c = false');
         //HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
         if(System.isBatch()){
             req.userId = 'Caricatore.Massivo';
@@ -63,10 +63,10 @@ public class HDT_WS_CreditCheck {
                 }
             }else if (String.isNotBlank(res?.exceptionMessage)){
                 orderData.orderId = req.crmId;
-                orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
-                orderData.outcome = 'KO';
+                orderData.outcomeDescription =  'KO Tecnico - Errore Generico - ' + res.exceptionMessage;
+                orderData.outcome = 'OK';
                 HDT_UTL_CreditCheck.insertCalloutLog(JSON.serialize(req), JSON.serialize(res));
-            }else{
+            }else if (!myOrd.isEmpty()){
                 //Gestione Credit Check In Progress 
                 HDT_UTL_DatabaseService.updateSObject(new Order(Id = req.crmId, CreditCheckInProgress__c = true));
             }

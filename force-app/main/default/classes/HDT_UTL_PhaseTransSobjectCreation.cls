@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 20-10-2022
+ * @last modified on  : 18-01-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
@@ -19,11 +19,23 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
         
         switch on method {
             when 'FacilityApproval'{
-                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_IstruttoriaAgevolazione').getRecordTypeId();
+                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
 
                 for(SObject s : senders){
                     if(s instanceof Order){
-                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Order__c = (Id)s.get('Id'));
+                        Order ord = (Order) s;
+                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Cluster__c = 'Segnalazioni', Order__c = ord.Id, AccountId = ord.AccountId, OperationGroup__c = 'Altri servizi-IUAS0002', TypeOperation__c = 'Verifica tariffa', Material__c = 'DistanzaCassonDaDomicilioUT');
+                        sObjectsToInsert.add(caso);
+                    }
+                }
+            }
+            when 'DL116_20'{
+                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+
+                for(SObject s : senders){
+                    if(s instanceof Order){
+                        Order ord = (Order) s;
+                        Case caso = new Case(RecordTypeId = recordTypeId, Type='Segnalazioni Ambientali', OperationGroup__c = 'DLGS_116/2020-IUAS0003', TypeOperation__c = 'CONSEGNA/RITIRO TUTTI I CONTEN', Material__c = 'Nessun materiale', Note__c = 'Uscita dal servizio. Del 116', Phase__c = 'Da Inviare', Status='In Lavorazione', Cluster__c = 'Segnalazioni', Order__c = ord.Id, AccountId = ord.AccountId );
                         sObjectsToInsert.add(caso);
                     }
                 }
@@ -39,6 +51,7 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
             return;
         }else{
             HDT_UTL_DatabaseService.insertSObject(sObjectsToInsert);
+            sObjectsToInsert.clear();
         }
     }
 

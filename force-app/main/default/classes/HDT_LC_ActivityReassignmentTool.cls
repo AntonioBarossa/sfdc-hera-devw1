@@ -20,13 +20,27 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Back office Teleselling'
     };
 
+    @AuraEnabled
+    public static List<String> getPickListValuesIntoList(){
+        
+        List<Queue__c> queueList = [SELECT Id, Agency2__c FROM Queue__c WITH SECURITY_ENFORCED ORDER BY Agency2__c ASC];
+        List<String> agencyValues = new List<String>();
+        
+        for(Queue__c q : queueList){
+            if(!agencyValues.contains(q.Agency2__c))
+                agencyValues.add(q.Agency2__c);
+        }
+        
+        return agencyValues;
+     }
+
 
     @AuraEnabled
-    public static List<Map<String,String>> getWorkGroups(String queryString) {
+    public static List<Map<String,String>> getWorkGroups(String queryString, String agency) {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
+        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString AND Agency2__c =: agency WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
                 'name' => (String) result.get('WorkGroup__c'),
                 'agency' => (String) result.get('Agency2__c'),
@@ -39,7 +53,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
 
     @AuraEnabled
     public static User getCurrentUser() {
-        return [SELECT Id, UserCompany__c, LoginChannel__c, CreatorGroup__c FROM User WHERE Id = :UserInfo.getUserId() WITH SECURITY_ENFORCED];
+        return [SELECT Id, UserCompany__c, LoginChannel__c, CreatorGroup__c, ProfileName__c FROM User WHERE Id = :UserInfo.getUserId() WITH SECURITY_ENFORCED];
     }
 
     @AuraEnabled
@@ -54,7 +68,9 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         User currentUser = getCurrentUser();
         List<PermissionSetAssignment> assignments = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_OmniSupervisor', currentUser.Id);
         List<PermissionSetAssignment> assignToUser = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_AssignToUser', currentUser.Id);
-        if(!assignments.isEmpty() || !assignToUser.isEmpty()) {
+        List<String> profileList = new List<String>{'Hera Teleseller Partner User','Hera Door2Door Partner User'};
+
+        if(!assignments.isEmpty() || !assignToUser.isEmpty() || profileList.contains(currentUser.ProfileName__c)) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{
                     'id' => user.Id,
@@ -98,13 +114,14 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     ) {
                         return 'L\'Attività ' + activity.Name +' deve essere assegnata all\'Agenzia ' + activity.ParentActivity__r.Order__r.Agency__c;
                     }
-                    if(!parentActivitiesIds.contains(activity.ParentActivity__c)) {
-                        parentActivitiesIds.add(activity.ParentActivity__c);
-                        parentActivitiesToUpdate.add(new wrts_prcgvr__Activity__c(
-                            Id = activity.ParentActivity__c,
-                            wrts_prcgvr__Status__c = 'Aperta'
-                        ));
-                    }
+                    //HRADTR_GV_Master -> gestione rimossa e trasferita nel flow HDT_FL_ActivityClosing
+                    // if(!parentActivitiesIds.contains(activity.ParentActivity__c)) {
+                    //     parentActivitiesIds.add(activity.ParentActivity__c);
+                    //     parentActivitiesToUpdate.add(new wrts_prcgvr__Activity__c(
+                    //         Id = activity.ParentActivity__c,
+                    //         wrts_prcgvr__Status__c = 'Aperta'
+                    //     ));
+                    // }
                 }
 
                 activity = new wrts_prcgvr__Activity__c(

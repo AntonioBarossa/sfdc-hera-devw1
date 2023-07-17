@@ -88,7 +88,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     isVisibleSignedDate = false;
     isVisibleAmbiente=false;
     isVisbleDocumentazioneContribuente=false;
-    lastDocContrValue='';
+    lastDocContrValue;
     areInputsVisible = true;
     loading = false;
     currentStep = 1;
@@ -303,7 +303,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     this.isVisibleAmbiente = true;
                     if(provenienza!= null && provenienza != undefined && provenienza != '' && provenienza ==='Da contribuente'){
                         this.isVisbleDocumentazioneContribuente = true;
-                        if(docContribuente != null && docContribuente != undefined && docContribuente != 'Y'){
+                        if(docContribuente != null && docContribuente != undefined && docContribuente == false){
                             this.loadData = true;
                         }else{
                             this.loadData = false;
@@ -358,7 +358,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             if(fieldValue != null && fieldValue === 'Da contribuente'){
                 this.isVisbleDocumentazioneContribuente=true;
                 /*var deliveryDoc = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;*/
-                if(this.lastDocContrValue && this.lastDocContrValue === 'N'){
+                if(this.lastDocContrValue != null && this.lastDocContrValue == false){
                     this.loadData = true;
                 }else{
                     this.loadData = false;
@@ -371,7 +371,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 this.isVisibleSignedDate = false;
             }
         }else if(fieldName === 'DeliveredDocumentation__c'){
-            if(fieldValue === 'Y'){
+            if(fieldValue === true){
                 this.loadData = false;
                 this.isVisibleSignedDate = false;
             }else{
@@ -463,8 +463,12 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingCountry__c'] = resultWrapper.addressWrapper.Stato;
             fields[ShippingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
-            fields[SignedDate.fieldApiName] = this.actualSignedDate;
-            this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            /* Se non controllato il null/undefined della data firma, e' possibile sbiancarla */
+            if(this.actualSignedDate)
+            {
+                fields[SignedDate.fieldApiName] = this.actualSignedDate;
+                this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            }
             //HRADTR_GV_Main
             fields[RelatedPractice.fieldApiName] = this.actualRelatedPractice;
             this.dataToSubmit['RelatedPractice__c'] = this.actualRelatedPractice;
@@ -476,6 +480,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 fields[DeliveredDocumentation.fieldApiName] = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;
             }
             const recordInput = { fields };
+            console.log('dati da aggiornare: ' + JSON.stringify(recordInput));
            
             updateRecord(recordInput)
                 .then(() => {

@@ -35,14 +35,35 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String estimatedFCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData);
         /*System.debug('Inserted FiscalCode:'+fiscalCode);
         System.debug('Estimated FiscalCode:'+estimatedFCode);*/
-        if (estimatedFCode.equalsIgnoreCase(fiscalCode)) {
+
+        /* Se ci sono piu record per il calcolo del codice fiscale in caso di omocodia
+        * Se non c'e' il record nell'oggetto city che contempla l'omocodia
+        * allora viene confrontato comunque il codice fiscale pulito dall'omocodia
+        */
+        if (estimatedFCode.equalsIgnoreCase(HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCode))) {
             return true;
             
         }
         return false;
     }
 
-
+    /* Nel calcolo del lead viene eseguito un controllo prima sulla validita' del codice fiscale
+    * Poi lo calcola nuovamente
+    * in caso di citta' con piu' codici belfiore e' necessario calcolare il codice fiscale 
+    * per ogni possibile citycode
+    */
+    public static Boolean matchEstimatedSetFiscalCode(Map<String, String> infoData, String fiscalCode)
+    {
+        Set<String> estimatedSetFiscalCode=HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoData);
+        for(String estFiscalCode : estimatedSetFiscalCode)
+        {
+            if(estFiscalCode.equalsIgnoreCase(HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCode)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @AuraEnabled
     public static Map<String,Object> getDataFromFiscalCodeData(String fiscalCodes){
@@ -53,6 +74,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String birthDate= '';
         String city='';
         String cityCode= '';
+        String fisCode = fiscalCodes.replaceAll( '\\s+', '');
+        fiscalCodes = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCodes);
        // for(String s:fiscalCodes.keySet()){
             try {
                 cityCode= fiscalCodes.replaceAll( '\\s+', '').substring(11,15);
@@ -132,7 +155,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 dataFromFiscalCode.put('gender', gender);
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);
-                res.put(fiscalCode,dataFromFiscalCode);
+                res.put(fisCode,dataFromFiscalCode);
            
             } catch (Exception e) {
                // e.setMessage('Inserire un codice fiscale valido');
@@ -153,7 +176,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String cityCode= '';
         for(String s:fiscalCodes.keySet()){
             try {
-                cityCode= fiscalCodes.get(s).replaceAll( '\\s+', '').substring(11,15);
+                String cleanFc = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCodes.get(s));
+                cityCode= cleanFc.replaceAll( '\\s+', '').substring(11,15);
                 codes.add(cityCode);
             } catch (Exception e) {
               //  e.setMessage('Inserire un codice fiscale valido');
@@ -164,7 +188,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         Map<String,String> cities= HDT_QR_City.getCityFromCode(codes);
         for(String s:fiscalCodes.keySet()){
             try {
-                String fiscalCode = fiscalCodes.get(s).replaceAll( '\\s+', '');
+                String fiscalCode =  HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCodes.get(s).replaceAll( '\\s+', ''));
                 String year = '19' + fiscalCode.substring(6,8);
                 String month = fiscalCode.substring(8,9);
                 String day = fiscalCode.substring(9,11);
@@ -254,7 +278,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String cityCode= '';
         for(String s:fiscalCodes){
             try {
-                cityCode= s.replaceAll( '\\s+', '').substring(11,15);
+                String cleanFc = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(s.replaceAll( '\\s+', ''));
+                cityCode= cleanFc.substring(11,15);
                 codes.add(cityCode);
             } catch (Exception e) {
                 HDT_WRP_FiscalObject wrp=new HDT_WRP_FiscalObject();
@@ -270,11 +295,11 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
 
             try {
                 
-           
-                String fiscalCode = s.replaceAll( '\\s+', '');
-                String year = '19' + s.substring(6,8);
-                String month = s.substring(8,9);
-                String day = s.substring(9,11);
+                
+                String fiscalCode =HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(s.replaceAll( '\\s+', ''));
+                String year = '19' + fiscalCode.substring(6,8);
+                String month = fiscalCode.substring(8,9);
+                String day = fiscalCode.substring(9,11);
                 Boolean isValid=true;
                 month =  monthsLetters.get(month);
  
@@ -286,8 +311,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     gender= 'Femmina';
                 }
                 birthDate = year +'-'+ month +'-'+day;
-                if (cities.get(s.substring(11,15))!=null) {
-                    city= cities.get(s.substring(11,15));
+                if (cities.get(fiscalCode.substring(11,15))!=null) {
+                    city= cities.get(fiscalCode.substring(11,15));
                 }
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)|| String.isBlank(month)) {
                     isValid=false;

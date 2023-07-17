@@ -46,6 +46,24 @@
                         </div>
                     </span>
                 </div>
+                <div class="slds-col slds-size_1-of-1 slds-section slds-is-open">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Documenti</span>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content">
+                        <template if:true={contentDocument}>
+                            <c-hdt-content-document-list files={contentDocument} onfiledelete={handleActionFinished}></c-hdt-content-document-list>                            
+                        </template>
+                        <lightning-file-upload
+                                    label="Inserire Documenti"
+                                    name="fileUploader"
+                                    record-id={documentRecordId}
+                                    multiple
+                                    accept={formats}
+                                    onuploadfinished={handleUploadFinished}>
+                        </lightning-file-upload>
+                    </div>
+                </div>
             </div>
 
             <div if:true={reminderMode} class="slds-grid slds-wrap slds-m-around_medium">
@@ -71,7 +89,16 @@
                     onclick={sendMail}
                     class="slds-m-left_x-small"
                     icon-name="utility:send"
-                    disabled
+                    disabled={isSendDisabled}
+                ></lightning-button>
+                <lightning-button
+                    variant="brand"
+                    name="cancel"
+                    label="Cancella"
+                    title="Cancella"
+                    onclick={handleCancel}
+                    class="slds-m-left_x-small"
+                    icon-name="utility:recycle_bin_empty"
                 ></lightning-button>
             </p>
 

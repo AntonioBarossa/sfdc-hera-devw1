@@ -267,33 +267,29 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }
                 //precedenteCliente = true;                
             }
-                
-            if(typeOfCommodity == 'Energia Elettrica'){
-                typeOfCommodity = 'ENERGIAELETTRICA';
-            }
-            if(typeOfCommodity == 'Gas'){
-                typeOfCommodity = 'GAS';
-            }
-            if(typeOfCommodity == 'Acqua'){
-                typeOfCommodity = 'ACQUA';
-            }
+            
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
-            if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
+            if(typeOfCommodity == 'Energia Elettrica'){
+                iwd.commodity = 'ENERGIAELETTRICA';
+            }
+            if(typeOfCommodity == 'Gas'){
+                iwd.commodity = 'GAS';
+            }
+            if(typeOfCommodity == 'Acqua'){
+                iwd.commodity = 'ACQUA';
+            }
+            
+            if (act.Order__r.IsVAS__c){
+                iwd.annualConsumption = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(act.Order__c); 
+            }else if(act.Order__r.ServicePoint__r?.AnnualConsumption__c != null){
                 iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c);
-            }            
-            iwd.commodity = typeOfCommodity;
+            }          
             
             system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
 
             List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
-
-            // da testare 18/6/21 @Picchiri
-            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
-                l.remove(0);
-                l.remove(1);
-            }
 
             system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
             String separator =  String.isBlank(act.Order__r.Account?.CustomerCode__c)? ',':' ';
@@ -307,11 +303,17 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.activationUser = 'AccountCommercialePRM';
             iw.account = 'AccountCommercialePRM';
             iw.jobTitle = act.Order__r.ChannelTransCode__c;
-            iw.internalCustomerId = act.Order__r.Account?.CustomerCode__c;
+            iw.internalCustomerId = String.isNotBlank(act.Order__r.Account?.CustomerCode__c)? act.Order__r.Account.CustomerCode__c : act.Order__r.Account != null? '1-'+String.valueOf(act.Order__r.Account.Id).substring(10,18).toUpperCase():'';
             iw.companyName = String.isNotBlank(act.Order__r.Account?.FirstName__c)? act.Order__r.Account.FirstName__c+separator+act.Order__r.Account.LastName__c : act.Order__r.Account?.LastName__c;
             iw.externalCustomerId = String.isNotBlank(act.Order__r.Account?.FiscalCode__c)? act.Order__r.Account.FiscalCode__c : act.Order__r.Account?.VATNumber__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
-            iw.bpClass =  bpClass;
+            /**
+             * FIX TK 914861C
+             * Description: Atos ha richiesto di inviare la marcatura per esteso. In precedenza veniva inviata la marcatura AS-IS Siebel.
+             * Azioni: Commentata riga 316 e aggiunta riga 317
+             * **/
+            //iw.bpClass =  bpClass;
+            iw.bpClass =  act.Order__r.Account?.CustomerMarking__c;
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
@@ -505,5 +507,34 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }
         }
 
+    }
+
+    public static void closeParentEntityCanceledActivity(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        Set<Id> caseIds = new Set<Id>();
+        Set<Id> orderIds = new Set<Id>();
+        Map<Id, wrts_prcgvr__Activity__c> oldActMap = new Map<Id, wrts_prcgvr__Activity__c>(oldActList);
+        for(wrts_prcgvr__Activity__c act : newActList){
+            if(act.wrts_prcgvr__Status__c=='Annullata' && oldActMap.get(act.id).wrts_prcgvr__Status__c!='Annullata' && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c) && 'Terzo contatto fallito'.equalsIgnoreCase(act.ContactResult__c)){
+                caseIds.add((ID)act.Case__c);
+                orderIds.add((ID)act.Order__c);
+            }
+        }
+
+        Map<Id, Case> casesToUpdate = new Map<Id, Case>([SELECT id, Phase__c FROM Case WHERE Phase__c <> 'Annullato' AND Status <> 'Closed' AND Id IN :caseIds WITH SECURITY_ENFORCED]);
+        Map<Id, Order> ordersToUpdate = new Map<Id, Order>([SELECT id, Phase__c FROM Order WHERE Phase__c <> 'Annullato' AND Status <> 'Closed' AND Id IN :orderIds WITH SECURITY_ENFORCED]);
+        if(!casesToUpdate.isEmpty()){
+            for(Case c : casesToUpdate.values()){
+                c.Phase__c='Annullato';
+                c.Status='Closed';
+            }
+        }
+        if(!ordersToUpdate.isEmpty()){
+            for(Order o : ordersToUpdate.values()){
+                o.Phase__c='Annullato';
+                o.Status='Activated';
+            }
+        }
+        new HDT_SRV_Case().updateRecords(casesToUpdate.values());
+        new HDT_SRV_Order().updateRecords(ordersToUpdate.values());
     }
 }

@@ -26,11 +26,14 @@ public with sharing class HDT_BA_CampaignMemberManaged implements Database.Batch
             actIdSet.add(campMemb.RelatedActivity__c);    
         }
 
-
+        Map<Id,String> mapContactResult = new Map<Id,String>();
         for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actIdSet)){
             if(act.Order__c != null){
                 actToOrderIdMap.put(act.Id, act.Order__r);
                 ordIdSet.add(act.Order__c);
+            }
+            if ('Quality Call'.equalsIgnoreCase(act.Type__c) || 'Comfort Call'.equalsIgnoreCase(act.Type__c)){
+                mapContactResult.put(act.Id,'Quality Call'.equalsIgnoreCase(act.Type__c)? 'Annullato Quality Call' : 'Annullato Comfort Call');
             }
         }
 
@@ -67,7 +70,8 @@ public with sharing class HDT_BA_CampaignMemberManaged implements Database.Batch
                     }
                 }
                 else {
-                    wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+                    String outcome = mapContactResult.containsKey(member.RelatedActivity__c)? mapContactResult.get(member.RelatedActivity__c) : 'Annullato';
+                    wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, ContactResult__c = outcome, wrts_prcgvr__Status__c = 'Non Esitata');
                     actToCancelList.add(act);
                 }
             }

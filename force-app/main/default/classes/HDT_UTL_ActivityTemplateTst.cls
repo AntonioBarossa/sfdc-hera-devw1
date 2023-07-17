@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 15-09-2022
+ * @last modified on  : 20-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -49,6 +49,69 @@ public with sharing class HDT_UTL_ActivityTemplateTst {
         
         Test.startTest();
         activityTemplate.handleNewActivityCreation(sobjectToNewActivityType);
+        System.assertEquals(activity.wrts_prcgvr__Phase__c, 'Bozza', 'test');
+        Test.stopTest();
+    }
+
+    @isTest 
+    public static void pclickActivityCreationTest(){		
+        HDT_UTL_ActivityTemplate activityTemplate = new HDT_UTL_ActivityTemplate();
+        activityTemplate.sobjType = 'Case';
+        HDT_UTL_ActivityTemplate.HDT_WRP_Infos info = new HDT_UTL_ActivityTemplate.HDT_WRP_Infos('testActivityTemplate', false, 'Bozza');
+        Case caso = new Case();
+        insert caso;
+        wrts_prcgvr__ActivityTemplate__c template = [SELECT Id,wrts_prcgvr__Subject__c,wrts_prcgvr__ObjectType__c FROM wrts_prcgvr__ActivityTemplate__c LIMIT 1];
+        template.Name='testActivityTemplatecase';
+        template.wrts_prcgvr__ObjectType__c='Case';
+        update template;
+        wrts_prcgvr__ActivityAction__c action = new wrts_prcgvr__ActivityAction__c();
+        action.wrts_prcgvr__ActivityTemplate__c=template.Id;
+        action.wrts_prcgvr__Field__c='field';
+        action.wrts_prcgvr__Value__c='value';
+        insert action;
+
+        wrts_prcgvr__Activity__c activity = activityTemplate.createActivity(caso, template, info);
+        Map<Id, HDT_UTL_ActivityTemplate.HDT_WRP_Infos> sobjectToNewActivityType = new Map<Id, HDT_UTL_ActivityTemplate.HDT_WRP_Infos>();
+        sobjectToNewActivityType.put(caso.Id,info);
+        
+        Test.startTest();
+        activityTemplate.handlePclickActivityCreation(sobjectToNewActivityType);
+        System.assertEquals(activity.wrts_prcgvr__Phase__c, 'Bozza', 'test');
+        Test.stopTest();
+    }
+
+    @isTest 
+    public static void asyncJobsTest(){		
+        HDT_UTL_ActivityTemplate activityTemplate = new HDT_UTL_ActivityTemplate();
+        activityTemplate.sobjType = 'Case';
+        HDT_UTL_ActivityTemplate.HDT_WRP_Infos info = new HDT_UTL_ActivityTemplate.HDT_WRP_Infos('testActivityTemplate', false, 'Bozza');
+        Case caso = new Case();
+        insert caso;
+        Case cas = new Case();
+        insert cas;
+        Case ca = new Case();
+        insert ca;
+        Case c = new Case();
+        insert c;
+        wrts_prcgvr__ActivityTemplate__c template = [SELECT Id,wrts_prcgvr__Subject__c,wrts_prcgvr__ObjectType__c FROM wrts_prcgvr__ActivityTemplate__c LIMIT 1];
+        template.Name='testActivityTemplatecase';
+        template.wrts_prcgvr__ObjectType__c='Case';
+        update template;
+        wrts_prcgvr__ActivityAction__c action = new wrts_prcgvr__ActivityAction__c();
+        action.wrts_prcgvr__ActivityTemplate__c=template.Id;
+        action.wrts_prcgvr__Field__c='field';
+        action.wrts_prcgvr__Value__c='value';
+        insert action;
+
+        wrts_prcgvr__Activity__c activity = activityTemplate.createActivity(caso, template, info);
+        Map<Id, HDT_UTL_ActivityTemplate.HDT_WRP_Infos> sobjectToNewActivityType = new Map<Id, HDT_UTL_ActivityTemplate.HDT_WRP_Infos>();
+        sobjectToNewActivityType.put(caso.Id,info);
+        sobjectToNewActivityType.put(cas.Id,info);
+        sobjectToNewActivityType.put(ca.Id,info);
+        sobjectToNewActivityType.put(c.Id,info);
+        
+        Test.startTest();
+        activityTemplate.handlePclickActivityCreation(sobjectToNewActivityType);
         System.assertEquals(activity.wrts_prcgvr__Phase__c, 'Bozza', 'test');
         Test.stopTest();
     }

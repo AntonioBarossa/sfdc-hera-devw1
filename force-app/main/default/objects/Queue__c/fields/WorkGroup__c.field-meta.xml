@@ -52,6 +52,16 @@
                 <label>ESTENERGY_Credit_Check_Target</label>
             </value>
             <value>
+                <fullName>ESTENERGY_CVMBO_Fiscale</fullName>
+                <default>false</default>
+                <label>ESTENERGY_CVMBO_Fiscale</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY_CVMBO_Processo_Volture_NC</fullName>
+                <default>false</default>
+                <label>ESTENERGY_CVMBO_Processo_Volture_NC</label>
+            </value>
+            <value>
                 <fullName>ESTENERGY_ESCALATION</fullName>
                 <default>false</default>
                 <label>ESTENERGY_ESCALATION</label>
@@ -592,6 +602,71 @@
                 <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_CSREG_Bonus Sociale Energy</label>
@@ -627,6 +702,11 @@
                 <label>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koinè</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Autoletture_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Autoletture_NC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</label>
@@ -652,6 +732,26 @@
                 <label>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koinè</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_Target</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</label>
@@ -675,6 +775,11 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Escalation_HC</fullName>
@@ -782,6 +887,16 @@
                 <label>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Linetech</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_HC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Rich Parere_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Rich Parere_HC</label>
@@ -800,6 +915,16 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Scarto Documentale_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Scarto Documentale_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_Linetech</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_HC</fullName>
@@ -905,6 +1030,11 @@
                 <fullName>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</fullName>
@@ -1187,9 +1317,39 @@
                 <label>HC_CVMBO_RESC_Reporting</label>
             </value>
             <value>
+                <fullName>HC_VENDITA_MM_Supporto_alla_Vendita</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto alla Vendita</label>
+            </value>
+            <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT</label>
+            </value>
+            <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</label>
+            </value>
+            <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</label>
+            </value>
+            <value>
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Annullamento Contratti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Annullamento Contratti</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Approvazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Approvazione</label>
             </value>
             <value>
                 <fullName>HCM_BACK_CON_Fatturazione</fullName>
@@ -1247,6 +1407,11 @@
                 <label>HCM_BACK_Reclami</label>
             </value>
             <value>
+                <fullName>HCM_BACK_TRG_Contratto non richiesto</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Contratto non richiesto</label>
+            </value>
+            <value>
                 <fullName>HCM_BACK_TRG_Fatturazione</fullName>
                 <default>false</default>
                 <label>HCM_BACK_TRG_Fatturazione</label>
@@ -1277,6 +1442,16 @@
                 <label>HCM_BACK_Verifiche</label>
             </value>
             <value>
+                <fullName>HCM_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_CON_Protocollo</label>
+            </value>
+            <value>
                 <fullName>HCM_DISCO_ Appuntamenti</fullName>
                 <default>false</default>
                 <label>HCM_DISCO_ Appuntamenti</label>
@@ -1297,6 +1472,11 @@
                 <label>HCM_DISCO_Notifiche</label>
             </value>
             <value>
+                <fullName>HCM_DISCO_Preventivi</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Preventivi</label>
+            </value>
+            <value>
                 <fullName>HCM_RECLAMI</fullName>
                 <default>false</default>
                 <label>HCM_RECLAMI</label>
@@ -1312,9 +1492,29 @@
                 <label>HCM_SPORT_Escalation</label>
             </value>
             <value>
+                <fullName>HCM_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Pagamenti</label>
+            </value>
+            <value>
                 <fullName>HCM_TRG_Reclami_scritti</fullName>
                 <default>false</default>
                 <label>HCM_TRG_Reclami_scritti</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Variazioni</label>
             </value>
             <value>
                 <fullName>HS_DAFC_Tesoreria_Verifica comportamento banca</fullName>
@@ -1345,6 +1545,81 @@
                 <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
                 <default>false</default>
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_CONSERVICE</fullName>
+                <default>false</default>
+                <label>MMS_BACK_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_CONTACT CENTER</fullName>
+                <default>false</default>
+                <label>MMS_BACK_CONTACT CENTER</label>
+            </value>
+            <value>
+                <fullName>MMS_BACK_GESTIONE CLIENTI</fullName>
+                <default>false</default>
+                <label>MMS_BACK_GESTIONE CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_COVISIAN</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_COVISIAN</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_KOINE&apos;</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_KOINE&apos;</label>
+            </value>
+            <value>
+                <fullName>MMS_CREDITO</fullName>
+                <default>false</default>
+                <label>MMS_CREDITO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_AMBIENTE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_AMBIENTE</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO_MSERVICE</label>
+            </value>
+            <value>
+                <fullName>MMS_GESTIONE TECNICA CLIENTI</fullName>
+                <default>false</default>
+                <label>MMS_GESTIONE TECNICA CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_INCASSI</fullName>
+                <default>false</default>
+                <label>MMS_INCASSI</label>
+            </value>
+            <value>
+                <fullName>MMS_LEGALE</fullName>
+                <default>false</default>
+                <label>MMS_LEGALE</label>
+            </value>
+            <value>
+                <fullName>MMS_TESORERIA</fullName>
+                <default>false</default>
+                <label>MMS_TESORERIA</label>
+            </value>
+            <value>
+                <fullName>MMS-BACK-CC</fullName>
+                <default>false</default>
+                <label>MMS-BACK-CC</label>
+            </value>
+            <value>
+                <fullName>Supporto alla Vendita</fullName>
+                <default>false</default>
+                <label>Supporto alla Vendita</label>
             </value>
         </valueSetDefinition>
     </valueSet>

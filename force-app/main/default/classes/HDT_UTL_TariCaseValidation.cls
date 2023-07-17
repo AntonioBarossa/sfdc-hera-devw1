@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 26-05-2022
+ * @last modified on  : 17-02-2023
  * @last modified by  : Giacinto Florio
 **/
 public with sharing class HDT_UTL_TariCaseValidation implements HDT_UTL_CaseValidationInterface {
@@ -21,6 +21,19 @@ public with sharing class HDT_UTL_TariCaseValidation implements HDT_UTL_CaseVali
         if((currentCase.Type=='Formulari Richiesta Sconto' || currentCase.Type=='Riduzione Superficie rifiuti spec promiscui') && countAttachments<1){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
         }
+
+        if(currentCase.Type=='Annullamento Contratti'  && countAttachments<1){
+            if(currentCase.Channel__c != 'Protocollo'){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
+            }
+            if(
+                getFieldValue(fields, 'RequestSource__c') != 'Da contribuente' && 
+                STRING.isBlank(getFieldValue(fields, 'CancellationNote__c'))
+            ){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
+            }
+        }
+
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 

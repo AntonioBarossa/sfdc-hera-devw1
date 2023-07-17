@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].Pricebook2Id=pricebookId;
         ordList[0].ServicePoint__c = servPointList[0].Id;
+        ordList[0].SignatureMethod__c = 'OTP Remoto';
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
@@ -129,13 +130,14 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
     static void testCreateDocumentEnvelopmentAttachment() {
         Test.startTest();
         ContentVersion cv1 = HDT_UTL_DocumentalManagement.createContectVersion('testBase64','filetest');
-        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
         Order ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
         
         HDT_WRP_DocumentalResponse resp = createResponse();
         HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(resp,'Order');
         SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord(ord.OrderNumber, 'Order');
-        Boolean res = HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, resp, 'Order');
+        Boolean res = HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, resp, 'Order',JSON.serialize(formParams));
         
         
         Test.stopTest();
@@ -146,14 +148,15 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
     static void testCreateDocument() {
         Test.startTest();
         ContentVersion cv1 = HDT_UTL_DocumentalManagement.createContectVersion('testBase64','filetest');
-        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
         Order ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
         
         HDT_WRP_DocumentalResponse resp = createResponse();
         HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(resp,'Order');
         SObject processRecordOrder = HDT_UTL_DocumentalManagement.getProcessRecord(ord.OrderNumber, 'Order');
         
-        Boolean res = HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecordOrder, resp, 'Order');
+        Boolean res = HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecordOrder, resp, 'Order',JSON.serialize(formParams));
         If (res) System.assertEquals('Plico in firma', processRecordOrder.get('DocumentalPhase__c'), 'Non aggiornato in modo vero');
 
         Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1];

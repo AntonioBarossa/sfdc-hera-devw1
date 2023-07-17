@@ -1,27 +1,47 @@
-import { LightningElement,api,track } from 'lwc';
+import { LightningElement,api,track,wire } from 'lwc';
 import getConfiguration from '@salesforce/apex/HDT_LC_BillingProfileSelection.getConfiguration';
+import createBpInSap from '@salesforce/apex/HDT_LC_BillingProfileSelection.handleNewBillingProfile';
+import { getRecord } from 'lightning/uiRecordApi';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+const FIELDS = ['Case.Id',
+				'Case.Commodity__c'];
 export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @api searchLabel;
     @api searchVariant;
     @api searchPlaceholder;
     @api results;
+    @api codiceCa;
     @api accountId;
     @api selectionType;
     @api cancelCase = false;
     //@frpanico 13/09 added variable to skip required selection (process "BP/CA errata categoria")
     @api nonReqSelection = false;
     @api enableNew = false;
-
-
+    @track commodity;
+    @api caseId;
     @track queryParams;
     @track maxRow;
     @track showSelector;
     @track columns;
     @track showModal = false;
+    @track showSpinner = false;
 
+    @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
+        wiredCase({ error, data }) {
+            if (error) {
+                let message = 'Unknown error';
+                if (Array.isArray(error.body)) {
+                    message = error.body.map(e => e.message).join(', ');
+                } else if (typeof error.body.message === 'string') {
+                    message = error.body.message;
+                }
+                console.log('data error ' +message);
+            } else if (data) {
+                console.log('data loaded');
+                this.commodity = data.fields.Commodity__c.value;
+            }
+        }
     getConfiguration(){
         getConfiguration({
             search: this.selectionType
@@ -58,25 +78,67 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
 
     handleRecordSelection(event){
         this.results = event.detail.selectedRows[0].Id;
+        this.codiceCa = event.detail.selectedRows[0].ContractAccountCode__c;
+        console.log('selected ' + JSON.stringify(event.detail.selectedRows[0]));
+    }
+    
+    validateNext(){
+        return this.commodity && (this.commodity==='Acqua' || this.commodity === 'Teleriscaldamento') && !this.codiceCa?false:true;
     }
     handleNewBilling(event){
-        console.log('event received' + event.detail);
-        this.results = event.detail;
+        this.results =  event.detail;
         this.handleNext();
+        /*console.log('event received' + event.detail);
+        this.results = event.detail;
+        if(this.commodity && (this.commodity==='Acqua' || this.commodity === 'Teleriscaldamento')){
+            this.createBpCa(this.results);
+        }else{
+            this.handleNext();
+        }*/
         //this.handleShowModal();
     }
 
     handleShowModal(){
         this.showModal = !this.showModal;
     }
+
+    createBpCa(billingId){
+        this.showSpinner = true;
+        createBpInSap({
+            billingId:billingId,
+            accountId:this.accountId,
+            processId:this.caseId
+        }).then(result=>{
+            var response = JSON.parse(result);
+            if(response.codiceContatto && response.codiceContatto != null && response.codiceContatto != 'undefined'){
+                if(response.id && response.id != null && response.id != 'undefined'){
+                    this.results = response.id;
+                }
+                this.codiceCa = response.codiceContatto;
+                this.handleNext();
+            }else{
+                this.showMessage('Errore',response.commenti,'error');
+            }
+            this.showSpinner = false;
+        }).catch(error => {
+            this.showSpinner = false;
+            this.showMessage('Errore',JSON.stringify(error),'error');
+            console.log('error ' + JSON.stringify(error));
+            
+        });
+    }
    
     handleNext(event){
-        if((this.results != null && this.results != "" && this.results != "undefined") || this.nonReqSelection === true){
-            const navigateNextEvent = new FlowNavigationNextEvent();
-            this.dispatchEvent(navigateNextEvent);
-        }else{
-            this.showMessage('Errore','Attenzione! Seleziona un Billing Profile prima di andare avanti','error');  
+        if(this.validateNext()){
+            if((this.results != null && this.results != "" && this.results != "undefined") || this.nonReqSelection === true){
+                const navigateNextEvent = new FlowNavigationNextEvent();
+                this.dispatchEvent(navigateNextEvent);
+            }else{
+                this.showMessage('Errore','Attenzione! Seleziona un Billing Profile prima di andare avanti','error');  
 
+            }
+        }else{
+            this.createBpCa(this.results);
         }
 
     }

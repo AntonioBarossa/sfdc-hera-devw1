@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Verifiche</value>
+        <value xsi:type="xsd:string">Reclami</value>
     </values>
     <values>
         <field>Object__c</field>
@@ -16,10 +16,10 @@
     </values>
     <values>
         <field>Subtype__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Processo M02</value>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Interventi con Verifica</value>
+        <value xsi:type="xsd:string">Verifica Dati al DL</value>
     </values>
 </CustomMetadata>

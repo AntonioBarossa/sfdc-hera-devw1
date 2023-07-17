@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>SendMode1__c</field>
-        <value xsi:type="xsd:string">Posta Cartacea</value>
+        <value xsi:type="xsd:string">Stampa Cartacea</value>
     </values>
     <values>
         <field>SendMode2__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SignMode__c</field>
-        <value xsi:type="xsd:string">Contratto già firmato</value>
+        <value xsi:type="xsd:string">Cartacea</value>
     </values>
     <values>
         <field>Source__c</field>

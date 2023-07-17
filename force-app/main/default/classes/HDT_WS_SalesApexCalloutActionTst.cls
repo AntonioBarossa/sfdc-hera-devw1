@@ -79,7 +79,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteObjectNull(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -129,7 +129,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAnnullamento(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -177,7 +177,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAmmissibilitaKO(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c,  VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c,  VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -225,7 +225,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAmmissibilitaOK(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -275,7 +275,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoKOdaDL(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -325,7 +325,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoOKdaDL(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -375,7 +375,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteAmmPrecheckKOSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -425,7 +425,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteAmmPrecheckOKSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -476,7 +476,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoKOdaSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -526,7 +526,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoOKdaSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -576,7 +576,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteErroreLavorazioneSAP(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -626,7 +626,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteCompletata(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -676,7 +676,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteFaseNulla(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -726,7 +726,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteFaseNullaRecordId(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, RecordTypeId, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, RecordTypeId, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -776,7 +776,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteResult(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c, SupplyCity__c, SalesCompany__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         

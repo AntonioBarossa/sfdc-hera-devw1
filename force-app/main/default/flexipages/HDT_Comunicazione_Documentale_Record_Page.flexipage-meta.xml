@@ -14,7 +14,7 @@
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Order__r.SignMode__c}</leftValue>
+                                    <leftValue>{!Record.Order__r.SignatureMethod__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>OTP Remoto</rightValue>
                                 </criteria>

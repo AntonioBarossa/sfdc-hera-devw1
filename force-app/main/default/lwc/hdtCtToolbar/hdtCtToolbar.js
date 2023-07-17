@@ -1,4 +1,4 @@
-import { LightningElement, api} from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -15,7 +15,10 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
     agentStatus = '';
     spinner = true;
     dialing = false;
+    contactId;
     title = 'Scheda cliente';
+    @track toolbarAttributes = [];
+
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -114,11 +117,13 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
       
             }
         }  
+        console.log('AUTO DataObj.job_type --> '+DataObj.job_type);
 
         switch (DataObj.event) {
 
             case 'AGENT:LOGGEDIN':
                 this.agentStatus = 'standard:voice_call';
+                localStorage.clear();
                 break;
 
             case 'AGENT:PAUSE':
@@ -135,9 +140,12 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
                 break;
 
             case 'dialing':
-                this.iconName = 'utility:dialing';
-                this.dialing = true;
-                this.title = 'Cliente contattato';
+                if(DataObj.job_type !== 'manual'){
+                    console.log('AUTO 2 DIALING ESEGUITA');
+                    this.iconName = 'utility:dialing';
+                    this.dialing = true;
+                    this.title = 'Cliente contattato';
+                }
                 break;
 
             case 'datachanged':
@@ -145,22 +153,40 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
             case 'established':
                 //Le due linee telefoniche vengono messe in comunicazione
-                this.iconName = 'utility:incoming_call';
-                this.dialing = false;
+                if(DataObj.job_type !== 'manual'){
+                    console.log('AUTO 2 ESTABLISHED ESEGUITA');
+                    this.iconName = 'utility:incoming_call';
+                    this.dialing = false;
+                }
                 break;
 
             case 'connectioncleared':
-                this.iconName = 'utility:end_call';
-                this.dialing = false;
-                this.title = 'Ultimo cliente contattato';
+                if(DataObj.job_type !== 'manual'){
+                    
+                    console.log('AUTO 2 CONNECTIONCLEARED ESEGUITA');
+                    
+                    this.iconName = 'utility:end_call';
+                    this.dialing = false;
+                    this.title = 'Ultimo cliente contattato';
 
-                setTimeout(() => {
-                    this.iconName = 'utility:log_a_call';           
-                }, 2000);
+                    setTimeout(() => {
+                        this.iconName = 'utility:log_a_call';           
+                    }, 2000);
 
+
+                    // console.log('DataObj.id --> '+DataObj.id);
+                    // if(DataObj.id) {
+                    //     this.contactId = DataObj.id;
+                        
+                    // }
+
+                    // window.TOOLBAR.CONTACT.OfflineEnd(this.contactId);
+                    // console.log('OFFLINEEND DONE');
+                }
                 break;
 
             case 'DELETE':
+                break;
                 
         }
     }

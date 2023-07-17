@@ -84,10 +84,16 @@ public with sharing class HDT_LC_AccountSelectorController {
 	public static String search(String queryString, String recordId) {
 		HDT_UTL_Struct result = new HDT_UTL_Struct();
 		if(queryString.isNumeric()) {
-			if( queryString.startsWith('100') ){
+			// query Account
+			List<Account> accountList = getAccountByBPCode(queryString);
+			if (accountList != null && !accountList.isEmpty()) {
+				result.accounts = accountList;
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+			//TK 986182C @enricodursontt
+			/*if( queryString.startsWith('100')){
 				//BP
 				result.accounts = getAccountByBPCode(queryString);
-				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);*/
 			} else if( queryString.startsWith('3') && queryString.length() == 10 ){
 				//mobilephone
 				result=getContactsAndLeads(result, queryString,'MobilePhone', recordId);
@@ -139,7 +145,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString, String conditionField ) {
 		if(sObjectType.Contact.isAccessible()) {
-			return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
+			return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c, CompanyOwner__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
 		} else {
 			return null;
 		}
@@ -148,7 +154,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static List<Lead> getLeads(String queryString, String conditionField ) {
 		if(sObjectType.Lead.isAccessible()) {
-			return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
+			return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c, CompanyOwner__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
 		} else {
 			return null;
 		}

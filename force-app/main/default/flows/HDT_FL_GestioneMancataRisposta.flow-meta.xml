@@ -5,7 +5,7 @@
         <name>Fase_Case_Attesa_risposta_cliente</name>
         <label>Fase Case = &quot;Attesa risposta cliente&quot;?</label>
         <locationX>182</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Fase_Case_Attesa_risposta_cliente_SI</name>
@@ -27,7 +27,7 @@
         <name>Fase_Case_Cliente_contattato</name>
         <label>Fase Case = &quot;Cliente contattato&quot;?</label>
         <locationX>710</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Fase_Case_Cliente_contattato_SI</name>
@@ -71,7 +71,7 @@
         <name>Aggiornamento_Fase_Case_Contattare_il_cliente</name>
         <label>Aggiornamento Fase Case = &quot;Contattare il cliente&quot;</label>
         <locationX>50</locationX>
-        <locationY>408</locationY>
+        <locationY>384</locationY>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -84,7 +84,7 @@
         <name>Aggiornamento_Fase_Case_Mancata_Risposta</name>
         <label>Aggiornamento Fase Case = &quot;Mancata Risposta&quot;</label>
         <locationX>578</locationX>
-        <locationY>408</locationY>
+        <locationY>384</locationY>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -119,9 +119,9 @@
             <connector>
                 <targetReference>Fase_Case_Attesa_risposta_cliente</targetReference>
             </connector>
-            <label>Contattare Cliente dopo 35 giorni(5 minuti test)</label>
-            <offsetNumber>5</offsetNumber>
-            <offsetUnit>Minutes</offsetUnit>
+            <label>Contattare Cliente dopo 35 giorni</label>
+            <offsetNumber>35</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
             <timeSource>RecordTriggerEvent</timeSource>
         </scheduledPaths>
         <scheduledPaths>
@@ -129,9 +129,9 @@
             <connector>
                 <targetReference>Fase_Case_Cliente_contattato</targetReference>
             </connector>
-            <label>Mancata Risposta dopo 30 giorni(3 minuti test)</label>
-            <offsetNumber>3</offsetNumber>
-            <offsetUnit>Minutes</offsetUnit>
+            <label>Mancata Risposta dopo 30 giorni</label>
+            <offsetNumber>30</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
             <timeSource>RecordTriggerEvent</timeSource>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>

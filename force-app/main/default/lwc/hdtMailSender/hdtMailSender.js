@@ -1,4 +1,4 @@
-import { LightningElement, wire} from "lwc";
+import { LightningElement, wire, api, track} from "lwc";
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference } from 'lightning/navigation';
@@ -6,9 +6,12 @@ import { NavigationMixin } from 'lightning/navigation';
 import getMetadata from '@salesforce/apex/HDT_LC_MailSender.getMetadata';
 import getBodyMailMerged from '@salesforce/apex/HDT_LC_MailSender.getBodyMailMerged';
 import sendMailToApex from '@salesforce/apex/HDT_LC_MailSender.sendMail';
-
+import getContentDocs from '@salesforce/apex/HDT_LC_MailSender.getContentDocs';
+import deletePendingFiles from '@salesforce/apex/HDT_LC_MailSender.deletePendingFiles';
+import getContentSizeAttachments from '@salesforce/apex/HDT_LC_MailSender.getContentSizeAttachments';
 export default class HdtMailSender extends NavigationMixin(LightningElement) {
     
+    @api recordIdFromAura;
     cardTitle;
     buttonLabel;
     reminderMode = false;
@@ -20,14 +23,26 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     render = false;
     spinner = true;
     mailStructure = {
-        caseId: '',
+        recordId: '',
         isReminder: false,
         orgWideAddId: '',
         bodyMail: '',
-        toAddress: ''
+        toAddress: '',
+        templateName: '',
+        attachmentsIdList: []
     };
     newCaseId;
     reminderMailCounter;
+    templateName;
+
+    //Variabili per gestione allegati
+    @api documentRecordId;
+    @track contentDocument;
+    @track formats=[];
+    @api acceptedFormats;
+    documentRecordIdList = [];
+    attachmentsSize = 0;
+    isSendDisabled = true;
 
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
@@ -38,7 +53,22 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback(){
-        console.log('>>> CASE ID: ' + this.recordId);
+        this.selectContentDocument();
+
+        console.log('### Accepted Format ' + this.acceptedFormats);
+        if(this.acceptedFormats){
+            console.log(this.acceptedFormats);
+            this.formats = this.acceptedFormats.split(";");
+            console.log(JSON.stringify(this.formats));
+        }
+
+        console.log('>>> recordIdFromAura: ' + this.recordIdFromAura);
+        console.log('>>> recordId from LWC: ' + this.recordId);
+
+        if(this.recordId===undefined || this.recordId===''){
+            this.recordId = this.recordIdFromAura;
+        }
+
         this.getMetadata();
     }
 
@@ -51,7 +81,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 console.log('# SUCCESS #');
 
                 this.mailSender = result.mailData.sender;
-                this.mailStructure.caseId = this.recordId;
+                this.mailStructure.recordId = this.recordId;
                 this.mailStructure.orgWideAddId = result.mailData.orgWideEmailAddressId;
                 this.reminderMode = result.isReminder;
                 this.mailStructure.isReminder = result.isReminder;
@@ -72,6 +102,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 this.spinner = false;
             } else {
                 console.log('# FAIL #');
+                this.closeAction();
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'ATTENZIONE',
@@ -99,8 +130,10 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         this.spinner = true;
 
         console.log('# getBodyMailMerged #');
-
-        getBodyMailMerged({templateId: event.detail.value, recordId: this.recordId})
+        console.log('# event.detail.value: ' + event.detail.value);
+        this.templateName = event.target.options.find(opt => opt.value === event.detail.value).label;
+        console.log('# templateName #: ' + this.templateName);
+        getBodyMailMerged({templateName: this.templateName, templateId: event.detail.value, recordId: this.recordId})
         .then(result => {
             console.log('# getBodyMailMerged #');
             console.log('>>> ' + JSON.stringify(result));
@@ -121,6 +154,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                         mode: 'sticky'
                     })
                 );
+                
             }
 
         })
@@ -147,27 +181,43 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         } else {
             disableButton = false;
         }
-        this.template.querySelectorAll('lightning-button').forEach((button) => {
-            button.disabled = disableButton; 
-        });
+        
+        this.isSendDisabled = disableButton;
     }
 
     sendMail(event){
+        //prima di inviare la mail di comunicazione gestore e creare il case, controllo se la dimensione totale degli eventuali allegati rimane al di sotto dei 10 MB
+        getContentSizeAttachments({cdIdList: this.documentRecordIdList})
+        .then(result => {
+            this.attachmentsSize = JSON.stringify(result);
+            console.log('attachmentsSize: ' + this.attachmentsSize);
 
-        if(this.bodyMail === undefined || this.bodyMail === ''){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'ATTENZIONE',
-                    message: 'Il messaggio non contiene nulla',
-                    variant: 'warning',
-                    mode: 'sticky'
-                })
-            );
-        } else {
-            this.spinner = true;
-            this.sendMailToApex();
-        }
-        
+            if(this.bodyMail === undefined || this.bodyMail === ''){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'ATTENZIONE',
+                        message: 'Il messaggio non contiene nulla',
+                        variant: 'warning',
+                        mode: 'sticky'
+                    })
+                );
+            } else if (this.attachmentsSize > 10){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'ATTENZIONE',
+                        message: 'La dimensione totale degli allegati supera i 10 MB.',
+                        variant: 'error',
+                        mode: 'sticky'
+                    })
+                );
+            }else {
+                this.spinner = true;
+                this.sendMailToApex();
+            }
+        })
+        .catch(error => {
+            console.log('# ERROR # ' + error);
+        });
     }
 
     sendReminderMail(event){
@@ -183,7 +233,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
             );
         } else {
             this.spinner = true;
-            //this.sendMailToApex();
+            this.sendMailToApex();
         }
 
     }
@@ -201,6 +251,9 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
 
         this.mailStructure.bodyMail = this.bodyMail;
         this.mailStructure.toAddress = this.mailReceiver;
+        this.mailStructure.templateName = this.templateName;
+        console.log('this.documentRecordIdList: ' + JSON.stringify(this.documentRecordIdList));
+        this.mailStructure.attachmentsIdList = this.documentRecordIdList;
         console.log('>>> send this: ' + JSON.stringify(this.mailStructure));
 
         sendMailToApex({mailStructure: JSON.stringify(this.mailStructure)})
@@ -222,6 +275,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 this.spinner = false;
                 this.goToNewRecord();
                 this.closeAction();
+                eval("$A.get('e.force:refreshView').fire();");
             } else {
                 console.log('# FAIL #');
                 this.dispatchEvent(
@@ -249,6 +303,51 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 objectApiName: 'Case',
                 actionName: 'view'
             }
+        });
+    }
+
+    selectContentDocument(){
+
+        if(this.documentRecordId == null || this.documentRecordId == undefined || this.documentRecordId == ''){
+            this.documentRecordId = this.recordId;
+        }
+        
+
+        getContentDocs({
+            arecordId: this.documentRecordId
+            })
+            .then(result => {
+                console.log('getContentDocs: ' + JSON.stringify(result));
+                if(Object.keys(result).length > 0 ){
+                    this.contentDocument = result;
+                    result.forEach(element => {
+                        let elem = JSON.stringify(element);
+                        this.documentRecordIdList.push(JSON.parse(elem).Id);
+                    });
+                }else{
+                    this.contentDocument = null;
+                }
+            })
+            .catch(error => {
+                this.error = error;
+            });
+    }
+
+    handleUploadFinished(){
+        this.selectContentDocument();
+    }
+    handleActionFinished(){
+        this.selectContentDocument();
+    }
+
+    handleCancel(){
+        deletePendingFiles({cdIdList: this.documentRecordIdList})
+        .then(result => {
+            console.log('# deletingPendingFiles #');
+            this.closeAction();
+        })
+        .catch(error => {
+            console.log('# ERROR # ' + error);
         });
     }
 

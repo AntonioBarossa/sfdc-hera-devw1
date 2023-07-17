@@ -10,12 +10,16 @@
         var flowName = 'HDT_FL_DispatchTari';
         inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Segnalazioni Ambientali' });
         inputVariables.push({ name : 'RecordTypeName', type : 'String', value : 'HDT_RT_Segnalazioni' });
-      	flow.startFlow(flowName, inputVariables);
+      	//flow.startFlow(flowName, inputVariables);
+        component.set("v.flowApiName", flowName);
+        component.set("v.inputVariables", inputVariables);
     },
 
     handleStatusChange : function (component, event) {
         if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
             console.log('Flow-Finished');
+            var flowfinal = component.find("flowData");
+			flowfinal.destroy();
             var dismissActionPanel = $A.get("e.force:closeQuickAction");
             dismissActionPanel.fire();
         }

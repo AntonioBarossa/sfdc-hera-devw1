@@ -326,6 +326,11 @@
                 <label>Esecuzione Appuntamento OK</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
@@ -659,16 +664,6 @@
                 <fullName>Annullamento - Dati discordanti</fullName>
                 <default>false</default>
                 <label>Annullamento - Dati discordanti</label>
-            </value>
-            <value>
-                <fullName>Quicklinks</fullName>
-                <default>false</default>
-                <label>Quicklinks</label>
-            </value>
-            <value>
-                <fullName>Profiles Chamber</fullName>
-                <default>false</default>
-                <label>Profiles Chamber</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -12,7 +12,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
     }
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(String productId, String record, HDT_WRP_EligibilityCriteria.HDT_WRP_Region obj){
-        //List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList
+
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
@@ -31,20 +31,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
             if(objRes.isCreateable() && objRes.isUpdateable()){
                 HDT_UTL_DatabaseService.upsertSObject(criteria);
-                //upsert criteria;
             } else {
-                //saveResponse.success = false;
-                //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
-                //saveResponse.dataError = false;
-                //return saveResponse;
                 return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false); 
             }
 
         } catch (Exception e){
-            //saveResponse.success = false;
-            //saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            //saveResponse.dataError = false;
-            //return saveResponse;
             return setSaveResponse(saveResponse, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']', false);
         }
 
@@ -53,9 +44,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
 
             if(!deleteResponse){
-                //saveResponse.success = false;
-                //saveResponse.message = Label.HDT_EligCriteria_DeleteError;
-                //return saveResponse;
                 return setSaveResponse(saveResponse, Label.HDT_EligCriteria_DeleteError, true);  
             }
 
@@ -69,6 +57,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                     muni.AreaCode__c =  singleProv.value;
                     //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
                     muni.JSONCode__c = JSON.serialize(singleProv);
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+                    //if(!singleProv.eligibleForAllCities){
+                    //    muni.JSONCode__c = JSON.serialize(singleProv);   
+                    //}
+                    //muni.EligibleForAllCities__c = singleProv.eligibleForAllCities;
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+
                     muniList.add(muni);
                 }
             }
@@ -89,9 +84,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
 
             if(!deleteResponse){
-                //saveResponse.success = false;
-                //saveResponse.message = Label.HDT_EligCriteria_DeleteError;
-                //return saveResponse;
                 return setSaveResponse(saveResponse, Label.HDT_EligCriteria_DeleteError, true); 
             }
 
@@ -133,26 +125,16 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         System.debug(LoggingLevel.DEBUG, '# clone this -> ' + newCriteria);
 
         try{
-            //insert newCriteria;
             SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
      
             if(objRes.isCreateable()){
                 HDT_UTL_DatabaseService.insertSObject(newCriteria);
-                //insert newCriteria;
             } else {
-                //saveResponse.success = false;
-                //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
-                //saveResponse.dataError = false;
-                //return saveResponse;
                 return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false);               
             }
 
         } catch (Exception e){
-            //saveResponse.success = false;
-            //saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            //saveResponse.dataError = false;
-            //return saveResponse;
             return setSaveResponse(saveResponse, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']', false); 
         }
 
@@ -160,7 +142,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             List<EligibleMunicipality__c> newItemsList = new List<EligibleMunicipality__c>();
             EligibleMunicipality__c newItem;
             for(EligibleMunicipality__c itemToClone : crtiteriaToClone.Comuni_Eleggibili__r){
-                newItem = itemToClone.clone(false, true, false, false);
+                //newItem = itemToClone.clone(false, true, false, false);
+                newItem = new EligibleMunicipality__c();
+                newItem.Name = itemToClone.Name;
+                newItem.AreaCode__c = itemToClone.AreaCode__c;
+                newItem.JSONCode__c = itemToClone.JSONCode__c;
                 newItem.EligibilityCriteria__c = newCriteria.Id;
                 newItemsList.add(newItem);
             }
@@ -217,43 +203,17 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return errorData;
     }
 
-    //public static Map<String, Set<String>> deserializeUntypedMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
-    //    String jsonInput = '{';
-
-    //    for(Integer n=0; n < muniList.size(); n++){
-    //        existingMuniMap.put(muniList[n].AreaCode__c, new Set<String>());
-    //        jsonInput += '"' + muniList[n].Id + '":';
-    //        jsonInput += muniList[n].JSONCode__c;
-    //        if((n+1) < muniList.size()){
-    //            jsonInput += ',';
-    //        }
-    //    }
-    //    jsonInput += '}';
-    //    
-    //    Map<String, Object> m =  (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
-
-    //    for(String k : m.keySet()){
-    //         
-    //        Map<String, Object> objMap = (Map<String, Object>)m.get(k);
-    //        List<Object> cityAvailable = (List<Object>)objMap.get('cityAvailable');
-    //        String areaCode = String.valueOf(objMap.get('value'));
-
-    //        Set<String> tempSet = existingMuniMap.get(areaCode);
-    //        for(Object city : cityAvailable){
-    //            Map<String, Object> cityMap = (Map<String, Object>)city;
-    //            tempSet.add(String.valueOf(cityMap.get('value')));
-    //        }
-    //        existingMuniMap.put(areaCode, tempSet);
-
-    //    }
-
-    //    return existingMuniMap;
-
-    //}
-
     public static Map<String, Set<String>> deserializeMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
+                
+                //#### 24-02-2023 enhanced eligibleForAllCities
+                //if(muni.EligibleForAllCities__c){
+                //    existingMuniMap.put(muni.AreaCode__c, null);
+                //    continue;
+                //}
+                //#### 24-02-2023 enhanced eligibleForAllCities
+
                 singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
                 singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
 
@@ -266,9 +226,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             return existingMuniMap;
     }
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
-        System.debug(LoggingLevel.DEBUG, '# getExistingEligibleMunicipalities2 > ' + eligibilityId);
+        System.debug(LoggingLevel.DEBUG, '# getExistingEligibleMunicipalities > ' + eligibilityId);
 
         Map<String, Set<String>> existingMuniMap = new Map<String, Set<String>>();
 
@@ -280,11 +240,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, eligibilityId);
 
         try{            
-
-
             //+++++++++++++++++++++++++++++
             //existingMuniMap = deserializeUntypedMethod(existingMuniMap, muniList);
-
             //+++++++++++++++++++++++++++++
             existingMuniMap = deserializeMethod(existingMuniMap, muniList);
 
@@ -294,6 +251,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : cityZipCodeObj.regionList[0].provinceList){
 
                 if(existingMuniMap.containsKey(prov.value)){
+
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+                    //if(existingMuniMap.get(prov.value) == null){
+                    //    continue;
+                    //}
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+
                     Set<String> avalilableCityCode = existingMuniMap.get(prov.value);
                     Set<Integer> itemsToRemove = new Set<Integer>();
 
@@ -331,44 +295,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return cityZipCodeObj;
 
     }
-
-    /*public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
-
-        System.debug(LoggingLevel.DEBUG, '# getExistingEligibleMunicipalities > ' + eligibilityId);
-        cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
-        try{
-            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
-            muniList = [
-                SELECT Id, Name, AreaCode__c, JSONCode__c
-                FROM EligibleMunicipality__c
-                WHERE EligibilityCriteria__c =: eligibilityId
-                WITH SECURITY_ENFORCED
-            ];
-            
-            
-            cityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
-            HDT_WRP_EligibilityCriteria.HDT_WRP_Region singleRegion = new HDT_WRP_EligibilityCriteria.HDT_WRP_Region();
-            singleRegion.regionName = 'EmiliaRomagna';
-            singleRegion.regionCode = 'EMR';
-            singleRegion.provinceList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>();
-
-            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
-            for(EligibleMunicipality__c muni : muniList){
-                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
-                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
-                singleRegion.provinceList.add(singleProv);
-            }
-            cityZipCodeObj.regionList.add(singleRegion);
-            cityZipCodeObj.success = true;
-            cityZipCodeObj.message = '';
-        } catch (Exception e){
-            cityZipCodeObj.success = false;
-            cityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-        }
-
-        return cityZipCodeObj;
-
-    }*/
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse deleteEligibilityCriteriaHelper(List<EligibilityCriteria__c> criteriaListToDelete, HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse){
 
@@ -428,7 +354,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         try{
 
             HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
-            cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(recordId, cityZipCodeObj);
+            cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(recordId, cityZipCodeObj);
 
             List<EligibilityCriteria__c> criteria;
             criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, recordId);
@@ -500,172 +426,5 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         return municipalityTreeObj;
     }
-
-    /*public static void updateEligibilityCriteria(Id product2Id, Boolean asChild){
-
-        try{
-            Product2 prod = new Product2();
-            prod.Id = product2Id;
-            prod.EligibilityCriteria__c = asChild;
-            update prod;
-        } catch (Exception e){
-            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
-        }
-
-    }*/
-
-    /*public static HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj createMunicipalityTreeObj(HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj, String recordId){
-        
-        municipalityTreeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj();
-
-        try{
-
-            List<EligibleMunicipality__c> muniList;
-            List<EligibilityCriteria__c> criteria;
-            muniList = HDT_QR_EligibilityCriteria.getEligibleMunicipalityByCriteriaId(muniList, recordId);
-            criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, recordId);
-
-
-            if(!criteria[0].EligibleForAllCities__c){
-                municipalityTreeObj.eligibleForAllCities = false;
-                municipalityTreeObj.treeItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
-                for(EligibleMunicipality__c muni : muniList){
-
-                    HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv  = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
-
-                    treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                    treeItem.label = singleProv.label + ' (' + singleProv.value + ')';
-                    treeItem.name = singleProv.value;
-                    treeItem.expanded = false;
-                    treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                    HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
-                    for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityAvailable){
-                        nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                        nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
-                        nestedTreeItem.name = cityItem.value;
-                        nestedTreeItem.expanded = false;
-                        nestedTreeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                        treeItem.items.add(nestedTreeItem);
-                    }
-                    municipalityTreeObj.treeItemList.add(treeItem);
-                }
-            } else {
-                municipalityTreeObj.eligibleForAllCities = true;
-                municipalityTreeObj.treeItemList = null;
-            }
-
-        } catch (Exception e){
-            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
-            throw new AuraHandledException(e.getMessage());
-        }
-
-        System.debug(JSON.serialize(municipalityTreeObj));
-
-        return municipalityTreeObj;
-    }
-
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj createMunicipalityTreeCompleteObj(HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj, String recordId){
-        
-        municipalityTreeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj();
-
-        try{
-
-            HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
-            cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(recordId, cityZipCodeObj);
-
-            List<EligibilityCriteria__c> criteria;
-            criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, recordId);
-
-
-            if(!criteria[0].EligibleForAllCities__c){
-                municipalityTreeObj.eligibleForAllCities = false;
-                municipalityTreeObj.treeItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                municipalityTreeObj.treeNotAvailableItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
-                HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItemNot;
-
-                for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : cityZipCodeObj.regionList[0].provinceList){
-
-                    if(singleProv.isEnabled){
-                        treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                        treeItem.label = singleProv.label + ' (' + singleProv.value + ')';
-                        treeItem.name = singleProv.value;
-                        treeItem.expanded = false;
-                        treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                        HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
-                        for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityAvailable){
-                            nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                            nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
-                            nestedTreeItem.name = cityItem.value;
-                            nestedTreeItem.expanded = false;
-                            nestedTreeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                            treeItem.items.add(nestedTreeItem);
-                        }
-
-                        municipalityTreeObj.treeItemList.add(treeItem);
-
-                        if(singleProv.cityRemoved.size()>0){
-
-                            treeItemNot = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                            treeItemNot.label = singleProv.label + ' (' + singleProv.value + ')';
-                            treeItemNot.name = singleProv.value;
-                            treeItemNot.expanded = false;
-                            treeItemNot.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-    
-                            HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeNotItem;
-                            for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityRemoved){
-                                nestedTreeNotItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                                nestedTreeNotItem.label = cityItem.label + ' (' + cityItem.value + ')';
-                                nestedTreeNotItem.name = cityItem.value;
-                                nestedTreeNotItem.expanded = false;
-                                nestedTreeNotItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                                treeItemNot.items.add(nestedTreeNotItem);
-                            }
-    
-                            municipalityTreeObj.treeNotAvailableItemList.add(treeItemNot);
-
-                        }
-
-                    } else {
-                       treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                       treeItem.label = singleProv.label + ' (' + singleProv.value + ')';
-                       treeItem.name = singleProv.value;
-                       treeItem.expanded = false;
-                       treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                       HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
-                       for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityAvailable){
-                           nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                           nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
-                           nestedTreeItem.name = cityItem.value;
-                           nestedTreeItem.expanded = false;
-                           nestedTreeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                           treeItem.items.add(nestedTreeItem);
-                       }
-
-                       municipalityTreeObj.treeItemList.add(treeItem);
-                    }
-
-                }
-
-            } else {
-                municipalityTreeObj.eligibleForAllCities = true;
-                municipalityTreeObj.treeItemList = null;
-            }
-
-        } catch (Exception e){
-            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
-            throw new AuraHandledException(e.getMessage());
-        }
-
-        System.debug(JSON.serialize(municipalityTreeObj));
-
-        return municipalityTreeObj;
-    }*/
 
 }

@@ -27,7 +27,7 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             HDT_UTL_DataFactoryTst.pClickCasePhase();
 
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G6 - MMS Associazione','Aziende SME');
             Id accId = accs[0].id;
             HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
             HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
@@ -87,6 +87,8 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
         
     	System.assertNotEquals(0, jobsScheduled.size(), 'expecting one queued job');
 
+        // Cover QBI bulk update constructor
+        HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate testConstructor = new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(new Map<Id, String>(), new Map<Id, String>());
 
     }
 }

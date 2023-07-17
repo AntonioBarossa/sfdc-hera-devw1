@@ -77,7 +77,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
         for(String s: accountAddressRes.keySet()){
                 //System.debug('s+ :'+s);
                 //System.debug('accountAddressRes.get(s) :'+accountAddressRes.get(s));
-                if('ShippingIsAddressVerified__c' == s){
+                if('ShippingIsAddressVerified__c' == s || 'ShippingAddressIsForeign__c' == s || 'BillingAddressIsForeign__c' == s){
                     account.put(s, accountAddressRes.get(s) == 'true' ? true : false);
                 }
                 else{ 
@@ -97,7 +97,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
         infoData.put('birthDate'    , dataAccount.get('birthDate')  );
         infoData.put('birthPlace'   , dataAccount.get('birthplace') );
         infoData.put('gender'       , dataAccount.get('gender')     );
-        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData, dataAccount.get('fiscalCode') )) {
+        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData, dataAccount.get('fiscalCode') )) {
             throw new AuraHandledException('Inserire un codice fiscale valido');
         }
         //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato

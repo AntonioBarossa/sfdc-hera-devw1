@@ -166,6 +166,10 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('VERTRAG'))) {
             sp.SAPContractCode__c = mapRequestFields.get('VERTRAG');
         }
+        if(String.isNotBlank(mapRequestFields.get('POD'))){
+            sp.Name= mapRequestFields.get('POD');
+            sp.ServicePointCode__c = mapRequestFields.get('POD');
+        }
         if (!String.isBlank(mapRequestFields.get('ANLAGE_ST'))) {
             switch on mapRequestFields.get('ANLAGE_ST'){
                 when 'Open', 'Riatt. avviata per morosita'{
@@ -235,6 +239,11 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
             if (String.isNotBlank(keyValue)) {
                 if (isNumber) {
+                    if('AnnualConsumption__c'.equalsIgnoreCase(field.getDescribe().getName())){
+                        String target = ',';
+                        String replacement = '.';
+                        keyValue = keyValue.replace(target, replacement);
+                    }
                     sp.put(field, Decimal.valueOf(keyValue));
                 }
                 else {

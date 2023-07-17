@@ -1,5 +1,7 @@
 public with sharing class HDT_UTL_ProcessDateManager {
 
+	private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
 	@AuraEnabled
 	public static Boolean isAfterthoughtDaysZero(Order order){
 		try {
@@ -38,6 +40,27 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			handleBusinessDate(orderList);
 		}
     }
+
+    public static void updateReadingDate(List<Order> orderList){
+		if(orderList.size()>0)
+		{
+			List<Reading__c> readingList = [ SELECT ReadingDate__c, ReadingValueMeter__c, OrderAcqua__r.MeterSN__c FROM Reading__c WHERE OrderAcqua__c IN :orderList WITH SECURITY_ENFORCED ];
+			if(!readingList.isEmpty()){
+				for( Reading__c reading : readingList ){
+					reading.ReadingDate__c = System.today();
+					reading.ReadingValueMeter__c = String.isBlank(reading.OrderAcqua__r.MeterSN__c)? 0 : reading.ReadingValueMeter__c;
+				}
+			} else {
+				Reading__c dummyReading = new Reading__c();
+				dummyReading.ReadingDate__c = System.today();
+				dummyReading.ReadingValueMeter__c = 0;
+				dummyReading.OrderAcqua__c = orderList[0].Id;
+				readingList.add(dummyReading);
+			}
+			HDT_UTL_DatabaseService.upsertSObject(readingList);
+		}
+    }
+
     public static void setMaxAfterthoughtDate(List<Order> orderList) {
 		if(!orderList.isEmpty()){
 			Order order = orderList[0];
@@ -78,7 +101,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                 }
     
                 Date dateSentToSii= null;
-                if(signedDate != null  && order.ProcessType__c.containsIgnoreCase('Switch In')){
+                if(signedDate != null  && order.ProcessType__c != null &&  order.ProcessType__c.containsIgnoreCase('Switch In')){
                     //if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                         // DIRITTO DI RINUNCIA DI RIPENSAMENTO
                         if (order.WaiverRightAfterthought__c == 'Si') { 
@@ -90,14 +113,14 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
-								if(dataRipensamento > Date.Today()){
+								if(dataRipensamento >= Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
 								}else if(dataRipensamento < Date.Today()){
-									dateSentToSii = Date.today();
+									dateSentToSii = order.IsTransition__c? Date.today().addDays(1) : Date.today();
 								}
-								else {
+								/* else {
 									dateSentToSii = dataRipensamento;
-								}
+								} */
                             }else {
 								dateSentToSii = Date.today();
 							}
@@ -114,16 +137,16 @@ public with sharing class HDT_UTL_ProcessDateManager {
     }
 	public static void setEffectiveDateBusiness(List<Order> orderList){
 		for(Order order : orderList){
-			Date signDate = order.SignedDate__c;
-			if(!order.IsActivationDeferred__c){
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie'){
-					if (order.RecessNotice__c == null) {
-						order.RecessNotice__c = 0;
-					}
-					Date dateDecorrenzaTmp = signDate.addMonths((Integer)order.RecessNotice__c);
-					Date effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
-					order.EffectiveDate__c = effectiveDateTmp;
+			if(!order.IsActivationDeferred__c && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie'){
+				//da bbp deve essere calcolata la effective date a partire da DateSentToSII__c che se l'ordine non è IsActivationDeferred__c equivale alla seguente formula
+				Date sendDateToSii = order.WizardCompletedDate__c != null? order.WizardCompletedDate__c:Date.today();
+				if (order.RecessNotice__c == null) {
+					order.RecessNotice__c = 0;
 				}
+				/**TK 940864C -- Per il calcolo della data decorrenza viene ora utilizzata la data invio SII invece della data firma (qualora data invio sii non nulla) */
+				Date dateDecorrenzaTmp = sendDateToSii.addMonths((Integer)order.RecessNotice__c);
+				Date effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
+				order.EffectiveDate__c = effectiveDateTmp;
 			}
 		}
 	}
@@ -225,9 +248,9 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			
 			for(Order order : orderList){
 				//CAMBIO OFFERTA DATA FIRMA - SWITCH IN DATA INVIO SII
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
-					dateToFrom = order.SignedDate__c;
-				}else if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+				if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
+					dateToFrom = Date.today() > order.SignedDate__c ? Date.today() : order.SignedDate__c;
+				}else if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
@@ -239,7 +262,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				}
 				
 				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
-					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					if(order.CommodityFormula__c != null && 'Acqua'.equalsIgnoreCase(order.CommodityFormula__c)){
+						order.EffectiveDate__c = System.today();
+					}else{
+						order.EffectiveDate__c = orderSrv.addBusinessDay(order.SignedDate__c, 3);
+					}	
 				}
 
 				if(dateToFrom != null){

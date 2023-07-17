@@ -143,7 +143,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ErrorediFatturazione' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi'}, 
+                {'Preventivi'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
@@ -155,7 +155,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'RettificaConsumi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Segnalazioni'},
+                {'Segnalazioni'},
             'Type' => new List<String>
                 {'Consumo Anomalo Idrico'}
         },
@@ -647,6 +647,34 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         return res;
     }
 
+    public static Boolean servicePointFilter(sObject sb, String method){
+        if ('RipristinoFornituraInterrotta'.equalsIgnoreCase(method)){
+            try{
+                Id recordId = sb.get('Id') != null ? (Id)sb.get('Id') : null;
+                HDT_QR_ServicePoint qrServicePoint = new HDT_QR_ServicePoint(); 
+                ServicePoint__c sr = qrServicePoint.getRecordById(recordId,'SapContractStatus__c')[0];
+                return 'Cessato'.equalsIgnoreCase(sr.SapContractStatus__c);
+            }catch (Exception e){
+                return false;
+            }
+        }else if ('modificaunitaimmobiliaricomponenti'.equalsIgnoreCase(method)){
+            try {
+                Id recordId = sb.get('Id') != null ? (Id)sb.get('Id') : null;
+                HDT_QR_ServicePoint qrServicePoint = new HDT_QR_ServicePoint(); 
+                ServicePoint__c sr = qrServicePoint.getRecordById(recordId,'RateCategory__c')[0];
+                Set<String> rateCategorySet = new Set<String>{'ACDOMRESP0','ACPROMISC0','ACPROMIBI0'};
+                if (rateCategorySet.contains(sr.RateCategory__c)) {
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
         //fix
@@ -701,7 +729,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         Boolean res = false;
         Boolean checkTari = false;
         Boolean checkStandard = false;
-        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c 
+        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c,SBQQ__Quote__c, SBQQ__Quote__r.SapContractCode__c, SBQQ__Product__r.Service__c
         FROM SBQQ__QuoteLine__c 
         WHERE SBQQ__Quote__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED];
@@ -713,6 +741,10 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
                 checkTari = true;
             }
             else if(quoteLine.ServicePoint__c != null && !quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+            {
+                checkStandard = true;
+            }
+            else if(quoteLine.ServicePoint__c == null && quoteLine.SBQQ__Quote__c != null && quoteLine.SBQQ__Quote__r.SapContractCode__c != null && !'Ambiente'.equalsIgnoreCase(quoteLine.SBQQ__Product__r.Service__c))
             {
                 checkStandard = true;
             }

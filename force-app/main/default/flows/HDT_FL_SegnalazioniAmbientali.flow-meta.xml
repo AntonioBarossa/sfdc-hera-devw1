@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>270</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -40,6 +40,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -216,6 +223,20 @@
                 <stringValue>Segnalazioni</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.DifferentNameFromTheApplicant__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -233,10 +254,24 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.PhoneNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>phone_NonBlank</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAccount.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -248,12 +283,19 @@
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
         <locationX>138</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>theCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCityTecnicalData.CompanyOwner__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -443,7 +485,7 @@
         <name>NextStep</name>
         <label>Next Step</label>
         <locationX>270</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -479,6 +521,7 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -571,7 +614,7 @@
         <name>GetCase_AfterWizard</name>
         <label>Get Case After Wizard</label>
         <locationX>270</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NextStep</targetReference>
@@ -586,6 +629,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getCityTecnicalData</name>
+        <label>getCityTecnicalData</label>
+        <locationX>138</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>putIndirizzi</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCaseIndirizzi.InvoicingCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CityTechnicalData__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -613,7 +677,7 @@
         <name>DaInviare</name>
         <label>Da Inviare</label>
         <locationX>490</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -643,7 +707,7 @@
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
         <locationX>138</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -695,7 +759,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>putIndirizzi</targetReference>
+            <targetReference>getCityTecnicalData</targetReference>
         </connector>
         <fields>
             <name>getAddress_0</name>
@@ -727,7 +791,7 @@
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
         <locationX>270</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -741,7 +805,7 @@
         </fields>
         <fields>
             <name>WizardLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <extensionName>c:hdtEnviromentalReports</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>cancelButton</name>
@@ -845,7 +909,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>

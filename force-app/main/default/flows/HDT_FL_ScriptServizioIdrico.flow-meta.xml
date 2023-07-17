@@ -1,17 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>AssignmentPrimaryEmail</name>
+        <label>AssignmentPrimaryEmail</label>
+        <locationX>264</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>PrimaryMail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SubprocessCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentShippingAddress</name>
+        <label>AssignmentShippingAddress</label>
+        <locationX>264</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>ShippingAddress</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ShippingMailCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentShippingMail</name>
+        <label>AssignmentShippingMail</label>
+        <locationX>264</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>ShippingMail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>PrimaryEmailCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignSubprocess</name>
+        <label>AssignSubprocess</label>
+        <locationX>264</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>Subprocess</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>PrimaryEmailCheck</name>
+        <label>PrimaryEmailCheck</label>
+        <locationX>396</locationX>
+        <locationY>1166</locationY>
+        <defaultConnector>
+            <targetReference>SubprocessCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isPrimaryEmailTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.Account.PrimaryEmail__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentPrimaryEmail</targetReference>
+            </connector>
+            <label>isPrimaryEmailTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ShippingAddressCheck</name>
+        <label>ShippingAddressCheck</label>
+        <locationX>396</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>ShippingMailCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isShippingAddressTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.ShippingAddressFormula__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentShippingAddress</targetReference>
+            </connector>
+            <label>isShippingAddressTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ShippingMailCheck</name>
+        <label>ShippingMailCheck</label>
+        <locationX>396</locationX>
+        <locationY>866</locationY>
+        <defaultConnector>
+            <targetReference>PrimaryEmailCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isShippingMailTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.ShippingMail__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentShippingMail</targetReference>
+            </connector>
+            <label>isShippingMailTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SubprocessCheck</name>
+        <label>SubprocessCheck</label>
+        <locationX>396</locationX>
+        <locationY>1466</locationY>
+        <defaultConnector>
+            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>SubProcessTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.Subprocess__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignSubprocess</targetReference>
+            </connector>
+            <label>SubProcessTrue</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_ScriptServizioIdrico {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ScriptServizioIdrico</label>
     <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+            <targetReference>ShippingAddressCheck</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Durata_Contratto_Servizio_Idrico</targetReference>
@@ -39,8 +204,8 @@
     <recordLookups>
         <name>GetorderItem</name>
         <label>GetorderItem</label>
-        <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationX>396</locationX>
+        <locationY>1874</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Dati_Tecnici_Servizio_Idrico</targetReference>
@@ -61,7 +226,7 @@
         <name>Conferma_Adesione_Servizio_Idrico</name>
         <label>Conferma Adesione Servizio Idrico</label>
         <locationX>176</locationX>
-        <locationY>1214</locationY>
+        <locationY>2282</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -77,10 +242,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ShippingAddressFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>ShippingAddress</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -92,22 +257,29 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Account.PrimaryEmail__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>PrimaryMail</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ShippingMail</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text_conferma_registrazione_idrico_4</name>
-            <fieldText>&lt;p&gt;Entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo Contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo, può indirizzarloe in forma scritta&amp;nbsp;ai canali indicati nel sito internet del Gestore o in bolletta&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente,&amp;nbsp;può adire alle procedure di risoluzione extragiudiziale delle controversie rivolgendosi al “Servizio Conciliazione” o alla procedura di “Conciliazione Paritetica”, il funzionamento dei quali è presente sul sito internet del Gestore alla voce “Conciliazione”.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Se deve inviare un reclamo, può indirizzarloe in forma scritta&amp;nbsp;ai canali indicati nel sito internet del Gestore o in bolletta&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente,&amp;nbsp;può adire alle procedure di risoluzione extragiudiziale delle controversie rivolgendosi al “Servizio Conciliazione” o alla procedura di “Conciliazione Paritetica”, il funzionamento dei quali è presente sul sito internet del Gestore alla voce “Conciliazione”.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text_conferma_registrazione_idrico_5</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto in Hera SpA&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto in Marche Multiservizi SpA.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -121,8 +293,8 @@
     <screens>
         <name>Dati_Tecnici_Servizio_Idrico</name>
         <label>Dati_Tecnici_Servizio_Idrico</label>
-        <locationX>264</locationX>
-        <locationY>878</locationY>
+        <locationX>396</locationX>
+        <locationY>1982</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -221,7 +393,7 @@
         </fields>
         <fields>
             <name>text_dati_tecnici_servizio_Idrico_5</name>
-            <fieldText>&lt;p&gt;•	[Se uso domestico residente]: Mi conferma che il numero di componenti il nucleo familiare è {!GetorderItem.OccupantsNumber__c}?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero di componenti il nucleo familiare è {!GetorderItem.OccupantsNumber__c}?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -250,8 +422,46 @@
         </fields>
         <fields>
             <name>text_dati_tecnici_servizio_Idrico_6</name>
-            <fieldText>&lt;p&gt;Se prima attivazione o subentro su GDM:&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail contratti@gruppohera.it&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail clienti@gruppomarchemultiservizi.it.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione In delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione con modifica</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Subentro</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text_dati_tecnici_servizio_Idrico_7</name>
@@ -265,7 +475,7 @@
         <name>Durata_Contratto_Servizio_Idrico</name>
         <label>Durata_Contratto_Servizio_Idrico</label>
         <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationY>2174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -274,7 +484,7 @@
         </connector>
         <fields>
             <name>text_durata_contratto_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Durata contratto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Il contratto, ai fini della fatturazione, ha decorrenza dalla data di attivazione della fornitura. La fornitura sarà attivata entro i termini previsti dalla &quot;Carta del Servizio Idrico&quot;. Il contratto di fornitura ha come scadenza il 31 dicembre dell&apos;anno di stipula ed è rinnovato tacitamente di anno in anno. E’ È possibile recedere dal contratto in qualsiasi momento, dandone comunicazione al Gestore ai riferimenti indicati nelle fatture&amp;nbsp;Il pagamento delle forniture deve essere effettuato in base alle fatture che le vengono periodicamente inviate, entro i termini e nei modi indicati sulle fatture stesse.”&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Il pagamento delle forniture deve essere effettuato in base alle fatture che le vengono periodicamente inviate, entro i termini e nei modi indicati sulle fatture stesse. Qualora il pagamento delle somme dovute in base alle fatture emesse non sia effettuato entro il termine di scadenza indicato in fattura, il Gestore, oltre al corrispettivo dovuto, addebita il pagamento degli interessi di mora, calcolati su base annua e pari al tasso ufficiale di riferimento aumentato di 3,5 punti percentuali&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Durata contratto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Il contratto, ai fini della fatturazione, ha decorrenza dalla data di attivazione della fornitura. La fornitura sarà attivata entro i termini previsti dalla &quot;Carta del Servizio Idrico&quot;. È possibile recedere dal contratto in qualsiasi momento, dandone comunicazione al Gestore ai riferimenti indicati nelle fatture&amp;nbsp;Il pagamento delle forniture deve essere effettuato in base alle fatture che le vengono periodicamente inviate, entro i termini e nei modi indicati sulle fatture stesse.”&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Il pagamento delle forniture deve essere effettuato in base alle fatture che le vengono periodicamente inviate, entro i termini e nei modi indicati sulle fatture stesse. Qualora il pagamento delle somme dovute in base alle fatture emesse non sia effettuato entro il termine di scadenza indicato in fattura, il Gestore, oltre al corrispettivo dovuto, addebita il pagamento degli interessi di mora.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -283,8 +493,8 @@
     <screens>
         <name>Tariffe_Servizio_Idrico</name>
         <label>Tariffe_Servizio_Idrico</label>
-        <locationX>264</locationX>
-        <locationY>638</locationY>
+        <locationX>396</locationX>
+        <locationY>1766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -298,7 +508,7 @@
         </fields>
         <fields>
             <name>text_tariffe_servizio_Idrico_1</name>
-            <fieldText>&lt;p&gt;Il Gestore applica&amp;nbsp;&amp;nbsp;le&amp;nbsp;&amp;nbsp;tariffe del&amp;nbsp;&amp;nbsp;Servizio&amp;nbsp;Idrico&amp;nbsp;Integrato&amp;nbsp;determinate&amp;nbsp;&amp;nbsp;dall’Ente di governo d’ambito (denominato Atersir) e approvate dall’Autorità nazionale di Regolazione Energia Reti e Ambiente. Le&amp;nbsp;tariffe&amp;nbsp;sono&amp;nbsp;articolate&amp;nbsp;per&amp;nbsp;&amp;nbsp;tipologia&amp;nbsp;d&apos;uso&amp;nbsp;e&amp;nbsp;fascia&amp;nbsp;di consumo,&amp;nbsp;e suddivise nei diversi segmenti di servizio (acquedotto, fognatura e depurazione).&amp;nbsp;Le tariffe sono disponibili sul&amp;nbsp;sito&amp;nbsp;internet del&amp;nbsp;Gestore.&lt;/p&gt;&lt;p&gt;Con l’attivazione della fornitura del servizio idrico, l’utente presta il proprio consenso ad aderire&lt;/p&gt;&lt;p&gt;anche alla copertura, offerta dal Fondo Fughe Acqua, degli oneri conseguenti i maggiori consumi idrici dovuti a perdite occulte avvenute lungo la rete privata a valle del contatore. Ad oggi l’importo di adesione al Fondo Fughe è pari a&amp;nbsp;10€/anno quota fissa +5€/anno x Unità immobiliare. Se vuole rinunciare a tale copertura può recedere dando comunicazione scritta di rinuncia da inviare al seguente indirizzo: Gruppo Hera Casella Postale 7155 – c/o FO 7 47122 FORLI’ (FC), oppure via e-mail all’indirizzo: rinunciafondofughe@gruppohera.it o tramite Fax 0542 368 165.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il Gestore applica le tariffe del Servizio Idrico Integrato determinate dall’Ente di governo d’ambito (denominato AATO) e approvate dall’Autorità nazionale di Regolazione Energia Reti e Ambiente. Le&amp;nbsp;tariffe&amp;nbsp;sono&amp;nbsp;articolate&amp;nbsp;per tipologia d&apos;uso e fascia di consumo, e suddivise nei diversi segmenti di servizio (acquedotto, fognatura e depurazione). Le tariffe sono disponibili sul sito internet del Gestore.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -330,11 +540,6 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>text_tariffe_servizio_Idrico_3</name>
-            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -350,18 +555,30 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
         <flowName>HDT_FL_Script_Gestione_Ordini</flowName>
+        <inputAssignments>
+            <name>famigliaProdottoOffertaInput</name>
+            <value>
+                <elementReference>offertaInput</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>idOrdinePadreInput</name>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>HDT_Script_Anagrafica</name>
         <label>HDT_Script_Anagrafica</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <connector>
             <targetReference>LoopOrdiniFigliOfferta</targetReference>
         </connector>
@@ -395,7 +612,7 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
@@ -420,4 +637,55 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>idOrdinePadreInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>offertaInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PrimaryMail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ShippingAddress</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ShippingMail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Subprocess</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

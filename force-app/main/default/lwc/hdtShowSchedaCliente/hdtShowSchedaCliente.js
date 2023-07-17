@@ -78,6 +78,8 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
             .catch(error => {
                 this.showSpinner = false;
                 console.error(error);
+                this.showMessage('Attenzione','Errore nella composizione del plico','error');
+                this.closeAction();
             });
         }catch(error){
             this.closeAction();

@@ -9,6 +9,7 @@
 global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
     
     private static final String REQUEST_PATH = '/notice';
+    private static final String NOTA_ANNULLAMENTO = 'Appuntamento cancellato da Call Center';
 
     public class HDT_WS_AnnullamentoSegnalazioneResponse extends HDT_WS_Response{
         @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
@@ -38,20 +39,22 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         SObject obj = (SObject) argsMap.get('sender');
         Case currentCase = (Case) obj;
 
-        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, null); //noticeId null
-        HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
+        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, currentCase.NoticeId__c); //noticeId null
+        HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'DELETE', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         
         try {
 
-            if(res.status.equalsIgnoreCase('success')){
+            if('Success'.equalsIgnoreCase(res?.data?.esito)){
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
-
-                if(!currentCase.WithdrawalFee__c){ //Se Ritiro Gratuito
+                //currentCase.Description= STRING.valueOf(obj.get(Case.Description))+'\n\nNota Cancellazione App.to da Call Center';
+                currentCase.Description= NOTA_ANNULLAMENTO;
+                
+                if(!currentCase.WithdrawalFee__c && currentCase.ServicePoint__c != null){ //Se Ritiro Gratuito
             
                     Datetime createdDate = currentCase.CreatedDate;
                     Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
@@ -78,7 +81,8 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                 if(String.isNotBlank(oldTransitions)){
                     result=oldTransitions.split('\\|\\|')[0].trim().substringBefore('@');
                     System.debug(LoggingLevel.DEBUG,'oldTransition -> ' + result);
-                    currentCase.Phase__c = result;
+                    currentCase.TecnicalPhase__c = result;
+                    currentCase.Description= 'Impossibile annullare l\'appuntamento';
                 }
             }
 

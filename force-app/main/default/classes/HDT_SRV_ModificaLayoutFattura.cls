@@ -64,6 +64,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
             currentCase = manageResponse(response, recordId);
         }else{
             currentCase.TecnicalPhase__c = 'Errore Lavorazione SAP';
+            currentCase.distributorflowcode__c = 'KO';
         }
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
@@ -110,10 +111,12 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
                 caseToUpdate.TecnicalPhase__c = 'Completata';
             } else {
                 caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
+                caseToUpdate.distributorflowcode__c = 'KO';
             }
 
         } else {
             caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.distributorflowcode__c = 'KO';
         }
         return caseToUpdate;
     }

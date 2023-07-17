@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MonthsOccupation__c</fullName>
+    <defaultValue>12</defaultValue>
     <externalId>false</externalId>
     <label>Mesi Occupazione</label>
     <precision>2</precision>

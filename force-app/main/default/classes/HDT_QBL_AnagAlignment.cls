@@ -18,8 +18,8 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
         Case anagAlignCase = anagAlignCases[0];
         System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: arricchimento dati...');
         try {
-            String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, anagAlignCase.ContractCode__c);
-            HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
+            HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(anagAlignCase.ContractCode__c, anagAlignCase.PODPDRFormula__c);
+            HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), anagAlignCase);
             if(anagAlignCase.Excises__c == null && String.isNotBlank(anagAlignCase.Taxes__c))
             {
                 List<HDT_ExciseTranscode__mdt> exciseTranscode = [SELECT Id, Excise__c FROM HDT_ExciseTranscode__mdt WHERE ExciseString__c = :anagAlignCase.Taxes__c];

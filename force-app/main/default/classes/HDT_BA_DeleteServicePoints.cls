@@ -59,7 +59,7 @@ public with sharing class HDT_BA_DeleteServicePoints implements Database.Batchab
         if(kpiMeta!=null && kpiMeta.EnableEmailSend__c){
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             list <EmailSetting__mdt> email=[SELECT DeveloperName, Email__c FROM EmailSetting__mdt WHERE DeveloperName='Elaborazione_Archivio_FUB' limit 1];
-            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress LIMIT 1];
+            OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' LIMIT 1];
             mail.setOrgWideEmailAddressId(owea[0].Id);
             mail.setToAddresses(new String[]{kpiMeta.DesiredEmail__c});
             mail.setSubject('Batch HDT_BA_DeleteServicePoints execution KPI');
@@ -70,7 +70,6 @@ public with sharing class HDT_BA_DeleteServicePoints implements Database.Batchab
 
         if(kpiMeta!=null && kpiMeta.EnableTracking__c){
             srvBatchEx.updateRecord(kpiTrack.Id,counterOk, counterKo, counterKo + counterOk);
-            System.debug('£££ '+ (Datetime.now().getTime() -start.getTime())/60000);
         }
     }
 }
