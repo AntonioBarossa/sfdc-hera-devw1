@@ -2,7 +2,10 @@ import { LightningElement,track,api,wire } from 'lwc';
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
 import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent, FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import { getRecord } from 'lightning/uiRecordApi';
-
+//CR ALM_1966
+import { publish, MessageContext } from 'lightning/messageService';
+import SEND_OUTPUT from '@salesforce/messageChannel/outputComp__c';
+//FINE CR ALM_1966
 export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     
     @api previousButton;
@@ -27,6 +30,24 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     @api maxRows;
 
     @api contractNumber;
+
+    //CR ALM_1966
+    @api sessionId;
+
+    @wire(MessageContext)
+    messageContext;
+
+    handleSelection(data){
+        if (this.sessionId){
+            const payload = {
+                name : 'selectedReadingDateString',
+                value : data,
+                sessionid : this.sessionId
+            };
+            publish(this.messageContext,SEND_OUTPUT, payload);
+        }
+    }
+    //FINE CR ALM_1966
     @track meterReadingColumns;
     loadData = false;
     spinner = true;
@@ -143,6 +164,8 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
             const attributeChangeEventDisputedThree = new FlowAttributeChangeEvent('disputedReadingThree', this.disputedReadingThree);
             this.dispatchEvent(attributeChangeEventDisputed);
         }
+        //CR ALM_1966
+        this.handleSelection(readingDate);
     }
 
     handleGoNext() {

@@ -52,6 +52,9 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         contentDocLinkList[0].LinkedEntityId=accList[0].Id;
         insert contentDocLinkList;
 
+        AccountStatementFilter__c stm = new AccountStatementFilter__c();
+        stm.DocumentSelected__c = '[{"codiceCliente":"1007579963","bloccoAlSollecito":"NO","contoContrattuale":"200011447158","classeConto":"Z005","dataEmissione":"22/08/2021","dataScadenza":"20/08/2021","dilazione":"NO","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000001","importo":"-675.58","modalitaPagamentoCA":"domiciliazione bancaria","numeroDocumento":"444013337644","rateizzato":"NO","residuo":"-675.58","societa":"Marche Multiservizi S.p.A","sollecitato":"NO","tipoDocumento":"DOPPI PAGAMENTI","totaleCopertina":"0.0","loginId":"0-1","secondoLivelloInformativo":[{"contratto":"3021664481","dataRegistrazione":"20/08/2021","documento":"444013337644","importo":"-675.58","residuo":"0.0","scadenza":"20/08/2021","settoreMerceologico":"Acqua","testoDettaglio":"DOPPI PAGAMENTI","tipoDocumento":"3I","idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000001"}],"id":"00000000000000000000000000000000000000000000000001"},{"codiceCliente":"1007579963","bloccoAlSollecito":"NO","contoContrattuale":"200011447158","classeConto":"Z005","dataEmissione":"22/08/2021","dataScadenza":"20/08/2021","dilazione":"NO","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000002","importo":"-14.18","modalitaPagamentoCA":"domiciliazione bancaria","numeroDocumento":"443913757334","rateizzato":"NO","residuo":"-14.18","societa":"Marche Multiservizi S.p.A","sollecitato":"NO","tipoDocumento":"DOPPI PAGAMENTI","totaleCopertina":"0.0","loginId":"0-1","secondoLivelloInformativo":[{"contratto":"3021664860","dataRegistrazione":"20/08/2021","documento":"443913757334","importo":"-14.18","residuo":"0.0","scadenza":"20/08/2021","settoreMerceologico":"Acqua","testoDettaglio":"DOPPI PAGAMENTI","tipoDocumento":"3I","idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000001"}],"id":"00000000000000000000000000000000000000000000000002"},{"codiceCliente":"1007579963","bloccoAlSollecito":"NO","contoContrattuale":"200011447158","classeConto":"Z005","dataEmissione":"22/08/2021","dataScadenza":"20/08/2021","dilazione":"NO","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000003","importo":"-14.45","modalitaPagamentoCA":"domiciliazione bancaria","numeroDocumento":"444112054257","rateizzato":"NO","residuo":"-14.45","societa":"Marche Multiservizi S.p.A","sollecitato":"NO","tipoDocumento":"DOPPI PAGAMENTI","totaleCopertina":"0.0","loginId":"0-1","secondoLivelloInformativo":[{"contratto":"3021664861","dataRegistrazione":"20/08/2021","documento":"444112054257","importo":"-14.45","residuo":"0.0","scadenza":"20/08/2021","settoreMerceologico":"Acqua","testoDettaglio":"DOPPI PAGAMENTI","tipoDocumento":"3I","idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000001"}],"id":"00000000000000000000000000000000000000000000000003"}]';
+        insert stm;
     }
 
     @IsTest
@@ -77,7 +80,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, caseToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, caseToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, /*Market__c,*/ InformativeType__c, SalesCompany__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         //System.assertEquals('Libero', updatedCase.Market__c, 'Market__c != Libero');
@@ -95,7 +98,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, orderToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, orderToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, InformativeType__c, InformativeCluster__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals('Subentro Gas', updatedCase.InformativeType__c, 'InformativeType__c != Subentro Gas');
@@ -113,7 +116,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, svToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, svToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, ServicePoint__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals(svToCopy.Id, updatedCase.ServicePoint__c, 'ServicePoint__c != svToCopy');
@@ -130,7 +133,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, billingProfileToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, billingProfileToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, BillingProfile__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals(billingProfileToCopy.Id, updatedCase.BillingProfile__c, 'BillingProfile__c != billingProfileToCopy');
@@ -147,7 +150,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, accountToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, accountToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, AccountId FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals(accountToCopy.Id, updatedCase.AccountId, 'AccountId != accountToCopy');
@@ -164,7 +167,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, contactToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, contactToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, ContactId FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals(contactToCopy.Id, updatedCase.ContactId, 'ContactId != contactToCopy');
@@ -181,12 +184,28 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         Test.startTest();
         
-        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, leadToCopy.Id);
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, leadToCopy.Id, null);
 
         Case updatedCase = [SELECT Id, ContactId, Lead__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
         System.assertEquals(leadToCopy.Id, updatedCase.Lead__c, 'Lead__c != leadToCopy');
 
         Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testPrePopulateFieldsFromEc(){
+
+        Case caseToPopulate = [SELECT Id FROM Case WHERE Type <> 'Autolettura da cliente' LIMIT 1];
+        AccountStatementFilter__c stmf = [SELECT Id FROM AccountStatementFilter__c LIMIT 1];
+        Test.startTest();
+        
+        String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, 'EC1Level', stmf.Id);
+
+        Test.stopTest();
+        
+        Case updatedCase = [SELECT Id, SalesCompany__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
+        System.assertNotEquals(null, updatedCase.SalesCompany__c, 'SalesCompany not updated');
         
     }
 

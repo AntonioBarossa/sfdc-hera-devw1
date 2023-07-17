@@ -107,7 +107,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             insert orders;
 
             List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orders[1].id, points[0].id, productList[0].id, priceBookEntryList[0].id);
-            ordersItems[0].ConsumptionAnnual__c = 10;
+            ordersItems[0].ConsumptionAnnualVAS__c = 10;
             insert ordersItems;
             
             List<Order> childOrders =  HDT_UTL_DataFactoryTst.createChildOrder(2, false, accs[0].id, sales, orders[0].id, null);
@@ -771,7 +771,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         try{
             String getConsumAnForVas = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(ord.id);
-            System.assertEquals('10.00', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
+            System.assertEquals('10', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
 
         } catch (Exception e) {
 
