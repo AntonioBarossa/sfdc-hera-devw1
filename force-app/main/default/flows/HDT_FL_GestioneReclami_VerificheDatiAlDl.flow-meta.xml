@@ -383,6 +383,13 @@
                 <elementReference>BlankDate</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>M03</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>UpdateCase</targetReference>
         </connector>
@@ -1778,6 +1785,12 @@
                     <elementReference>Get_Case.Commodity__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1954,6 +1967,12 @@
                     <elementReference>FlowCase.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2054,6 +2073,12 @@
                 <name>recordType</name>
                 <value>
                     <elementReference>FlowCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2189,6 +2214,12 @@
                     <stringValue>Processo M03 Ele</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2278,6 +2309,12 @@
                 <name>labelSaveButton</name>
                 <value>
                     <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxFileSize</name>
+                <value>
+                    <stringValue>5000000</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
