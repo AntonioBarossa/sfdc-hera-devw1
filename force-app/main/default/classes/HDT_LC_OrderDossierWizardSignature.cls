@@ -215,13 +215,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
 
     private static List<ComfortQualityCall__c> executeQuery(List<Order> orders,String signatureMethod,String docSendingMethod){
-        Boolean isVas = false;
         if ('HDT_RT_VAS'.equalsIgnoreCase(ord[0].RecordType.DeveloperName)){
-            isVas = true;
-        }  
-        if (isVas){
             return HDT_QR_ComfortQualityCall.getRecordByOrderParamsVasMassive(orders,signatureMethod,docSendingMethod);
-            /* [SELECT
+        }  
+        return HDT_QR_ComfortQualityCall.getRecordByOrderParamsMassive(orders,signatureMethod);
+        /* if (isVas){
+            [SELECT
             Id,
             ComfortEnabled__c,
             QualityEnabled__c,
@@ -241,10 +240,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             AND (QualitySignatureMethod__c = :signatureMethod
                 OR ComfortSignatureMethod__c = :signatureMethod
                 OR ComfortDocSendingChannel__c = :docSendingMethod)
-            WITH SECURITY_ENFORCED];*/
+            WITH SECURITY_ENFORCED];
         } 
-        return HDT_QR_ComfortQualityCall.getRecordByOrderParamsMassive(orders,signatureMethod);
-        /* [SELECT
+        [SELECT
         Id,
         ComfortEnabled__c,
         QualityEnabled__c,
