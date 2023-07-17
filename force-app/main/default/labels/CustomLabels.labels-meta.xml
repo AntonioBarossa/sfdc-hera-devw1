@@ -200,11 +200,18 @@
         <value>NESSUN_DL;</value>
     </labels>
     <labels>
-        <fullName>HDT_M03_Distributors_Gas_To_Exclude</fullName>
+        <fullName>HDT_EnableRadioButton</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Distributori M03 Gas Da Escludere</shortDescription>
-        <value>10D1900000;13D1900000;10D8060000;10D7010000;13D7010000;</value>
+        <shortDescription>Abilita la vecchia gestione dei radio button l80 e I326</shortDescription>
+        <value>N</value>
+    </labels>
+    <labels>
+        <fullName>HDT_M03_Distributors_Gas_To_Include</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Distributori M03 Gas Da Includere</shortDescription>
+        <value>NESSUN_DL;</value>
     </labels>
     <labels>
         <fullName>HDT_CPQ_TemplateProductCode</fullName>
@@ -550,6 +557,13 @@
         <value>Stai creando un&apos;offerta tecnica per questo prodotto</value>
     </labels>
     <labels>
+        <fullName>HDT_NegativeOutcomes</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_NegativeOutcomes</shortDescription>
+        <value>Annullato;KO definitivo;Eliminato;KO;Pratica rifiutata;KO gestito;Annullato per recesso</value>
+    </labels>
+    <labels>
         <fullName>HDT_OfferConfig_ConfigError</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -611,6 +625,13 @@
         <protected>false</protected>
         <shortDescription>HDT_OfferConfig_WS_Success</shortDescription>
         <value>Offerta inviata a SAP correttamente, codice Sap:</value>
+    </labels>
+    <labels>
+        <fullName>HDT_PositiveOutcomes</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PositiveOutcomes</shortDescription>
+        <value>Pratica gestita;Chiuso</value>
     </labels>
     <labels>
         <fullName>HDT_PermissionSetNameForCPQ</fullName>
@@ -1289,5 +1310,19 @@
         <protected>false</protected>
         <shortDescription>recordEditFormMissingFields</shortDescription>
         <value>Campi obbligatori non compilati.</value>
+    </labels>
+    <labels>
+        <fullName>DM_2022_B086_Enable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Enable Integrazione A2A E - Distribuzione</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
+        <fullName>DM_2022_B086_Distributori</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Distributori Abilitati all'invio del file in A2A</shortDescription>
+        <value>ALL</value>
     </labels>
 </CustomLabels>

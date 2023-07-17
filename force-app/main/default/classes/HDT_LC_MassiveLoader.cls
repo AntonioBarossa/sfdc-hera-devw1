@@ -199,10 +199,16 @@ public with sharing class HDT_LC_MassiveLoader {
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
         Boolean parsingError = false;
         Id contentDocumentId = uploadedFile.ContentDocumentId;
-
-        if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION) &&
-           !fileName.equalsIgnoreCase(selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)
-            ) {                
+        List<String> fileNameDetails = fileName.split('\\.');
+        
+        if(
+            !fileNameDetails[0].containsIgnoreCase(selectedProcess.DeveloperName) ||
+            !fileNameDetails[0].containsIgnoreCase(selectedProcess.MasterLabel) ||
+            fileNameDetails[1] != constantsUtl.MASSIVLOADER_FILE_EXTENTION
+        ){
+        //if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION) &&
+        //   !fileName.equalsIgnoreCase(selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)
+        //    ) {                
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderFileNameError);
             deleteDocument(contentDocumentId, massiveLoaderRequestId);

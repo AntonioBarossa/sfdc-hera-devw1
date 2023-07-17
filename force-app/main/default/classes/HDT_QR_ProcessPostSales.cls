@@ -18,7 +18,7 @@ public with sharing class HDT_QR_ProcessPostSales {
     public static List<Contract> getContracts(List<Contract> contractList, Set<String> codeSet){
         contractList = new List<Contract>();
         contractList = [
-            SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c
+            SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c, Status
             FROM Contract
             //WHERE ServicePoint__r.ServicePointCode__c IN :podSet
             WHERE SAPContractCode__c IN :codeSet

@@ -3,6 +3,8 @@ import { NavigationMixin } from 'lightning/navigation';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { loadScript } from 'lightning/platformResourceLoader';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+import getCurrentProfile from '@salesforce/apex/HDT_LC_CampaignsController.getCurrentProfile';
+
 
 import id from '@salesforce/user/Id';
 export default class HdtCampaignTelesellingToolbar extends NavigationMixin(LightningElement) {
@@ -33,6 +35,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
     spinner = true;
     dialing = false;
     title = 'Scheda cliente';
+    @track isCurrentUserTeleseller = false;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -52,6 +55,23 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
             this.enableCallback();
             this.spinner = false;           
         }, 1000);*/
+
+        getCurrentProfile({ 'campaignMemberId': this.recordId}).then(data => {
+            console.log('getCurrentProfile START');
+
+            if(data === 'Hera Teleseller Partner User'){
+                console.log('getCurrentProfile USER TELESELLER');
+                this.isCurrentUserTeleseller = true;
+            }
+            else{
+                console.log('getCurrentProfile USER NOT TELESELLER');
+                this.isCurrentUserTeleseller = false;
+            }
+            
+        }),error => {
+            console.log('getCurrentProfile ERROR');
+            console.log(error);
+        };
 
     }
 
@@ -198,11 +218,17 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
     }
 
     submitHandlerNegativeOutcome(event) {
-        let status;
+        //let status;
+        console.log('event.detail.status --> '+event.detail.status);
         if (event.detail.status) {
-            status = event.detail.status;
+            let statusParams = event.detail.status;
+            let status = statusParams[0];
+            let ecid = statusParams[1];
             console.log('submitHandlerNegativeOutcome - ' + status);
-            this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(status, true);
+            console.log('isArray --> '+Array.isArray(event.detail.status));
+            console.log('status - ' + status);
+            console.log('ecid - ' + ecid);
+            this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(ecid, status, true);
             getRecordNotifyChange([{recordId: this.recordId}]);
         }
     }

@@ -34,8 +34,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
         codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
-        recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
-        contactCfIndex = mapHeaderForWrapper.get('ReferenteCF');
+        if(!isMucProcess){
+            recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
+            contactCfIndex = mapHeaderForWrapper.get('ReferenteCF');
+        }
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();

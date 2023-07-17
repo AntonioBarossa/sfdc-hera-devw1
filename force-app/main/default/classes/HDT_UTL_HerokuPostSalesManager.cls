@@ -452,6 +452,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
 
+            if(String.isNotBlank(reqWrp.requestMap.get('ZCOM_ATTACHMENTS_DA_PI')) && reqWrp.requestMap.get('ZCOM_ATTACHMENTS_DA_PI').equalsIgnoreCase('SI')){
+                currentCase.AttachmentManagement__c=true;
+            }
+
         }else if(method.equalsIgnoreCase('esito_finale')){
             //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -740,6 +744,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 //In questo scenario restiamo in attesa del flusso 152 contenente l'allegato delle verifiche
             }else if(currentCase.Type.equalsIgnoreCase('Modifica Unita Immobiliari Componenti') || (currentCase.Type.equalsIgnoreCase('Esenzione Modifica Fognatura Depurazione') && currentCase.Subprocess__c.equalsIgnoreCase('Modifica Fognatura e Depurazione'))) {
                 //In questo scenario il set di fase "Completata" viene gestito mediante altre logiche presenti sulla classe HDT_UTL_PostSalesManager, richiamata da process click all'atterraggio sulla fase di "Esito OK da DBO" tramite classe HDT_SRV_PostSalesManager
+            }else if('Rettifica Consumi'.equalsIgnoreCase(currentCase.Type) && 'Errore Stima Consumi'.equalsIgnoreCase(currentCase.Subprocess__c)){
+                //do nothing
             }
             else{
                 //DBO non invia mai il completata
@@ -813,6 +819,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         HDT_UTL_Morosita morUtl = new HDT_UTL_Morosita();
         try {
+            currentCase.CustomerRequestDate__c = System.now();
             tipo = reqWrp.requestMap.get('TIPO_SIEBEL');
             sottotipo = reqWrp.requestMap.get('SOTTOTIPO_SIEBEL');
             cluster = reqWrp.requestMap.get('CLUSTER');

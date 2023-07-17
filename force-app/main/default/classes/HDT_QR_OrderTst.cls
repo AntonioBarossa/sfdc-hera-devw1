@@ -713,7 +713,7 @@ public class HDT_QR_OrderTst{
 		
 		Test.startTest();
 		
-		List<Order> orders = (new HDT_QR_Order()).getRecordsByAccountIdInPhases(acc.Id, new List<String>{'Bozza'});
+		List<Order> orders = (new HDT_QR_Order()).getRecordsByAccountIdInPhases(null, acc.Id, new List<String>{'Bozza'});
 
 		System.assertEquals(false, orders.isEmpty(), 'The Orders were not retrieved correctly');
 
@@ -818,5 +818,22 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 		
 	}
-	
+	@IsTest
+	static void testgetAllChildOrdersFromParentId(){
+
+		List<Order> ords = [SELECT Id, ParentOrder__c, QualityCall__c FROM Order];
+		ords.get(0).ParentOrder__c = ords.get(1).Id;
+		update ords;
+
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getAllChildOrdersFromParentId(ords.get(1).Id);
+
+		System.assertEquals(false, orders.isEmpty(), 'No child orders were retrieved for the specified Parent Order');
+
+		Test.stopTest();
+		
+	}
+
+
 }

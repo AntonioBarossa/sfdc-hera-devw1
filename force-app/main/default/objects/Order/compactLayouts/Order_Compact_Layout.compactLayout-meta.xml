@@ -7,6 +7,7 @@
     <fields>Process__c</fields>
     <fields>ProcessType__c</fields>
     <fields>LoginChannel__c</fields>
+    <fields>IsMassive__c</fields>
     <fields>CreatedById</fields>
     <label>Order_Compact_Layout</label>
 </CompactLayout>

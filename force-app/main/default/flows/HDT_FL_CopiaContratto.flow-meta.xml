@@ -2,10 +2,66 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
     <decisions>
+        <description>Controlla se si sta riprendendo il processo da Bozza</description>
+        <name>Riprendi_da_Bozza</name>
+        <label>Riprendi da Bozza?</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Switch_Subflow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InputCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Edit_Form</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Screen_Outcome</name>
+        <label>Screen Outcome</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuovo_Doc_Send_Tracking</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CoContratto.documentSendTrackingLwc</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CoContratto.documentSendTrackingLwc</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>DocumentSendTracking</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Document_Selected</targetReference>
+            </connector>
+            <label>Nuovo Doc. Send Tracking</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>578</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
         </defaultConnector>
@@ -21,12 +77,18 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
+                <targetReference>Cerca_Contatto_Primario</targetReference>
             </connector>
             <label>Cluster Generiche Attivazioni</label>
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>Tipo copia da passare al case che dipende dalla fase dell&apos;order agganciato alla comunicazione documentale</description>
+        <name>CopyType</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!Get_Document_Send_Tracking_1.Order__r.Phase__c}, &apos;Documentazione Gestita&apos;), &apos;Copia contratto firmato&apos; , &apos;Copia contratto non firmato&apos;)</expression>
+    </formulas>
     <formulas>
         <name>DocumentSelectedName</name>
         <dataType>String</dataType>
@@ -56,10 +118,11 @@
     <recordCreates>
         <name>Crea_Case</name>
         <label>Crea Case</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignRecordIdToReference>InputCase</assignRecordIdToReference>
         <connector>
-            <targetReference>Get_Document_Send_Tracking</targetReference>
+            <targetReference>Edit_Form</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -83,6 +146,18 @@
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CopyType__c</field>
+            <value>
+                <elementReference>CopyType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>Get_Document_Send_Tracking_1.Order__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -110,20 +185,16 @@
             </value>
         </inputAssignments>
         <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
         <name>Create_Document_Selected</name>
         <label>Create Document Selected</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Edit_Form</targetReference>
-        </connector>
+        <locationY>1214</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
-                <elementReference>Crea_Case</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -147,14 +218,37 @@
         <object>DocumentSelected__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordDeletes>
+        <description>Cancella i Document selected esistenti e agganciati al case</description>
+        <name>Delete_Document_Selected</name>
+        <label>Delete Document Selected</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Get_Document_Send_Tracking</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Document_Send_Tracking</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <object>DocumentSelected__c</object>
+    </recordDeletes>
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Switch_Subflow</targetReference>
+            <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -186,10 +280,31 @@
         <name>Get_Document_Send_Tracking</name>
         <label>Get Document Send Tracking</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Document_Selected</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CoContratto.documentSendTrackingLwc</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>DocumentSendTracking__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Document_Send_Tracking_1</name>
+        <label>Document Send Tracking</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -206,11 +321,11 @@
     <recordLookups>
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case</targetReference>
+            <targetReference>Get_Document_Send_Tracking_1</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -227,14 +342,22 @@
     <screens>
         <name>Edit_Form</name>
         <label>Edit Form</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_Outcome</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i campi sottostanti.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>CoContratto</name>
-            <extensionName>c:HDT_LCP_CopiaContratto</extensionName>
+            <extensionName>c:hdtCopiaContratto</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
@@ -255,27 +378,27 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isRunFromFlow</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>objectName</name>
                 <value>
                     <stringValue>Case</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>isRunFromFlow</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processtype</name>
                 <value>
                     <elementReference>ProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordId</name>
+                <name>recordid</name>
                 <value>
-                    <elementReference>Crea_Case</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -294,8 +417,8 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -311,7 +434,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Cerca_Contatto_Primario</targetReference>
+            <targetReference>Riprendi_da_Bozza</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -338,6 +461,14 @@
     </variables>
     <variables>
         <name>DocumentSendTracking</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Id del case in input in caso di ripresa del processo</description>
+        <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

@@ -8,6 +8,6 @@
           "isredirect": true
         });
         urlEvent.fire();
-        location.reload();
+        //location.reload();
       }
 })

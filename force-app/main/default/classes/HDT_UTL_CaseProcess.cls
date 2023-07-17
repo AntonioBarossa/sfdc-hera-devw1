@@ -322,9 +322,25 @@ public with sharing class HDT_UTL_CaseProcess {
                     parentCase = caseQr.getParentCaseById(caseNew.ParentId);
                     
                     if('Annullato'.equalsIgnoreCase(newPhase) && 'Autolettura da cliente'.equalsIgnoreCase(caseNew.Type) && 'Inviato al DL'.equalsIgnoreCase(oldPhase) && parentCase != null && 'Errore Stima Consumi'.equalsIgnoreCase(parentCase.Subprocess__c) && ('Energia Elettrica'.equalsIgnoreCase(caseNew.CommodityFormula__c) || 'Gas'.equalsIgnoreCase(caseNew.CommodityFormula__c))){
-                        HDT_UTL_Case.createActivity(caseNew.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                        HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
                     }
                 }
+            }
+
+            List<CommunicationLogTracking__c> comLogTrackList = new List<CommunicationLogTracking__c>();
+            try {
+                for (Case cs : caseList) {
+                    if ('Completata'.equalsIgnoreCase(cs.Phase__c)){
+                        CommunicationLogTracking__c trck = new CommunicationLogTracking__c();
+                        trck.CaseId__c = cs.Id;
+                        comLogTrackList.add(trck);
+                    }
+                }
+                if (comLogTrackList.size() > 0){
+                    insert comLogTrackList;
+                }
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed error: ' + e.getMessage());
             }
         }
     }
@@ -403,7 +419,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
                         CampaignMember updateMember = new CampaignMember();
                         updateMember.Id = cm.Id;
-                        updateMember.Status = 'Positivo';
+                        updateMember.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
                         membersToUpdate.add(updateMember);
                     }
                 }

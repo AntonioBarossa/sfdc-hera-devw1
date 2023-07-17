@@ -146,10 +146,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         List<SObject> objToUpdate = new List<SObject>();
 
         List<String> phasesOrder = new List<String>{'Bozza','Da Inviare','In Lavorazione'};
-        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesOrder);
+        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesOrder);
 
         List<String> phasesCase = new List<String>{'Bozza','Da Inviare'};
-        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesCase);
+        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesCase);
 
         System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {
@@ -695,7 +695,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             if(currentCase.ParentId != null){
                 Case parentCase = [SELECT Id, Type, Subprocess__c FROM Case where Id =: currentCase.ParentId WITH SECURITY_ENFORCED LIMIT 1];
                 if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiKo.contains(currentCase.Phase__c)){
-                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
                 }else if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiOk.contains(currentCase.Phase__c)){
                     parentCase.Phase__c = 'Da Inviare';
                     update parentCase;

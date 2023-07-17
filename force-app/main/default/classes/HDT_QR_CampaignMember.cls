@@ -486,7 +486,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT Id,
             Contact.AccountId,
-            CampaignId,
+            CampaignId, Campaign.PositiveOutcomeDefaultStatus__c,
             Status
             FROM CampaignMember 
             WHERE HasResponded = false 
@@ -688,8 +688,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT
             Id,
-            ContactId, 
-            LeadId
+            ContactId,
+            PhoneNumber__c,
+            Ecid__c, 
+            LeadId,
+            Campaign.Tipology__c
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
@@ -698,7 +701,7 @@ public inherited sharing class HDT_QR_CampaignMember {
 
     public static List<CampaignMember> getCampMembByActivity(String actId){
 
-        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
+        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c, Ecid__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
         return campMembList;
     }
     

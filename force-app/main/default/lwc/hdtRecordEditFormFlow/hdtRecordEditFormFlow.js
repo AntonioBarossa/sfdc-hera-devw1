@@ -14,6 +14,8 @@ import ACCOUNTID from '@salesforce/schema/Case.AccountId';
 
 import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
+//CR ALM_1966
+import SEND_OUTPUT from '@salesforce/messageChannel/outputComp__c';
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -43,6 +45,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api outputId;
     @api documentRecordId;
     @api sessionid;
+    @api maxFileSize;
 
     @track errorMessage;
     @track error;
@@ -68,6 +71,35 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+    
+    //CR ALM_1966
+    subscriptionM01;
+    readingDate = '';
+
+    subscribeM01(){
+        if (this.sessionid && this.processType === 'Processo M01'){
+            this.subscriptionM01 = subscribe(
+                this.messageContext,
+                SEND_OUTPUT,
+                (mg) => this.handleResponse(mg)
+            )
+        }
+
+    }
+
+    unsubscribeM01(){
+        if (this.subscriptionM01){
+            unsubscribe(this.subscriptionM01);
+            this.subscriptionM01 = null;
+        }
+    }
+
+    handleResponse(message){
+        if (message.sessionid === this.sessionid && message.name === 'selectedReadingDateString'){
+            this.readingDate = message.value;
+        }
+    }
+    //Fine CR ALM_1966
     showCustomLabels= false;
 
     get submitButtonClass(){
@@ -234,10 +266,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             })
             .then(result => {
                 console.log(JSON.stringify(result));
-                if(Object.keys(result).length > 0 )
+                if(Object.keys(result).length > 0 ){
+                    try{
+                        if(this.maxFileSize != null && result[0].ContentSize > this.maxFileSize){
+                            this.showMessage('Errore','Attenzione il file caricato a sistema è troppo grande per essere inviato al Distributore, è necessario procedere con la cancellazione.','error');
+                        }
+                    }catch(err){
+                        console.log('##Errore ' + err);
+                    }
                     this.contentDocument = result;
-                else
-                this.contentDocument = null;
+                }else{
+                    this.contentDocument = null;
+                }
             })
             .catch(error => {
                 this.error = error;
@@ -246,6 +286,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     
     connectedCallback(){
         this.subscribeMC();
+        this.subscribeM01();
         if(this.addContentDocument){
             this.selectContentDocument();
         }
@@ -379,6 +420,19 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.saveInDraft = false;
             this.cancelCase = false;
             const fields = event.detail.fields;
+            if (this.sessionid && this.processType === 'Processo M01' && !this.readingDate){
+                this.showMessage('Errore','Selezionare una lettura per proseguire','error');
+                return;
+            }else if (this.sessionid && this.processType === 'Processo M01'){
+                fields['ReadingDateDisputed__c'] = this.readingDate;
+            }
+            
+            //Pre-valorizzazione campo Data Inserimento Richiesta, sulle tutte le pratiche su cui non è a video nel wizard di processo
+            if (!fields.CustomerRequestDate__c){
+                var today = new Date();
+                fields.CustomerRequestDate__c = today.toISOString();
+            }
+            
             console.log('fields ' + JSON.stringify(fields));
             if(this.validateClass){
                 validateRecord({
@@ -391,7 +445,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         if(resultWrapper.outcomeCode === "OK"){ 
                             this.template.querySelector('lightning-record-edit-form').submit(fields);
                         }else{
-                            console.log('ErrorMessage: ' +resultWrapper.outcomeDescription);
                             this.showMessage('Errore',resultWrapper.outcomeDescription,'error');  
                         }
                     })
@@ -470,6 +523,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     disconnectedCallback(){
         if(this.subscription) unsubscribe(this.subscription);
         this.subscription = null;
+        this.unsubscribeM01();
     }
 
     variationsTerminationsLogic(){

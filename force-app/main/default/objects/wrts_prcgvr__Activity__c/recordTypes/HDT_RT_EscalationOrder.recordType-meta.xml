@@ -2554,10 +2554,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sblocco Processo Post-Vendita</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Pratica gestita erroneamente</fullName>
             <default>false</default>
         </values>
@@ -2579,10 +2575,6 @@
         </values>
         <values>
             <fullName>Rapporti con i distributori e SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
         <values>

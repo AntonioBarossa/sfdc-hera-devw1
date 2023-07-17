@@ -1596,7 +1596,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
+            <field>CompanyOwnerLabel__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -2552,6 +2552,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ReadingSerialNumberCorrector__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DocumentDate__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DocumentNumber__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DocumentType__c</field>
             <table>Order</table>
         </columns>
         <masterLabel>Orders</masterLabel>

@@ -105,6 +105,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_ENU_AnagAlignmentContext context = codiceServizio.equals('VS2') ? HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_POD : HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_PDR;
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
+        anagAlignCase.CustomerRequestDate__c = System.now();
         switch on codicePrestazione {
             when 'A01', 'A40', 'A03', 'S01', 'S02','A10' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
@@ -726,6 +727,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return;
         } */
         newCase.SalesCompanyCode__c = 'Gas'.equals(ord.CommodityFormula__c) ? '10V0000160' : '13V0000000';
+        if('Gas'.equalsIgnoreCase(ord.CommodityFormula__c) && String.isNotBlank(ord.SalesCompanyCode__c) && '10V0000000'.equalsIgnoreCase(ord.SalesCompanyCode__c)){
+            newCase.SalesCompanyCode__c = ord.SalesCompanyCode__c;
+        }
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         newCase.SalesCompany__c = depsSrv.calculateSalesCompany(newCase.SalesCompanyCode__c);
     }

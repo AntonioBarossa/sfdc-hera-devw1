@@ -557,7 +557,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.FiscalCode__c,
             Contact__c,
             IntegratedSAP__c,
-            isSTG__c
+            isSTG__c,
+            Activity__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -579,6 +580,7 @@ public inherited sharing class HDT_QR_Order {
             AccountId,
             Account.Name,
             Account.Recordtype.DeveloperName,
+            Account.CompanyOwner__c,
             Name,
             Recordtypeid,
             Recordtype.Name,
@@ -627,6 +629,7 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             CustomerCategory__c,
             MarketOrigin__c,
+            Market__c,
             Type,
             ShippingMail__c,
             PhoneNumber__c,
@@ -851,14 +854,15 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
-    public List<Order> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+    public List<Order> getRecordsByAccountIdInPhases(Id senderId, String accountId, List<String> phases ){
         return [
             SELECT
             Id,
             Phase__c 
             FROM
             Order
-            WHERE AccountId = :accountId
+            WHERE Id != :senderId
+            AND AccountId = :accountId
             AND Phase__c IN :phases
             WITH SECURITY_ENFORCED
         ];
@@ -1458,7 +1462,7 @@ public inherited sharing class HDT_QR_Order {
         return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id = :ord.ParentOrder__c WITH SECURITY_ENFORCED];
     }
     public List<Order> getParentOrderDocs(List<String> ordParents){
-        return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id IN :ordParents WITH SECURITY_ENFORCED];
+        return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c, CommodityFormula__c from Order Where id IN :ordParents WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getOpenActivities

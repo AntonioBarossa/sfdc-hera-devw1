@@ -83,7 +83,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             }
             switch on orderToWork.RecordType.DeveloperName {
                 when 'HDT_RT_VAS','HDT_RT_ScontiBonus', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione' {
-                    ordersToCancel.add(orderToWork);
+                    //ordersToCancel.add(orderToWork);
+                    vasOrdersToCancel.add(orderToWork);
                 }
                 when 'HDT_RT_Default'{
                     //verifyDraftVas(orderToWork,vasOrdersToCancel);
@@ -103,7 +104,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
-        orderSrv.updateRecords(ordersToCancel);
+        //orderSrv.updateRecords(ordersToCancel);
+        orderSrv.updateRecords(vasOrdersToCancel);
     }
 
     /* 
@@ -131,7 +133,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         }
         for (Order o : [
-            SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,IsWinback__c
+            SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,ServicePoint__r.SwitchInWinback__c
             FROM Order 
             WHERE Id IN :orderToCheckVas.keySet() 
             //condizione per toglere i vas dalla query

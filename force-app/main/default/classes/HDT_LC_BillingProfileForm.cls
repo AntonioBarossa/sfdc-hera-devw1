@@ -123,7 +123,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     @AuraEnabled
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
 
-        if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
+        if(billingProfile.PaymentMethod__c == 'RID' && (!billingProfile.IbanIsForeign__c || (billingProfile.IbanIsForeign__c && !String.isBlank(billingProfile.IBAN__c) && billingProfile.IBAN__c.startsWithIgnoreCase('SM')))){
             if(!String.isBlank(billingProfile.IBAN__c) && billingProfile.IBAN__c.length() == 27){
                 billingProfile.IbanCountry__c = billingProfile.IBAN__c.substring(0, 2).toUpperCase();
                 billingProfile.IbanCIN_IBAN__c = billingProfile.IBAN__c.substring(2, 4).toUpperCase();

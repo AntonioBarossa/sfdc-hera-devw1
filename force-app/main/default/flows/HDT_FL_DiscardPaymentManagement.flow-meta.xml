@@ -4,7 +4,7 @@
         <name>Chiudi_Attivit</name>
         <label>Chiudi Attività</label>
         <locationX>842</locationX>
-        <locationY>1070</locationY>
+        <locationY>1466</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -19,12 +19,70 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Ricalcolo_Importi</name>
+        <label>Ricalcolo Importi</label>
+        <locationX>710</locationX>
+        <locationY>950</locationY>
+        <actionName>HDT_SRV_InstallmentPlans</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>RefreshPianoRate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>CaseToWork.AccountId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>customerCode</name>
+            <value>
+                <elementReference>CaseToWork.Account.CustomerCode__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>CaseToWork.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>totalToPay</name>
+            <value>
+                <elementReference>CaseToWork.TotalToPay__c</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Assegna_Importo_Rata</name>
+        <label>Assegna Importo Rata</label>
+        <locationX>710</locationX>
+        <locationY>1166</locationY>
+        <assignmentItems>
+            <assignToReference>RefreshPianoRate.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaRefreshCase</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assegnazione_Blocco_Sollecito</name>
         <label>Assegnazione Blocco Sollecito</label>
         <locationX>1106</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>processType</assignToReference>
             <operator>Assign</operator>
@@ -54,7 +112,7 @@
         <name>Assegnazione_Comunicazione_Pagamento</name>
         <label>Assegnazione Comunicazione Pagamento</label>
         <locationX>842</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>processType</assignToReference>
             <operator>Assign</operator>
@@ -91,7 +149,7 @@
         <name>Assegnazione_Default</name>
         <label>Assegnazione Default</label>
         <locationX>1634</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>processType</assignToReference>
             <operator>Assign</operator>
@@ -107,7 +165,7 @@
         <name>Assegnazione_Piano_Rateizzazione</name>
         <label>Assegnazione Piano Rateizzazione</label>
         <locationX>1370</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>processType</assignToReference>
             <operator>Assign</operator>
@@ -134,12 +192,37 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Piano_Rateizzazione_0</name>
+        <label>Piano Rateizzazione?</label>
+        <locationX>842</locationX>
+        <locationY>842</locationY>
+        <defaultConnector>
+            <targetReference>EditDocumentSector_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseToWork.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Piano Rateizzazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ricalcolo_Importi</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Show_Document_Sector</name>
         <label>Show Document Sector</label>
         <locationX>842</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <defaultConnector>
-            <targetReference>EditDocumentSector_0</targetReference>
+            <targetReference>Piano_Rateizzazione_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -162,7 +245,7 @@
         <name>Tipo_processo</name>
         <label>Tipo processo</label>
         <locationX>842</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Assegnazione_Default</targetReference>
         </defaultConnector>
@@ -265,6 +348,19 @@
             <label>Piano Rateizzazione</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>DepositAmount</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISNULL({!RefreshPianoRate.DepositAmount__c}),0.0,{!RefreshPianoRate.DepositAmount__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>InstallmentAmount</name>
+        <dataType>Number</dataType>
+        <expression>({!RefreshPianoRate.AmountToPayInInstallments__c} - {!DepositAmount})/{!RefreshPianoRate.InstallmentNumberRequired__c}</expression>
+        <scale>2</scale>
+    </formulas>
     <interviewLabel>Gestione Scarti Pagamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Scarti Pagamenti</label>
     <processMetadataValues>
@@ -286,11 +382,42 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>RefreshPianoRate</name>
+        <label>RefreshPianoRate</label>
+        <locationX>710</locationX>
+        <locationY>1058</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Importo_Rata</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseToWork.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>AggiornaRefreshCase</name>
+        <label>AggiornaRefreshCase</label>
+        <locationX>710</locationX>
+        <locationY>1274</locationY>
+        <connector>
+            <targetReference>Chiudi_Attivit</targetReference>
+        </connector>
+        <inputReference>RefreshPianoRate</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>842</locationX>
-        <locationY>1190</locationY>
+        <locationY>1574</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -323,12 +450,12 @@
         <name>EditDocumentSector</name>
         <label>EditDocumentSector</label>
         <locationX>710</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>EditDocumentSector_0</targetReference>
+            <targetReference>Piano_Rateizzazione_0</targetReference>
         </connector>
         <fields>
             <name>Titolo</name>
@@ -397,7 +524,7 @@
     <screens>
         <name>EditDocumentSector_0</name>
         <label>EditDocumentSector</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -505,7 +632,7 @@
         <name>Gestione_Richiesta_Domiciliazione</name>
         <label>Gestione Richiesta Domiciliazione</label>
         <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <flowName>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</flowName>
         <inputAssignments>
             <name>CaseInput</name>
@@ -530,7 +657,7 @@
         <name>Gestione_Rimborso</name>
         <label>Gestione Rimborso</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <flowName>HDT_FL_GestionePagamenti_Rimborso</flowName>
         <inputAssignments>
             <name>CaseInput</name>
@@ -555,7 +682,7 @@
         <name>Gestione_Variazione_Domiciliazione</name>
         <label>Gestione Variazione Domiciliazione</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <flowName>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</flowName>
         <inputAssignments>
             <name>CaseInput</name>

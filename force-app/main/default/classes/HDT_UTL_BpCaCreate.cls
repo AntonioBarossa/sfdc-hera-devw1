@@ -7,7 +7,7 @@
 public with sharing class HDT_UTL_BpCaCreate
 {
 
-    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate();
+    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate(); 
     public final String SOBJ_KEY = 'sobj';
     public final String EVT_KEY = 'evt';
     /** This method simply calls the private method
@@ -73,6 +73,9 @@ public with sharing class HDT_UTL_BpCaCreate
                 if(sobj.get('ContractAccountCode__c') != null)
                 {
                     newOrder.ContractAccountCode__c = (String) sobj.get('ContractAccountCode__c');
+                }
+                if(sobj.get('BillingProfile__c') != null){
+                    newOrder.BillingProfile__c = (String) sobj.get('BillingProfile__c');
                 }
                 evt.SerializedSobj__c = JSON.serialize(newOrder);
                 platEvents.add(evt);
@@ -207,7 +210,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico =  tryParse(infoOrder.Account.BillingStreetNumber__c);
         request.suffissoCivico =  tryParse(infoOrder.Account.BillingStreetNumberExtension__c);
         request.cap =  tryParse(infoOrder.Account.BillingPostalCode);
-        request.provincia =  tryParse(infoOrder.Account.BillingState);
+        request.provincia =  tryParse(infoOrder.Account.BillingState?.Substring(0,2)).toUpperCase();
         request.via =  tryParse(infoOrder.Account.BillingStreetName__c);
         
         return request;
@@ -313,7 +316,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.InvoicingPostalCode__c);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.InvoicingStreetName__c);
         request.presso = tryParse(infoOrder.BillingProfile__r.CareOf__c);
 
@@ -328,7 +331,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(billing.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.InvoicingStreetNumberExtension__c);
         request.cap = tryParse(billing.InvoicingPostalCode__c);
-        request.provincia = tryParse(billing.InvoicingProvince__c);
+        request.provincia = tryParse(billing.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
         request.via = tryParse(billing.InvoicingStreetName__c);
         request.presso = tryParse(billing.CareOf__c);
 
@@ -383,7 +386,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingPostalCode);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetName__c);
         request.comune = '';
 
@@ -398,7 +401,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(billing.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.DivergentSubject__r.MailingStreetNumberExtension__c);
         request.cap = tryParse(billing.DivergentSubject__r.MailingPostalCode);
-        request.provincia = tryParse(billing.DivergentSubject__r.MailingState);
+        request.provincia = tryParse(billing.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
         request.via = tryParse(billing.DivergentSubject__r.MailingStreetName__c);
         request.comune = '';
 
@@ -536,13 +539,22 @@ public with sharing class HDT_UTL_BpCaCreate
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }
-        /* Otherwise only the Billing Profile needs to be updated */
+        /* Otherwise only the Billing Profile needs to be updated.
+         * In this use case SAP could return a ContractAccount already existing, we need to query it before update.
+         */
         else
         {
             orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
-            result.add(billingProfileToUpdate);
+            HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+            BillingProfile__c billingProfile = bpQr.getRecordByContractAccount(response.data.codiceContatto);
+            //Id bpId = billingProfile != null? billingProfile.Id:inputOrder.BillingProfile__c;
+            if(billingProfile != null){
+                orderToUpdate.BillingProfile__c = billingProfile.Id;
+            }else{
+                BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
+                result.add(billingProfileToUpdate);
+            }
             result.add(orderToUpdate);
         }
         /* Other orders in progress with same Account and Billing Profile which have CustomerCode and ContractAccount fields blank need to be updated */
@@ -557,6 +569,10 @@ public with sharing class HDT_UTL_BpCaCreate
             if(otherChild.ContractAccountCode__c == null)
             {
                 otherChildToUpdate.ContractAccountCode__c = orderToUpdate.ContractAccountCode__c;
+            }
+            if(String.isNotBlank(otherChild.BillingProfile__c) && otherChild.BillingProfile__c != orderToUpdate.BillingProfile__c)
+            {
+                otherChild.BillingProfile__c = orderToUpdate.BillingProfile__c;
             }
             result.add(otherChildToUpdate);
         }
@@ -611,12 +627,29 @@ public with sharing class HDT_UTL_BpCaCreate
             return JSON.serialize(data);
         }
     }
-    public void updateBillingProfile(String dataString, Id billingId){
+    public String updateBillingProfile(String dataString, Id billingId,Id processId){
         HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        Id bpId = null;
         if(String.isNotBlank(data.codiceContatto)){
-            BillingProfile__c bp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
-            update bp;
+            BillingProfile__c newBp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
+            try {
+                update newBp;
+                bpId = newBp.Id;
+            } catch (Exception ex) {
+                String error = ex.getMessage();
+                if(String.isNotBlank(error) && error.containsIgnoreCase('duplicates value')){
+                    HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
+                    BillingProfile__c bp  = bpQr.getRecordByContractAccount(data.codiceContatto);
+                    if(bp != null){
+                        bpId = bp.Id;
+                        //Case caseToUpdate = new Case(Id=processId,BillingProfile__C=bp.Id);
+                        //update CaseToUpdate;
+                    }
+                }
+            }
         }
+        data.id = bpId;
+        return JSON.serialize(data);
     }
     public void updateAccount(String dataString, Id accountId){
         HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
@@ -652,5 +685,6 @@ public with sharing class HDT_UTL_BpCaCreate
         public String commenti {get;set;}
         public String codiceBP {get;set;}
         public String esito {get;set;}
+        public String id {get;set;}
     }
 }

@@ -275,10 +275,23 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         if (context == 'Order' && isPlicoReitek) { // plico "ex-Reitek", cioè firmato con vocal order
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Order', 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'SI' : 'NO';
+            String commodity = HDT_UTL_DocumentalManagement.getValue('Order', 'Commodity__c', 0, inputs, formParams);
+            String product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'NO':(isResident ? 'SI' : 'NO');
+            //residentTranscoded = isResident ? 'SI' : 'NO';
         } else { // plico "normale"
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue(context, 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'Si' : 'No';
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            String product = '';
+            String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams);
+            if('Order'.equalsIgnoreCase(context)){
+                product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            }
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'No':(isResident ? 'Si' : 'No');
+            //residentTranscoded = isResident ? 'Si' : 'No';
         }
 
         return residentTranscoded;
@@ -316,13 +329,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
                 companyOwner = HDT_UTL_DocumentalManagement.getValue('Case', 'CompanyOwner__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
-                if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
-                    if (distributorList != null && distributorList.size()>0) {
-                        companyDesc = 'Hera Comm S.p.A.';
-                    } else {
-                        companyDesc = 'Hera Comm Marche';
+                if(cluster != 'Reclami'){ 
+                    List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
+                    if (cityExceptionList != null && cityExceptionList.size()>0) {
+                        List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                        if (distributorList != null && distributorList.size()>0) {
+                            companyDesc = 'Hera Comm S.p.A.';
+                        } else {
+                            companyDesc = 'Hera Comm Marche';
+                        }
                     }
                 }
 
@@ -973,16 +988,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String[] splittedResponse = plainTextResponse.split('\n');
 
         List<String> cleanedResponseLines = new List<String>();
-        for (Integer i = 0; i < splittedResponse.size(); i++) {
+        /*for (Integer i = 0; i < splittedResponse.size(); i++) {
             String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
             List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
             // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
-            // TK 910361C -- Lunghezza stringa ridotta a 130 caratteri
-            if (cleanResponseLine.length() > 130) {
+            if (cleanResponseLine.length() > 2000) {
                 System.debug(LoggingLevel.DEBUG, 'Riga troppo lunga per Engage1: ' + cleanResponseLine);
                 // https://stackoverflow.com/a/10735971/16766541
                 // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
-                Pattern splitPattern = Pattern.compile('.{1,130}\\b'); 
+                Pattern splitPattern = Pattern.compile('.{1,2000}'); 
                 Matcher splitMatcher = splitPattern.matcher(cleanResponseLine);
                 while (splitMatcher.find()) {
                     splittedLine.add(splitMatcher.group(0).trim());
@@ -995,10 +1009,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             } else {
                 cleanedResponseLines.add(cleanResponseLine);
             }
-        }
+        }*/
 
         // Sezione ricorsiva 310|100 con il corpo della risposta.
-        for (Integer i = 0; i < cleanedResponseLines.size(); i++) {
+        for (Integer i = 0; i < splittedResponse.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
@@ -1006,7 +1020,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('100');
             }
 
-            record.add(cleanedResponseLines[i]);
+            record.add(splittedResponse[i].trim());
             record.add(endLine);
 
             payloadSection += String.join(record, div);

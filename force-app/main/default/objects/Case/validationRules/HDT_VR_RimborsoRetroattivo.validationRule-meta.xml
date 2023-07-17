@@ -5,7 +5,8 @@
     <description>Inibisco l&apos;inserimento nel campo Argomento del valore Rimborso retroattivo importo fognatura e depurazione se non si dispone del permesso specifico.</description>
     <errorConditionFormula>AND(
 	$Permission.HDT_CP_RimborsoRetroattivo = false,
-	ISCHANGED(BillingErrorArgument__c),
+ NOT(RecordType.DeveloperName = &quot;HDT_RT_VerificaDatiAlDl&quot;),
+	ISCHANGED(BillingErrorArgument__c), 
 	ISPICKVAL(BillingErrorArgument__c, &apos;Rimborso retroattivo importo fognatura e depurazione&apos;)
 )</errorConditionFormula>
     <errorDisplayField>BillingErrorArgument__c</errorDisplayField>

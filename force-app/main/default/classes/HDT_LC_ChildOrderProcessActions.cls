@@ -64,6 +64,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
                 }
             }
+            /** Inserito blocco per forzare l'inserimento della data decorrenza in caso di "Attivazione Posticipata" a true
+             * In quanto in questa casistica l'algoritmo non valuta la data decorrenza
+            */
+            if(orderToUpdate.IsActivationDeferred__c != null && orderToUpdate.IsActivationDeferred__c == true && orderToUpdate.EffectiveDate__c == null)
+            {
+                throw new AuraHandledException('Se Attivazione Posticipata è necessario valorizzare la data decorrenza');
+            }
 
             if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
                 List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
@@ -470,9 +477,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         if(String.isBlank(currentOrder.PhoneNumber__c) && String.isBlank(orderToUpdate.PhoneNumber__c))
         {
-            orderToUpdate.PhoneNumber__c = currentOrder.Contact__c != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
-                                            : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? 
-                                                currentOrder.Contact__r.Phone : emptyPhoneDefault;
+            if (currentOrder.Contact__c == null )
+            {
+                orderToUpdate.PhoneNumber__c = emptyPhoneDefault;
+            }
+            else {
+                orderToUpdate.PhoneNumber__c = currentOrder.Contact__r.MobilePhone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
+                : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.Phone) ? 
+                    currentOrder.Contact__r.Phone : emptyPhoneDefault;
+            }
+
         }
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
