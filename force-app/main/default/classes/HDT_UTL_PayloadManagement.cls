@@ -988,16 +988,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String[] splittedResponse = plainTextResponse.split('\n');
 
         List<String> cleanedResponseLines = new List<String>();
-        for (Integer i = 0; i < splittedResponse.size(); i++) {
+        /*for (Integer i = 0; i < splittedResponse.size(); i++) {
             String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
             List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
             // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
-            // TK 910361C -- Lunghezza stringa ridotta a 130 caratteri
-            if (cleanResponseLine.length() > 130) {
+            if (cleanResponseLine.length() > 2000) {
                 System.debug(LoggingLevel.DEBUG, 'Riga troppo lunga per Engage1: ' + cleanResponseLine);
                 // https://stackoverflow.com/a/10735971/16766541
                 // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
-                Pattern splitPattern = Pattern.compile('.{1,130}\\b'); 
+                Pattern splitPattern = Pattern.compile('.{1,2000}'); 
                 Matcher splitMatcher = splitPattern.matcher(cleanResponseLine);
                 while (splitMatcher.find()) {
                     splittedLine.add(splitMatcher.group(0).trim());
@@ -1010,10 +1009,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             } else {
                 cleanedResponseLines.add(cleanResponseLine);
             }
-        }
+        }*/
 
         // Sezione ricorsiva 310|100 con il corpo della risposta.
-        for (Integer i = 0; i < cleanedResponseLines.size(); i++) {
+        for (Integer i = 0; i < splittedResponse.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
@@ -1021,7 +1020,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('100');
             }
 
-            record.add(cleanedResponseLines[i]);
+            record.add(splittedResponse[i].trim());
             record.add(endLine);
 
             payloadSection += String.join(record, div);

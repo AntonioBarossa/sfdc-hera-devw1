@@ -22,7 +22,7 @@
             <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
             <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
             <property name="isRunFromFlow" type="String" label="isRunFromFlow" description="process type passed by the flow" role="inputOnly"/>
-
+            <property name="documentSendTrackingLwc" type="String" label="Document Send Tracking" description="Document Send Tracking selected in the component"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -692,7 +692,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
+            <field>CompanyOwnerLabel__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -2771,6 +2771,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Account.FiscalCode__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Account.BillingPlaceCode__c</field>
             <table>Order</table>
         </columns>
@@ -2802,6 +2807,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account.OtherPhone__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.FirstName__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.VATNumber__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -2842,6 +2857,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account.BillingStreetNumberExtension__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.LastName__c</field>
             <table>Order</table>
         </columns>
         <masterLabel>Account</masterLabel>
