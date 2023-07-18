@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_QualityCall {
     }
     
     public void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method,Integer attempts){
-        attempts--; //inserendo upNum == 1 ripete eventualmente una sola volta il'update;
+        attempts--;
         Integer index = 0;
         List<SObject> rObejct = new List<SObject>();
         for(Database.SaveResult sr :srList){
