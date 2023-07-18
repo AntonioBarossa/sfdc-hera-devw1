@@ -39,9 +39,6 @@
     <columns>
         <field>MandatoryAttachments__c.AccountType__c</field>
     </columns>
-    <columns>
-        <field>MandatoryAttachments__c.Commodity__c</field>
-    </columns>
     <format>Tabular</format>
     <name>Rapporto Allegati Obbligatori</name>
     <params>
