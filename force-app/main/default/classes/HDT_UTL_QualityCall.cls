@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_QualityCall {
                     for (Database.Error error :  sr.getErrors()){
                         errorMessage += error.getMessage() +  '\n';
                     }
-                    if (recordId == null || !errorMessage.containsIgnoreCase('unable to obtain exclusive access to this record') || attempts < 0 ){
+                    if (recordId == null || checkSkipControl(obj,method) || !errorMessage.containsIgnoreCase('unable to obtain exclusive access to this record') || attempts < 0 ){
                         logs.addLog('HDT_BA_QualityCall', method, request, null, errorMessage, recordId, null, null);
                         continue;
                     }
@@ -69,5 +69,19 @@ public with sharing class HDT_UTL_QualityCall {
         Set<String> annullablePhase = new Set<String>{'Amm. Precheck KO SII','Amm. Precheck OK SII', 'Esito KO da DL', 'Esito KO da SII', 'Ammissibilità KO','Dati discordanti'};
         Boolean switchCancellationEligibility = (ord.ProcessType__c!= null && ord.ProcessType__c.containsIgnoreCase('Switch In')) ? (ord.PhaseStory__c != null && ord.PhaseStory__c.containsIgnoreCase('Ammissibilità OK')) : true;
         return ord.HerokuPracticeCode__c != null && !annullablePhase.contains(ord.Phase__c) && switchCancellationEligibility;
+    }
+
+    private Boolean checkSkipControl(SObject obj,String method){
+        Boolean skipControl = true;
+        if ('Y'.equalsIgnoreCase(System.Label.EnableQualityCallUpdateControl) && 'update order second batch'.equalsIgnoreCase(method)){
+            try{
+                phase =  (String) obj.get('Phase__c');
+                status =  (String) obj.get('Status');
+                skipControl = !'Annullato'.equalsIgnoreCase(status) || !'Annullato'.equalsIgnoreCase(phase);
+            }catch(Exception e){
+                skipControl = true; 
+            }
+        }
+        return skipControl;
     }
 }
