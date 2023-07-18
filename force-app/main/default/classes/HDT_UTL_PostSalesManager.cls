@@ -728,8 +728,28 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             } catch (Exception e) {
                 System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
             }
-            
         }
+
+        if( String.isNotBlank(currentCase.ServicePoint__c) && 
+            String.isNotBlank(currentCase.ShipmentAddressAssign__c) && 
+            'Variazione Indirizzo di fornitura'.equalsIgnoreCase(currentCase.Type) &&
+            ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) )
+        {
+            try {
+                ServicePoint__c sp = [SELECT SupplyStreet__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyProvince__c, SupplyCity__c, SupplyCountry__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED LIMIT 1];
+                sp.SupplyStreet__c = String.isNotBlank(currentCase.SupplyStreetName__c)? currentCase.SupplyStreetName__c : '';
+                sp.SupplyStreetName__c = String.isNotBlank(currentCase.SupplyStreetName__c)? currentCase.SupplyStreetName__c : '';
+                sp.SupplyStreetNumber__c = String.isNotBlank(currentCase.SupplyStreetNumber__c)? currentCase.SupplyStreetNumber__c : '';
+                sp.SupplyPostalCode__c = String.isNotBlank(currentCase.SupplyPostalCode__c)? currentCase.SupplyPostalCode__c : '';
+                sp.SupplyProvince__c = String.isNotBlank(currentCase.SupplyProvince__c)? currentCase.SupplyProvince__c : '';
+                sp.SupplyCity__c = String.isNotBlank(currentCase.SupplyCity__c)? currentCase.SupplyCity__c : '';
+                sp.SupplyCountry__c = String.isNotBlank(currentCase.SupplyCountry__c)? currentCase.SupplyCountry__c : '';
+                update sp;
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+            }
+        }
+
     }
 
     //metodo che gestisce la creazione di una activity per una determinata casistica del processo di Modifica Unità Immobiliari Acqua
