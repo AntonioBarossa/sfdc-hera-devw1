@@ -370,6 +370,10 @@
     <picklistValues>
         <picklist>MethodsForOutgoingPayments__c</picklist>
         <values>
+            <fullName>Bonifico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
