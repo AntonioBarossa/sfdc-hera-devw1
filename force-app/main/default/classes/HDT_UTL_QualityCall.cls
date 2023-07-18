@@ -73,10 +73,11 @@ public with sharing class HDT_UTL_QualityCall {
 
     private Boolean checkSkipControl(SObject obj,String method){
         Boolean skipControl = true;
+        //System.Label.EnableQualityCallUpdateControl --> per disattivare la funzione basta valorizzare != 'Y'
         if ('Y'.equalsIgnoreCase(System.Label.EnableQualityCallUpdateControl) && 'update order second batch'.equalsIgnoreCase(method)){
             try{
-                phase =  (String) obj.get('Phase__c');
-                status =  (String) obj.get('Status');
+                String phase =  (String) obj.get('Phase__c');
+                String status =  (String) obj.get('Status');
                 skipControl = !'Annullato'.equalsIgnoreCase(status) || !'Annullato'.equalsIgnoreCase(phase);
             }catch(Exception e){
                 skipControl = true; 
