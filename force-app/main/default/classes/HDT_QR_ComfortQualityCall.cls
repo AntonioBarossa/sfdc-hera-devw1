@@ -7,11 +7,11 @@
 public inherited sharing class HDT_QR_ComfortQualityCall {
     
     public static List<ComfortQualityCall__c> getRecordByOrderParams(Order order){
-        getRecordByOrderParamsMassive(new List<Order>{order},order.SignatureMethod__c);
+        return getRecordByOrderParamsMassive(new List<Order>{order},order.SignatureMethod__c);
     }
 
     //modifica query in modo da poterla da essere utilizzabile in HDT_LC_OrderDossierWizardSignature
-    public static List<ComfortQualityCall__c> getRecordByOrderParamsMassive(List<Order> order,String signatureMethod){
+    public static List<ComfortQualityCall__c> getRecordByOrderParamsMassive(List<Order> orders,String signatureMethod){
         
         /* @frpanico 27/10/2021
          * Usato metodo StripInaccessible per risolvere problemi di
