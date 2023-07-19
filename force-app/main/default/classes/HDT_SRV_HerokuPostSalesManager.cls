@@ -474,7 +474,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                     String base = EncodingUtil.base64Encode(cvList[0].VersionData);
                     String extension = cvList[0].ContentDocument.FileExtension;
                     Integer size = Integer.valueOf(cvList[0].ContentDocument.ContentSize);
-                    if(size > 5000)return mrrList;
+                    if(size > 5000000)return mrrList;
                     wrts_prcgvr.MRR_1_0.Field attachField = new wrts_prcgvr.MRR_1_0.Field();
                     attachField.name = 'ATTACHMENT';
                     attachField.fieldType = 'STRING';
