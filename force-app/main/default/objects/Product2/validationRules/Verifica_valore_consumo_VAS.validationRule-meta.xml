@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verifica_valore_consumo_VAS</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(TEXT(Family) = &apos;VAS Prodotto&apos;,TEXT(Family) =&apos;VAS Servizio&apos;),
+				ConsumptionAnnualVAS__c &lt;&gt;0,ConsumptionAnnualVAS__c&lt;&gt;2000)</errorConditionFormula>
+    <errorMessage>Il consumo annuo VAS deve essere valorizzato con 0 oppure 2000</errorMessage>
+</ValidationRule>

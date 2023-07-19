@@ -200,6 +200,13 @@
         <value>NESSUN_DL;</value>
     </labels>
     <labels>
+        <fullName>HDT_EnableRadioButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Abilita la vecchia gestione dei radio button l80 e I326</shortDescription>
+        <value>N</value>
+    </labels>
+    <labels>
         <fullName>HDT_M03_Distributors_Gas_To_Include</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1303,5 +1310,19 @@
         <protected>false</protected>
         <shortDescription>recordEditFormMissingFields</shortDescription>
         <value>Campi obbligatori non compilati.</value>
+    </labels>
+    <labels>
+        <fullName>DM_2022_B086_Enable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Enable Integrazione A2A E - Distribuzione</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
+        <fullName>DM_2022_B086_Distributori</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Distributori Abilitati all'invio del file in A2A</shortDescription>
+        <value>ALL</value>
     </labels>
 </CustomLabels>

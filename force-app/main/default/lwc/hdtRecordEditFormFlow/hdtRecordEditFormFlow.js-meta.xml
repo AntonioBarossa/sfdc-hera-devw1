@@ -106,6 +106,8 @@
            
             <property name="sessionid" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
             
+            <property name="maxFileSize" type="String" label="Max File Size in Byte" description="Max File Size in Byte" role="inputOnly"/>
+            
         </targetConfig>
         
         

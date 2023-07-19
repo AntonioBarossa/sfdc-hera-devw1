@@ -45,6 +45,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api outputId;
     @api documentRecordId;
     @api sessionid;
+    @api maxFileSize;
 
     @track errorMessage;
     @track error;
@@ -265,10 +266,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             })
             .then(result => {
                 console.log(JSON.stringify(result));
-                if(Object.keys(result).length > 0 )
+                if(Object.keys(result).length > 0 ){
+                    try{
+                        if(this.maxFileSize != null && result[0].ContentSize > this.maxFileSize){
+                            this.showMessage('Errore','Attenzione il file caricato a sistema è troppo grande per essere inviato al Distributore, è necessario procedere con la cancellazione.','error');
+                        }
+                    }catch(err){
+                        console.log('##Errore ' + err);
+                    }
                     this.contentDocument = result;
-                else
-                this.contentDocument = null;
+                }else{
+                    this.contentDocument = null;
+                }
             })
             .catch(error => {
                 this.error = error;

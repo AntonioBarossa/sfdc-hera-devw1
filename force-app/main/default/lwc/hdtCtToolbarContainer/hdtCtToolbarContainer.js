@@ -161,8 +161,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                             this.uuid = this.toolbarAttributes.id;
                         }
                         if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
-                            console.log('ctToolbarContainer ENTRATO IN saveScript POSITIVO');
-                            this.saveScript('Positivo', true);
+                           // console.log('ctToolbarContainer ENTRATO IN saveScript POSITIVO');
+                           // this.saveScript('Positivo', true);
                         } else {
                             callData = event.detail.CallData;
                             this.endCallDateTime = this.toolbarAttributes.endTime;

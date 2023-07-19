@@ -677,10 +677,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 				}*/
 				try {
-					if (!moduliOpzionaliMancanti.isEmpty()) {
-						System.debug(LoggingLevel.DEBUG, 'Moduli opzionali NON compilati: ' + moduliOpzionaliMancanti);
-						record.put('DocumentalPhase__c','Plico firmato senza moduli opzionali');
-					} else {
+					if('Y'.equalsIgnoreCase(System.Label.HDT_EnableRadioButton) || Test.isRunningTest()){
+						if (!moduliOpzionaliMancanti.isEmpty()) {
+							System.debug(LoggingLevel.DEBUG, 'Moduli opzionali NON compilati: ' + moduliOpzionaliMancanti);
+							record.put('DocumentalPhase__c','Plico firmato senza moduli opzionali');
+						} else {
+							record.put('DocumentalPhase__c','Plico firmato');
+						}
+					}else{
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
 					record.put('Phase__c','Documentazione Gestita');

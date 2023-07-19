@@ -111,6 +111,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             if(!objFields.isEmpty()){
                 mrrList = handleMrrFields(mrrList, objFields, currentCase);
             }
+            mrrList = handleAttachment(mrrList,processType,currentCase.Id);
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
             arg.put('payload',mrrList);
@@ -440,6 +441,52 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                     obj.fields.add(meterCodeField);
                 }            
                 break;
+            }
+        }
+        return mrrList;
+    }
+
+    @TestVisible
+    public static wrts_prcgvr.MRR_1_0.MultiRequest handleAttachment(wrts_prcgvr.MRR_1_0.MultiRequest mrrList,String processType,Id recordId){
+        //Recupero le CustomLabel
+        String enableSendAttachment = System.Label.DM_2022_B086_Enable;
+        String activeDistributor = System.Label.DM_2022_B086_Distributori;
+        String value = '';
+        List<wrts_prcgvr.MRR_1_0.Field> fieldsList = new List<wrts_prcgvr.MRR_1_0.Field>();
+        if(String.isNotBlank(enableSendAttachment) && 'Y'.equalsIgnoreCase(enableSendAttachment) && String.isNotBlank(processType) && 'Verifica Dati al DL'.equalsIgnoreCase(processType)){
+            for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects){
+                if(obj.objectType != null && obj.objectType.equalsIgnoreCase('Case')){
+                    fieldsList = obj.fields;
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('SERVICEID_DIS'))
+                        {
+                            value = f.value;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(String.isNotBlank(value) && String.isNotBlank(activeDistributor) && ('ALL'.equalsIgnoreCase(activeDistributor) || activeDistributor.indexOf(value)>-1)){
+                //verifico la presenza di allegati e creo i tag ATTACHMENT e ATTACHMENT_EXT
+                HDT_QR_ContentVersion cvQr = new HDT_QR_ContentVersion();
+                List<ContentVersion> cvList = cvQr.getContentVersionByParentId(recordId);
+                if(!cvList.isEmpty()){
+                    String base = EncodingUtil.base64Encode(cvList[0].VersionData);
+                    String extension = cvList[0].ContentDocument.FileExtension;
+                    Integer size = Integer.valueOf(cvList[0].ContentDocument.ContentSize);
+                    if(size > 5000)return mrrList;
+                    wrts_prcgvr.MRR_1_0.Field attachField = new wrts_prcgvr.MRR_1_0.Field();
+                    attachField.name = 'ATTACHMENT';
+                    attachField.fieldType = 'STRING';
+                    attachField.value = base;
+                    fieldsList.add(attachField);
+
+                    wrts_prcgvr.MRR_1_0.Field attachExtField = new wrts_prcgvr.MRR_1_0.Field();
+                    attachExtField.name = 'ATTACHMENT_EXT';
+                    attachExtField.fieldType = 'STRING';
+                    attachExtField.value = extension;
+                    fieldsList.add(attachExtField);
+                }
             }
         }
         return mrrList;
