@@ -111,6 +111,11 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if(STRING.isNotBlank(newAction?.activityType)){
                 caseToNewActivityType.put(actualCase.Id,newAction);
             }
+            if('Variazione Anagrafica Cliente'.equalsIgnoreCase(actualCase.Type) && 'Esito KO da SAP'.equalsIgnoreCase(actWithCase.Type__c) && 'Errore Lavorazione SAP'.equalsIgnoreCase(actualCase.Phase__c)){
+                actualCase.Status = 'Closed';
+                actualCase.Phase__c = 'Da Inviare';
+                sObjectToUpdate.add(actualCase);
+            }
         } 
 
         for(wrts_prcgvr__Activity__c actWithOrder : activitiesWithSObjects.get('Related_Orders')){
@@ -174,7 +179,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                                                             Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, 
                                                             Order__r.CommercialProduct__c,
 
-                                                            wrts_prcgvr__ActivityTemplate__r.Name 
+                                                            wrts_prcgvr__ActivityTemplate__r.Name,
+                                                            Type__c 
 
                                                      FROM wrts_prcgvr__Activity__c 
                                                      WHERE Id IN :allActivity  
