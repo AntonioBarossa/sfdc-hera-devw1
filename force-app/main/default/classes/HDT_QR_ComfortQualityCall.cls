@@ -102,9 +102,7 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
     }
 
     private static void populateSetString(Set<String> queryValue, String value){
-        if (String.isNotBlank(value)){
-            queryValue.add(value);
-        }
+        queryValue.add(String.isBlank(value)? '' : value);
     }
 
     private static Map<String,Set<String>> getMapForQuery(List<Order> orders){
