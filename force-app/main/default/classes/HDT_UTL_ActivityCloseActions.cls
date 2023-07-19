@@ -112,7 +112,6 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 caseToNewActivityType.put(actualCase.Id,newAction);
             }
             if('Variazione Anagrafica Cliente'.equalsIgnoreCase(actualCase.Type) && 'Esito KO da SAP'.equalsIgnoreCase(actWithCase.Type__c) && 'Errore Lavorazione SAP'.equalsIgnoreCase(actualCase.Phase__c)){
-                actualCase.Status = 'Closed';
                 actualCase.Phase__c = 'Da Inviare';
                 sObjectToUpdate.add(actualCase);
             }
