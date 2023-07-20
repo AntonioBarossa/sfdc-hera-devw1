@@ -185,6 +185,13 @@
         <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
     </labels>
     <labels>
+        <fullName>EnableQualityCallUpdateControl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EnableQualityCallUpdateControl</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
         <fullName>Error</fullName>
         <categories>Cross</categories>
         <language>en_US</language>

@@ -496,6 +496,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         && ordRetrieved.Status.equalsIgnoreCase(annullatoStatus))
                                     {
                                         ord.Phase__c = annullatoPhase;
+                                        ord.ManagedSapDiscard__c = 'KO';
                                     }
                                     /**@frpanico 04/02/2022
                                      * Gestione preventivo Extra Sistema
