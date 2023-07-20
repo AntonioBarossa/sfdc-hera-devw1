@@ -52,7 +52,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				}
 			} else {
 				Reading__c dummyReading = new Reading__c();
-				dummyReading.ReadingDate__c = System.today();
+				dummyReading.ReadingDate__c = 'Voltura'.containsIgnoreCase(orderList[0].DocumentalProcessType__c) && 'Retroattiva'.containsIgnoreCase(orderList[0].Subprocess__c) && 'ACPOZZI000'.equalsIgnoreCase(orderList[0].RateCategory__c) && orderList[0].RetroactiveDate__c != null ? orderList[0].RetroactiveDate__c : System.today();
 				dummyReading.ReadingValueMeter__c = 0;
 				dummyReading.OrderAcqua__c = orderList[0].Id;
 				readingList.add(dummyReading);
