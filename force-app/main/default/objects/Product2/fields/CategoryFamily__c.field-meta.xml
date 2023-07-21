@@ -159,6 +159,11 @@
                 <label>Prezzo Netto Ranton</label>
             </value>
             <value>
+                <fullName>Prezzo Netto Relax</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Relax</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Tlr</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Tlr</label>
