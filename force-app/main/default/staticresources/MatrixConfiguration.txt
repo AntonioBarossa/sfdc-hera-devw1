@@ -625,7 +625,7 @@
         },
         {
           "fieldName": "numValue",
-          "enabled": true,
+          "enabled": false,
           "relatedTo": ""
         },
         {
@@ -645,7 +645,7 @@
         },
         {
           "fieldName": "stringValue",
-          "enabled": true,
+          "enabled": false,
           "relatedTo": ""
         }
       ]
