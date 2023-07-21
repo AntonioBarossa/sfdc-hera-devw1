@@ -327,21 +327,6 @@ public with sharing class HDT_UTL_CaseProcess {
                 }
             }
 
-            List<CommunicationLogTracking__c> comLogTrackList = new List<CommunicationLogTracking__c>();
-            try {
-                for (Case cs : caseList) {
-                    if ('Completata'.equalsIgnoreCase(cs.Phase__c)){
-                        CommunicationLogTracking__c trck = new CommunicationLogTracking__c();
-                        trck.CaseId__c = cs.Id;
-                        comLogTrackList.add(trck);
-                    }
-                }
-                if (comLogTrackList.size() > 0){
-                    insert comLogTrackList;
-                }
-            } catch (Exception e) {
-                System.debug(LoggingLevel.DEBUG, 'Throwed error: ' + e.getMessage());
-            }
         }
     }
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){

@@ -92,7 +92,6 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_SRV_VoltureChangeManager vltMgr = new HDT_SRV_VoltureChangeManager();
         vltMgr.orderPrecheckOk(Trigger.new);
 
-        HDT_UTL_OrderProcess.handleAfterUpdate(Trigger.new, Trigger.oldMap);
 
         HDT_UTL_VoltureChangeManager.cancelTechnicalVolture((List<Order>)Trigger.New);
 
