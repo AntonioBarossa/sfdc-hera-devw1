@@ -237,6 +237,11 @@
                 <label>Prezzo Netto PiuControllo Special Lavoro Luce</label>
             </value>
             <value>
+                <fullName>Prezzo Netto Relax Casa Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Relax Casa Gas</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Special Web Gas</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Special Web Gas</label>

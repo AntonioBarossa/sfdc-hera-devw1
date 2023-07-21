@@ -106,7 +106,7 @@
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>HERA COMM MARCHE, SOCIETÀ DI VENDITA GAS CON SEDE A URBINO, VIA SASSO 120 E DI HERA COMM CON SEDE A IMOLA, VIA MOLINO ROSSO 8</stringValue>
+                <stringValue>HERA COMM MARCHE, SOCIETÀ DI VENDITA GAS CON SEDE A URBINO, VIA SASSO 120</stringValue>
             </value>
         </assignmentItems>
         <connector>
