@@ -215,66 +215,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
 
     private static List<ComfortQualityCall__c> executeQuery(List<Order> orders,String signatureMethod,String docSendingMethod){
-        
-        Set<String> channel = new Set<String>();
-        Set<String> recordType = new Set<String>();
-        Set<String> customerCategory = new Set<String>();
-        Set<String> marketOrigin = new Set<String>();
-        Boolean isVas = false;
-        for (Order ord : orders){
-            populateSetString(channel, ord.Channel__c);
-            populateSetString(customerCategory, ord.CustomerCategory__c);
-            if ('HDT_RT_VAS'.equalsIgnoreCase(ord.RecordType.DeveloperName)){
-                isVas = true;
-                continue;
-            }
-            populateSetString(marketOrigin, ord.Market__c);
-            populateSetString(recordType, ord.RecordType.DeveloperName);            
-        }
-        if (isVas){
-            return [SELECT
-            Id,
-            ComfortEnabled__c,
-            QualityEnabled__c,
-            Process__c,
-            Channel__c,
-            MarketType__c,
-            CustomerType__c,
-            DaysComfort__c,
-            UniqueQuality__c,
-            ComfortDocSendingChannel__c,
-            QualitySignatureMethod__c,
-            ComfortSignatureMethod__c
-            FROM ComfortQualityCall__c
-            WHERE Process__c = 'HDT_RT_Vas' //text
-            AND Channel__c IN :channel //text
-            AND CustomerType__c IN :customerCategory //text
-            AND (QualitySignatureMethod__c = :signatureMethod
-                OR ComfortSignatureMethod__c = :signatureMethod
-                OR ComfortDocSendingChannel__c = :docSendingMethod)
-            WITH SECURITY_ENFORCED];
-        }
-        return [SELECT
-        Id,
-        ComfortEnabled__c,
-        QualityEnabled__c,
-        Process__c,
-        Channel__c,
-        MarketType__c,
-        CustomerType__c,
-        DaysComfort__c,
-        UniqueQuality__c,
-        ComfortDocSendingChannel__c,
-        QualitySignatureMethod__c,
-        ComfortSignatureMethod__c
-        FROM ComfortQualityCall__c
-        WHERE Process__c IN :recordtype //text
-        AND Channel__c IN :channel //text
-        AND CustomerType__c IN :customerCategory //text
-        AND MarketType__c IN :marketOrigin //picklist
-        AND (ComfortSignatureMethod__c = :signatureMethod 
-            OR QualitySignatureMethod__c = :signatureMethod)
-        WITH SECURITY_ENFORCED];
+        if ('HDT_RT_VAS'.equalsIgnoreCase(orders[0].RecordType.DeveloperName)){
+            return HDT_QR_ComfortQualityCall.getRecordByOrderParamsVasMassive(orders,signatureMethod,docSendingMethod);
+        }  
+        return HDT_QR_ComfortQualityCall.getRecordByOrderParamsMassive(orders,signatureMethod);
 
     }
 
@@ -333,11 +277,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         }
     }
 
-    private static void populateSetString(Set<String> queryValue, String value){
-        if (String.isNotBlank(value)){
-            queryValue.add(value);
-        }
-    }
 
     private static List<ComfortQualityCall__c> getComfortQualityCall(Order o, List<ComfortQualityCall__c> comfortQualityCall){
         List<ComfortQualityCall__c> response = new List<ComfortQualityCall__c>();
