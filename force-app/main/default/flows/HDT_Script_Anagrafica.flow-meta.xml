@@ -1395,7 +1395,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_11_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1417,7 +1417,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_11_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1431,6 +1431,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1741,7 +1748,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_9_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1763,7 +1770,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_9_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1777,6 +1784,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -2116,7 +2130,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_5_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2138,7 +2152,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_5_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2152,6 +2166,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
