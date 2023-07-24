@@ -29,6 +29,11 @@
         &quot;initialWidth&quot;: 140
       },
       {
+        &quot;label&quot;: &quot;Data consumo&quot;,
+        &quot;fieldName&quot;: &quot;consDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
         &quot;label&quot;: &quot;Data inizio&quot;,
         &quot;fieldName&quot;: &quot;consDateStart&quot;,
         &quot;initialWidth&quot;: 140
