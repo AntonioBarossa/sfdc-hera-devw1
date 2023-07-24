@@ -414,7 +414,7 @@
         </fields>
         <fields>
             <name>text_idrico_10</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!OrderData.DocumentType__c} dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -429,13 +429,20 @@
         </fields>
         <fields>
             <name>text_idrico_11</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!getChild_0.DocumentType__c} dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -570,7 +577,7 @@
         </fields>
         <fields>
             <name>textfixanag5</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!OrderData.DocumentType__c} dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -585,13 +592,20 @@
         </fields>
         <fields>
             <name>textfixanag6</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!getChild_0.DocumentType__c} dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -666,7 +680,7 @@
         </fields>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!OrderData.DocumentType__c} dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -681,13 +695,20 @@
         </fields>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!getChild_0.DocumentType__c} dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -762,7 +783,7 @@
         </fields>
         <fields>
             <name>text8</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!OrderData.DocumentType__c} dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -777,13 +798,20 @@
         </fields>
         <fields>
             <name>text15</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!getChild_0.DocumentType__c} dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1012,7 +1040,7 @@
         </fields>
         <fields>
             <name>text13_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!OrderData.DocumentType__c} dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1027,13 +1055,20 @@
         </fields>
         <fields>
             <name>text15_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero del/della {!getChild_0.DocumentType__c} dell’intestatario è {!getChild_0.DocumentNumber__c} e la Data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1294,7 +1329,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_10_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero del/della {!OrderData.DocumentType__c} è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1316,7 +1351,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_10_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero del/della {!getChild_0.DocumentType__c} è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1330,6 +1365,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1353,7 +1395,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_11_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1375,7 +1417,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_11_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1389,6 +1431,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1633,7 +1682,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_8_0_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero del/della {!OrderData.DocumentType__c} è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1655,7 +1704,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_8_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1669,6 +1718,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -1692,7 +1748,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_9_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1714,7 +1770,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_9_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1728,6 +1784,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -2001,7 +2064,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_4_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt; il numero del/della {!OrderData.DocumentType__c} è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2023,7 +2086,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_4_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; il numero della Carta d’identità è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; il numero del/della {!getChild_0.DocumentType__c} è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2037,6 +2100,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -2060,7 +2130,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_5_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della {!OrderData.DocumentType__c}&lt;/span&gt; del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2082,7 +2152,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_5_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;del/della &lt;/span&gt;{!getChild_0.DocumentType__c} del legale rappresentante è {!getChild_0.DocumentNumber__c} e la data di rilascio è {!getChild_0.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2096,6 +2166,13 @@
                 <conditions>
                     <leftValueReference>getChild_0.DocumentNumber__c</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.DocumentNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
                     </rightValue>
@@ -2244,6 +2321,13 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Order</objectType>
+    </variables>
+    <variables>
+        <name>OrderDocumentType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>OrdiniFigliOffertaInput</name>
