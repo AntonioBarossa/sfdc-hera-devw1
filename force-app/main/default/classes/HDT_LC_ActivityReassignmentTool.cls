@@ -105,7 +105,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
             List<wrts_prcgvr__Activity__c> parentActivitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
             Set<Id> parentActivitiesIds = new Set<Id>();
 
-            for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id IN :idList WITH SECURITY_ENFORCED]) {
+            for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c,wrts_prcgvr__IsClosed__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__IsClosed__c = false AND Id IN :idList WITH SECURITY_ENFORCED]) {
                 if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
                     if(
                         activity.ParentActivity__r.Order__c != null &&
