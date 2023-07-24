@@ -9909,6 +9909,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>LEGITTIMA %E2%80%93 Errore Distributore o Gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LEGITTIMA %E2%80%93 Errore Procedurale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LEGITTIMA %E2%80%93 Limiti di sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NON LEGITTIMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Respito no cliente</fullName>
             <default>false</default>
         </values>
