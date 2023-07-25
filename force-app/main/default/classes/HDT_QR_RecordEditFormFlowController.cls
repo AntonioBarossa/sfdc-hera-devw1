@@ -46,7 +46,7 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
 
         securityClass.checkSecurityAccess();
         
-        List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList WITH SECURITY_ENFORCED];
+        List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate,ContentSize FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList WITH SECURITY_ENFORCED];
         
         return entries;
         

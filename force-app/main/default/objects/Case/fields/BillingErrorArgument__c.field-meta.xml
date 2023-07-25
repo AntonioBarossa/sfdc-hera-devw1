@@ -113,6 +113,86 @@
                 <default>false</default>
                 <label>Argomento non censito</label>
             </value>
+            <value>
+                <fullName>Bonus Gas</fullName>
+                <default>false</default>
+                <label>Bonus Gas</label>
+            </value>
+            <value>
+                <fullName>Disallineamento RCU</fullName>
+                <default>false</default>
+                <label>Disallineamento RCU</label>
+            </value>
+            <value>
+                <fullName>Disallineamento Flussi</fullName>
+                <default>false</default>
+                <label>Disallineamento Flussi</label>
+            </value>
+            <value>
+                <fullName>Accertamento documentale</fullName>
+                <default>false</default>
+                <label>Accertamento documentale</label>
+            </value>
+            <value>
+                <fullName>Agevolazioni PdR terremotati</fullName>
+                <default>false</default>
+                <label>Agevolazioni PdR terremotati</label>
+            </value>
+            <value>
+                <fullName>Contatore e PdR</fullName>
+                <default>false</default>
+                <label>Contatore e PdR</label>
+            </value>
+            <value>
+                <fullName>Emettitore d&apos;impulsi</fullName>
+                <default>false</default>
+                <label>Emettitore d&apos;impulsi</label>
+            </value>
+            <value>
+                <fullName>Gestione di un servizio tecnico</fullName>
+                <default>false</default>
+                <label>Gestione di un servizio tecnico</label>
+            </value>
+            <value>
+                <fullName>Verifica Metrologica</fullName>
+                <default>false</default>
+                <label>Verifica Metrologica</label>
+            </value>
+            <value>
+                <fullName>Supporto per indagini giudiziarie</fullName>
+                <default>false</default>
+                <label>Supporto per indagini giudiziarie</label>
+            </value>
+            <value>
+                <fullName>Infomazioni su letture</fullName>
+                <default>false</default>
+                <label>Infomazioni su letture</label>
+            </value>
+            <value>
+                <fullName>Titolarità</fullName>
+                <default>false</default>
+                <label>Titolarità</label>
+            </value>
+            <value>
+                <fullName>Esecuzione lavori</fullName>
+                <default>false</default>
+                <label>Esecuzione lavori</label>
+            </value>
+            <value>
+                <fullName>Preventivi</fullName>
+                <default>false</default>
+                <label>Preventivi</label>
+            </value>
+            <value>
+                <fullName>Prescrizione breve</fullName>
+                <default>false</default>
+                <label>Prescrizione breve</label>
+            </value>
+            <value>
+                <fullName>M01 e M02</fullName>
+                <default>false</default>
+                <label>M01 e M02</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

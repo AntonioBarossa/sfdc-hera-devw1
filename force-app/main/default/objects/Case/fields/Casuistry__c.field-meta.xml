@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Casuistry__c</fullName>
+    <externalId>false</externalId>
+    <label>Casistica</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>BillingErrorArgument__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Comunicazione mancata Concessione Bonus Gas</fullName>
+                <default>false</default>
+                <label>Comunicazione mancata Concessione Bonus Gas</label>
+            </value>
+            <value>
+                <fullName>Verifica Bonus Gas</fullName>
+                <default>false</default>
+                <label>Verifica Bonus Gas</label>
+            </value>
+            <value>
+                <fullName>Disallineamento con RCU</fullName>
+                <default>false</default>
+                <label>Disallineamento con RCU</label>
+            </value>
+            <value>
+                <fullName>Disallineamento - Flusso UIG</fullName>
+                <default>false</default>
+                <label>Disallineamento - Flusso UIG</label>
+            </value>
+            <value>
+                <fullName>Disallineamento - Flusso ACG</fullName>
+                <default>false</default>
+                <label>Disallineamento - Flusso ACG</label>
+            </value>
+            <value>
+                <fullName>Disallineamento - Flusso VTG</fullName>
+                <default>false</default>
+                <label>Disallineamento - Flusso VTG</label>
+            </value>
+            <value>
+                <fullName>Disallineamento - Flusso RCG</fullName>
+                <default>false</default>
+                <label>Disallineamento - Flusso RCG</label>
+            </value>
+            <value>
+                <fullName>Infomazioni su pratiche con accertamento documentale in stato  REA</fullName>
+                <default>false</default>
+                <label>Infomazioni su pratiche con accertamento documentale in stato  REA</label>
+            </value>
+            <value>
+                <fullName>Pratica in stato AND (da recuperare)</fullName>
+                <default>false</default>
+                <label>Pratica in stato AND (da recuperare)</label>
+            </value>
+            <value>
+                <fullName>Richiesta Elenco PdR aggiornato</fullName>
+                <default>false</default>
+                <label>Richiesta Elenco PdR aggiornato</label>
+            </value>
+            <value>
+                <fullName>Richiesta di agevolazione</fullName>
+                <default>false</default>
+                <label>Richiesta di agevolazione</label>
+            </value>
+            <value>
+                <fullName>Richiesta chiarimenti agevolazione sul PdR</fullName>
+                <default>false</default>
+                <label>Richiesta chiarimenti agevolazione sul PdR</label>
+            </value>
+            <value>
+                <fullName>Verifiche sullo stato del misuratore e sullo stato tecnico del PdR</fullName>
+                <default>false</default>
+                <label>Verifiche sullo stato del misuratore e sullo stato tecnico del PdR</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamenti contatore elettronico - anomalia display</fullName>
+                <default>false</default>
+                <label>Malfunzionamenti contatore elettronico - anomalia display</label>
+            </value>
+            <value>
+                <fullName>Incongruenza  della matricola misuratore a sistema</fullName>
+                <default>false</default>
+                <label>Incongruenza  della matricola misuratore a sistema</label>
+            </value>
+            <value>
+                <fullName>Informazioni su pdr inesistente a sistema</fullName>
+                <default>false</default>
+                <label>Informazioni su pdr inesistente a sistema</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamenti contatore tradizionale - anomalia totalizzatore</fullName>
+                <default>false</default>
+                <label>Malfunzionamenti contatore tradizionale - anomalia totalizzatore</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni Manomissione impianto</fullName>
+                <default>false</default>
+                <label>Segnalazioni Manomissione impianto</label>
+            </value>
+            <value>
+                <fullName>Informazioni/Sblocco PdR chiusi da ordinanza pubblica</fullName>
+                <default>false</default>
+                <label>Informazioni/Sblocco PdR chiusi da ordinanza pubblica</label>
+            </value>
+            <value>
+                <fullName>Richiesta certificati di taratura del contatore/convertitore</fullName>
+                <default>false</default>
+                <label>Richiesta certificati di taratura del contatore/convertitore</label>
+            </value>
+            <value>
+                <fullName>Verifica ed aggiornamento ubicazione PDR</fullName>
+                <default>false</default>
+                <label>Verifica ed aggiornamento ubicazione PDR</label>
+            </value>
+            <value>
+                <fullName>Richiesta preventivo installazione emettitore di impulsi</fullName>
+                <default>false</default>
+                <label>Richiesta preventivo installazione emettitore di impulsi</label>
+            </value>
+            <value>
+                <fullName>Chiarimenti su esito di servizio</fullName>
+                <default>false</default>
+                <label>Chiarimenti su esito di servizio</label>
+            </value>
+            <value>
+                <fullName>Manca esito del servizio o di un appuntamento</fullName>
+                <default>false</default>
+                <label>Manca esito del servizio o di un appuntamento</label>
+            </value>
+            <value>
+                <fullName>Contestazione esito intervento</fullName>
+                <default>false</default>
+                <label>Contestazione esito intervento</label>
+            </value>
+            <value>
+                <fullName>Mancata registrazione servizi</fullName>
+                <default>false</default>
+                <label>Mancata registrazione servizi</label>
+            </value>
+            <value>
+                <fullName>Anticipo appuntamento o richiesta appuntamento fuori standard</fullName>
+                <default>false</default>
+                <label>Anticipo appuntamento o richiesta appuntamento fuori standard</label>
+            </value>
+            <value>
+                <fullName>Servizio in ETC (esito tecnico completato)</fullName>
+                <default>false</default>
+                <label>Servizio in ETC (esito tecnico completato)</label>
+            </value>
+            <value>
+                <fullName>Mancato appuntamento</fullName>
+                <default>false</default>
+                <label>Mancato appuntamento</label>
+            </value>
+            <value>
+                <fullName>Pratiche RET-DPR-ETS (registrato temporaneo-da prenotare-esito tecnico scartato)</fullName>
+                <default>false</default>
+                <label>Pratiche RET-DPR-ETS (registrato temporaneo-da prenotare-esito tecnico scartato)</label>
+            </value>
+            <value>
+                <fullName>Verifica metrologica su contatore rimosso (V03)</fullName>
+                <default>false</default>
+                <label>Verifica metrologica su contatore rimosso (V03)</label>
+            </value>
+            <value>
+                <fullName>Verifica e certificazione dei dati di lettura per fini legali</fullName>
+                <default>false</default>
+                <label>Verifica e certificazione dei dati di lettura per fini legali</label>
+            </value>
+            <value>
+                <fullName>Certificazione dati titolarità per fini legali</fullName>
+                <default>false</default>
+                <label>Certificazione dati titolarità per fini legali</label>
+            </value>
+            <value>
+                <fullName>Richiesta di conferma di lettura riguardante servizi tecnici al PdR (non da reclamo del cliente)</fullName>
+                <default>false</default>
+                <label>Richiesta di conferma di lettura riguardante servizi tecnici al PdR (non da reclamo del cliente)</label>
+            </value>
+            <value>
+                <fullName>Assenza prolungata di letture effettive (non da reclamo del cliente)</fullName>
+                <default>false</default>
+                <label>Assenza prolungata di letture effettive (non da reclamo del cliente)</label>
+            </value>
+            <value>
+                <fullName>Titolarità del cliente finale</fullName>
+                <default>false</default>
+                <label>Titolarità del cliente finale</label>
+            </value>
+            <value>
+                <fullName>Titolarità del PdR</fullName>
+                <default>false</default>
+                <label>Titolarità del PdR</label>
+            </value>
+            <value>
+                <fullName>Approfondimento su permessi esecuzione lavori</fullName>
+                <default>false</default>
+                <label>Approfondimento su permessi esecuzione lavori</label>
+            </value>
+            <value>
+                <fullName>Preventivi in stato SPE (sopralluogo eseguito)</fullName>
+                <default>false</default>
+                <label>Preventivi in stato SPE (sopralluogo eseguito)</label>
+            </value>
+            <value>
+                <fullName>Il PDF del servizio non è leggibile</fullName>
+                <default>false</default>
+                <label>Il PDF del servizio non è leggibile</label>
+            </value>
+            <value>
+                <fullName>Prescrizione Breve - Richiesta certificazioni dati</fullName>
+                <default>false</default>
+                <label>Prescrizione Breve - Richiesta certificazioni dati</label>
+            </value>
+            <value>
+                <fullName>Sollecito della risposta ad un M01 o ad un M02 aperti con tempistiche già scadute</fullName>
+                <default>false</default>
+                <label>Sollecito della risposta ad un M01 o ad un M02 aperti con tempistiche già scadute</label>
+            </value>
+            <value>
+                <fullName>Chiarimenti sulla risposta a  M01 o a M02</fullName>
+                <default>false</default>
+                <label>Chiarimenti sulla risposta a  M01 o a M02</label>
+            </value>
+            <value>
+                <fullName>Mancata notifica Bonus Gas</fullName>
+                <default>false</default>
+                <label>Mancata notifica Bonus Gas</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Disallineamento RCU</controllingFieldValue>
+            <valueName>Disallineamento con RCU</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disallineamento Flussi</controllingFieldValue>
+            <valueName>Disallineamento - Flusso UIG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disallineamento Flussi</controllingFieldValue>
+            <valueName>Disallineamento - Flusso ACG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disallineamento Flussi</controllingFieldValue>
+            <valueName>Disallineamento - Flusso VTG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Disallineamento Flussi</controllingFieldValue>
+            <valueName>Disallineamento - Flusso RCG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accertamento documentale</controllingFieldValue>
+            <valueName>Infomazioni su pratiche con accertamento documentale in stato  REA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accertamento documentale</controllingFieldValue>
+            <valueName>Pratica in stato AND (da recuperare)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agevolazioni PdR terremotati</controllingFieldValue>
+            <valueName>Richiesta Elenco PdR aggiornato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agevolazioni PdR terremotati</controllingFieldValue>
+            <valueName>Richiesta di agevolazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agevolazioni PdR terremotati</controllingFieldValue>
+            <valueName>Richiesta chiarimenti agevolazione sul PdR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Verifiche sullo stato del misuratore e sullo stato tecnico del PdR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Malfunzionamenti contatore elettronico - anomalia display</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Incongruenza  della matricola misuratore a sistema</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Informazioni su pdr inesistente a sistema</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Malfunzionamenti contatore tradizionale - anomalia totalizzatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Segnalazioni Manomissione impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Informazioni/Sblocco PdR chiusi da ordinanza pubblica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Richiesta certificati di taratura del contatore/convertitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contatore e PdR</controllingFieldValue>
+            <valueName>Verifica ed aggiornamento ubicazione PDR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emettitore d&apos;impulsi</controllingFieldValue>
+            <valueName>Richiesta preventivo installazione emettitore di impulsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Chiarimenti su esito di servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Manca esito del servizio o di un appuntamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Contestazione esito intervento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Mancata registrazione servizi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Anticipo appuntamento o richiesta appuntamento fuori standard</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Servizio in ETC (esito tecnico completato)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Mancato appuntamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione di un servizio tecnico</controllingFieldValue>
+            <valueName>Pratiche RET-DPR-ETS (registrato temporaneo-da prenotare-esito tecnico scartato)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Metrologica</controllingFieldValue>
+            <valueName>Verifica metrologica su contatore rimosso (V03)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto per indagini giudiziarie</controllingFieldValue>
+            <valueName>Verifica e certificazione dei dati di lettura per fini legali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto per indagini giudiziarie</controllingFieldValue>
+            <valueName>Certificazione dati titolarità per fini legali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Infomazioni su letture</controllingFieldValue>
+            <valueName>Richiesta di conferma di lettura riguardante servizi tecnici al PdR (non da reclamo del cliente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Infomazioni su letture</controllingFieldValue>
+            <valueName>Assenza prolungata di letture effettive (non da reclamo del cliente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Titolarità</controllingFieldValue>
+            <valueName>Titolarità del cliente finale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Titolarità</controllingFieldValue>
+            <valueName>Titolarità del PdR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esecuzione lavori</controllingFieldValue>
+            <valueName>Approfondimento su permessi esecuzione lavori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Preventivi in stato SPE (sopralluogo eseguito)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Il PDF del servizio non è leggibile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prescrizione breve</controllingFieldValue>
+            <valueName>Prescrizione Breve - Richiesta certificazioni dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>M01 e M02</controllingFieldValue>
+            <valueName>Sollecito della risposta ad un M01 o ad un M02 aperti con tempistiche già scadute</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>M01 e M02</controllingFieldValue>
+            <valueName>Chiarimenti sulla risposta a  M01 o a M02</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus Gas</controllingFieldValue>
+            <valueName>Comunicazione mancata Concessione Bonus Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus Gas</controllingFieldValue>
+            <valueName>Verifica Bonus Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus Gas</controllingFieldValue>
+            <valueName>Mancata notifica Bonus Gas</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -37,6 +37,97 @@
                 <default>false</default>
                 <label>Richiesta info Telefonica</label>
             </value>
+            <value>
+                <fullName>Flusso di misura mancante</fullName>
+                <default>false</default>
+                <label>Flusso di misura mancante</label>
+            </value>
+            <value>
+                <fullName>Flusso di misura errato</fullName>
+                <default>false</default>
+                <label>Flusso di misura errato</label>
+            </value>
+            <value>
+                <fullName>Fatture di trasporto errate</fullName>
+                <default>false</default>
+                <label>Fatture di trasporto errate</label>
+            </value>
+            <value>
+                <fullName>Fatture di connessione errate</fullName>
+                <default>false</default>
+                <label>Fatture di connessione errate</label>
+            </value>
+            <value>
+                <fullName>Fatture di trasporto mancante</fullName>
+                <default>false</default>
+                <label>Fatture di trasporto mancante</label>
+            </value>
+            <value>
+                <fullName>Fatture di connessione mancante</fullName>
+                <default>false</default>
+                <label>Fatture di connessione mancante</label>
+            </value>
+            <value>
+                <fullName>Sollecito attività di connessione</fullName>
+                <default>false</default>
+                <label>Sollecito attività di connessione</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni relative a impianti di e-distribuzione</fullName>
+                <default>false</default>
+                <label>Segnalazioni relative a impianti di e-distribuzione</label>
+            </value>
+            <value>
+                <fullName>Sisma - Attivazione agevolazione non automatica</fullName>
+                <default>false</default>
+                <label>Sisma - Attivazione agevolazione non automatica</label>
+            </value>
+            <value>
+                <fullName>Certificazione per contenzioso legale</fullName>
+                <default>false</default>
+                <label>Certificazione per contenzioso legale</label>
+            </value>
+            <value>
+                <fullName>Verifiche_segnalazione dati errati o mancanti</fullName>
+                <default>false</default>
+                <label>Verifiche_segnalazione dati errati o mancanti</label>
+            </value>
+            <value>
+                <fullName>Altro</fullName>
+                <default>false</default>
+                <label>Altro</label>
+            </value>
+            <value>
+                <fullName>Modifica indirizzo di fornitura</fullName>
+                <default>false</default>
+                <label>Modifica indirizzo di fornitura</label>
+            </value>
+            <value>
+                <fullName>Sollecito cessazione fornitura temporanea</fullName>
+                <default>false</default>
+                <label>Sollecito cessazione fornitura temporanea</label>
+            </value>
+            <value>
+                <fullName>Informazioni richieste respinte</fullName>
+                <default>false</default>
+                <label>Informazioni richieste respinte</label>
+            </value>
+            <value>
+                <fullName>Prescrizione breve</fullName>
+                <default>false</default>
+                <label>Prescrizione breve</label>
+            </value>
+            <value>
+                <fullName>Lettura errata/anomala</fullName>
+                <default>false</default>
+                <label>Lettura errata/anomala</label>
+            </value>
+            <value>
+                <fullName>Richiesta info</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Richiesta info</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
