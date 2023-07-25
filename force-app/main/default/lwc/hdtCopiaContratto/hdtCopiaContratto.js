@@ -62,6 +62,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
     @track preloading= false;
+    @track pageLoader = false;
     @api selectedActivity;
     @api documentSendTrackingLwc;
     @api availableActions = [];
@@ -104,8 +105,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         new fieldData('Località [Spedizione/Fatturazione]', "BillingPlace__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingPlace__c")
     ];
 
-
-
     get columnsChild(){
         return [
             //...this.columns, 
@@ -122,11 +121,11 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     showSingleRow;
 
     get isSendEmail(){
-        return this.selectedSend=="E-Mail";
+        return this.selectedSend == "E-Mail";
     }
 
     get isCartacea(){
-        return this.selectedSend=="Posta Cartacea";
+        return this.selectedSend == "Posta Cartacea";
     }
 
     get selectedParentAsList(){
@@ -134,6 +133,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     }
     get selectedParentAsListRow(){
         return [this.selectedOrder.Id];
+    }
+
+    get confirmButtonDisabled(){
+        return !this.ordChild;
     }
 
     connectedCallback(){
@@ -158,13 +161,9 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 this.getOrderParent(result.c.CopyType__c);
             }
         });
-       // this.getOrderParent();
-
     }
 
     get firstRowChild(){
-        console.log("sel row Child")
-        console.log(this.selectedrowchild?.length ? null : this.selectedrowchild[0])
         if(!this.selectedrowchild?.length)  return null;
         if(!this.selectedrowchild[0].Contact__r) this.selectedrowchild[0].Contact__r={Email : ""};
         return this.selectedrowchild[0];
@@ -174,35 +173,31 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         return this.tipoCopia == "Copia della registrazione";
     }
 
+    get isFirmato(){
+        return this.tipoCopia == "Copia contratto firmato";
+    }
+
     getMapFields(){
         let mFields = new Map();
-        //    constructor(label, apiname, required, disabled, value) {
         mFields.set("Copia contratto non firmato",
             [
                 new fieldData(null, "CustomerName__c"),
                 new fieldData(null, "CustomerLastName__c" ),
                 new fieldData(null, "CustomerFiscalCode__c" ),
-                new fieldData(null, "CustomerVATNumber__c" )
-                
+                new fieldData(null, "CustomerVATNumber__c" )                
             ]
         )
         this.mapFields = mFields.get(this.tipoCopia);
     }
 
-    get isFirmato(){
-        return this.tipoCopia == "Copia contratto firmato";
-    }
-
     changeValueTipo(event){
         this.tipoCopia = event.detail.value;
-        console.log('*****:' + event.detail.value);
         this.selectedOrder = null;
         this.showParentList = false;
         this.showChildList2 = false;
         this.showChildList = false;
 
         this.getOrderParent(event.detail.value);
-
     }
 
     changeValueTipoAttivita(event){
@@ -221,10 +216,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         this.selectedSend = event.detail.value;
     }
 
-
     catchFieldsToSave(Case){
-
-        console.log(Case);
+        console.log('*** catchFieldsToSave(Case): ' + Case);
         let fieldsTemplate = this.template.querySelectorAll('lightning-input-field');
         fieldsTemplate.forEach(element => 
             {
@@ -234,7 +227,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                     Case[element.name]= element.value;
                 }
             })
-        console.log(Case);
+        console.log('*** catchFieldsToSave(Case): ' + Case);
         let address = this.getAddress();
         if(address){
             this.saveAddress(address, Case);
@@ -243,7 +236,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     }
 
     selectedRowHandler(event){
-        console.log('********:' + JSON.stringify(event.detail.selectedRows));
+        console.log('*** selectedRowHandler: ' + JSON.stringify(event.detail.selectedRows));
         this.selectedOrder = event.detail.selectedRows[0];
         this.showSingleRow=true;
         if(!this.selectedOrder){
@@ -262,26 +255,20 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 this.showChildList2 = false;
                 this.ismessagevisible = true;
                 this.typeActivity = true;
-                //this.showButtonPreview = false;
-                //this.isinboundchannel = false;
             }
             else{
                 this.showChildList2 = true;
                 this.ismessagevisible = false;
                 this.typeActivity = false;
-               // this.showButtonPreview = false;
-                //this.isinboundchannel = true;
             }
         });
-
-
     }
+
     handlePreview(event){
         try{
             let previewButton = event.target;
             previewButton.disabled=true;
             
-           // this.loading = true;
             var formParams = {
                 mode : 'Preview',
                 Archiviato : 'N',
@@ -316,7 +303,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                         this.blob = new Blob(byteArrays, { type: 'application/pdf' });
 
                         const blobURL = URL.createObjectURL(this.blob);
-                        //this.loading = false;
                         this[NavigationMixin.Navigate](
                             {
                                 type: 'standard__webPage',
@@ -325,26 +311,20 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                                 }
                             }
                         );
-                       // this.previewExecuted = true;
                     }else{
-                        //this.loading = false;
                         this.showMessage('Attenzione',resultParsed.message,'error');
                     }
                 }else{
-                   // this.loading = false;
                     this.showMessage('Attenzione','Errore nella composizione del plico','error');
                 }
-               // this.isPrintButtonDisabled = false;
                previewButton.disabled=false;
             })
             .catch(error => {
-               // this.loading = false;
                 console.error(error);
             });
         }catch(error){
             console.error();
         }
-       // this.isPrintButtonDisabled = false;
     }
 
     selectChild(event){
@@ -352,17 +332,16 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     }
 
     getOrderParent(type){
-        console.log('***ACC:' + this.accountId);
+        console.log('*** accountId: ' + this.accountId);
         getParent({accountId : this.accountId,tipo : type}).then(response =>{
             if(response != null && response.length != 0){
                 this.ordersList = response;
-                console.log('*****1:' +JSON.stringify(response));
+                console.log('*** getOrderParent(response): ' +JSON.stringify(response));
                 this.showParentList = true;
                 for(var i=0; i<response.length; i++){
-                    console.log('*****2:' + this.orderIdPre);
-                    console.log('*****22:' + response[i].Id);
+                    console.log('*** getOrderParent(orderIdPre): ' + this.orderIdPre);
+                    console.log('*** getOrderParent(response[i].Id): ' + response[i].Id);
                     if(this.orderIdPre == response[i].Id){
-                        console.log('*****3');
                         var lis = [];
                         lis.push(response[i].Id);
                         this.selectedOrderValue = lis;
@@ -373,25 +352,19 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                             this.orderChildList = response;
                             this.showChildList = true;
                             if(this.tipoCopia == 'Copia della registrazione'){
-                                console.log('Try:Copia');
                                 this.selectedrowchild = this.orderChildList;
                                 this.showChildList2 = false;
                                 this.ismessagevisible = true;
                                 this.typeActivity = true;
-                                //this.showButtonPreview = false;
-                                //this.isinboundchannel = false;
                             }
                             else{
                                 this.showChildList2 = true;
                                 this.ismessagevisible = false;
                                 this.typeActivity = false;
-                               // this.showButtonPreview = false;
-                                //this.isinboundchannel = true;
                             }
                         });
                     }
                 }
-                console.log('*****4');
                 this.showParentList = true;
             }
             else{
@@ -403,14 +376,15 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                     this.dispatchEvent(event);
             }
         });
-
-
     }
 
     handleConfirm(){
-        console.log('*****:' + this.tipoCopia);
+        this.pageLoader = true;
+        console.log('*** Tipo Copia: ' + this.tipoCopia);
+        console.log('*** Email value field: '+this.template.querySelector('lightning-input-field[data-recid="Email"]').value);
         let Case = this.catchFieldsToSave({Id: this.recordid});
-        if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
+        if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') 
+            || (this.isSendEmail && !(this.template.querySelector('lightning-input-field[data-recid="Email"]')?.value))){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
                 variant: 'error',
@@ -460,12 +434,12 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                         this.dispatchEvent(navigateNextEvent);
                     }
                 });
-            }
+        }
+        this.pageLoader = false;
     }
 
     handleConfirmDraft(){
-
-        console.log('*****:' + this.tipoCopia);
+        this.pageLoader = true;
         let Case = this.catchFieldsToSave({Id: this.recordid});
         confirmAction2Draft({
             c : Case,
@@ -477,25 +451,21 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             }).then(response =>{
                     const navigateNextEvent = new FlowNavigationNextEvent();
                     this.dispatchEvent(navigateNextEvent);
-        });   
+        });
+        this.pageLoader = false;   
     }
 
-
     validateAddress(address) {
-        console.log('validateAddress START');
+        console.log('*** validateAddress START');
         let errorMessages = [];
         let concatAddressErrorFields = '';
 
         //Validate address
         if(!address['Indirizzo Estero']){
-            console.log('entra in if ind estero');
             if (!address['Flag Verificato']) {
-                console.log('entra in flag verificato false ');
                 errorMessages.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
         } else {
-            console.log('entra in else ind estero ');
-
             if (address['Stato'] === undefined || address['Stato'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
             }
@@ -572,8 +542,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 this.dispatchEvent(event);
             const navigateNext = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNext);     
-            }).catch(error => {
-                console.log('*** handleAnnull(): '+error);
-            });
+        }).catch(error => {
+            console.log('*** handleAnnull(): '+error);
+        });
     }
 }
