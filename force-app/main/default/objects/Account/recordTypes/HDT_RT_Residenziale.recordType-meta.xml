@@ -3199,4 +3199,15 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Vulnerability__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

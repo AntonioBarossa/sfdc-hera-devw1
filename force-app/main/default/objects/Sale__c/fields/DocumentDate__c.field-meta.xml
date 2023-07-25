@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DocumentDate__c</fullName>
     <externalId>false</externalId>
-    <label>Data Documento</label>
+    <label>Data Emissione Documento</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
