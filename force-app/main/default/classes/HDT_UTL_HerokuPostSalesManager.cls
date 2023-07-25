@@ -606,6 +606,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
                 currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
             }
+
+            if(nextPhase != null && nextPhase != ''){
+                Set<String> nextPhaseSet = new Set<String>{'Esito OK da DL/SII','Esito KO da DL/SII','Esito OK da DBO', 'Esito KO da DBO'};
+                if(nextPhaseSet.contains(nextPhase) && currentPhase.indexOf('Annullamento') > -1 && ('Acqua'.equalsIgnoreCase(recordCase.Commodity__c) || 'Teleriscaldamento'.equalsIgnoreCase(recordCase.Commodity__c))){
+                        nextPhase = 'Annullamento - ' + nextPhase;
+                }
+                currentCase.Phase__c = nextPhase;
+            }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');
@@ -689,7 +697,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
     private void handleAfterNotify(Case currentCase, String storno, String activity,String discardReason){
         currentCase = hpsmQr.getCaseRecord(currentCase.Id);
-        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || (currentCase.Phase__c == 'Annullato' && !'Closed'.equalsIgnoreCase(currentCase.Status))){
+        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || 'Annullamento - Esito KO da DBO'.equalsIgnoreCase(currentCase.Phase__c) || (currentCase.Phase__c == 'Annullato' && !'Closed'.equalsIgnoreCase(currentCase.Status))){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
