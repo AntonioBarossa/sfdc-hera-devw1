@@ -10,7 +10,7 @@
             <assignToReference>AvaiableOptions</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>extract_Values.ConsegnaDotazioni__c</elementReference>
+                <elementReference>extract_Values.DeliveryMode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -203,7 +203,13 @@
         <description>(TP4 per TariNg e RIT8 per tariG)</description>
         <name>causalCodeFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!theCase.Account.CustomerMarking__c}) = &quot;TariG&quot;, &quot;RIT8&quot;, &quot;TP4&quot;)</expression>
+        <expression>CASE(
+	TEXT({!theCase.Account.CustomerMarking__c}),
+	&quot;TA - BP TARI NG AAA&quot;, &quot;TP4&quot;,
+	&quot;TP - BP TARIP&quot;, &quot;TP4&quot;,
+	&quot;TM - BP TARI NG MMS&quot;, &quot;TP4&quot;,
+	&quot;RIT8&quot;
+)</expression>
     </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RiparazioneDotazione</label>
@@ -293,14 +299,28 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Comune__c</field>
+            <field>City__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>theCase.SupplyCity__c</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>IsQuadruplet__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>HDT_CoerenzaComuneDotazione__mdt</object>
+        <object>EquipmentAdministration__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>

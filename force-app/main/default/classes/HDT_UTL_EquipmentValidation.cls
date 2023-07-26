@@ -17,19 +17,19 @@ public with sharing class HDT_UTL_EquipmentValidation implements HDT_UTL_CaseVal
     private HDT_WRP_EquipmentValidation getValidationResult(ProcessEquipment__c equipment){
         String caseType = equipment.Case__r.Type;
         List<String> keyList = new List<String>(this.fieldsMap.keySet());
-        String appendix = keyList[0].startsWithIgnoreCase('old')? 'Old' : 'New';
+        String prefix = keyList[0].startsWithIgnoreCase('old')? 'Old' : 'New';
 
-        if(checkAllBlank(appendix))    return new HDT_WRP_EquipmentValidation('Error', 'Popolare almeno un campo');
+        if(checkAllBlank(prefix))    return new HDT_WRP_EquipmentValidation('Error', 'Popolare almeno un campo');
         if(caseType == 'Associa Dotazioni')     return new HDT_WRP_EquipmentValidation('OK', 'Success');
 
-        if(appendix == 'Old')  return new HDT_WRP_EquipmentValidation('OK', 'Success');
+        if(prefix == 'Old')  return new HDT_WRP_EquipmentValidation('OK', 'Success');
 
         return checkDeliveryEquipment(equipment);
     }
 
-    private Boolean checkAllBlank(String appendix){
+    private Boolean checkAllBlank(String prefix){
         for(String field : this.fieldsName){
-            Object objStrValue = this.fieldsMap.get(appendix+field);
+            Object objStrValue = this.fieldsMap.get(prefix+field);
             if(STRING.isNotBlank(STRING.valueOf(objStrValue))){
                 return false;
             }

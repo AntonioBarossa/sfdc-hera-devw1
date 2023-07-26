@@ -72,6 +72,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
     public static String prePopulateFields(String recordId, String context, String serviceCatalogId){
 
         Case infoCase = new Case(Id = recordId);
+        Set<String> informativeValidContext = new Set<String>{'EC1Level','CreditManagement','ExpiredList','PaperlessList'};
 
         if(context instanceOf Id){
 
@@ -162,7 +163,8 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
             HDT_UTL_DatabaseService.updateSObject(infoCase);
 
-        }else if ('EC1Level'.equalsIgnoreCase(context)){
+        // }else if ('EC1Level'.equalsIgnoreCase(context)){
+        }else if (informativeValidContext.contains(context)){
             System.debug(LoggingLevel.DEBUG, '>>>serviceCatalogId: ' + serviceCatalogId);
             List<AccountStatementFilter__c> stmList = [SELECT DocumentSelected__c FROM AccountStatementFilter__c WHERE Id =: serviceCatalogId WITH SECURITY_ENFORCED LIMIT 1];
             if(stmList.size() > 0){

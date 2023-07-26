@@ -1621,6 +1621,31 @@
                 <default>false</default>
                 <label>Supporto alla Vendita</label>
             </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_BP/CA - err cat_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_BP/CA - err cat_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_BP/CA - err cat_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_BP/CA - err cat_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_CambioContNonReg_Con</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_CambioContNonReg_Con</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_CambioContNonReg_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_CambioContNonReg_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_ Err fat_Con</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_ Err fat_Con</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
