@@ -179,6 +179,17 @@ public with sharing class HDT_UTL_CaseProcess {
         if( !oldCmor && newCmor) return true;
         return false;
     }
+
+    public static Boolean checkSkipDatePopulation(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		Datetime newCustomerReqDate = caseNew.CustomerRequestDate__c;
+		Datetime oldCustomerReqDate = caseOld.CustomerRequestDate__c;
+        Date oldWrittenRecDate = caseOld.WrittenReceiptRequestDate__c;
+        Date newWrittenRecDate = caseNew.WrittenReceiptRequestDate__c;
+        if((oldCustomerReqDate == null && newCustomerReqDate != null) || (oldWrittenRecDate == null && newWrittenRecDate != null)) return true;
+        return false;
+    }
     
     public static Boolean isChangedPhase(List<Case> caseList, Map<Id,SObject> caseOldMap){
         Case caseNew = caseList[0];
