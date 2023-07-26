@@ -203,7 +203,13 @@
         <description>(TP4 per TariNg e RIT8 per tariG)</description>
         <name>causalCodeFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!theCase.Account.CustomerMarking__c}) = &quot;TariG&quot;, &quot;RIT8&quot;, &quot;TP4&quot;)</expression>
+        <expression>CASE(
+	TEXT({!theCase.Account.CustomerMarking__c}),
+	&quot;TA - BP TARI NG AAA&quot;, &quot;TP4&quot;,
+	&quot;TP - BP TARIP&quot;, &quot;TP4&quot;,
+	&quot;TM - BP TARI NG MMS&quot;, &quot;TP4&quot;,
+	&quot;RIT8&quot;
+)</expression>
     </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RiparazioneDotazione</label>
