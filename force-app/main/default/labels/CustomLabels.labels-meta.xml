@@ -1332,4 +1332,18 @@
         <shortDescription>Distributori Abilitati all'invio del file in A2A</shortDescription>
         <value>ALL</value>
     </labels>
+    <labels>
+        <fullName>HDT_OfferCodeMaxItem</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferCodeMaxItem</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>HDT_AlignOfferCodeSapTableMaxItem</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_AlignOfferCodeSapTableMaxItem</shortDescription>
+        <value>1000</value>
+    </labels>
 </CustomLabels>
