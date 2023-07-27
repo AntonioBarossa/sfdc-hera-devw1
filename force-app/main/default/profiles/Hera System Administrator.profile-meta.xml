@@ -12290,11 +12290,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>HDT_CoerenzaComuneDotazione__mdt.Comune__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>HDT_CoerenzaComuneDotazione__mdt.ConsegnaDotazioni__c</field>
         <readable>true</readable>
     </fieldPermissions>
