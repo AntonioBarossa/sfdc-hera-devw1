@@ -511,4 +511,62 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         controllNum=string.valueOf(math.mod((10-sumMod),10));
         return controllNum;
     }
+    //CR PAEVOW1_024
+    public static Integer getAgeFromFiscalCode(String fiscalCode){
+        Integer age;
+        String fc = fiscalCode.replace(' ', '');
+        if (String.isNotBlank(fc) && !fc.isAlpha() && !fc.isNumeric() && fc.length() == 16){
+            try{
+                String subfc = fc.substring(6,11);
+                age = getAge(subfc);
+            }catch(Exception e){
+                System.debug(LoggingLevel.DEBUG, 'Errore nel calcolo dell\'età ' + e.getMessage());
+            }
+        }
+        return age;
+    }
+
+    private static Integer getAge(String subfc){
+        Date birth = Date.newInstance(getYearFromFiscalCode(subfc), getMonthFromFiscalCode(subfc), getDayFromFiscalCode(subfc));
+        Date today = Date.today();
+        //Caso in cui il cliente compie 100 anni entro questo anno, ma ancora non li ha compiuti
+        if (birth > today){
+            return 99;
+        }
+        Integer age = today.year() - birth.year();
+        Date compareDate = Date.newInstance(birth.year(), today.month(), today.day());
+        return birth > compareDate ? age -1 : age;
+    }
+
+    private static Integer getMonthFromFiscalCode(String subfc){
+        Map<String,Integer> mapMonth = new Map<String,Integer>{
+            'A' => 1,
+            'B' => 2,
+            'C' => 3,
+            'D' => 4,
+            'E' => 5,
+            'H' => 6,
+            'L' => 7,
+            'M' => 8,
+            'P' => 9,
+            'R' => 10,
+            'S' => 11,
+            'T' => 12
+        };
+        return mapMonth.get(subfc.substring(2,3).toUpperCase());
+    }
+
+    private static Integer getDayFromFiscalCode(String subfc){
+        Integer d = Integer.valueOf(subfc.substring(3));
+        return d > 40 ? d-40 : d;
+    }
+
+    private static Integer getYearFromFiscalCode(String subfc){
+        Integer actualYear = Date.today().year();
+        Integer century = (actualYear / 100);
+        Integer y = Integer.valueOf(subfc.substring(0,2)) + (century * 100); 
+        return y > actualYear ?  y - 100 :  y;  
+
+    }
+    //FINE CR PAEVOW1_024
 }

@@ -622,6 +622,15 @@
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>VasPracticeCode__c</fields>
+        <fields>Status__c</fields>
+        <fields>VasSupplier__c</fields>
+        <fields>VasSupplierStatus__c</fields>
+        <relatedList>VasSupplierTable__c.OrderReference__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
