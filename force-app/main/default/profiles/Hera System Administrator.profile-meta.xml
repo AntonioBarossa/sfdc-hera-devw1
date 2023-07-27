@@ -28,6 +28,10 @@
     <custom>true</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_CoerenzaComuneDotazione__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_AppointmentSetting__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
