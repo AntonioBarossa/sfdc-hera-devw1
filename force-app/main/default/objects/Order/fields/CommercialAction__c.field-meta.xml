@@ -21,6 +21,11 @@
                 <label>CALL BACK WEB</label>
             </value>
             <value>
+                <fullName>CAMPAGNA ex-OIL</fullName>
+                <default>false</default>
+                <label>CAMPAGNA ex-OIL</label>
+            </value>
+            <value>
                 <fullName>campagna SALVAGUARDIA</fullName>
                 <default>false</default>
                 <label>campagna SALVAGUARDIA</label>
