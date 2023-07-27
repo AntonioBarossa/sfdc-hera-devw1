@@ -34,10 +34,15 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         familySet.add('VAS Servizio');
         familySet.add('Promozione');
         familySet.add('Offerta commerciale');
+        List <Product2> prodsToCheck=new List <Product2>();
 
         for(Product2 p : (Product2[])Trigger.New){
 
             Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
+
+            if (p.Family=='Offerta commerciale' && p.Status__c=='Confermata' && oldProd.Status__c=='In Sviluppo') {
+                prodsToCheck.add(p);        
+            }
 
             if(oldProd.NoSellable__c != p.NoSellable__c){
                 System.debug(LoggingLevel.DEBUG, '>>> this record skip trigger for NoSellable__c ');
@@ -64,6 +69,10 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
                 }
             }
 
+        }
+
+        if (!prodsToCheck.isEmpty()) {
+            HDT_UTL_ProductStObjProcess.checkOfferCode(prodsToCheck);
         }
 
         System.debug(LoggingLevel.DEBUG, '>>> productForTrigger ' + productForTrigger.size());
