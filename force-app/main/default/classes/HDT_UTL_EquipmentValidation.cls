@@ -53,9 +53,11 @@ public with sharing class HDT_UTL_EquipmentValidation implements HDT_UTL_CaseVal
 
         if(mandatoryFields.isEmpty() && fieldsToBlank.isEmpty())    return new HDT_WRP_EquipmentValidation('OK', 'Success');
         
-        HDT_WRP_EquipmentValidation result = new HDT_WRP_EquipmentValidation('Error', 'Popolare tutti e soli i campi valorizzati nella sezione precedente');
-        result.mandatoryFields = mandatoryFields;
-        result.fieldsToBlank = fieldsToBlank;
+        HDT_WRP_EquipmentValidation result = new HDT_WRP_EquipmentValidation(
+            'Error', 'Popolare tutti e soli i campi valorizzati nella sezione precedente',
+            mandatoryFields, fieldsToBlank
+        );
+
         return result;
     }
 
@@ -83,8 +85,13 @@ public with sharing class HDT_UTL_EquipmentValidation implements HDT_UTL_CaseVal
         List<String> fieldsToBlank { get; set; }
 
         HDT_WRP_EquipmentValidation(String outcomeCode, String outcomeDescription){
-            this.outcomeCode = outcomeCode;
-            this.outcomeDescription = outcomeDescription;
+            super(outcomeCode, outcomeDescription);
+        }
+
+        HDT_WRP_EquipmentValidation(String outcomeCode, String outcomeDescription, List<String> mandatoryFields, List<String> fieldsToBlank){
+            this(outcomeCode, outcomeDescription);
+            this.mandatoryFields = mandatoryFields;
+            this.fieldsToBlank = fieldsToBlank;
         }
     }
 }
