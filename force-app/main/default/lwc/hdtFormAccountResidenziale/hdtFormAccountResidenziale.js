@@ -152,6 +152,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         //this.filterMarkingOptions(customerMarkingOptionsPreCheck);
         this.companyPicklist( event.target.value);
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        const tariNgMarkings = ['BP TARI NG AAA','BP TARIP','BP TARI NG MMS']
+        this.customerMarkingOptions = this.customerData.values.filter(opt => (opt.validFor.includes(key) && tariNgMarkings.indexOf(opt.value) === -1 ));
         this.markingValue = '';
         this.categoryValue = '';
         
