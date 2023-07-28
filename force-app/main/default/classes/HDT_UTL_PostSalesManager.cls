@@ -73,6 +73,30 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
 
     }
+    /* Nel caso di esito negativo sull'allineamento anagrafico i case di
+    * - Variazione Indirizzo di fornitura 
+    * Devono ritornare nella fase "Elaborazione Manuale"
+    */
+    public void advanceParentCaseNegativeOutcome(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        Case caseToUpdate = new Case();
+        try{
+          Case parentCase = caseQr.getParentCaseById(currentCase.ParentId);
+          if(parentCase != null && 'Variazione indirizzo di fornitura'.equalsIgnoreCase(parentCase.Type))
+          {
+            caseToUpdate.Id = parentCase.Id;
+            caseToUpdate.Phase__c = 'Elaborazione Manuale';
+            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            return;
+          }  
+        }
+        catch(Exception e)
+        {
+            /* TODO inserire log comunicazione */
+            return;
+        }
+    }
 
     public void advanceParentCasePhase(SObject inputCase){
 
