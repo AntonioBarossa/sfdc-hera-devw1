@@ -14,19 +14,19 @@ global with sharing class HDT_WS_UpdateOfferCode {
                 HDT_WRP_UpdateOfferCode.HDT_WRP_UpdateOfferCodeResponse outcomeResponse = handleRequest(requestWrap);
                 responseWrap.data = outcomeResponse.data;
                 responseWrap.outcome = 'OK';
-                responseWrap.outcomeCode = '0';
+                responseWrap.outcomeCode = 'S0';
                 response.statusCode = 200;
 
             }catch (Exception e){
                 response.statusCode = 400;
                 responseWrap.outcome = 'KO';
-                responseWrap.outcomeCode = '03';
+                responseWrap.outcomeCode = 'S3';
                 HDT_UTL_IntegrationLog.handleGenericErrorRequest(request.requestBody.toString(), 'doPost', 'Exception handle request', 'HDT_WS_UpdateOfferCode', '');
             }      
         }catch (Exception e){
             response.statusCode = 500;
             responseWrap.outcome = 'KO';
-            responseWrap.outcomeCode = '03';   
+            responseWrap.outcomeCode = 'S3';   
             HDT_UTL_IntegrationLog.handleGenericErrorRequest(request.requestBody.toString(), 'doPost', 'Error deserializing request', 'HDT_WS_UpdateOfferCode', '');         
         }
         finally {
@@ -40,7 +40,7 @@ global with sharing class HDT_WS_UpdateOfferCode {
         if(!wrap.data.isEmpty() && wrap.data.size() > Integer.valueOf(Label.HDT_OfferCodeMaxItem)){
             for(HDT_WRP_UpdateOfferCode.HDT_WRP_UpdateOfferCodeData item : wrap.data){
                 item.outcome = 'KO';
-                item.outcomeCode = '02';
+                item.outcomeCode = 'S2';
             }
             response.data = wrap.data;
             return response;
@@ -62,10 +62,10 @@ global with sharing class HDT_WS_UpdateOfferCode {
             for(HDT_WRP_UpdateOfferCode.HDT_WRP_UpdateOfferCodeData item : wrap.data){
                 if(!mapSapContractCodeContract.containsKey(item.sapContractCode)){ 
                     item.outcome = 'KO';
-                    item.outcomeCode = '01';
+                    item.outcomeCode = 'S1';
                 }else{
                     item.outcome = 'OK';
-                    item.outcomeCode = '0';
+                    item.outcomeCode = 'S0';
                     listOfOfferCodeLog.add(createOfferCodeLog(item));
                 }
             }
