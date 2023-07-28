@@ -9,7 +9,6 @@
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        
         <controllingField>CompanyOwner__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CustomerMarking</valueSetName>
@@ -36,6 +35,10 @@
         <valueSettings>
             <controllingFieldValue>AAA-EBT</controllingFieldValue>
             <valueName>AAS Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AAA-EBT</controllingFieldValue>
+            <valueName>BP TARI NG AAA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HERA COMM</controllingFieldValue>
@@ -94,6 +97,10 @@
             <valueName>D8 - Marcatura nulla</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>BP TARIP</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>G1 - MMS Persona fisica</valueName>
         </valueSettings>
@@ -116,6 +123,10 @@
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>G6 - MMS Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MMS</controllingFieldValue>
+            <valueName>BP TARI NG MMS</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reseller</controllingFieldValue>
