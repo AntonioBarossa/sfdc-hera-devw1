@@ -47,6 +47,11 @@
                 <label>Hera ProtezionePiu Luce</label>
             </value>
             <value>
+                <fullName>Hera Sm4rt Casa Luce</fullName>
+                <default>false</default>
+                <label>Hera Sm4rt Casa Luce</label>
+            </value>
+            <value>
                 <fullName>Nuova Impronta Zero Casa Gas</fullName>
                 <default>false</default>
                 <label>Nuova Impronta Zero Casa Gas</label>
