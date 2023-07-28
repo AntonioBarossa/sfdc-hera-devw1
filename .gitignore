@@ -51,6 +51,7 @@ launch.json
 force-app/main/default/lwc/*/__tests__/*
 
 package.json
+package-lock.json
 .eslintignore
 assets
 .vscode
