@@ -8828,13 +8828,6 @@
             </value>
         </filters>
         <filters>
-            <field>IsDirect</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
             <field>Roles</field>
             <operator>EqualTo</operator>
             <value>

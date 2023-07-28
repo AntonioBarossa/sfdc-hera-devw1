@@ -38,6 +38,26 @@
                 <default>false</default>
                 <label>Segnalato fornitore</label>
             </value>
+            <value>
+                <fullName>NON LEGITTIMA</fullName>
+                <default>false</default>
+                <label>NON LEGITTIMA</label>
+            </value>
+            <value>
+                <fullName>LEGITTIMA – Errore Procedurale</fullName>
+                <default>false</default>
+                <label>LEGITTIMA – Errore Procedurale</label>
+            </value>
+            <value>
+                <fullName>LEGITTIMA – Limiti di sistema</fullName>
+                <default>false</default>
+                <label>LEGITTIMA – Limiti di sistema</label>
+            </value>
+            <value>
+                <fullName>LEGITTIMA – Errore Distributore o Gestore</fullName>
+                <default>false</default>
+                <label>LEGITTIMA – Errore Distributore o Gestore</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
@@ -58,6 +78,22 @@
         <valueSettings>
             <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
             <valueName>Segnalato fornitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto/Rich. Info</controllingFieldValue>
+            <valueName>NON LEGITTIMA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto/Rich. Info</controllingFieldValue>
+            <valueName>LEGITTIMA – Errore Procedurale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto/Rich. Info</controllingFieldValue>
+            <valueName>LEGITTIMA – Limiti di sistema</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto/Rich. Info</controllingFieldValue>
+            <valueName>LEGITTIMA – Errore Distributore o Gestore</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

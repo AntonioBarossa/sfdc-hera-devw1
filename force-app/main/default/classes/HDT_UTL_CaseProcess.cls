@@ -179,6 +179,17 @@ public with sharing class HDT_UTL_CaseProcess {
         if( !oldCmor && newCmor) return true;
         return false;
     }
+
+    public static Boolean checkSkipDatePopulation(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		Datetime newCustomerReqDate = caseNew.CustomerRequestDate__c;
+		Datetime oldCustomerReqDate = caseOld.CustomerRequestDate__c;
+        Date oldWrittenRecDate = caseOld.WrittenReceiptRequestDate__c;
+        Date newWrittenRecDate = caseNew.WrittenReceiptRequestDate__c;
+        if((oldCustomerReqDate == null && newCustomerReqDate != null) || (oldWrittenRecDate == null && newWrittenRecDate != null)) return true;
+        return false;
+    }
     
     public static Boolean isChangedPhase(List<Case> caseList, Map<Id,SObject> caseOldMap){
         Case caseNew = caseList[0];
@@ -327,21 +338,6 @@ public with sharing class HDT_UTL_CaseProcess {
                 }
             }
 
-            List<CommunicationLogTracking__c> comLogTrackList = new List<CommunicationLogTracking__c>();
-            try {
-                for (Case cs : caseList) {
-                    if ('Completata'.equalsIgnoreCase(cs.Phase__c)){
-                        CommunicationLogTracking__c trck = new CommunicationLogTracking__c();
-                        trck.CaseId__c = cs.Id;
-                        comLogTrackList.add(trck);
-                    }
-                }
-                if (comLogTrackList.size() > 0){
-                    insert comLogTrackList;
-                }
-            } catch (Exception e) {
-                System.debug(LoggingLevel.DEBUG, 'Throwed error: ' + e.getMessage());
-            }
         }
     }
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){

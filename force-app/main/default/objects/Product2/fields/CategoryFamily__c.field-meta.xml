@@ -69,6 +69,11 @@
                 <label>Hera Impronta Zero</label>
             </value>
             <value>
+                <fullName>Hera Smart</fullName>
+                <default>false</default>
+                <label>Hera Smart</label>
+            </value>
+            <value>
                 <fullName>Hera Welfare</fullName>
                 <default>false</default>
                 <label>Hera Welfare</label>
@@ -157,6 +162,11 @@
                 <fullName>Prezzo Netto Ranton</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Ranton</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Relax</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Relax</label>
             </value>
             <value>
                 <fullName>Prezzo Netto Tlr</fullName>
