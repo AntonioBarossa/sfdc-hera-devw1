@@ -3,21 +3,10 @@
     <label>Voltura - Voltura Tecnica</label>
     <protected>false</protected>
     <values>
-        <field>Commodity__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;VoltureType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;Charge__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;SupplyType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;UseCategory__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;WithdrawalClass__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;AnnualConsumption__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;ServiceEnergy__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;AtecoCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
-]</value>
+{&quot;FieldName&quot;:&quot;Charge__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
@@ -30,16 +19,14 @@
 {&quot;FieldName&quot;:&quot;ServicePoint__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;ContractCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;MeterCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;SupplyType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CommodityFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;Resident__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;ClientCategory__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;AnnualConsumption__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;Email__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;Market__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
-]</value>
-    </values>
-    <values>
-        <field>ReadOnlyRelatedFields__c</field>
-        <value xsi:nil="true"/>
+{&quot;FieldName&quot;:&quot;Market__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;WithdrawalClass__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
