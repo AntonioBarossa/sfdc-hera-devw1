@@ -5637,11 +5637,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CaseExtension__c.Case__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>CaseExtension__c.EffectiveDate1__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5658,11 +5653,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CaseExtension__c.EffectiveDate4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OrderExtension__c.Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
