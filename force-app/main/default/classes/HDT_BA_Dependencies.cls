@@ -5,7 +5,7 @@
 */
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject>, Schedulable {
-
+    private final List<String> CLOSED_PHASE = new List<String>{'Completata','Annullato'};
     /**
     * @description 
     * @author federico.defelice@webresults.it | 10-11-2021 
@@ -22,7 +22,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     */
     public Database.QueryLocator start(Database.BatchableContext bc) {
          
-        String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c, NextPhase__c '
+        String query = 'SELECT Id, Status__c, Case__c, Order__c,Case__r.Phase__c, Order__r.Phase__c, Type__c, NextPhase__c '
                     + 'FROM ServiceRequest__c '
                     + 'WHERE DependOn__c = null '
                     + 'AND Status__c = \''+String.escapeSingleQuotes(HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO)+'\' '
@@ -39,22 +39,25 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     public void execute(Database.BatchableContext bc, List<ServiceRequest__c> srList) {
         Integer recordsProcessed = 0;
         List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
+        List<ServiceRequest__c> srToDelete = new List<ServiceRequest__c>();
         List<Order> ordersToBeUpdated = new List<Order>();
         List<Case> casesToBeUpdated = new List<Case>();
 
         for(ServiceRequest__c sr : srList) {        
-            if(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_POSTSALES)){
+            if(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_POSTSALES) && HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO.equalsIgnoreCase(sr.Case__r.Phase__c)){
                 Case caseToUpdate = new Case(ID=sr.Case__c);
                 caseToUpdate.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
                 caseToUpdate.Phase__c = sr.NextPhase__c;
                 casesToBeUpdated.add(caseToUpdate);
-            }else if(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_SALES)){
+            }else if(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_SALES) && HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO.equalsIgnoreCase(sr.Order__r.Phase__c)){
                 Order orderToUpdate = new Order(ID=sr.Order__c);
                 orderToUpdate.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
                 orderToUpdate.Phase__c = sr.NextPhase__c;
                 ordersToBeUpdated.add(orderToUpdate);
+            }else if (CLOSED_PHASE.contains(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_SALES) ? sr.Order__r.Phase__c : sr.Case__r.Phase__c)){
+                srToDelete.add(sr);
+                continue;
             }
-            sr.DependOn__c = null;
             sr.Status__c = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
             serviceRequestsToBeSequenced.add(sr);
             recordsProcessed++;
@@ -63,6 +66,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
             Savepoint sp = Database.setSavePoint();
             try{
                 if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
+                    ServiceRequest__c.SObjectType.getDescribe().isDeletable()&&
                     Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
                     Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
                     Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
@@ -87,6 +91,9 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
                     if(casesToBeUpdated.size()>0){
                         update casesToBeUpdated;
                     }
+                    if (!srToDelete.isEmpty()){
+                        delete srToDelete;
+                    }
                 }
             }catch(Exception ex){
                 System.debug(LoggingLevel.ERROR, ex.getMessage());
@@ -103,7 +110,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     */
     public void finish(Database.BatchableContext bc) {
         System.debug(LoggingLevel.DEBUG, 'Batch execution, for unlock records in the sequentialization processing, finished');
-        scheduleCallouts();
+        //scheduleCallouts();
     }
 
     private void scheduleCallouts(){

@@ -110,6 +110,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                     value: 'Marche Multiservizi TARI'
                 },
                 {
+                    label: 'Estenergy',
+                    value: 'Estenergy'
+                },
+                {
                     label: 'Multi',
                     value: 'Multi'
                 }
