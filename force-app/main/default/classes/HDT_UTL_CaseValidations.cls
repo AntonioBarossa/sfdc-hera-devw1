@@ -34,7 +34,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
         caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi' || caseType == 'Paperless' || 
-        caseType == 'Comunicazione Pagamento'){
+        caseType == 'Comunicazione Pagamento' || 'Copia Bolletta/Bollettino'.equalsIgnoreCase(caseType)){
 
             result = validatePagamenti(fields, caseType, currentCase);
 
@@ -401,6 +401,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }
             }
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));  
+        }else if ('Copia Bolletta/Bollettino'.equalsIgnoreCase(caseType) && 'E-Mail'.equalsIgnoreCase(getFieldValue(fields, 'SendMode__c')) && String.isBlank(getFieldValue(fields, 'Email__c'))){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per la modalità di invio selezionata è necessario specificare un indirizzo email valido.'));
         }
         else
         {
