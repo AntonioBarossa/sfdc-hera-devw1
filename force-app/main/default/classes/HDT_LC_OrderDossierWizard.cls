@@ -193,9 +193,10 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         check = sale.Status__c == 'Attiva' ? true : false;
         
         Map<String, Order> checkMap = checkExistingOrderParent(saleId);
-        Boolean isTari = checkMap != null && !checkMap.isEmpty() && macroProcessType.equalsIgnoreCase('handleProcessTari') && checkMap.keySet().contains('tari');
+        Boolean isDocumentalDiscard  = 'docManagement'.equalsIgnoreCase(macroProcessType);
+        Boolean isTari = checkMap != null && !checkMap.isEmpty() && (macroProcessType.equalsIgnoreCase('handleProcessTari') || isDocumentalDiscard) && checkMap.keySet().contains('tari');
         Boolean isStandard = checkMap != null && !checkMap.isEmpty() && macroProcessType.equalsIgnoreCase('handleProcess') && checkMap.keySet().contains('standard');
-        Boolean createOrder = !isTari && !isStandard;
+        Boolean createOrder = !isTari && !isStandard && !isDocumentalDiscard;
 
         Order parentOrder = new Order();
 
