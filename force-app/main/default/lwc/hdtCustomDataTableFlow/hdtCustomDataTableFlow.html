@@ -1,13 +1,15 @@
 <template>
     <template if:true={showTable}>
-        <div class="slds-scrollable_y" style="height:10rem" tabindex="0">
-            <lightning-datatable
-                    key-field="id"
-                    data={records}
-                    columns={columns}
-                    hide-checkbox-column="true">
-            </lightning-datatable>
-        </div>
+        <template if:false={showErrorMessage}>
+            <div class="slds-scrollable_y" style="height:10rem" tabindex="0">
+                <lightning-datatable
+                        key-field="id"
+                        data={records}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                </lightning-datatable>
+            </div>
+        </template>
     </template>
     <template if:true={showErrorMessage}>
         <div align="center">
