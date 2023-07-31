@@ -5675,11 +5675,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CaseExtension__c.ExternalKey__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>OrderExtension__c.Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5701,11 +5696,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderExtension__c.EffectiveDate4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OrderExtension__c.ExternalKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
