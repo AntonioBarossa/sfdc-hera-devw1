@@ -131,7 +131,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoPODCodeMismatch);
                 retMap.put('checksAreValid',false);
             }
-            if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.SAPIntegrationID__c != csvSplitted[accountIndex]){
+            if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.CustomerCode__c != csvSplitted[accountIndex]){
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoAccountCodeMismatch);
                 retMap.put('checksAreValid',false);
             }
