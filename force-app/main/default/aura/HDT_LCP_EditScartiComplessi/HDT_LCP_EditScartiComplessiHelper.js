@@ -174,7 +174,8 @@
                             "c__accountId" : accountid,
                             "c__ordineVendita": orderParentId,
                             "c__discardRework": true,
-                            "c__discardActivityId": activity.Id
+                            "c__discardActivityId": activity.Id,
+                            "c__macroProcessType" : "docManagement"
                         }
                     },
                     focus: true
@@ -205,7 +206,8 @@
                             "c__accountId" : accountid,
                             "c__ordineVendita": orderParentId,
                             "c__discardRework": true,
-                            "c__discardActivityId": activity.Id
+                            "c__discardActivityId": activity.Id,
+                            "c__macroProcessType" : "docManagement"
                         }
                     },
                     focus: true
