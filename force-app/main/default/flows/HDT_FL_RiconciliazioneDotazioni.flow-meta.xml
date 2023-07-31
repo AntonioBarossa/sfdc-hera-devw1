@@ -760,10 +760,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>getInputCase.Account.CustomerMarking__c</leftValueReference>
+                    <leftValueReference>getInputCase.CausalCode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>TARIG</stringValue>
+                        <stringValue>RI8</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -796,10 +796,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>getInputCase.Account.CustomerMarking__c</leftValueReference>
+                    <leftValueReference>getInputCase.CausalCode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>TARING</stringValue>
+                        <stringValue>TP8</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
