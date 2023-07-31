@@ -291,7 +291,7 @@ public inherited sharing class HDT_QR_Contract {
         return [SELECT Id,SAPContractCode__c,ContractSalesCompany__c,Market__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.JointBottomAdhesion__c,
                 ServicePoint__r.PaySewer__c, ServicePoint__r.PayPurification__c, ServicePoint__r.MeterSN__c, ServicePoint__r.CommoditySector__c,
                 ServicePoint__r.Distributor__c, ServicePoint__r.SupplyType__c, Contact__c,AccountId,Account.PrimaryEmail__c,
-                Account.SAPIntegrationID__c ,BillingProfile__r.InvoicingAddressFormula__c,BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c,
+                Account.SAPIntegrationID__c,Account.CustomerCode__c ,BillingProfile__r.InvoicingAddressFormula__c,BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c,
                 BillingProfile__r.InvoicingPlace__c, BillingProfile__r.InvoicingPostalCode__c, BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c,
                 BillingProfile__r.InvoicingStreetNumberExtension__c,BillingProfile__r.InvoiceEmailAddress__c,BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c ,ServicePoint__r.AnnualConsumption__c, ServicePoint__r.MeterClass__c,
                 ServicePoint__r.Disconnectable__c, ServicePoint__r.Distributor__r.Code__c, ServicePoint__r.MarketOrigin__c, ServicePoint__r.PurificationInfoOnTheInvoice__c, ServicePoint__r.RateCategory__c,
