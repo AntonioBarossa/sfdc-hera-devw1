@@ -24,7 +24,8 @@
 				ISPICKVAL(Category__c, &quot;Piccoli Condomini&quot;),
 				ISPICKVAL(Category__c, &quot;Grandi Condomini&quot;)
 			)
-		)
+		),
+		ISPICKVAL(CustomerMarking__c, &quot;Persona Fisica&quot;)
 	),
 	NOT
 	(
@@ -63,7 +64,13 @@
 				), 
 				FiscalCode__c != &quot;&quot;, 
 				ISNUMBER(FiscalCode__c)
-			)
+			),
+			AND(
+    			ISPICKVAL(CustomerMarking__c, &quot;Persona Fisica&quot;),
+    			NOT(ISNUMBER(FiscalCode__c)),
+    			ISBLANK(VATNumber__c),
+    			LEN(FiscalCode__c) == 16
+   			)
 		)
 	)
 )</errorConditionFormula>
