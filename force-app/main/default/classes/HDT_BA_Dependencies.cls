@@ -37,7 +37,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     */
     public void execute(Database.BatchableContext bc, List<ServiceRequest__c> srList) {
         Integer recordsProcessed = 0;
-        List<String> closedPhase = new List<String>{'Completata','Annullato'};
+        List<String> closedPhases = new List<String>{'Completata','Annullato'};
         List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
         List<ServiceRequest__c> srToDelete = new List<ServiceRequest__c>();
         List<Order> ordersToBeUpdated = new List<Order>();
@@ -54,7 +54,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
                 orderToUpdate.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
                 orderToUpdate.Phase__c = sr.NextPhase__c;
                 ordersToBeUpdated.add(orderToUpdate);
-            }else if (closedPhase.contains(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_SALES) ? sr.Order__r.Phase__c : sr.Case__r.Phase__c)){
+            }else if (closedPhases.contains(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_SALES) ? sr.Order__r.Phase__c : sr.Case__r.Phase__c)){
                 srToDelete.add(sr);
                 continue;
             }
