@@ -69,6 +69,11 @@
                 <label>Hera Impronta Zero</label>
             </value>
             <value>
+                <fullName>Hera Smart</fullName>
+                <default>false</default>
+                <label>Hera Smart</label>
+            </value>
+            <value>
                 <fullName>Hera Welfare</fullName>
                 <default>false</default>
                 <label>Hera Welfare</label>

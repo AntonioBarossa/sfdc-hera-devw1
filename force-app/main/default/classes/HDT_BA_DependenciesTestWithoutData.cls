@@ -47,7 +47,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         Order order = ordListBlk[0];
         
         order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
-        order.Phase__c = PHASE_BLK;
+        order.Phase__c = 'Annullato';
         order.Status = STATUS_CANCELLED;
         insert order;
 
@@ -57,8 +57,9 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         sr.ServicePointCode__c = servPointList[0].ServicePointCode__c;
         sr.Order__c = order.Id;
         sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-        sr.Status__c = STATUS_CANCELLED;
+        sr.Status__c = PHASE_INC_SEQ;
         sr.ProcessType__c = PROCESS_TYPE;
+        sr.NextPhase__c = PHASE_INC_NEXT;
         insert sr;
         System.debug(LoggingLevel.DEBUG, sr);
     }
@@ -83,7 +84,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         Order order = ordListInc[0];
         
         order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
-        order.Phase__c = PHASE_INC_NEXT;
+        order.Phase__c = 'Sequenzializzato';
         order.Contact__c = contact.Id;
         insert order;
 

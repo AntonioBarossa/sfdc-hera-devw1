@@ -237,7 +237,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let key = this.customerData.controllerValues[event.target.value];
         //this.filterMarkingOptions();
         this.companyPicklist(event.target.value);
-        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        const tariNgMarkings = ['BP TARI NG AAA','BP TARIP','BP TARI NG MMS']
+        this.customerMarkingOptions = this.customerData.values.filter(opt => (opt.validFor.includes(key) && tariNgMarkings.indexOf(opt.value) === -1 ));
         this.markingValue = '';
         this.categoryValue = '';
     }

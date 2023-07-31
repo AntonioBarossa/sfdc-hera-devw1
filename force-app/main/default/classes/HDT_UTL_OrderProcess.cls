@@ -188,6 +188,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.ProcessType__c == 'Voltura' 
                 && (oldOrder.Phase__c == 'In attesa validazione' || oldOrder.Phase__c == 'Accettazione Voltura')
                 && (order.Phase__c == 'Documentazione Validata') 
+                && order.QualityCall__c
                 && isMonitoringList.contains(order.CommercialId__c) 
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null)

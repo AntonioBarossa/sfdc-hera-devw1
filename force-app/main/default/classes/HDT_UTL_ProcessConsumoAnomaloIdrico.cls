@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     }
 
     private Boolean addressFieldsInvalid(BillingProfile__c billingProf){
-        return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || String.isBlank(billingProf.InvoicingPlace__c) ||
+        return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || 
                 String.isBlank(billingProf.InvoicingPostalCode__c) || String.isBlank(billingProf.InvoicingProvince__c) || String.isBlank(billingProf.InvoicingStreetName__c) ||
                 String.isBlank(billingProf.InvoicingStreetNumber__c) || String.isBlank(billingProf.InvoicingAddressFormula__c);
     }
