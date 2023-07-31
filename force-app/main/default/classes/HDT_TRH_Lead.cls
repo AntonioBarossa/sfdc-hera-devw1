@@ -170,8 +170,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         if(r.id == a.recordtypeid){
                             Lead li = mapAccountLead.get(a.id);
                         
-                            a.LastName__c = li.Company;
-                            a.Name=li.Company;
+                            a.LastName__c = li.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale') ? li.LastName : li.Company;
+                            a.FirstName__c = li.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale') ? li.FirstName : '';
                             a.PrimaryEmail__c= li.Email;
                             a.Description= li.Description;
                             Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
