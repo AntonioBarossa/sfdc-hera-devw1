@@ -19183,26 +19183,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>OfferCode32Admin__c.OfferCode32__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.OfferProductCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.CodT0__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.EffectiveDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>OfferCode32Admin__c.Driver1__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19224,26 +19204,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OfferCode32Admin__c.Product2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.Service__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.Company__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.MarketType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OfferCode32Admin__c.OfferProductVersion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
