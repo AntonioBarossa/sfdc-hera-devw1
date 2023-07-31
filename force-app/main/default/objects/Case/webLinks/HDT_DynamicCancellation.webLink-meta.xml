@@ -28,5 +28,6 @@ c__processType={!CASE(Case.Type,
                 &apos;Cessazione post accertamento&apos;,TEXT(Case.Type),
                 &apos;Reclamo da cittadino&apos;,TEXT(Case.Type),
                 &apos;Posizionamento contenitore&apos;,TEXT(Case.Type),
+																&apos;Associa Dotazioni&apos;,TEXT(Case.Type),
 																&apos;Annullamento prestazione&apos;)}</url>
 </WebLink>

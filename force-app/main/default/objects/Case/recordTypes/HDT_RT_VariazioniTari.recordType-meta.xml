@@ -3226,6 +3226,18 @@
             <fullName>UNION-Persona fisica</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>BP TARI NG AAA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP TARI NG MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP TARIP</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CustomerPaymentAgreements__c</picklist>
