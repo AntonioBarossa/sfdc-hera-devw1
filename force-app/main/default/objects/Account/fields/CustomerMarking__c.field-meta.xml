@@ -41,6 +41,10 @@
             <valueName>BP TARI NG AAA</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>AAA-EBT</controllingFieldValue>
+            <valueName>TA - BP TARI NG AAA</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>HERA COMM</controllingFieldValue>
             <valueName>Associazione</valueName>
         </valueSettings>
@@ -101,6 +105,10 @@
             <valueName>BP TARIP</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>TP - BP TARIP</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>G1 - MMS Persona fisica</valueName>
         </valueSettings>
@@ -127,6 +135,10 @@
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>BP TARI NG MMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MMS</controllingFieldValue>
+            <valueName>TM - BP TARI NG MMS</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reseller</controllingFieldValue>

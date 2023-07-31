@@ -12744,6 +12744,10 @@
 			<fullName>Segnalazioni Ambientali</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>Gestione Sost./Furto/Smarr. Dot.</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>

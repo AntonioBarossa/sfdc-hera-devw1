@@ -12166,6 +12166,10 @@
 			<fullName>Superficie</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>Richieste di riparazione dotazione domiciliare</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>SubscriberType__c</picklist>
@@ -12666,6 +12670,14 @@
 		</values>
 		<values>
 			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Associa Dotazioni</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Gestione Sost./Furto/Smarr. Dot.</fullName>
 			<default>false</default>
 		</values>
     </picklistValues>
