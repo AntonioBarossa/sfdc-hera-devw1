@@ -279,6 +279,11 @@
                 <label>Rettifica per segnalazione cassetto fiscale</label>
             </value>
             <value>
+                <fullName>Richieste di riparazione dotazione domiciliare</fullName>
+                <default>false</default>
+                <label>Richieste di riparazione dotazione domiciliare</label>
+            </value>
+            <value>
                 <fullName>Rid. Agev. Dopo Accertamento</fullName>
                 <default>false</default>
                 <label>Rid. Agev. Dopo Accertamento</label>
@@ -365,6 +370,70 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Lettura su Contratto Aperto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Sostituzione Contatore per Incuria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Autorizzazione allo scarico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Cartografia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Fognatura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna apertura contatore chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna consumo abusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna inversione contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna lettura a carico HERA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna SISMA chiusura contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna sul posto gratuita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica Rottura Impianto Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Adesione Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Rinuncia Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>In Continuità</valueName>
         </valueSettings>
@@ -385,16 +454,8 @@
             <valueName>Recupero</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Elementi di dettaglio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report disaggregato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report storno di adeguamento</valueName>
+            <controllingFieldValue>Gestione Sost./Furto/Smarr. Dot.</controllingFieldValue>
+            <valueName>Richieste di riparazione dotazione domiciliare</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
@@ -433,12 +494,64 @@
             <valueName>Solo aggiunta attacco senza sopralluogo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Elementi di dettaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report disaggregato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report storno di adeguamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Revoca Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Modifica Impianto</controllingFieldValue>
             <valueName>Spostamento Impianto</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica Impianto</controllingFieldValue>
             <valueName>Variazione Portata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Agevolazione cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Energia Elettrica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Errata applicazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>IVA - Agevolazione cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>IVA - Errata applicazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
@@ -485,115 +598,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
-            <valueName>Agevolazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Adesione Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Rinuncia Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Modifica Fognatura e Depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna apertura contatore chiuso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna consumo abusivo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna inversione contatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna lettura a carico HERA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna SISMA chiusura contatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna sul posto gratuita</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica Rottura Impianto Cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Istruttoria</controllingFieldValue>
-            <valueName>Antincendio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Istruttoria</controllingFieldValue>
-            <valueName>Autorizzazione allo scarico</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Istruttoria</controllingFieldValue>
-            <valueName>Cartografia</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Istruttoria</controllingFieldValue>
-            <valueName>Fognatura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Istruttoria</controllingFieldValue>
-            <valueName>Parere Preventivo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
-            <valueName>Lettura su Contratto Aperto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
-            <valueName>Sostituzione Contatore per Incuria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>IVA - Esenzione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>IVA - Revoca Esenzione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Agevolazione cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Energia Elettrica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Errata applicazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>IVA - Agevolazione cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>IVA - Errata applicazione</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
