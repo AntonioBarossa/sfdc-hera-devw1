@@ -179,13 +179,16 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'DES_ERR_AEEG' => 'No Error',
             'COD_PRAT_UTENTE' => '10922312839',
 			'result' => 'ko',
-            'COD_PRAT_DISTR' => '123812938123_DL'
+            'COD_PRAT_DISTR' => '123812938123_DL',
+            'errorMessage' => 'Venditore 13V0000170 non definito'
         };
         Test.startTest();
         currentOrder[0] = voltureChangeUtl.handleResponse(fieldsMap, currentOrder[0]);
         Test.stopTest();
+        List<wrts_prcgvr__Activity__c> actTest = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Type__c = 'Caricamento Manuale Siebel'];
         System.assertEquals('Comunicazione verso Heroku KO', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
         System.assertEquals(null, currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
+        System.assertEquals(true, !actTest.isEmpty(), 'Attivita non creata');
     }
 
     @IsTest
