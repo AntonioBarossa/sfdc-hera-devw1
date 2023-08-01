@@ -169,7 +169,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     if ( a.LastName__c==null) {
                         if(r.id == a.recordtypeid){
                             Lead li = mapAccountLead.get(a.id);
-                            a.Name = li.Company;
+                        
                             a.LastName__c = li.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale') ? li.LastName : li.Company;
                             a.FirstName__c = li.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale') ? li.FirstName : '';
                             a.PrimaryEmail__c= li.Email;
