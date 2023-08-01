@@ -26,21 +26,6 @@
         <label>AAS Parti comuni</label>
     </customValue>
     <customValue>
-        <fullName>TA - BP TARI NG AAA</fullName>
-        <default>false</default>
-        <label>TA - BP TARI NG AAA</label>
-    </customValue>
-    <customValue>
-        <fullName>TP - BP TARIP</fullName>
-        <default>false</default>
-        <label>TP - BP TARIP</label>
-    </customValue>
-    <customValue>
-        <fullName>TM - BP TARI NG MMS</fullName>
-        <default>false</default>
-        <label>TM - BP TARI NG MMS</label>
-    </customValue>
-    <customValue>
         <fullName>AAS Persona fisica</fullName>
         <default>false</default>
         <label>AAS Persona fisica</label>
