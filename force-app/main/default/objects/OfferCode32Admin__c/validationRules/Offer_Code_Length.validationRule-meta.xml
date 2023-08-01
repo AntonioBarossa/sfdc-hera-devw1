@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offer_Code_Length</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN(OfferCode32__c) &lt;&gt; 32</errorConditionFormula>
+    <errorMessage>La lunghezza del codice non può essere diversa da 32 caratteri</errorMessage>
+</ValidationRule>

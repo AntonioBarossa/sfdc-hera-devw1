@@ -242,7 +242,20 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         res.setStatus('success');
                         res.setStatusCode(200);
 
-                    } when else {
+                    } when 'AllignSapOfferCode' {
+                        String requestBody = req.getBody();
+                        HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableRequest requestWrap = (HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableRequest) JSON.deserialize(requestBody, HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableRequest.class);
+                        for(HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableData item : requestWrap.data){
+                            item.outcome = 'OK';
+                            item.outcomeCode = '0';
+                        }
+                        HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableResponse resp = new HDT_WRP_AlignSapOfferCodeTable.HDT_WRP_AlignSapOfferCodeTableResponse();
+                        resp.data = requestWrap.data;
+                        body = JSON.serialize(resp);
+                        res.setStatusCode(200);
+                        res.setStatus('success');
+                        res.setBody(body);
+                    }when else {
         
                         res.setStatusCode(404);
                         

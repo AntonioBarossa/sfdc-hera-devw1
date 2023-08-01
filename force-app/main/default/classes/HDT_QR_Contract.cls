@@ -306,4 +306,9 @@ public inherited sharing class HDT_QR_Contract {
         return [SELECT Id,BillingProfile__c,AccountId,Account.Category__c,ServicePoint__c,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED ];
     }
 
+    public List<Contract> getContractBySapCodeWithStatusActive(Set<String> sapCodes){
+        String filterStatus = 'Attivo';
+        return [SELECT Id,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes AND Status =: filterStatus WITH SECURITY_ENFORCED ];
+    }
+
 }
