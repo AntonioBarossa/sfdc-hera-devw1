@@ -836,4 +836,19 @@
         <default>false</default>
         <label>Social</label>
     </standardValue>
+    <standardValue>
+        <fullName>Gestione Sost./Furto/Smarr. Dot.</fullName>
+        <default>false</default>
+        <label>Gestione Sost./Furto/Smarr. Dot.</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Associa Dotazioni</fullName>
+        <default>false</default>
+        <label>Associa Dotazioni</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestione Dotazioni</fullName>
+        <default>false</default>
+        <label>Gestione Dotazioni</label>
+    </standardValue>
 </StandardValueSet>
