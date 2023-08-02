@@ -293,7 +293,23 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		}
 	}
 
-    
+	@isTest
+    public static void testAgencyActivityProcess(){
+		HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery input = new HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery();
+		input.ids = new List<Id>{[SELECT id FROM Order].get(0).Id};
+		input.fields = 'Id,Case__c,Order__c';
+		List<HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery> inputs = new List<HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery>{input};
+		Test.startTest();
+			List<HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesResponse> resp = HDT_UTL_ActivityCustom.agencyActivityProcess(inputs);
+			System.assertEquals(false,resp[0].found,'Gestione lista vuota non valida');
+			input = new HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery();
+			input.ids = new List<Id>{[SELECT id FROM wrts_prcgvr__Activity__c].get(0).Id};
+			input.fields = 'Id,Case__c,Order__c';
+			inputs = new List<HDT_UTL_ActivityCustom.HDT_WRP_ActivitiesForFlowQuery>{input};
+			resp = HDT_UTL_ActivityCustom.agencyActivityProcess(inputs);
+			System.assertEquals(true,resp[0].found,'Non viene trovata nessuna attività');
+		test.stopTest();
+	}
     
     
     
