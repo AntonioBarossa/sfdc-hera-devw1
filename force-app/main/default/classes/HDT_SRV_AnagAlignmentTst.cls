@@ -59,6 +59,19 @@ public class HDT_SRV_AnagAlignmentTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
 		HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In Lavorazione SAP', 'Bozza', rtIdsosp, 'HDT_RT_SospensioneRiattivazione','A','','','');
 
+        List<OfferCodeUpdateLog__c> listOfferCodeUpdateLog = new List<OfferCodeUpdateLog__c>();
+        OfferCodeUpdateLog__c offLogCodTZeroY = new OfferCodeUpdateLog__c();
+        offLogCodTZeroY.SapContractCode__c = contractListTwo[0].SapContractCode__c;
+        offLogCodTZeroY.Pod__c = servPointList[0].ServicePointCode__c;
+        offLogCodTZeroY.OfferCode__c = 'Test';
+        offLogCodTZeroY.Profile__c = 'Test';
+        offLogCodTZeroY.Commodity__c = 'Energia Elettrica';
+        offLogCodTZeroY.EffectiveDate__c = Date.today();
+        offLogCodTZeroY.CodTzero__c = 'Y';
+        offLogCodTZeroY.EffectiveMonths__c = 10;
+        offLogCodTZeroY.CausalCode__c = 'Test';
+        listOfferCodeUpdateLog.add(offLogCodTZeroY);
+        insert listOfferCodeUpdateLog;
     }
 
     @IsTest
@@ -470,6 +483,20 @@ public class HDT_SRV_AnagAlignmentTst {
 
         Test.stopTest();
         
+    }
+
+    @IsTest
+    static void testbulkCreateAnagAlignmentOfferCode(){
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        List<OfferCodeUpdateLog__c> listOfOfferCodeUpdateLog = new List<OfferCodeUpdateLog__c>([SELECT Id, SapContractCode__c, Pod__c, OfferCode__c, Profile__c, Commodity__c, EffectiveDate__c, CodTzero__c, EffectiveMonths__c, CausalCode__c FROM OfferCodeUpdateLog__c]);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
+        Test.startTest();
+        HDT_SRV_AnagAlignment.bulkCreateAnagAlignmentOfferCode(listOfOfferCodeUpdateLog);
+        Test.stopTest();
     }
 
     public class HDT_SRV_AnagAlignmentTstMock implements HttpCalloutMock{

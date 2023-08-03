@@ -19208,6 +19208,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CaseExtension__c.CodTzero__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CaseExtension__c.EffectiveDate1__c</field>
         <readable>true</readable>
     </fieldPermissions>
