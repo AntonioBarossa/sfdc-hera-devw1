@@ -213,4 +213,14 @@ public with sharing class HDT_QR_AnagAlignment {
 
         return 0;
     }
+
+    public List<HDT_RegionalAdditional__mdt> findRegionalAdditionalBulk (Set<String> setOfTax, Set<String> setOfCity, Set<String> setOfRegion){
+        List<HDT_RegionalAdditional__mdt> listOfAdditionals = new List<HDT_RegionalAdditional__mdt>([SELECT Id, AdditionalValue__c, Tax__c, City__c 
+                                                                                                FROM HDT_RegionalAdditional__mdt 
+                                                                                                WHERE Tax__c IN: setOfTax
+                                                                                                    AND(City__c IN: setOfCity OR City__c = NULL)
+                                                                                                    AND(Region__c IN: setOfRegion OR Region__c = NULL)
+                                                                                                WITH SECURITY_ENFORCED]);
+        return listOfAdditionals;
+    }
 }
