@@ -104,12 +104,15 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             sapContractCode = order.SapContractCode__c;
 
             //richiamo dataEnrichment
+            /*
+            *** Rimosso arricchimento dati in quanto recupera i dati del contratto vecchio
+            *** Facendo scendere dati in corretti sui sistemi a valle
             try{
                 newCase = dataEnrichment(pod,sapContractCode,newCase);
             }catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, 'Impossibile arrichire dati: ' + e.getMessage());
             }
-
+            */
 
             if(newCase.PhoneNumber__c == null || String.isBlank(newCase.PhoneNumber__c))
             {
