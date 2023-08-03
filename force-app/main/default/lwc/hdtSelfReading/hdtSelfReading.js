@@ -498,13 +498,13 @@ export default class HdtSelfReading extends LightningElement {
                             if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
                                 numeroRegistriAlert++;
                             /* TK 945331C - Le letture "Lettura di cessazione stimata" (TL 95) non sono da intendersi come letture stimate */
-                            } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue && tipoLettura !== 'Lettura di cessazione stimata') {
+                            } else if (newReadingValue >= oldReadingValue && newReadingValue < selectedReadingValue && tipoLettura !== 'Lettura di cessazione stimata') {
                                 numeroRegistriStimati++;
                             }
                         } else {
                             if (newReadingValue < oldReadingValue) {
                                 numeroRegistriErrati++;
-                            } else if (newReadingValue > oldReadingValue) {
+                            } else if (newReadingValue > oldReadingValue) { 
                                 numeroRegistriAlert++;
                             }
                         } 
