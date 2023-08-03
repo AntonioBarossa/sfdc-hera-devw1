@@ -700,6 +700,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             if(offerT0.size()==1){
                 orderToUpdate.OfferCode32__c=offerCodes[0].OfferCode32__c;
                 if (offerCodes.size()>1) {
+                    ordExt.Order__c=(String)orderToUpdate.Id;
                     ordExt.ExternalKey__c=(String)orderToUpdate.Id;
                     try{
                         upsert ordExt ExternalKey__c;

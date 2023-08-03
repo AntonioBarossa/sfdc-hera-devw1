@@ -19,11 +19,11 @@ public with sharing class HDT_UTL_OfferCodeAdmin {
                     offCode.Exported__c=false;
                 }
                 else{
-                        throw new HDT_TRH_AmmCodiciOffertaException('Nessun Prodoto Corrispondente a questo codice trovato!');
+                        throw new HDT_TRH_AmmCodiciOffertaException('Nessun Prodotto Corrispondente a questo codice trovato!');
                     }
             }
             catch (Exception ex){
-                offCode.adderror('Nessun Prodoto Corrispondente a questo codice trovato!');
+                offCode.adderror('Nessun Prodotto Corrispondente a questo codice trovato!');
             }
         }  
     }
