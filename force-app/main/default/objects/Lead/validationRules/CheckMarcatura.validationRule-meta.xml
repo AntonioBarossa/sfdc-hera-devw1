@@ -39,15 +39,11 @@
 			),
 			AND( 
 				ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), 
-				ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), 
-				OR(
 					AND(
 						FiscalCode__c != &quot;&quot;, 
-						ISNUMBER(FiscalCode__c)
-					), 
-					ISBLANK(FiscalCode__c)
-				), 
-				NOT(ISBLANK(VATNumber__c)) 
+						ISNUMBER(FiscalCode__c),
+						NOT(ISBLANK(VATNumber__c)) 
+					)
 			),
 			AND( 
 				ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;), 
