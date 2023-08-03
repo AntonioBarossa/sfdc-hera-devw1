@@ -38,7 +38,8 @@
 				ISNUMBER(FiscalCode__c) 
 			),
 			AND( 
-				ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), 
+				ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;),
+				ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), 
 					AND(
 						FiscalCode__c != &quot;&quot;, 
 						ISNUMBER(FiscalCode__c),
