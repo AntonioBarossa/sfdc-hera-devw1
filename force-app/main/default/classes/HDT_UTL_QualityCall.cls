@@ -1,10 +1,22 @@
 public with sharing class HDT_UTL_QualityCall {
-    public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : 50;
+    private static final Integer NEW_DAYS_TO_WORK = getDeadlineDays(Date.today());
+    public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : NEW_DAYS_TO_WORK > 50 ? NEW_DAYS_TO_WORK : 50;
     public static final String HANDLE_ACTIVITY = 'Attività gestita';
     public static final String HANDLE_DEADLINE = 'Scadenza gestita';
     public static final Integer ORDER_BATCH_SIZE = 50;
     public static final Date START_DATE = Date.today().addDays(-DAYS_TO_WORK);
     
+    public static Integer getDeadlineDays(Date actCreatedDate){
+        String deadline = System.Label.HDT_QualityCallDeadLine;
+        String dateToStart = System.Label.HDT_QualityCallStartingDate;
+        Boolean useNewDate = false;
+        if (String.isNotBlank(deadline) && deadline.isNumeric() && Pattern.matches('[0-9]{4}[-]([0][1-9]|[1][0-2])[-]([0][1-9]|[1-2][0-9]|[3][0-1])',dateToStart)){
+            Date startFix = Date.valueOf(dateToStart);
+            useNewDate = startFix <= actCreatedDate;
+        }
+        return Test.isRunningTest()? DAYS_TO_WORK : useNewDate? Integer.valueOf(deadline) : 50;
+        
+    }
 
     public void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method){
         this.setLogRecord(srList, recordToWork, logs, method,2);
