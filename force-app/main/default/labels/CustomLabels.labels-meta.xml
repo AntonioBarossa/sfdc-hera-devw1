@@ -214,6 +214,13 @@
         <value>NESSUN_DL;</value>
     </labels>
     <labels>
+        <fullName>HDT_ComfortCallDeadLine</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ComfortCallDeadLine</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
         <fullName>HDT_CPQ_TemplateProductCode</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -646,6 +653,20 @@
         <protected>false</protected>
         <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
         <value>Offerta commerciale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_QualityCallDeadLine</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_QualityCallDeadLine</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>HDT_QualityCallStartingDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_QualityCallStartingDate</shortDescription>
+        <value>2023-08-01</value>
     </labels>
     <labels>
         <fullName>HDT_Sold</fullName>
