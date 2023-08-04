@@ -14,10 +14,20 @@ public inherited sharing class HDT_LC_SelfReading {
  
     @AuraEnabled
     public static void updateSelfReading(String fields){
+        List<SObject> objToUpdate = new List<SObject>();
  
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
- 
-        HDT_UTL_DatabaseService.updateSObject(obj);
+        objToUpdate.add(obj);
+        
+        if( String.isNotBlank(obj.OrderAcqua__c) && obj.ReadingDate__c != null && obj.OrderAcqua__r.readingCustomerDate__c != obj.ReadingDate__c )
+        {
+            Order ord = new order();
+            ord.Id = obj.OrderAcqua__c;
+            ord.ReadingCustomerDate__c = obj.ReadingDate__c;
+            objToUpdate.add(ord);
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(objToUpdate);
     }
 
     @AuraEnabled
