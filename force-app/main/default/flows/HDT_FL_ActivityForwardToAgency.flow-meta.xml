@@ -283,7 +283,6 @@
             <label>OK</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <interviewLabel>Activity - Inoltro ad Agenzia {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Inoltro ad Agenzia</label>
     <loops>
