@@ -4,7 +4,7 @@
         <name>PredefaultDataDecorrenza</name>
         <label>PredefaultDataDecorrenza</label>
         <locationX>446</locationX>
-        <locationY>1430</locationY>
+        <locationY>1274</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -30,16 +30,16 @@
         <name>Assegna_a_BO</name>
         <label>Assegna a BO</label>
         <locationX>314</locationX>
-        <locationY>3158</locationY>
+        <locationY>2930</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
+            <assignToReference>RefreshCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Attesa Lavorazione BO</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.Status</assignToReference>
+            <assignToReference>RefreshCase.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -53,16 +53,16 @@
         <name>Assegna_a_Da_Inviare</name>
         <label>Assegna a Da Inviare</label>
         <locationX>578</locationX>
-        <locationY>3158</locationY>
+        <locationY>2930</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
+            <assignToReference>RefreshCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.Status</assignToReference>
+            <assignToReference>RefreshCase.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -76,7 +76,7 @@
         <name>AssegnaAliquotaAccise</name>
         <label>AssegnaAliquotaAccise</label>
         <locationX>314</locationX>
-        <locationY>2462</locationY>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Excises__c</assignToReference>
             <operator>Assign</operator>
@@ -92,7 +92,7 @@
         <name>AssegnaCaseId</name>
         <label>AssegnaCaseId</label>
         <locationX>380</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>InputCase</assignToReference>
             <operator>Assign</operator>
@@ -108,7 +108,7 @@
         <name>AssegnaEmail</name>
         <label>AssegnaEmail</label>
         <locationX>314</locationX>
-        <locationY>2126</locationY>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Email__c</assignToReference>
             <operator>Assign</operator>
@@ -124,7 +124,7 @@
         <name>AssegnaPhone</name>
         <label>AssegnaPhone</label>
         <locationX>314</locationX>
-        <locationY>1790</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.PhoneNumber__c</assignToReference>
             <operator>Assign</operator>
@@ -140,7 +140,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>446</locationX>
-        <locationY>1550</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.EffectiveDate__c</assignToReference>
             <operator>Assign</operator>
@@ -198,16 +198,16 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>446</locationX>
-        <locationY>3494</locationY>
+        <locationY>3230</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.CausalCode__c</assignToReference>
+            <assignToReference>RefreshCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.OperationCode__c</assignToReference>
+            <assignToReference>RefreshCase.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
@@ -221,7 +221,7 @@
         <name>Aliquota_Accise_vuot</name>
         <label>Aliquota Accise vuota?</label>
         <locationX>446</locationX>
-        <locationY>2342</locationY>
+        <locationY>2090</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase_0</targetReference>
         </defaultConnector>
@@ -246,7 +246,7 @@
         <name>Compatibile</name>
         <label>Compatibile?</label>
         <locationX>248</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati</targetReference>
         </defaultConnector>
@@ -275,7 +275,7 @@
         <name>Email_Vuota</name>
         <label>Email Vuota</label>
         <locationX>446</locationX>
-        <locationY>2006</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>Aliquota_Accise_vuot</targetReference>
         </defaultConnector>
@@ -307,7 +307,7 @@
         <name>ParentRecordId_valorizzato</name>
         <label>ParentRecordId valorizzato?</label>
         <locationX>446</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>GetInputCase</targetReference>
         </defaultConnector>
@@ -332,7 +332,7 @@
         <name>Proflo_front</name>
         <label>Proflo front?</label>
         <locationX>446</locationX>
-        <locationY>3038</locationY>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Assegna_a_Da_Inviare</targetReference>
         </defaultConnector>
@@ -348,11 +348,8 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>GetInputCase.Phase__c</leftValueReference>
+                <leftValueReference>RefreshCase.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Bozza</stringValue>
-                </rightValue>
             </conditions>
             <connector>
                 <targetReference>Assegna_a_BO</targetReference>
@@ -364,7 +361,7 @@
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>446</locationX>
-        <locationY>2918</locationY>
+        <locationY>2606</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -406,7 +403,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Proflo_front</targetReference>
+                <targetReference>RefreshCase</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -415,7 +412,7 @@
         <name>Telefono_Vuoto</name>
         <label>Telefono Vuoto?</label>
         <locationX>446</locationX>
-        <locationY>1670</locationY>
+        <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Email_Vuota</targetReference>
         </defaultConnector>
@@ -444,6 +441,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del processo di Voltura Tecnica</description>
+    <environments>Default</environments>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
@@ -453,6 +451,12 @@
         <name>PhoneFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!GetInputCase.Contact.MobilePhone}),IF(ISBLANK({!GetInputCase.Contact.Phone}),&quot;123&quot;,{!GetInputCase.Contact.Phone}),{!GetInputCase.Contact.MobilePhone})</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates processtype based on commodity</description>
+        <name>ProcessTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; TEXT({!GetInputCase.Commodity__c})</expression>
     </formulas>
     <formulas>
         <name>ShipToDifferentAddress</name>
@@ -484,7 +488,7 @@
         <name>Crea_Case_Voltura_Tecnica</name>
         <label>Crea Case Voltura Tecnica</label>
         <locationX>248</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <connector>
             <targetReference>Compatibilita</targetReference>
         </connector>
@@ -585,7 +589,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>446</locationX>
-        <locationY>3374</locationY>
+        <locationY>3122</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -620,7 +624,7 @@
         <name>Get_RecordType_Voltura_Tecnica</name>
         <label>Get RecordType Voltura Tecnica</label>
         <locationX>248</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Voltura_Tecnica</targetReference>
@@ -641,7 +645,7 @@
         <name>GetInputCase</name>
         <label>GetInputCase</label>
         <locationX>446</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>PredefaultDataDecorrenza</targetReference>
@@ -662,7 +666,7 @@
         <name>GetParentRecord</name>
         <label>GetParentRecord</label>
         <locationX>248</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_RecordType_Voltura_Tecnica</targetReference>
@@ -679,18 +683,39 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>RefreshCase</name>
+        <label>RefreshCase</label>
+        <locationX>446</locationX>
+        <locationY>2714</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Proflo_front</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>3614</locationY>
-        <inputReference>GetInputCase</inputReference>
+        <locationY>3338</locationY>
+        <inputReference>RefreshCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>2678</locationY>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Screen_Input_Dati</targetReference>
         </connector>
@@ -700,7 +725,7 @@
         <name>Screen_Input_Dati</name>
         <label>Screen Input Dati</label>
         <locationX>446</locationX>
-        <locationY>2798</locationY>
+        <locationY>2498</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -767,7 +792,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>ProcessTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -813,7 +838,7 @@
         <name>Annullamento_Prestazione_SubFlow</name>
         <label>Annullamento Prestazione SubFlow</label>
         <locationX>50</locationX>
-        <locationY>3038</locationY>
+        <locationY>2714</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -832,7 +857,7 @@
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
         <locationX>380</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>AssegnaCaseId</targetReference>
         </connector>
@@ -860,7 +885,7 @@
         <name>Compatibilita</name>
         <label>Compatibilita</label>
         <locationX>248</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Compatibile</targetReference>
         </connector>

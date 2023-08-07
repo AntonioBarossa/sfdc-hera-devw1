@@ -21,7 +21,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Voltura Tecnica Gas</value>
+        <value xsi:type="xsd:string">Voltura Tecnica</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>

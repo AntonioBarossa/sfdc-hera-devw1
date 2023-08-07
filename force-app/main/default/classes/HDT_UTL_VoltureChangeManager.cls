@@ -186,6 +186,17 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
             orderToUpdate.Description = (String)fieldsMap.get('errorMessage');
             orderToUpdate.DiscardReason__c = (String)fieldsMap.get('errorMessage');
+            if(((String)fieldsMap.get('errorMessage')).contains('Venditore')){
+                wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
+                act.Type__c = 'Caricamento Manuale Siebel';
+                act.DiscardCategory__c = 'Manuale';
+                act.RecordTypeId = Schema.getGlobalDescribe().get('wrts_prcgvr__Activity__c').getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+                act.Order__c = orderToUpdate.Id;
+                act.Account__c = orderToUpdate.AccountId;
+                act.ServicePoint__c = orderToUpdate.ServicePoint__c;
+                act.wrts_prcgvr__Status__c = 'Aperta';
+                HDT_UTL_DatabaseService.insertSObject(act);
+            }
 
         }
         return orderToUpdate;
