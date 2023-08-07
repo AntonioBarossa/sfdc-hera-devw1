@@ -1,6 +1,6 @@
 public with sharing class HDT_UTL_QualityCall {
     private static final Integer NEW_DAYS_TO_WORK = getDeadlineDays(Date.today());
-    public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : NEW_DAYS_TO_WORK > 50 ? NEW_DAYS_TO_WORK : 50;
+    public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : NEW_DAYS_TO_WORK < 50 ? NEW_DAYS_TO_WORK : 50;
     public static final String HANDLE_ACTIVITY = 'Attività gestita';
     public static final String HANDLE_DEADLINE = 'Scadenza gestita';
     public static final Integer ORDER_BATCH_SIZE = 50;

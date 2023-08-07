@@ -72,7 +72,7 @@ public with sharing class HDT_UTL_CampaignMember {
                     newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
                 }
                 else{
-                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).Tipology__c=='Quality Call' ? System.today().addDays(50) : Date.today().addYears(1); 
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).Tipology__c=='Quality Call' ? System.today().addDays(HDT_UTL_QualityCall.getDeadlineDays(System.today())) : Date.today().addYears(1); 
                     //newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
                 }
             }
