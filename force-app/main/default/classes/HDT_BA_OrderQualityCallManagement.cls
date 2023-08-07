@@ -227,7 +227,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
             }
             if (!mapStartDate.containsKey(o.ParentOrder__c) || mapStartDate.get(o.ParentOrder__c) < startDate){
-                mapDaysToWork.put(o.ParentOrder__c,HDT_UTL_QualityCall.getDeadlineDays(this.actMap.get(o.ParentOrder__c).CreatedDate.date()));
+                mapDaysToWork.put(o.ParentOrder__c,HDT_UTL_QualityCall.getDeadlineDays(this.actMap.get(o.ParentOrder__c)?.CreatedDate.date()));
                 mapStartDate.put(o.ParentOrder__c,startDate);
             }
             this.mapOrderToManage.put(o.ParentOrder__c,true);

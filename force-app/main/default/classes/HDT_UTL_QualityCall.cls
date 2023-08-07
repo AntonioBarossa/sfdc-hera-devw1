@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_QualityCall {
         String deadline = System.Label.HDT_QualityCallDeadLine;
         String dateToStart = System.Label.HDT_QualityCallStartingDate;
         Boolean useNewDate = false;
-        if (String.isNotBlank(deadline) && deadline.isNumeric() && Pattern.matches('[0-9]{4}[-]([0][1-9]|[1][0-2])[-]([0][1-9]|[1-2][0-9]|[3][0-1])',dateToStart)){
+        if (actCreatedDate != null &&String.isNotBlank(deadline) && deadline.isNumeric() && Pattern.matches('[0-9]{4}[-]([0][1-9]|[1][0-2])[-]([0][1-9]|[1-2][0-9]|[3][0-1])',dateToStart)){
             Date startFix = Date.valueOf(dateToStart);
             useNewDate = startFix <= actCreatedDate;
         }
