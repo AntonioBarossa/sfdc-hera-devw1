@@ -623,4 +623,30 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
         }
     }
+
+    @InvocableMethod(label = 'Get Activities By Ids')
+    public static List<HDT_WRP_ActivitiesResponse> agencyActivityProcess(List<HDT_WRP_ActivitiesForFlowQuery> inputs){
+        HDT_WRP_ActivitiesResponse resp = new HDT_WRP_ActivitiesResponse();
+        if (inputs != null && inputs[0].ids != null && !inputs[0].ids.isEmpty() && String.isNotBlank(inputs[0].fields)){
+            String condition = 'Id IN (\'' + String.join(inputs[0].ids, '\',\'')+'\')';
+            resp.activities = HDT_QR_GenericQuery.getGenericRecords(inputs[0].fields, 'wrts_prcgvr__Activity__c', condition);
+            resp.found = resp.activities.size() > 0;
+        }
+        return new List<HDT_WRP_ActivitiesResponse>{resp};
+    }
+
+    public class HDT_WRP_ActivitiesForFlowQuery{
+        @InvocableVariable
+        public List<Id> ids;
+        @InvocableVariable
+        public String fields;
+    }
+
+    public class HDT_WRP_ActivitiesResponse{
+        @InvocableVariable
+        public List<wrts_prcgvr__Activity__c> activities;
+        @InvocableVariable
+        public Boolean found = false;
+    }
+     
 }

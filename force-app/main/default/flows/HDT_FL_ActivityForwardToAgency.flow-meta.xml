@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Get_All_Activities</name>
+        <label>Get All Activities</label>
+        <locationX>1101</locationX>
+        <locationY>1233</locationY>
+        <actionName>HDT_UTL_ActivityCustom</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Verify_Data</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>fields</name>
+            <value>
+                <stringValue>id, Case__c, Order__c</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ids</name>
+            <value>
+                <elementReference>ids</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>go_to_new_activity_acton</name>
         <label>Vai a Nuova Attività</label>
         <locationX>1272</locationX>
@@ -20,7 +45,7 @@
     <assignments>
         <name>add_activities_to_lists_assignment</name>
         <label>Aggiungi Attività a Liste</label>
-        <locationX>1184</locationX>
+        <locationX>1185</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>activities_to_insert</assignToReference>
@@ -33,7 +58,7 @@
             <assignToReference>activities_to_update</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>parent_activity</elementReference>
+                <elementReference>activities_loop</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -60,7 +85,7 @@
         <name>forwarding_activity_set</name>
         <label>Compila Attività di Inoltro</label>
         <locationX>1184</locationX>
-        <locationY>1694</locationY>
+        <locationY>1693</locationY>
         <assignmentItems>
             <assignToReference>forwarding_activity.Type__c</assignToReference>
             <operator>Assign</operator>
@@ -72,7 +97,7 @@
             <assignToReference>forwarding_activity.ParentActivity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>activities_loop</elementReference>
+                <elementReference>activities_loop.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -87,6 +112,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>note_input</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>forwarding_activity.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>activities_loop.Order__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>forwarding_activity.Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>activities_loop.Case__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -115,14 +154,7 @@
         <locationX>1184</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
-            <assignToReference>parent_activity.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>activities_loop</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>parent_activity.wrts_prcgvr__Status__c</assignToReference>
+            <assignToReference>activities_loop.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Sospesa</stringValue>
@@ -229,6 +261,28 @@
             <label>Si</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Verify_Data</name>
+        <label>Verify Data</label>
+        <locationX>1093</locationX>
+        <locationY>1396</locationY>
+        <defaultConnectorLabel>Stop</defaultConnectorLabel>
+        <rules>
+            <name>OK</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_All_Activities.found</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>activities_loop</targetReference>
+            </connector>
+            <label>OK</label>
+        </rules>
+    </decisions>
     <interviewLabel>Activity - Inoltro ad Agenzia {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Inoltro ad Agenzia</label>
     <loops>
@@ -236,7 +290,7 @@
         <label>Loop su Attività</label>
         <locationX>1096</locationX>
         <locationY>1574</locationY>
-        <collectionReference>ids</collectionReference>
+        <collectionReference>Get_All_Activities.activities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>forwarding_activity_set</targetReference>
@@ -350,10 +404,10 @@
         <name>recordtype_get</name>
         <label>RecordType</label>
         <locationX>1096</locationX>
-        <locationY>1454</locationY>
+        <locationY>1062</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>activities_loop</targetReference>
+            <targetReference>Get_All_Activities</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -406,7 +460,7 @@
         <name>insert_note</name>
         <label>Inserisci Note</label>
         <locationX>1096</locationX>
-        <locationY>1334</locationY>
+        <locationY>853</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
