@@ -181,6 +181,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
     private void getChildOrderInfo(Set<String> pOrdersId, Set<Id> orderWithActivity){
         Date dueDate = Date.today();
         Map<Id,Date> mapStartDate = new Map<Id,Date>();
+        Map<Id,Integer> mapDaysToWork = new Map<Id,Integer>();
         /* Set<String> notValidPhase = new Set<String>{
             'in attesa validazione',
             'accettazione voltura',
@@ -226,12 +227,13 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
             }
             if (!mapStartDate.containsKey(o.ParentOrder__c) || mapStartDate.get(o.ParentOrder__c) < startDate){
+                mapDaysToWork.put(o.ParentOrder__c,HDT_UTL_QualityCall.getDeadlineDays(this.actMap.get(o.ParentOrder__c)?.CreatedDate.date()));
                 mapStartDate.put(o.ParentOrder__c,startDate);
             }
             this.mapOrderToManage.put(o.ParentOrder__c,true);
         }
         for (Id parentId : mapStartDate.keySet()){
-            if (mapStartDate.get(parentId).daysBetween(dueDate) <= HDT_UTL_QualityCall.DAYS_TO_WORK){
+            if (mapStartDate.get(parentId).daysBetween(dueDate) <= mapDaysToWork.get(parentId)){
                 this.mapOrderToManage.put(parentId,false);
             }
         }

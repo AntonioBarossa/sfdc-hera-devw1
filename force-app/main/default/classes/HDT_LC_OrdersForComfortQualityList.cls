@@ -57,7 +57,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
             causalQuality = 'Comfort Call OK';
             //orderUpdate.SignedDate__c = Date.today();
-            orderUpdate.Phase__c = phase;
+            orderUpdate.Phase__c = 'In attesa conferma cliente'.equalsIgnoreCase(ordComf[0].Phase__c) ? phase : ordComf[0].Phase__c;
             /* upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
             upList.add(orderUpdate); */
             //Divisione update order padre rispetto al figlio per il calcolo delle date.

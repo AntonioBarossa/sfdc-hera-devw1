@@ -10,6 +10,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
 
+        Integer deadline = getDeadlineDays();
         Map<String,wrts_prcgvr__Activity__c> mapActivities = new Map<String,wrts_prcgvr__Activity__c>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
@@ -142,7 +143,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = mapActivities.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            NumberingValidityEndDate__c = System.today().addDays(deadline),
                             ExcludeFub__c = 'Si',
                             GenericField1__c = orderMap.get(ordId).AccountId
                         ));
@@ -164,5 +165,10 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void finish(Database.BatchableContext bc){
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_ComfortCall - END');
+    }
+
+    private Integer getDeadlineDays(){
+        String deadline = System.Label.HDT_ComfortCallDeadLine;
+        return String.isNotBlank(deadline) && deadline.isNumeric()? Integer.valueOf(deadline) : 30;
     }
 }
