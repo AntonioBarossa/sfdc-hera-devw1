@@ -112,6 +112,10 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 mrrList = handleMrrFields(mrrList, objFields, currentCase);
             }
             mrrList = handleAttachment(mrrList,processType,currentCase.Id);
+            if('Voltura Tecnica'.equalsIgnoreCase(processType))
+            {
+                mrrList = dtCommVolturaTecnica(mrrList);
+            }
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
             arg.put('payload',mrrList);
@@ -586,6 +590,29 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 }
             }
         }
+        return mrrList;
+    }
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest dtCommVolturaTecnica(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean fieldChanged = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(fieldChanged) { break; }
+            if(obj.objectType != null && obj.objectType.equalsIgnoreCase('Case'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('DT_RIC_UTENTE'))
+                    {
+                        f.value = String.valueOf(System.now());
+                        fieldChanged = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
         return mrrList;
     }
 }
