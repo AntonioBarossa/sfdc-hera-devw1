@@ -52,13 +52,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
+            <targetReference>Societa_di_Vendita_Non_Valorizzata</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_ProcessType_Acqua</name>
         <label>Assegna ProcessType Acqua</label>
-        <locationX>1634</locationX>
+        <locationX>2426</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -75,7 +75,7 @@
     <assignments>
         <name>Assegna_ProcessType_TARI</name>
         <label>Assegna ProcessType TARI</label>
-        <locationX>1056</locationX>
+        <locationX>1650</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -91,7 +91,7 @@
     <assignments>
         <name>Assegna_ProcessType_W1</name>
         <label>Assegna ProcessType W1</label>
-        <locationX>1898</locationX>
+        <locationX>2690</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -103,6 +103,53 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Prima_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Societa_di_Vendita</name>
+        <label>Assegna Societa di Vendita</label>
+        <locationX>226</locationX>
+        <locationY>2054</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita.SellerCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Societa_di_Vendita_0</name>
+        <label>Assegna Societa di Vendita</label>
+        <locationX>710</locationX>
+        <locationY>2504</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita_0.SellerCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -125,14 +172,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
+            <targetReference>Societa_di_Vendita_Non_Valorizzata</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>248</locationX>
-        <locationY>1730</locationY>
+        <locationY>2912</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -176,7 +223,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>512</locationX>
-        <locationY>1730</locationY>
+        <locationY>2912</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +253,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_0</targetReference>
+            <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -249,7 +296,7 @@
     <decisions>
         <name>Gestito</name>
         <label>Gestito?</label>
-        <locationX>1056</locationX>
+        <locationX>1650</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -276,7 +323,7 @@
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>380</locationX>
-        <locationY>1622</locationY>
+        <locationY>2804</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -308,7 +355,7 @@
         <name>ParentId_Valorizzato</name>
         <label>ParentId Valorizzato?</label>
         <locationX>380</locationX>
-        <locationY>2030</locationY>
+        <locationY>3212</locationY>
         <defaultConnectorLabel>Non Valorizzato</defaultConnectorLabel>
         <rules>
             <name>Valorizzato</name>
@@ -330,7 +377,7 @@
         <name>Processo_Padre</name>
         <label>Processo Padre</label>
         <locationX>182</locationX>
-        <locationY>2246</locationY>
+        <locationY>3428</locationY>
         <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
         <rules>
             <name>Ricostruzione_Consumi</name>
@@ -365,7 +412,7 @@
     <decisions>
         <name>ReclamoAcqua</name>
         <label>ReclamoAcqua?</label>
-        <locationX>1766</locationX>
+        <locationX>2558</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Assegna_ProcessType_W1</targetReference>
@@ -388,9 +435,41 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Record_Trovato</name>
+        <label>Record Trovato</label>
+        <locationX>710</locationX>
+        <locationY>1730</locationY>
+        <defaultConnector>
+            <targetReference>GetSocietaVendita_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Trovato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCity</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SDV_valorizzata</targetReference>
+            </connector>
+            <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>recordType_Check</name>
         <label>recordType Check</label>
-        <locationX>1411</locationX>
+        <locationX>2104</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>ReclamoAcqua</targetReference>
@@ -454,7 +533,7 @@
     <decisions>
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>743</locationX>
+        <locationX>1139</locationX>
         <locationY>782</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -530,12 +609,95 @@
             <label>Annulla</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>SDV_valorizzata</name>
+        <label>SDV valorizzata</label>
+        <locationX>490</locationX>
+        <locationY>1838</locationY>
+        <defaultConnector>
+            <targetReference>GetSocietaVendita_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzata</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzata_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCity.SDV__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCity.SDV__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetSocietaVendita</targetReference>
+            </connector>
+            <label>Valorizzata</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Societa_di_Vendita_Non_Valorizzata</name>
+        <label>Societa di Vendita Non Valorizzata?</label>
+        <locationX>380</locationX>
+        <locationY>1514</locationY>
+        <defaultConnector>
+            <targetReference>GetCity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzata</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzata</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case_Aggiornato.SalesCompany__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case_Aggiornato.SalesCompany__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case_Aggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case_Aggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cerca_Case_reiterazione</targetReference>
+            </connector>
+            <label>Valorizzata</label>
+        </rules>
+    </decisions>
     <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
     <environments>Default</environments>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
         <expression>DATEVALUE({!Cerca_Case_reiterazione.CreatedDate}) + 90 &gt; DATEVALUE({!InputCase.CreatedDate})</expression>
+    </formulas>
+    <formulas>
+        <name>ServiceGas</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(TEXT({!InputCase.ServicePoint__r.CommoditySector__c}) = &quot;Gas&quot;, true, false)</expression>
     </formulas>
     <formulas>
         <name>SupplyCityFormula</name>
@@ -567,7 +729,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>380</locationX>
-        <locationY>1514</locationY>
+        <locationY>2696</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -616,7 +778,7 @@
         <name>Get_Case_Padre</name>
         <label>Get Case Padre</label>
         <locationX>182</locationX>
-        <locationY>2138</locationY>
+        <locationY>3320</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Processo_Padre</targetReference>
@@ -654,21 +816,142 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetCity</name>
+        <label>GetCity</label>
+        <locationX>710</locationX>
+        <locationY>1622</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Record_Trovato</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceEle__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceGas__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ServiceGas</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>City__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSocietaVendita</name>
+        <label>GetSocietaVendita</label>
+        <locationX>226</locationX>
+        <locationY>1946</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Societa_di_Vendita</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Comune__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCity.SDV__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Marcatura__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>distributor__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.ServicePoint__r.CommoditySector__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_MatriceSocietaVendita__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSocietaVendita_0</name>
+        <label>GetSocietaVendita</label>
+        <locationX>710</locationX>
+        <locationY>2396</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Societa_di_Vendita_0</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Comune__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Marcatura__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>distributor__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.ServicePoint__r.CommoditySector__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_MatriceSocietaVendita__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>248</locationX>
-        <locationY>1838</locationY>
-        <connector>
-            <targetReference>ParentId_Valorizzato</targetReference>
-        </connector>
-        <inputReference>Get_Input_Case_Aggiornato</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Aggiorna_Case_0</name>
-        <label>Aggiorna Case</label>
-        <locationX>512</locationX>
-        <locationY>1838</locationY>
+        <locationX>380</locationX>
+        <locationY>3104</locationY>
         <connector>
             <targetReference>ParentId_Valorizzato</targetReference>
         </connector>
@@ -678,7 +961,7 @@
         <name>Collega_Case_Figlio</name>
         <label>Collega Case Figlio</label>
         <locationX>50</locationX>
-        <locationY>2354</locationY>
+        <locationY>3536</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -698,7 +981,7 @@
     <recordUpdates>
         <name>updateCasePreClassification</name>
         <label>updateCasePreClassification</label>
-        <locationX>1056</locationX>
+        <locationX>1650</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Gestito</targetReference>
@@ -740,7 +1023,7 @@
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
-        <locationX>743</locationX>
+        <locationX>1139</locationX>
         <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -991,7 +1274,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1285</locationX>
+        <locationX>1978</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>recordType_Check</targetReference>
@@ -1001,7 +1284,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>842</locationX>
+        <locationX>1634</locationX>
         <locationY>890</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1026,7 +1309,7 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>1056</locationX>
+        <locationX>1650</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>updateCasePreClassification</targetReference>
