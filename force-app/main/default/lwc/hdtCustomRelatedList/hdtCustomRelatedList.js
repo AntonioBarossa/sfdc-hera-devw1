@@ -48,9 +48,17 @@ export default class HdtCustomRelatedList extends LightningElement {
             if(result) {
                 this.numberOfRecords = result['childRecords'] ? result['childRecords'].length : 0;
                 
-                if (this.calculateTitle) this.title = result.objectLabel + ' (' + (this.numberOfRecords > this.linesToDisplay ? this.linesToDisplay + '+' : result['childRecords'].length) + ')';
-                this.generateDataTable(result['columns'], result['childRecords'], this.fetchColumns ? result['relationshipsAddedToQuery'] : this.relationshipFields);
+                if (this.calculateTitle) {
+                    this.title = result.objectLabel + ' (' + (this.numberOfRecords > this.linesToDisplay ? this.linesToDisplay + '+' : this.numberOfRecords) + ')'
+                };
 
+                if (result['childRecords']) {
+                    this.generateDataTable(result['columns'], result['childRecords'], this.fetchColumns ? result['relationshipsAddedToQuery'] : this.relationshipFields);
+                }
+
+                if (result['errorMessage']) {
+                    console.error(result['errorMessage'], result['errorStack']);
+                }
             }
 
         });

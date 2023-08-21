@@ -214,6 +214,13 @@
         <value>NESSUN_DL;</value>
     </labels>
     <labels>
+        <fullName>HDT_ComfortCallDeadLine</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ComfortCallDeadLine</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
         <fullName>HDT_CPQ_TemplateProductCode</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -267,7 +274,7 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>HDT_DocusignPhaseNoUpdate</shortDescription>
-        <value>Completata;Annullato;Accettazione Voltura;Credit Check KO;Attesa Credit Check;Voltura Rifiutata;Esportazione VS Siebel;Caricamento Siebel OK</value>
+        <value>Completata;Annullato;Accettazione Voltura;Credit Check KO;Attesa Credit Check;Voltura Rifiutata;Esportazione VS Siebel;Caricamento Siebel OK;In attesa di quality call;In Corso caricamento Siebel;Caricamento Siebel KO;In attesa conferma cliente;Comunicazione verso Heroku OK</value>
     </labels>
     <labels>
         <fullName>HDT_EligCriteria_ProductType</fullName>
@@ -646,6 +653,20 @@
         <protected>false</protected>
         <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
         <value>Offerta commerciale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_QualityCallDeadLine</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_QualityCallDeadLine</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>HDT_QualityCallStartingDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_QualityCallStartingDate</shortDescription>
+        <value>2023-08-09</value>
     </labels>
     <labels>
         <fullName>HDT_Sold</fullName>

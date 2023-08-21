@@ -130,14 +130,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     }
                     else {
                         if (orderActivityMap.get(ordId).Id != null) {
-
+                            Date today = System.today();
                             notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                                 ContactId = orderMap.get(ordId).Contact__c,
                                 CampaignId = compOwnerToCampMap.get(compOwner).Id ,
                                 PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                                 RelatedActivity__c = orderActivityMap.get(ordId).Id,
-                                NumberingValidityStartDate__c = System.today(),
-                                NumberingValidityEndDate__c = System.today().addDays(50),
+                                NumberingValidityStartDate__c = today,
+                                NumberingValidityEndDate__c = today.addDays(HDT_UTL_QualityCall.getDeadlineDays(today)),
                                 ExcludeFub__c = 'Si',
                                 GenericField1__c = orderMap.get(ordId).AccountId
                             ));

@@ -338,9 +338,13 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         for (Integer i=0;i<saveResults.size();i++) {
             Database.SaveResult saveResult = saveResults.get(i);
             SObject record = records.get(i);
-
+            Id ordRefId;
+            if (record.getSObjectType() == Schema.Order.getSObjectType()){
+                ordRefId = (Id)record.get('Id');
+            }
             String code = recordIdsPerCode.get((Id)record.get('Id'));
             VasSupplierTable__c vasRecord = vasRecordsMap.get(code);
+            vasRecord.OrderReference__c = ordRefId;
 
             if (saveResult.isSuccess()) {
                 if (vasRecord.Status__c==STATUS_PENDING) {

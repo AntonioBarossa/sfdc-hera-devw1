@@ -2,7 +2,13 @@
  * Created by Cristiano Salvati on 05/12/2022.
  */
 
-public with sharing class HDT_BA_DocumentalManagementIdricoBulk implements Database.Batchable<sObject>, Database.Stateful{
+public with sharing class HDT_BA_DocumentalManagementIdricoBulk implements Database.Batchable<sObject>, Database.Stateful, Schedulable{
+
+    public void execute(SchedulableContext ctx){
+        BatchExecutionKpiConfiguration__mdt batchConfig = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_DocumentalManagementIdricoBulk');
+        Database.executebatch(this, (Integer) batchConfig.BatchSize__c);
+    }
+
     public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT Id, Phase__c,SendMode__c,SignMode__c FROM Case Where Phase__c =\''+Label.consumoAnomaloIdricoDefaultPhase+'\'';
         return Database.getQueryLocator(query);

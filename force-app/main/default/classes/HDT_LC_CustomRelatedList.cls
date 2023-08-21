@@ -25,6 +25,8 @@ public with sharing class HDT_LC_CustomRelatedList {
             Schema.DescribeSObjectResult childObjectType = Schema.getGlobalDescribe().get(childObjectApiName).getDescribe();
             Map<String, Schema.SObjectField> childObjectFields = childObjectType.fields.getMap();
             
+            result.put('objectLabel', childObjectType.getLabelPlural());
+            
             String relationShipsToAddToQuery = '';
 
             JSONGenerator gen = JSON.createGenerator(true);
@@ -114,15 +116,18 @@ public with sharing class HDT_LC_CustomRelatedList {
 
             result.put('columns', gen.getAsString());
             result.put('relationshipsAddedToQuery', relationShipsToAddToQuery);
-            result.put('objectLabel', childObjectType.getLabelPlural());
             result.put('childRecords', Database.query(queryString));
 
             return result;
 
         } catch (Exception e) {
+            
             System.debug('exMessage ' + e.getMessage());
             System.debug('exStack ' + e.getStackTraceString());
-            throw new AuraHandledException(e.getMessage());
+            result.put('errorMessage', e.getMessage());
+            result.put('errorStack', e.getStackTraceString());
+            
+            return result;
         }
     }
 

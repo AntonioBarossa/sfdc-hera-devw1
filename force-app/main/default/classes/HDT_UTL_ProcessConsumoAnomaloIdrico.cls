@@ -131,7 +131,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoPODCodeMismatch);
                 retMap.put('checksAreValid',false);
             }
-            if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.SAPIntegrationID__c != csvSplitted[accountIndex]){
+            if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.CustomerCode__c != csvSplitted[accountIndex]){
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoAccountCodeMismatch);
                 retMap.put('checksAreValid',false);
             }
@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     }
 
     private Boolean addressFieldsInvalid(BillingProfile__c billingProf){
-        return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || String.isBlank(billingProf.InvoicingPlace__c) ||
+        return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || 
                 String.isBlank(billingProf.InvoicingPostalCode__c) || String.isBlank(billingProf.InvoicingProvince__c) || String.isBlank(billingProf.InvoicingStreetName__c) ||
                 String.isBlank(billingProf.InvoicingStreetNumber__c) || String.isBlank(billingProf.InvoicingAddressFormula__c);
     }

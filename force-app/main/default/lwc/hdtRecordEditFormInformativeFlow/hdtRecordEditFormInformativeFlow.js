@@ -80,6 +80,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
     @track selectedSalesCompany;
     @track salesCompanies;
     @track disabledSalesCompany = false;
+    @track existPredefaultCommodity = false;
 
     @api serviceCatalogId;
 
@@ -107,6 +108,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 {
                     label: 'Marche Multiservizi TARI',
                     value: 'Marche Multiservizi TARI'
+                },
+                {
+                    label: 'Estenergy',
+                    value: 'Estenergy'
                 },
                 {
                     label: 'Multi',
@@ -246,6 +251,36 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                 });
                             
                             }
+                            else if(payload.CommodityFormula__c !== null && payload.CommodityFormula__c !== undefined && payload.CommodityFormula__c !== '')
+                            {
+                                var result = [
+                                    {
+                                        label:'Energia Elettrica',
+                                        value:'Energia Elettrica'
+                                    },
+                                    {
+                                        label:'Gas',
+                                        value:'Gas'
+                                    },                                                
+                                    {
+                                        label:'Multi',
+                                        value:'Multi'
+                                    },
+                                    {
+                                        label:'Acqua',
+                                        value:'Acqua'
+                                    },
+                                    {
+                                        label:'Ambiente',
+                                        value:'Ambiente'
+                                    }
+                                ];
+                                console.log('#Servizio -> ' + JSON.stringify(result));
+                                this.commodity = JSON.stringify(result);
+                                this.selectedCommodity = payload.CommodityFormula__c;
+                                this.disabledCommodity = true;
+                                this.existPredefaultCommodity = true;
+                            }
                             if (payload && payload.SalesCompany__c){
                                 this.selectedSalesCompany = payload.SalesCompany__c;
                                 this.disabledSalesCompany = true;
@@ -278,6 +313,8 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
 
 
     getProcess(event){
+        console.log('### Commmodity: ' + this.commodity);
+        console.log('### SelectedCommodity: ' + this.selectedCommodity);
         var cluster = event.detail;
         this.selectedCluster = cluster;
         var params = {
@@ -295,8 +332,8 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 this.selectedProcess = null;
                 this.selectedTopic = null;
                 this.topic = null;
-                this.commodity = null;
-                this.selectedCommodity = null;
+                this.commodity = this.existPredefaultCommodity ? this.commodity : null;
+                this.selectedCommodity = this.existPredefaultCommodity ? this.selectedCommodity : null;
                 this.dettaglioInfo = null;
                 this.selectedDettaglioInfo = null;
                 this.showTitolo = false;
@@ -400,13 +437,26 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 }
             ];
             console.log('#Servizio -> '+JSON.stringify(result));
-            this.commodity = JSON.stringify(result);
-            this.selectedCommodity = null;
+            this.commodity = this.existPredefaultCommodity ? this.commodity : JSON.stringify(result);
+            this.selectedCommodity = this.existPredefaultCommodity ? this.selectedCommodity : null;
             this.dettaglioInfo = null;
             this.selectedDettaglioInfo = null;
             this.topic = null;
             this.selectedTopic = null;
             this.showTitolo = false;
+            if(this.existPredefaultCommodity){
+                const params = {
+                    method: 'topic',
+                    cluster: this.selectedCluster,
+                    context: this.context,
+                };
+                getOptions({serviceClass: this.serviceClass, params: JSON.stringify(params)})
+                .then(result => {
+                    this.topic = result;
+                    this.showTopic = true;
+                    this.showTitolo = false;
+                })
+            }
         }
     }
     handleSuccess(event) {

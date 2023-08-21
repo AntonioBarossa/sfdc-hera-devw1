@@ -133,13 +133,41 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.Contract__c = contractObj.Id;
                 }
                 when 'BillingProfile__c'{
-
+                    String contractSalesCompany ;
+                    String contractCommodity ;
+                    String accountId;
+                    Set<String> salesCompany = new Set<String>();
+                    Set<String> commodity = new Set<String>();
+                    //Contract contractObj = [SELECT Id, BillingProfile__c,ContractSalesCompany__c,CommoditySectorFormula__c FROM Contract WHERE BillingProfile__c =: contextId AND Status IN ('Attivo','Activated')
+                    //WITH SECURITY_ENFORCED];
+                    for (Contract contractObj : [SELECT Id, AccountId,BillingProfile__c,ContractSalesCompany__c,CommoditySectorFormula__c FROM Contract WHERE BillingProfile__c =: contextId AND Status IN ('Attivo','Activated')
+                    WITH SECURITY_ENFORCED]) {
+                        salesCompany.add(contractObj.ContractSalesCompany__c);
+                        commodity.add(contractObj.CommoditySectorFormula__c);
+                        accountId = contractObj.AccountId;
+                    }
                     
+                    if(salesCompany.size() > 1){
+                        contractSalesCompany ='Multi';
+                    }else if(salesCompany.size() == 1) {
+                        contractSalesCompany= (new list<String>(salesCompany))[0];
+                    }
 
-                    BillingProfile__c contextObj = (BillingProfile__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName);
+                    if(commodity.size() > 1){
+                        contractCommodity ='Multi';
+                    }else if(commodity.size() == 1) {
+                        contractCommodity=(new list<String>(commodity))[0];
+                    }
+
+                    infoCase.Commodity__c = contractCommodity;
+                    infoCase.SalesCompany__c = contractSalesCompany;
+
+                    infoCase.AccountId = accountId;
+                    infoCase.BillingProfile__c = contextId;
+                   /* BillingProfile__c contextObj = (BillingProfile__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName);
 
                     infoCase.AccountId = contextObj.Account__c;
-                    infoCase.BillingProfile__c = contextId;
+                    infoCase.BillingProfile__c = contextId;*/
 
                 }
                 when 'Account'{
