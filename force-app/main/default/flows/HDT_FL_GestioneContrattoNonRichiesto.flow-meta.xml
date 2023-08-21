@@ -917,6 +917,13 @@
                     <elementReference>GetRelatedOrder.EffectiveDate__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetRelatedOrder.EffectiveDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssegnaValoriRelated_0_0_0_0_0</targetReference>
             </connector>
@@ -1121,7 +1128,7 @@
             <label>Switch</label>
         </rules>
     </decisions>
-    <formulas>
+        <formulas>
         <name>CaseCancellationCodeFormula</name>
         <dataType>String</dataType>
         <expression>IF(
