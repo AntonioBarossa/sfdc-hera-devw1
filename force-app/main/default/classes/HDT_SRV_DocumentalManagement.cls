@@ -1108,6 +1108,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							}
 							payloadArray.add(defaultVal);
 						}else{
+							value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 							payloadArray.add(value);
 						}
 					}else{
