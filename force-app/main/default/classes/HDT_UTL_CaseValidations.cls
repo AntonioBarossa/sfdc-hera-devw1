@@ -667,7 +667,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
-                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(newFiscalCode, newFirstName, newLastName))
                 {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
                 }
