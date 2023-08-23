@@ -1,0 +1,30 @@
+.loading-container{
+    padding: 50px 20px;
+}
+.spinner-text-container{
+    padding-top: 80px;
+}
+.spinner-text{
+    font-size: 20px;
+}
+.item-container{
+    overflow-wrap: break-word;
+    width: 100%;
+}
+.btn{
+    width: 100%;
+    padding: 7px;
+    border: 1px solid rgb(80, 80, 80);
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
+.btn-active{
+    background-color: aliceblue;
+}
+.btn-disabled{
+    background-color: grey; 
+}
+.btn-info-container{
+    width: 100%;
+}

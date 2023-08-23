@@ -1,0 +1,33 @@
+<template>
+    
+        <div class="container">
+            <lightning-card title="Amministrazione AMS" icon-name="utility:automate">
+                <div class="loading-container" if:true={isLoading}>
+                    <lightning-spinner variant="brand" size="large" alternative-text="Loading..."></lightning-spinner>
+                    <div class="slds-align_absolute-center slds-text-font_monospace spinner-text-container">
+                        <h1 class="spinner-text">{loadingMessage}</h1>
+                    </div>
+                </div>
+                <div if:false={isLoading}>
+                <lightning-layout vertical-align="center" multiple-rows="true">
+                <template for:each={btns} for:item="btn">
+                    <lightning-layout-item key={btn.id} class="btn-container" padding="around-medium" size="12">
+                        <div class="item-container">
+                            <button name={btn.id} class={btn.className} onclick={handleClick}>
+                                <lightning-layout class="btn-info-container" vertical-align="center" horizontal-align="spread">
+                                    <lightning-layout-item size="10">
+                                        {btn.label}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="2">
+                                        <lightning-icon icon-name={btn.iconName} alternative-text="Start Operation"></lightning-icon>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+                </lightning-layout>
+            </div>
+            </lightning-card>
+    </div>
+</template>

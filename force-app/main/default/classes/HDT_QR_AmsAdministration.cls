@@ -39,4 +39,17 @@ public with sharing class HDT_QR_AmsAdministration {
         ];
     }
 
+    public List<HDT_AmsAdministration__mdt> fetchConfigs()
+    {
+        return [SELECT ClassName__c, Method__c, MasterLabel FROM HDT_AmsAdministration__mdt WHERE IsActive__c = true WITH SECURITY_ENFORCED];
+    }
+
+    public List<AmsAdministration__c> getCurrentDateRecords(){
+        return [SELECT Id, Process__c, Status__c FROM AmsAdministration__c WHERE CreatedDate = TODAY WITH SECURITY_ENFORCED];
+    }
+
+    public List<AmsAdministration__c> getTodayPendingOperations(){
+        return [SELECT Id FROM AmsAdministration__c WHERE CreatedDate = TODAY AND Status__c = 'PENDING' WITH SECURITY_ENFORCED];
+    }
+
 }
