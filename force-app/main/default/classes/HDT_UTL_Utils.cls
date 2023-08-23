@@ -145,9 +145,14 @@ public with sharing class HDT_UTL_Utils {
                 if(sObjectName == 'Order'){
                     newObject.put('LoginChannel__c', u.LoginChannel__c);
                 }
-                else{
+                // 22-08-23 dmontors fix
+                else if(sObjectName == 'SBQQ__Quote__c'){
+                    System.debug('>>>>> testLoginGroup__c (noset): ' + u.LoginChannel__c);
+                // 22-08-23 dmontors fix
+                } else {
                     newObject.put('LoginGroup__c', u.LoginChannel__c); 
                 }
+
                 if(u.Station__c != '' && u.Station__c != null){
                     newObject.put('LoginWorkstation__c', u.Station__c);
                 }
