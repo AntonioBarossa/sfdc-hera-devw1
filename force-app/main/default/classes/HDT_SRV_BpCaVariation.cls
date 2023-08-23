@@ -230,7 +230,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.codiceCausale = 'MA2';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
-        requestBody.account.nome = (String) caseRecord.get('FirstName__c') != null ? (String) caseRecord.get('FirstName__c') : '';
+        requestBody.account.nome = (String) caseRecord.get('FirstName__c') != null ? (String) caseRecord.get('FirstName__c') : null;
         requestBody.account.alias = (String) caseRecord.get('LastName__c'); // Non dovrebbe mai essere vuoto.
         requestBody.account.codiceFiscale = (String) caseRecord.get('FiscalCode__c') != null ? (String) caseRecord.get('FiscalCode__c') : '';
         requestBody.account.partitaIva = (String) caseRecord.get('VatNumber__c') != null ? (String) caseRecord.get('VatNumber__c') : '';
