@@ -1,4 +1,4 @@
-public with sharing class HDT_UTL_AmsOrderDependencies 
+public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdministration
 {
     HDT_QR_AmsAdministration amsQr = new HDT_QR_AmsAdministration();
 
@@ -39,15 +39,20 @@ public with sharing class HDT_UTL_AmsOrderDependencies
         return result;
     }
 
+    public void finishOperations(HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result){
+        /* Implements finish operations */
+        return;
+    }
+
     /* Per consentire il corretto funzionamento e' necessario che le attivita siano chiuse prima del passaggio di fase degli ordini */
     private HDT_WRP_AmsAdministration.HDT_WRP_OperationResult sequenzialization(List<Order> orderToWork){
         HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result = new HDT_WRP_AmsAdministration.HDT_WRP_OperationResult();
         List<wrts_prcgvr__Activity__c> actToClose = new List<wrts_prcgvr__Activity__c>();
         for(Order o : orderToWork)
         {
-            if(o.Activities_Custom__r != null && o.Activities_Custom__r[0].Id != null)
+            if(o.Activities_Custom__r != null && !o.Activities_Custom__r.isEmpty() && o.Activities_Custom__r[0].Id != null)
             {
-                actToClose.add(new wrts_prcgvr__Activity__c(Id = Activities_Custom__r[0].Id, ClosingNote__c = 'Chiusura per Bonifica AMS', wrts_prcgvr__Status__c = 'Chiusa	'));
+                actToClose.add(new wrts_prcgvr__Activity__c(Id = o.Activities_Custom__r[0].Id, ClosingNote__c = 'Chiusura per Bonifica AMS', wrts_prcgvr__Status__c = 'Chiusa	'));
             }
             o.Phase__c = 'Sequenzializzato';
             o.Status = 'Sequenzializzato';
@@ -56,7 +61,7 @@ public with sharing class HDT_UTL_AmsOrderDependencies
         {
             result.results.addAll(performUpdateOperation(actToClose, 'wrts_prcgvr__Activity__c'));
         }
-        if(orderToWork.isEmpty())
+        if(!orderToWork.isEmpty())
         {
             result.results.addAll(performUpdateOperation(orderToWork, 'Order'));
         }
@@ -64,17 +69,22 @@ public with sharing class HDT_UTL_AmsOrderDependencies
     }
 
     private HDT_WRP_AmsAdministration.HDT_WRP_OperationResult desequenzialization(List<Order> orderToWork){
-        List<ServiceRequest> srToDelete = orderToWork.ServiceRequests__r;
+        List<ServiceRequest__c> srToDelete = new List<ServiceRequest__c>();
         HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result = new HDT_WRP_AmsAdministration.HDT_WRP_OperationResult();
         // Salvare informazioni su numero record
-        if(!srToDelete.isEmpty())
-        {
-            result.results.addAll(performDeleteOperation(srToDelete, 'ServiceRequest__c'));
-        }
+
         for(Order o : orderToWork)
         {
             o.Phase__c = 'Esportazione VS Siebel';
             o.Status = 'In Lavorazione';
+            if(o.ServiceRequests__r != null && !o.ServiceRequests__r.isEmpty())
+            {
+                srToDelete.addAll(o.ServiceRequests__r);
+            }
+        }
+        if(!srToDelete.isEmpty())
+        {
+            result.results.addAll(performDeleteOperation(srToDelete, 'ServiceRequest__c'));
         }
         if(!orderToWork.isEmpty())
         {
