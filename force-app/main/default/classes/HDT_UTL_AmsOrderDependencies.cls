@@ -1,6 +1,7 @@
 public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdministration
 {
     HDT_QR_AmsAdministration amsQr = new HDT_QR_AmsAdministration();
+    HDT_SRV_AmsAdministration amsSrv = new HDT_SRV_AmsAdministration();
 
     public List<Order> startOperations(String method){
         List<Order> orderToWork = new List<Order>();
@@ -41,6 +42,54 @@ public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdm
 
     public void finishOperations(HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result){
         /* Implements finish operations */
+        Integer createdCount = 0;
+        Integer deletedCount = 0;
+        Integer updatedCount = 0;
+        Integer failedRecords = 0;
+        Map<String, List<String>> operationDetail = new Map<String, List<String>>();
+        Map<String, Object> operationResults = new Map<String, Object>();
+        for(HDT_WRP_AmsAdministration.HDT_WRP_Result singleResult : result.results)
+        {
+            if(singleResult.isSuccess)
+            {
+                String key = singleResult.objectType + '_Success';
+                switch on singleResult.dmlOperation {
+                    when 'DELETE' {
+                        deletedCount++;
+                    }
+                    when 'UPDATE' {
+                        updatedCount++;
+                    }
+                    when 'CREATE' {
+                        createdCount++;
+                    }
+                }
+                if(operationDetail.get(key) == null)
+                {
+                    operationDetail.put(key, new List<String>());
+                }
+                operationDetail.get(key).add(singleResult?.recordId);
+            }
+            else
+            {
+                String key = singleResult.objectType + '_Failed';
+                if(operationDetail.get(key) == null)
+                {
+                    operationDetail.put(key, new List<String>());
+                }
+                operationDetail.get(key).add(singleResult?.recordId);
+                failedRecords++;
+            }
+        }
+
+        operationResults.put('CreatedRecords__c', createdCount);
+        operationResults.put('DeletedRecords__c', deletedCount);
+        operationResults.put('UpdatedRecords__c', updatedCount);
+        operationResults.put('FailedRecords__c', failedRecords);
+        operationResults.put('ElaborationDetail__c', JSON.serialize(operationDetail));
+
+        amsSrv.updateAmsLogRecord(result.logId , operationResults);
+
         return;
     }
 
@@ -115,6 +164,7 @@ public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdm
                 singleResult.isSuccess = true;
                 singleResult.recordId = dRes.getId();
                 singleResult.objectType = objectName;
+                singleResult.dmlOperation = 'DELETE';
             }
             result.add(singleResult);
         }
@@ -142,6 +192,7 @@ public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdm
                 singleResult.isSuccess = true;
                 singleResult.recordId = sRes.getId();
                 singleResult.objectType = objectName;
+                singleResult.dmlOperation = 'UPDATE';
             }
             result.add(singleResult);
         }
