@@ -5,7 +5,7 @@
         <name>Assegna_Esito_Attivit</name>
         <label>Assegna Esito Attività</label>
         <locationX>50</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>activity.ActivityOutcome__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assegna_EsitoColonnetta_true</name>
         <label>Assegna EsitoColonnetta = true</label>
         <locationX>1106</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>EsitoColonnetta</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
         <locationX>314</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>Assign_Activity</name>
         <label>Assign Activity</label>
         <locationX>842</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +125,7 @@
         <name>Assign_Sending_DL_Managed</name>
         <label>Assign Sending DL Managed</label>
         <locationX>578</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>activity.SendingDlManaged__c</assignToReference>
             <operator>Assign</operator>
@@ -141,7 +141,7 @@
         <name>AssignEsitoBpCa</name>
         <label>AssignEsitoBpCa</label>
         <locationX>842</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>EsitoBpCa</assignToReference>
             <operator>Assign</operator>
@@ -157,7 +157,7 @@
         <name>Copy_1_of_Assegna_Note</name>
         <label>Copy 1 of Assegna Note</label>
         <locationX>1370</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +173,7 @@
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
         <locationX>1106</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -196,7 +196,7 @@
         <name>HDT_CloseDistributorComunicationAssign</name>
         <label>HDT_CloseDistributorComunicationAssign</label>
         <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -268,7 +268,7 @@
         <name>Activity_Type_Gestione_Agenzia</name>
         <label>Activity Type = &quot;Gestione Agenzia&quot;?</label>
         <locationX>688</locationX>
-        <locationY>1886</locationY>
+        <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Check_Esito_Attivit</targetReference>
         </defaultConnector>
@@ -307,7 +307,7 @@
         <name>ActivityType_0</name>
         <label>ActivityType</label>
         <locationX>842</locationX>
-        <locationY>1190</locationY>
+        <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity</targetReference>
         </defaultConnector>
@@ -428,7 +428,7 @@
         <name>Attivita_Conferma_Data_Decorrenza</name>
         <label>Attivita Conferma Data Decorrenza?</label>
         <locationX>842</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Set_Note</targetReference>
         </defaultConnector>
@@ -453,7 +453,7 @@
         <name>Check_Esito_Attivit</name>
         <label>Check Esito Attività</label>
         <locationX>842</locationX>
-        <locationY>2318</locationY>
+        <locationY>2066</locationY>
         <defaultConnector>
             <targetReference>Completa_processo</targetReference>
         </defaultConnector>
@@ -540,21 +540,6 @@
             <label>Aggiorna Ordine(Gestione contratto colonnetta)</label>
         </rules>
         <rules>
-            <name>Chiudi_attivit_Unificazione_BP_CA</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Activity.Case__r.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Unificazione/Separazione BP-CA-Bolletta</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_Finale</targetReference>
-            </connector>
-            <label>Chiudi attività  Unificazione BP CA</label>
-        </rules>
-        <rules>
             <name>Aggiorna_Ordine_Conferma_Data_Decorrenza</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -574,7 +559,7 @@
         <name>L_activity_ha_un_padre</name>
         <label>L&apos;activity ha un padre?</label>
         <locationX>842</locationX>
-        <locationY>1646</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Check_Esito_Attivit</targetReference>
         </defaultConnector>
@@ -599,7 +584,7 @@
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
         <locationX>842</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
         </defaultConnector>
@@ -681,7 +666,7 @@
         <name>Get_Activity</name>
         <label>Get Activity</label>
         <locationX>842</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tipo_Completa_Attivit</targetReference>
@@ -702,7 +687,7 @@
         <name>Get_Activity_Padre</name>
         <label>Get Activity Padre</label>
         <locationX>688</locationX>
-        <locationY>1766</locationY>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Activity_Type_Gestione_Agenzia</targetReference>
@@ -722,8 +707,8 @@
     <recordUpdates>
         <name>Aggiorna_Order_Dati_Discordanti</name>
         <label>Aggiorna Order (Dati Discordanti)</label>
-        <locationX>358</locationX>
-        <locationY>2438</locationY>
+        <locationX>446</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -746,8 +731,8 @@
     <recordUpdates>
         <name>Aggiorna_Order_Gestione_contratto_colonnetta</name>
         <label>Aggiorna Order (Gestione contratto colonnetta)</label>
-        <locationX>886</locationX>
-        <locationY>2438</locationY>
+        <locationX>974</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -784,7 +769,7 @@
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
         <locationX>842</locationX>
-        <locationY>1526</locationY>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>L_activity_ha_un_padre</targetReference>
         </connector>
@@ -793,8 +778,8 @@
     <recordUpdates>
         <name>Copy_1_of_Aggiorna_Order_Dati_Discordanti</name>
         <label>Copy 1 of Aggiorna Order (Dati Discordanti)</label>
-        <locationX>622</locationX>
-        <locationY>2438</locationY>
+        <locationX>710</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -823,8 +808,8 @@
     <recordUpdates>
         <name>Copy_2_of_Aggiorna_Order_Dati_Discordanti</name>
         <label>Copy 2 of Aggiorna Order (Dati Discordanti)</label>
-        <locationX>1326</locationX>
-        <locationY>2438</locationY>
+        <locationX>1238</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -854,7 +839,7 @@
         <name>Riapri_Activity_Validazione_Documentale</name>
         <label>Riapri Activity &quot;Validazione Documentale&quot;</label>
         <locationX>556</locationX>
-        <locationY>2006</locationY>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Check_Esito_Attivit</targetReference>
         </connector>
@@ -878,7 +863,7 @@
         <name>Copy_1_of_Set_Note</name>
         <label>Copy 1 of Set Note</label>
         <locationX>710</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -901,7 +886,7 @@
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
         <locationX>842</locationX>
-        <locationY>2654</locationY>
+        <locationY>2366</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -917,7 +902,7 @@
         <name>Screen_Finale_0</name>
         <label>Screen Finale</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -933,7 +918,7 @@
         <name>Set_Note</name>
         <label>Set Note</label>
         <locationX>974</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1088,8 +1073,8 @@
     <subflows>
         <name>Annulla_Order</name>
         <label>Annulla Order</label>
-        <locationX>94</locationX>
-        <locationY>2438</locationY>
+        <locationX>182</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -1116,8 +1101,8 @@
     <subflows>
         <name>Completa_processo</name>
         <label>Completa processo</label>
-        <locationX>1590</locationX>
-        <locationY>2438</locationY>
+        <locationX>1502</locationX>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
