@@ -604,6 +604,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Equipment__c.IsArchived__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Equipment__c.ServicePoint__c</field>
         <readable>true</readable>
@@ -1786,6 +1791,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Interaction__c.LoginWorkstation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Interaction__c.IsArchived__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4875,6 +4885,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>BillingProfile__c.IsArchived__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>BillingProfile__c.IsDigitalMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5621,6 +5636,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.VasSupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.IsArchived__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8146,6 +8166,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.AreaRelevantForCalculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.IsArchived__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11446,6 +11471,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentalEnvelopeAttachment__c.IsArchived__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalEnvelopeAttachment__c.IsDocusignSpecialTemplate__c</field>
         <readable>true</readable>
@@ -13726,6 +13756,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Individual.IsArchived__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Individual.IsHomeOwner</field>
         <readable>true</readable>
@@ -15109,6 +15144,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.ExpectedRevenue</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.IsArchived__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24024,6 +24064,11 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>SBQQ__QuoteLine__c.EndDateTARI__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>SBQQ__QuoteLine__c.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
