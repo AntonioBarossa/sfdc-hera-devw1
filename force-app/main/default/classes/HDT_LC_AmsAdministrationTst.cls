@@ -54,7 +54,7 @@ public with sharing class HDT_LC_AmsAdministrationTst {
         User u = new user(alias = 'test123', email='test@test.com',
             emailencodingkey='UTF-8', firstName='AMS', lastname='Testing', languagelocalekey='en_US',
             localesidkey='en_US', profileid = p.Id, country='Italy',
-            timezonesidkey='Europe/Berlin', username='test@ams.com');
+            timezonesidkey='Europe/Berlin', username='testAmsAdministrationHera2@ams.com');
         insert u;
     }
 
