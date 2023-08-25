@@ -89,7 +89,7 @@ public with sharing class HDT_UTL_AmsOrderDependenciesTst {
 
     @isTest
     static void sequenzializationTst(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 
@@ -109,7 +109,7 @@ public with sharing class HDT_UTL_AmsOrderDependenciesTst {
 
     @isTest
     static void desequenzializationTst(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 
