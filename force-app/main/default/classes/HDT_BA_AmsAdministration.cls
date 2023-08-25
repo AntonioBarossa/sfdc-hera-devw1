@@ -27,7 +27,8 @@ public with sharing class HDT_BA_AmsAdministration implements Database.Batchable
     public void finish(Database.BatchableContext context)
     {
         operationResult.logId = logId;
-        engine.finishOperations(operationResult);
+        AmsAdministration__c logToUpdate = engine.finishOperations(operationResult);
+        amsSrv.updateAmsLogRecord(logToUpdate);
         return;
     }
 

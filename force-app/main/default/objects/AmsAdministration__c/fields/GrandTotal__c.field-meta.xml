@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ProcessedRecords__c</fullName>
+    <fullName>GrandTotal__c</fullName>
     <externalId>false</externalId>
-    <formula>CreatedRecords__c + UpdatedRecords__c  +  DeletedRecords__c</formula>
+    <formula>ProcessedRecords__c +  FailedRecords__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Record Elaborati</label>
+    <label>Totale Record</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>0</scale>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

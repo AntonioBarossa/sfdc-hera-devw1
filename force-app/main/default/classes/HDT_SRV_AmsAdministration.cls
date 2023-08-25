@@ -19,27 +19,18 @@ public with sharing class HDT_SRV_AmsAdministration {
         return result;
     }
 
-    public String updateAmsLogRecord(String recordId, Map<String, Object> operationResults){
+    public String updateAmsLogRecord(AmsAdministration__c logToUpdate){
         String result = '';
 
-        AmsAdministration__c updateLogRecord = new AmsAdministration__c();
-        updateLogRecord.Id = recordId;
-        updateLogRecord.Status__c = 'COMPLETED';
-        if(!operationResults.isEmpty())
-        {
-            for(String key : operationResults.keySet())
-            {
-                updateLogRecord.put(key, operationResults.get(key));
-            }
-        }
+        logToUpdate.Status__c = 'COMPLETED';
 
-        Database.SaveResult saveRes = Database.update(updateLogRecord, false);
+        Database.SaveResult saveRes = Database.update(logToUpdate, false);
         if(saveRes.isSuccess())
         {
             result = saveRes.getId();
         }
         
-        return 'Success';
+        return result;
     }
 
 }
