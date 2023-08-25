@@ -62,7 +62,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AmsAdministration__c.ErrorDetails__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmsAdministration__c.FailedRecords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AmsAdministration__c.GrandTotal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -44,7 +44,7 @@ export default class HdtAmsAdministration extends LightningElement {
                     if(!this.isOperationPending)
                     {
                         console.log('### Stopping operations');
-                        this.fireToastEvent({name: 'Successo', message: this.operationPending + ' completata', variant: 'success'});
+                        this.fireToastEvent({title: 'Successo', message: 'Operazione Completata', variant: 'success'});
                         this.operationPending = '';
                         this.isLoading = false;
                     }

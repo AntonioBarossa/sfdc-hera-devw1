@@ -40,13 +40,15 @@ public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdm
         return result;
     }
 
-    public void finishOperations(HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result){
+    public AmsAdministration__c finishOperations(HDT_WRP_AmsAdministration.HDT_WRP_OperationResult result){
         /* Implements finish operations */
+        AmsAdministration__c amsLog = new AmsAdministration__c();
         Integer createdCount = 0;
         Integer deletedCount = 0;
         Integer updatedCount = 0;
         Integer failedRecords = 0;
         Map<String, List<String>> operationDetail = new Map<String, List<String>>();
+        Map<String, List<String>> errorDetail = new Map<String, List<String>>();
         Map<String, Object> operationResults = new Map<String, Object>();
         for(HDT_WRP_AmsAdministration.HDT_WRP_Result singleResult : result.results)
         {
@@ -73,24 +75,24 @@ public with sharing class HDT_UTL_AmsOrderDependencies implements HDT_INF_AmsAdm
             else
             {
                 String key = singleResult.objectType + '_Failed';
-                if(operationDetail.get(key) == null)
+                if(errorDetail.get(key) == null)
                 {
-                    operationDetail.put(key, new List<String>());
+                    errorDetail.put(key, new List<String>());
                 }
-                operationDetail.get(key).add(singleResult?.recordId);
+                errorDetail.get(key).add(singleResult?.recordId);
                 failedRecords++;
             }
         }
 
-        operationResults.put('CreatedRecords__c', createdCount);
-        operationResults.put('DeletedRecords__c', deletedCount);
-        operationResults.put('UpdatedRecords__c', updatedCount);
-        operationResults.put('FailedRecords__c', failedRecords);
-        operationResults.put('ElaborationDetail__c', JSON.serialize(operationDetail));
+        amsLog.CreatedRecords__c = createdCount;
+        amsLog.DeletedRecords__c = deletedCount;
+        amsLog.UpdatedRecords__c = updatedCount;
+        amsLog.FailedRecords__c = failedRecords;
+        amsLog.ElaborationDetail__c = JSON.serialize(operationDetail);
+        amsLog.ErrorDetails__c = JSON.serialize(errorDetail);
+        amsLog.Id = result.logId;
 
-        amsSrv.updateAmsLogRecord(result.logId , operationResults);
-
-        return;
+        return amsLog;
     }
 
     /* Per consentire il corretto funzionamento e' necessario che le attivita siano chiuse prima del passaggio di fase degli ordini */
