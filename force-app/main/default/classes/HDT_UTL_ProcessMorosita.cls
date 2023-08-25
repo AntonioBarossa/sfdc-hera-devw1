@@ -258,7 +258,10 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         }
         if(caseToInsert.size() > 0){
             for(Case singleCase : caseToInsert){
-                if(String.isBlank(singleCase.ParentId)){
+                if(String.isBlank(singleCase.ParentId)
+                // fix 21-08-2023 dmontors
+                   && servicePointContainerMap.containsKey(singleCase.ServicePoint__c) 
+                ){
                     singleCase.ParentId = servicePointContainerMap.get(singleCase.ServicePoint__c).Id;
                 }
             }

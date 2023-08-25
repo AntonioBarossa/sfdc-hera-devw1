@@ -41,6 +41,11 @@
                 <label>Script per postvendita</label>
             </value>
             <value>
+                <fullName>Storico offerte</fullName>
+                <default>false</default>
+                <label>Storico offerte</label>
+            </value>
+            <value>
                 <fullName>Gestione obiezioni</fullName>
                 <default>false</default>
                 <label>Gestione obiezioni</label>

@@ -1120,7 +1120,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }catch(Exception e){
             System.debug(LoggingLevel.DEBUG, 'UTL_CLASS_ContractEndDate_error--> '+e.getMessage());
         }
-        if(contractCode != null){
+        if(String.isNotBlank(contractCode)){
            handleContractUpdate(contractCode, oldContractCode,contractStatus,contractEndDate);
         }
     }
