@@ -8,6 +8,11 @@ public inherited sharing class HDT_LC_CustomLookupController {
 
     @AuraEnabled(cacheable=true)
     public static List<HDT_UTL_ObjDetail> lookUp(String searchTerm, string myObject, String filter, String searchBy, String setAsKey, List<String> detailFields) {
+        return lookUpWithOrderBy(searchTerm, myObject, filter, searchBy, setAsKey, null, detailFields);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<HDT_UTL_ObjDetail> lookUpWithOrderBy(String searchTerm, string myObject, String filter, String searchBy, String setAsKey, String orderBy, List<String> detailFields) {
 
         Boolean enableDetails = (detailFields != null && detailFields.size()>0 && !detailFields.isEmpty()) ? true : false;
         String myQuery = null;
@@ -59,7 +64,11 @@ public inherited sharing class HDT_LC_CustomLookupController {
             myQuery += String.join(statementList, ' AND ');
         }
 
-        myQuery += ' ORDER BY LastModifiedDate DESC';
+        if (String.isNotBlank(orderBy)) {
+            myQuery += ' ORDER BY ' + orderBy;
+        } else {
+            myQuery += ' ORDER BY LastModifiedDate DESC';
+        }
         myQuery += ' LIMIT 20';
 
         System.debug(LoggingLevel.DEBUG, '# myQuery -> ' + myQuery);

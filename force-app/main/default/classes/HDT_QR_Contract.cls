@@ -303,7 +303,12 @@ public inherited sharing class HDT_QR_Contract {
     }
 
     public List<Contract> getContractBySapCodeBpManagementBulk(Set<String> sapCodes){
-        return [SELECT Id,BillingProfile__c,AccountId,Account.Category__c,ServicePoint__c,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED ];
+        return [SELECT Id,BillingProfile__c,AccountId,Account.Category__c,ServicePoint__c, ServicePoint__r.ServicePointCode__c, SAPContractCode__c, Account.BillingState, Account.BillingStreetNumber__c, Account.BillingPlace__c, Account.BillingStreetName__c, Account.BillingPostalCode, Account.BillingCountry, Account.BillingCityCode__c, Account.FirstName__c, Account.LastName__c, Account.VATNumber__c, Account.FiscalCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED ];
+    }
+
+    public List<Contract> getContractBySapCodeWithStatusActive(Set<String> sapCodes){
+        String filterStatus = 'Attivo';
+        return [SELECT Id,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes AND Status =: filterStatus WITH SECURITY_ENFORCED ];
     }
 
 }

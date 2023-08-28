@@ -291,36 +291,6 @@
         <label>LUCEEG IT SERV-Persona fisica</label>
     </customValue>
     <customValue>
-        <fullName>MMS Associazione</fullName>
-        <default>false</default>
-        <label>MMS Associazione</label>
-    </customValue>
-    <customValue>
-        <fullName>MMS Azienda</fullName>
-        <default>false</default>
-        <label>MMS Azienda</label>
-    </customValue>
-    <customValue>
-        <fullName>MMS Condominio</fullName>
-        <default>false</default>
-        <label>MMS Condominio</label>
-    </customValue>
-    <customValue>
-        <fullName>MMS Ditta individuale</fullName>
-        <default>false</default>
-        <label>MMS Ditta individuale</label>
-    </customValue>
-    <customValue>
-        <fullName>MMS Parti comuni</fullName>
-        <default>false</default>
-        <label>MMS Parti comuni</label>
-    </customValue>
-    <customValue>
-        <fullName>MMS Persona fisica</fullName>
-        <default>false</default>
-        <label>MMS Persona fisica</label>
-    </customValue>
-    <customValue>
         <fullName>MOODS-Altro</fullName>
         <default>false</default>
         <label>MOODS-Altro</label>
@@ -529,6 +499,51 @@
         <fullName>G6 - MMS Associazione</fullName>
         <default>false</default>
         <label>G6 - MMS Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Persona fisica</fullName>
+        <default>false</default>
+        <label>MMS Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Associazione</fullName>
+        <default>false</default>
+        <label>MMS Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Azienda</fullName>
+        <default>false</default>
+        <label>MMS Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Condominio</fullName>
+        <default>false</default>
+        <label>MMS Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Ditta individuale</fullName>
+        <default>false</default>
+        <label>MMS Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Parti comuni</fullName>
+        <default>false</default>
+        <label>MMS Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>BP TARI NG AAA</fullName>
+        <default>false</default>
+        <label>BP TARI NG AAA</label>
+    </customValue>
+    <customValue>
+        <fullName>BP TARIP</fullName>
+        <default>false</default>
+        <label>BP TARIP</label>
+    </customValue>
+    <customValue>
+        <fullName>BP TARI NG MMS</fullName>
+        <default>false</default>
+        <label>BP TARI NG MMS</label>
     </customValue>
     <description>Rappresenta una segmentazione del cliente</description>
     <masterLabel>Marcatura Cliente</masterLabel>

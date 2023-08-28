@@ -658,6 +658,61 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         return result;
     }
 
+    private static void alignOrderOfferCode(Order orderToUpdate) {
+
+        String prodCode=orderToUpdate.CommercialProductCode__c;
+        String prodversion=orderToUpdate.CommercialProductVersion__c;
+        String salesCompany='';
+        if (orderToUpdate.SalesCompany__c=='Hera Comm S.p.A.') {
+            salesCompany='1070';
+        }else if (orderToUpdate.SalesCompany__c=='Hera Comm Marche') {
+            salesCompany='2060';
+        }else if (orderToUpdate.SalesCompany__c=='EstEnergy S.p.A.') {
+            salesCompany='7030';
+        }
+        String marketType=orderToUpdate.Market__c;
+        String comodity='';
+        if (orderToUpdate.Commodity__c=='Energia Elettrica') {
+            comodity='E';
+        }else if (orderToUpdate.Commodity__c=='Gas') {
+            comodity='G';
+        }
+
+        List <OfferCode32Admin__c> offerCodes=HDT_QR_OfferCodeAdmin.getOfferCodesForOrder(prodCode, prodversion, salesCompany, marketType,comodity);
+        
+        if (!offerCodes.isEmpty()) {
+            List <OfferCode32Admin__c> offerT0=new List <OfferCode32Admin__c>();
+            OrderExtension__c ordExt =new OrderExtension__c();
+            Integer counter = 1;
+            String fieldName = 'EffectiveDate#__c';
+
+            for(OfferCode32Admin__c offerCode : offerCodes){
+                if('Y'.equalsIgnoreCase(offerCode.CodT0__c)){
+                    offerT0.add(offerCode);
+                }else{
+                    ordExt.put(fieldName.replace('#',String.valueOf(counter)), offerCode.EffectiveDate__c);
+                    counter++;
+                }
+                if(counter==4){
+                    break;
+                }
+            }
+            if(offerT0.size()==1){
+                orderToUpdate.OfferCode32__c=offerCodes[0].OfferCode32__c;
+                if (offerCodes.size()>1) {
+                    ordExt.Order__c=(String)orderToUpdate.Id;
+                    ordExt.ExternalKey__c=(String)orderToUpdate.Id;
+                    try{
+                        upsert ordExt ExternalKey__c;
+                    }
+                    catch (DmlException e) {
+                        System.debug(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
     /**
     * @description alignFields
     * @param order - Order
@@ -693,6 +748,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         //Enter here for VAS or BonusESconti
         alignOrderItem(orderToUpdate, order);
+        alignOrderOfferCode(orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
         //LG 2009 Concetta Richiesta disattivazione da ROOM

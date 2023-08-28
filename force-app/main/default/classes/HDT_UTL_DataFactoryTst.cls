@@ -3546,6 +3546,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return cityTechnicalData;
 	}
 
+	public static List<Equipment__c> createEquipment(Integer numberRecords, Boolean doInsert, Id accountId, Id contractId){
+		List<Equipment__c> eqs = new List<Equipment__c>();
+
+		for(Integer n =0; n<numberRecords;n++){
+			eqs.add(new Equipment__c(Contract__c = contractId, Account__c=accountId, EquipmentCode__c ='##TEST'+n));
+		}
+		if(doInsert){	insert eqs;}
+		return eqs;
+	}
+
 
 	/**
 	* @author Cristiano Salvati (c.salvati@key2.it)
@@ -3755,5 +3765,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return results;
 		
+	}
+
+	public static List<EquipmentAdministration__c> createEquipmentAdministrations(Integer amount, Boolean doInsert) {
+
+		List<EquipmentAdministration__c> equipmentAdministrations = new List<EquipmentAdministration__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			equipmentAdministrations.add(new EquipmentAdministration__c(
+				City__c = 'City -' + i,
+				OperationGroup__c = 'Raccolta differenziat-IURD0023',
+				OperationType__c = 'Richiesta contenitore',
+				Material__c = 'Vetro',
+				isActive__c = true,
+				IsQuadruplet__c = true
+			));
+
+		}
+
+		if (doInsert) {
+			insert equipmentAdministrations;
+		}
+
+		return equipmentAdministrations;
+
 	}
 }

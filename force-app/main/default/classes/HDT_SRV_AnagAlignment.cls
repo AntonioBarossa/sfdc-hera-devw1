@@ -761,4 +761,93 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return '';
     }
 
+    public static List<Case> bulkCreateAnagAlignmentOfferCode (List<OfferCodeUpdateLog__c> listOfOfferCodeUpdateLog){
+        Set<String> setOfSapContractCode = new Set<String>();
+        Map<String, OfferCodeUpdateLog__c> mapSapContractCodeOfferCodeUpdate = new Map<String, OfferCodeUpdateLog__c>();
+        for(OfferCodeUpdateLog__c offerCodeUpdateLog : listOfOfferCodeUpdateLog){
+            setOfSapContractCode.add(offerCodeUpdateLog.SapContractCode__c);
+            mapSapContractCodeOfferCodeUpdate.put(offerCodeUpdateLog.SapContractCode__c, offerCodeUpdateLog);
+        }
+        List<Contract> listOfContract = new List<Contract>();
+        HDT_QR_Contract queryContract = new HDT_QR_Contract();
+        listOfContract = queryContract.getContractBySapCodeBpManagementBulk(setOfSapContractCode);
+        Set<Id> setIdOfAccount = new Set<Id>();
+        Map<String, Contract> mapIdContract = new Map<String, Contract>();
+        for(Contract contr : listOfContract){
+            setIdOfAccount.add(contr.AccountId);
+            mapIdContract.put(contr.Id, contr);
+        }
+        List<AccountContactRelation> listOfAccountRelation = new List<AccountContactRelation>();
+        HDT_QR_AccountContactRelation queryAccount = new HDT_QR_AccountContactRelation();
+        listOfAccountRelation = queryAccount.getPrimaryContactRelations(setIdOfAccount);
+        Map<String, AccountContactRelation> mapAccountIdAccountContactRelation = new Map<String, AccountContactRelation>();
+        for(AccountContactRelation accContRelation : listOfAccountRelation){
+            mapAccountIdAccountContactRelation.put(accContRelation.AccountId, accContRelation);
+        }
+        List<Case> listOfCaseToInsert = new List<Case>();
+        for(Contract contr : listOfContract){
+            Case caseToInsert = new Case();
+            caseToInsert.Contract__c = contr.Id;
+            caseToInsert.AccountId = contr.AccountId;
+            caseToInsert.ServicePoint__c = contr.ServicePoint__c;
+            caseToInsert.BillingProvince__c = contr.Account.BillingState;
+            caseToInsert.BillingStreetNumber__c = contr.Account.BillingStreetNumber__c;
+            caseToInsert.BillingPlace__c = contr.Account.BillingPlace__c;
+            caseToInsert.BillingStreetName__c = contr.Account.BillingStreetName__c;
+            caseToInsert.BillingPostalCode__c = contr.Account.BillingPostalCode;
+            caseToInsert.BillingCountry__c = contr.Account.BillingCountry;
+            caseToInsert.BillingCityCode__c = contr.Account.BillingCityCode__c;
+            caseToInsert.FirstName__c = contr.Account.FirstName__c;
+            caseToInsert.LastName__c = contr.Account.LastName__c;
+            caseToInsert.VATNumber__c = contr.Account.VATNumber__c;
+            caseToInsert.FiscalCode__c = contr.Account.FiscalCode__c;
+            if(mapAccountIdAccountContactRelation.containsKey(contr.AccountId)){
+                caseToInsert.Mobile__c = mapAccountIdAccountContactRelation.get(contr.AccountId).Contact.MobilePhone != null ? mapAccountIdAccountContactRelation.get(contr.AccountId).Contact.MobilePhone : mapAccountIdAccountContactRelation.get(contr.AccountId).Contact.Phone;
+                caseToInsert.ContactId = mapAccountIdAccountContactRelation.get(contr.AccountId).ContactId;
+            }
+            if(mapSapContractCodeOfferCodeUpdate.containsKey(contr.SapContractCode__c)){
+                caseToInsert.EffectiveDate__c = mapSapContractCodeOfferCodeUpdate.get(contr.SapContractCode__c).EffectiveDate__c;
+            }
+            listOfCaseToInsert.add(caseToInsert);
+        }
+        List<Case> listOfCaseFinal = new List<Case>();
+        Set<String> setOfTaxes = new Set<String>();
+        Set<String> setOfSupplyCity = new Set<String>();
+        for(Case caseToInsert : listOfCaseToInsert){
+            if(mapIdContract.containsKey(caseToInsert.Contract__c)){
+                Contract contr = mapIdContract.get(caseToInsert.Contract__c);
+                try {
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(contr.SapContractCode__c, contr.ServicePoint__r.ServicePointCode__c);
+                    Case caseFinal = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), caseToInsert);
+                    setOfTaxes.add(caseFinal.Taxes__c);
+                    setOfSupplyCity.add(caseFinal.SupplyCity__c);
+                    listOfCaseFinal.add(caseFinal);
+                } catch (Exception ex){
+                    System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AnagAlignment: arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
+            }   
+        }
+        List<HDT_ExciseTranscode__mdt> listOfExciseTranscode = new List<HDT_ExciseTranscode__mdt>([SELECT Id, Excise__c, ExciseString__c FROM HDT_ExciseTranscode__mdt WHERE ExciseString__c IN : setOfTaxes]);
+        Map<String, Double> mapTaxesExcise = new Map<String, Double>();
+        for(HDT_ExciseTranscode__mdt cmdt : listOfExciseTranscode){
+            mapTaxesExcise.put(cmdt.ExciseString__c, cmdt.Excise__c);
+        }
+        HDT_QR_AnagAlignment queryAdditional = new HDT_QR_AnagAlignment();
+        List<HDT_RegionalAdditional__mdt> listOfAdditional = new List<HDT_RegionalAdditional__mdt>();
+        listOfAdditional = queryAdditional.findRegionalAdditionalBulk(setOfTaxes, setOfSupplyCity, new Set<String>());
+        Map<String, Double> mapTaxesAdditionalValue = new Map<String, Double>();
+        for(HDT_RegionalAdditional__mdt cmdt : listOfAdditional){
+            mapTaxesAdditionalValue.put(cmdt.Tax__c+'_'+cmdt.City__c, cmdt.AdditionalValue__c);
+        }
+        for(Case caseToInsert : listOfCaseFinal){
+            if(caseToInsert.Excises__c == null && String.isNotBlank(caseToInsert.Taxes__c)){
+                caseToInsert.Excises__c = mapTaxesExcise.containsKey(caseToInsert.Taxes__c) ? mapTaxesExcise.get(caseToInsert.Taxes__c) : 0.0;
+            }
+            if(caseToInsert.RegionalAdditional__c == null && String.isNotBlank(caseToInsert.Taxes__c)){
+                caseToInsert.RegionalAdditional__c = mapTaxesAdditionalValue.containsKey(caseToInsert.Taxes__c+'_'+caseToInsert.SupplyCity__c) ? mapTaxesAdditionalValue.get(caseToInsert.Taxes__c) : 0;
+            } 
+        }
+        return listOfCaseFinal;
+    }
+
 }

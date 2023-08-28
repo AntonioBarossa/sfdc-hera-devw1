@@ -122,6 +122,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     'Modifica dati contrattuali'.equalsIgnoreCase(caseType) || 'Modifica post accertamento'.equalsIgnoreCase(caseType) )   
         {
             result = cessazioneVariazioneValidate(currentCase, fields);
+        }else if(   'Associa Dotazioni'.equalsIgnoreCase(caseType))   
+        {
+            result = associaDotazioniValidate(currentCase, fields);
         }else if(caseType=='Errore di Fatturazione'){
             result = validateErroreFatturazione(currentCase, fields);
         }else {
@@ -147,7 +150,21 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         //system.debug('end validate');
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
-    
+
+    private String associaDotazioniValidate(Case currCase, String fields){
+        //system.debug('init validate');
+        //String result = '';
+        HDT_UTL_CityDataTariValidation cityDataTariValidation = new HDT_UTL_CityDataTariValidation();
+        if( getFieldValue(fields, 'ClientIdentificationDate__c') > String.valueOf(Date.today())) {
+            //system.debug('Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna');
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Attenzione! La data richiesta non può essere maggiore della data odierna'));
+        }
+        //system.debug('preClass');
+        //result = cityDataTariValidation.validate(fields, currCase.Id);
+        //system.debug('end validate');
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+
     /*
     * @Author: Salvatore A. Sarà 19/10/2021
     * Risoluzione "Debug Should Use Logging Level"

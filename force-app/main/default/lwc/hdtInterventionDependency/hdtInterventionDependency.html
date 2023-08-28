@@ -1,0 +1,87 @@
+<template>
+    <!--<div class="slds-box">-->
+        <!--<label class="slds-form-element__label" for="city" >
+            <abbr class="slds-required" title="required">* </abbr>Comune
+        </label>
+        <c-hdt-custom-lookup
+            obj-name="CityTechnicalData__c"
+            set-as-key="CadastralCity__c"
+            search-by="Name"        
+            icon-name="custom:custom45"
+            order-by="Name ASC"
+            onvalueselect={handleCitySelected}
+            value-id={cityId}
+            event-on-get-record="true"
+            required="true"
+            id="city"
+            data-id="city" >
+        </c-hdt-custom-lookup>-->
+
+
+        <lightning-input 
+            type="text" 
+            label="Comune"
+            required
+            data-id="city"
+            value={city} 
+            disabled>
+        </lightning-input>
+
+
+        <lightning-combobox
+            disabled={operationGroupDisabled}
+            name="operationGroup"
+            required="true"
+            label="Gruppo Intervento"
+            value={operationGroup}
+            placeholder="Selezionare Gruppo Intervento"
+            options={operationGroups}
+            onchange={operationGroupChange}
+            data-id="operationGroup" >
+        </lightning-combobox>
+
+        <lightning-combobox
+            disabled={operationTypeDisabled}
+            name="operationType"
+            required="true"
+            label="Tipo Intervento"
+            value={operationType}
+            placeholder="Selezionare Tipo Intervento"
+            options={operationTypes}
+            onchange={operationTypeChange}
+            data-id="operationType" >
+        </lightning-combobox>
+
+        <!--
+        <lightning-combobox
+            disabled={materialsDisabled}
+            name="material"
+            required="true"
+            label="Materiale"
+            value={material}
+            placeholder="Selezionare Materiale"
+            options={materials}
+            onchange={materialChange}
+            data-id="material" >
+        </lightning-combobox>
+    -->
+
+    <template lwc:if={materialsSize}>
+        <lightning-checkbox-group 
+        name="material"
+        label="Materiali"
+        required
+        disabled={materialsDisabled}
+        options={materials}
+        value={materialArray}
+        message-when-value-missing="Necessario selezionare almeno un materiale"
+        data-id="material"
+        onchange={materialChange}>
+        </lightning-checkbox-group>
+    </template>
+        
+
+
+<!--     </div>
+ -->
+</template>

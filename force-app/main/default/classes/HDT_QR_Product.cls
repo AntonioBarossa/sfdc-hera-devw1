@@ -43,4 +43,17 @@ public inherited sharing class HDT_QR_Product {
         ];
     }
 
+    public static List<Product2> getProductsByCodeVersion(Set<String> prodCodes, Set<String> prodVersions) {
+        return [
+            SELECT 
+            Id,
+            ProductCode,
+            Version__c
+            FROM Product2
+            WHERE Family='Offerta commerciale'
+            AND ProductCode IN : prodCodes AND Version__c IN : prodVersions
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
