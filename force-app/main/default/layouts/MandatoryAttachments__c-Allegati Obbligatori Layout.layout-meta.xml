@@ -46,10 +46,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Commodity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ProductCode__c</field>
             </layoutItems>
             <layoutItems>
