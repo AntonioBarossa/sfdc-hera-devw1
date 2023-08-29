@@ -74,7 +74,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     showSpinner = true;
     @track fieldsToRetrieve=OBJECT_FIELDS.map(el=> `Case.${el}`);
     @track isView = false;
-    test = EMAIL_FIELD;
 
     /*@wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
     wireRecord({error,data}){
