@@ -163,6 +163,11 @@
     <pluralLabel>Dati Tecnici Comunali</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Dati_Tecnici_Comunali</listViewButtons>
+        <searchResultsAdditionalFields>Province__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TARIManaged__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TARIManagingStartDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TARIManagingEndDate__c</searchResultsAdditionalFields>
+        <searchResultsCustomButtons>Rapporto_Dati_Tecnici_Comunali</searchResultsCustomButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

@@ -164,6 +164,11 @@
     <pluralLabel>Allegati Obbligatori</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Allegati_Obbligatori</listViewButtons>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>MandatoryAttachments__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Cluster__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ProcessType__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SubProcessType__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
