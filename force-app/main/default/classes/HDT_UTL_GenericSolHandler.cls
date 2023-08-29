@@ -33,6 +33,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.Id = childOrderList[0].Id;
         childOrder = createChildOrderWithItem(childOrder,params);
         Order parentOrder = createParentOrder(childOrder,sale);
+        parentOrder.Status ='Completed';
+        parentOrder.Phase__c = 'Documentazione Gestita';
         HDT_UTL_DatabaseService.insertSObject(parentOrder);
         childOrder.ParentOrder__c = parentOrder.Id;
         childOrder.Phase__c = 'Comunicazione verso Heroku';
