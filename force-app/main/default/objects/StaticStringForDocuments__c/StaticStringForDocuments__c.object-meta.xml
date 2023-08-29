@@ -163,6 +163,10 @@
     <pluralLabel>StaticStringForDocuments</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Stringa_Documentale</listViewButtons>
+        <searchResultsAdditionalFields>Municipality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Process__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subprocess__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FixedString__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Special</startsWith>
