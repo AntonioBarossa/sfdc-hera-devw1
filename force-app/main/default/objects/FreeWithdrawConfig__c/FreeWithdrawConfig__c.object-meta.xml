@@ -162,6 +162,15 @@
     <pluralLabel>Configurazion Ritiri Gratuiti</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Configurazione_Ritiri_Gratuiti</listViewButtons>
+        <searchResultsAdditionalFields>Municipality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FreeWithdrawCalculation__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TypeOperation__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ToBePaidWithinMonthsDomestic__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ToBePaidWithinMonthsNotDomestic__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ToPayIfVolumeEqualOrHigherDom__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ToPayIfVolumeEqualOrHigherNotDom__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PayIfIsPrivateAreaDom__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PayIfIsPrivateAreaNotDom__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

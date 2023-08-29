@@ -165,6 +165,8 @@
     <pluralLabel>Tabelle Appuntamento Tari</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Tabella_Appuntamento_Tari</listViewButtons>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TypeOperation__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

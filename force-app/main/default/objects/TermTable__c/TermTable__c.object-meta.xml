@@ -165,6 +165,10 @@
     <pluralLabel>Tabelle Periodi</pluralLabel>
     <searchLayouts>
         <listViewButtons>Rapporto_Tabella_Periodi</listViewButtons>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Cluster__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subtype__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
