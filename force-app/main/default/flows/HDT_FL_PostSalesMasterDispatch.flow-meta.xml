@@ -3047,6 +3047,13 @@
                     <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Associa Dotazioni</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>CommodityDecision_0_0</targetReference>
             </connector>
@@ -3141,6 +3148,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Associa Dotazioni</stringValue>
                 </rightValue>
             </conditions>
             <connector>

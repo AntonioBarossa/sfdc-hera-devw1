@@ -80,7 +80,7 @@ public with sharing class HDT_UTL_AmsOrderDependenciesTst {
         User u = new user(alias = 'test123', email='test@test.com',
             emailencodingkey='UTF-8', firstName='AMS', lastname='Testing', languagelocalekey='en_US',
             localesidkey='en_US', profileid = p.Id, country='Italy',
-            timezonesidkey='Europe/Berlin', username='test@ams.com');
+            timezonesidkey='Europe/Berlin', username='testAmsAdministrationHera@ams.com');
         insert u;
 
 
@@ -89,7 +89,7 @@ public with sharing class HDT_UTL_AmsOrderDependenciesTst {
 
     @isTest
     static void sequenzializationTst(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 
@@ -109,7 +109,7 @@ public with sharing class HDT_UTL_AmsOrderDependenciesTst {
 
     @isTest
     static void desequenzializationTst(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 

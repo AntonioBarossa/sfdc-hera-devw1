@@ -1,6 +1,9 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFornitura from '@salesforce/apex/HDT_LC_SaleVas.getFornitura';
+
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 const DATA_ACCESS_MAP = {
     'ORDERS_IN_PROGRESS_VAS':{
@@ -271,7 +274,46 @@ const DATA_ACCESS_MAP = {
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
-    }
+    },
+    'ASSOCIA_DOTAZIONI_ORDER':{
+        label : 'Ordini',
+        sObjectName: 'Order',
+        emptyMessage: 'Non ci sono record selezionabili',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.OrderNumber;
+                item.Type = item.Type;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.SAPImplantCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'Fornitura', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'ASSOCIA_DOTAZIONI_CONTRACT':{
+        label : 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono record selezionabili',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.SAPContractCode__c;
+                item.Type = item.CommoditySectorFormula__c;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.SAPImplantCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Contratto', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'Stato', fieldName: 'Status', type: 'text'},
+            {label: 'Fornitura', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
 };
 const ROWS_PER_PAGE = 4;
 
@@ -280,6 +322,7 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     //input values
     @api accountId;
     @api groupOptions;
+    @api sessionid;
 
     //output values
     @api recordId;
@@ -297,12 +340,14 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     currentPage = 0;
     @track tableData;
     @track tableColumns = [];
+    skipValidate = false;
 
     radioGroupOptions;
     
     defaultSelection;
 
     connectedCallback(){
+        this.subscribeMC();
         const keys = this.groupOptions.split(";").map(key => key.trim());
         this.radioGroupOptions = keys.filter(key => DATA_ACCESS_MAP[key]!=null).map(key => {
             return {
@@ -320,12 +365,19 @@ export default class HdtSelezFornituraFlow extends LightningElement {
         //this.handleRadioGroupChange({detail:{value:this.groupOption}});
     }
 
+    //subscribe
+    @wire(MessageContext)
+	messageContext;
+    //subscribe
+
     handleRadioGroupChange(event) {
         this.tableData = null;
         this.totalPages = 0;
         this.selectedOption = event.detail.value;
         this.confirmedSelectedOption = '';
-        
+        this.selectedRecord = {};
+        this.recordId = null;
+        this.sObjectName = null;
         this.loadRecords();
     }
 
@@ -455,18 +507,54 @@ export default class HdtSelezFornituraFlow extends LightningElement {
         }
     }
 
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {
+                if(this.sessionid==mc.sessionid){
+                    switch (mc.message){
+                        case "draft":
+                        case "cancel":
+                            this.skipValidate = true;
+                            break;
+                        default:
+                        break;
+                    }                    
+                }
+            
+            },
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    disconnectedCallback(){
+        if(this.subscription) unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
     @api
     validate() {
-        if (this.recordId || DATA_ACCESS_MAP[this.selectedOption].optionalSelection) {
-            return { isValid: true }; 
-        }
-        else {
-            // If the component is invalid, return the isValid parameter 
-            // as false and return an error message. 
-            return {
-                isValid: false,
-                errorMessage: 'Non hai selezionato nessun elemento'
-            };
+        if(!this.skipValidate){
+            if (this.recordId || DATA_ACCESS_MAP[this.selectedOption]?.optionalSelection) {
+                return { isValid: true }; 
+            }
+            else {
+                // If the component is invalid, return the isValid parameter 
+                // as false and return an error message. 
+                return {
+                    isValid: false,
+                    errorMessage: 'Non hai selezionato nessun elemento'
+                };
+            }
         }
     }
 }

@@ -466,6 +466,16 @@
         <label>Modifica Unita Immobiliari Componenti - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Sost./Furto/Smarr. Dot. - AMB</fullName>
+        <default>false</default>
+        <label>Gestione Sost./Furto/Smarr. Dot. - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Associa Dotazioni - AMB</fullName>
+        <default>false</default>
+        <label>Associa Dotazioni - AMB</label>
+    </customValue>
+    <customValue>
         <fullName>Modifica impianto - Preventivo analitico - EE</fullName>
         <default>false</default>
         <label>Modifica impianto - Preventivo analitico - EE</label>

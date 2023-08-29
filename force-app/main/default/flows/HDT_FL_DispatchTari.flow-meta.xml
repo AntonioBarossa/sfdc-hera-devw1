@@ -4,8 +4,8 @@
     <assignments>
         <name>assign_Case_Bozza</name>
         <label>assign Case Bozza</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>theCase</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>initialize_Case_Variable</name>
         <label>initialize Case Variable</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>710</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>theCase.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -117,8 +117,8 @@
     <decisions>
         <name>isRipristinaFase</name>
         <label>Ripristina Fase?</label>
-        <locationX>446</locationX>
-        <locationY>158</locationY>
+        <locationX>578</locationX>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante_o_Titolare</targetReference>
         </defaultConnector>
@@ -142,8 +142,8 @@
     <decisions>
         <name>PROCESS_TREE</name>
         <label>PROCESS TREE</label>
-        <locationX>446</locationX>
-        <locationY>734</locationY>
+        <locationX>578</locationX>
+        <locationY>650</locationY>
         <defaultConnector>
             <targetReference>DispatchSales_Subflow</targetReference>
         </defaultConnector>
@@ -186,6 +186,21 @@
             <label>Gestione Rifiuti</label>
         </rules>
         <rules>
+            <name>Gestione_Dotazioni</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Dotazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>HDT_FL_GestioneDotazioni</targetReference>
+            </connector>
+            <label>Gestione Dotazioni</label>
+        </rules>
+        <rules>
             <name>Generiche_Tari</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -201,6 +216,7 @@
             <label>Generiche Tari</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_DispatchTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_DispatchTari</label>
     <processMetadataValues>
@@ -225,8 +241,8 @@
     <recordLookups>
         <name>Cerca_Legale_Rappresentante_o_Titolare</name>
         <label>Cerca Legale Rappresentante o Titolare</label>
-        <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationX>710</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordType</targetReference>
@@ -274,8 +290,8 @@
     <recordLookups>
         <name>getRecordBozza</name>
         <label>getRecordBozza</label>
-        <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assign_Case_Bozza</targetReference>
@@ -295,8 +311,8 @@
     <recordLookups>
         <name>getRecordType</name>
         <label>getRecordType</label>
-        <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationX>710</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>initialize_Case_Variable</targetReference>
@@ -315,7 +331,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>isRipristinaFase</targetReference>
@@ -325,8 +341,8 @@
     <subflows>
         <name>DispatchSales_Subflow</name>
         <label>DispatchSales Subflow</label>
-        <locationX>842</locationX>
-        <locationY>854</locationY>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_PostSalesMasterDispatchSales</flowName>
         <inputAssignments>
             <name>AccountId</name>
@@ -345,8 +361,8 @@
     <subflows>
         <name>GenericheTariSubflow</name>
         <label>Generiche Tari Subflow</label>
-        <locationX>578</locationX>
-        <locationY>854</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GenericProcessTari</flowName>
         <inputAssignments>
             <name>theCase</name>
@@ -356,10 +372,23 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>HDT_FL_GestioneDotazioni</name>
+        <label>HDT_FL_GestioneDotazioni</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <flowName>HDT_FL_GestioneDotazioni</flowName>
+        <inputAssignments>
+            <name>caseId</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>HDT_FL_GestioneRifiuti</name>
         <label>HDT_FL_GestioneRifiuti</label>
         <locationX>314</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneRifiuti</flowName>
         <inputAssignments>
             <name>theCase</name>
@@ -372,7 +401,7 @@
         <name>HDT_FL_SegnalazioniAmbientali</name>
         <label>HDT_FL_SegnalazioniAmbientali</label>
         <locationX>50</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <flowName>HDT_FL_SegnalazioniAmbientali</flowName>
         <inputAssignments>
             <name>theCase</name>

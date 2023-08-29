@@ -54,13 +54,13 @@ public with sharing class HDT_LC_AmsAdministrationTst {
         User u = new user(alias = 'test123', email='test@test.com',
             emailencodingkey='UTF-8', firstName='AMS', lastname='Testing', languagelocalekey='en_US',
             localesidkey='en_US', profileid = p.Id, country='Italy',
-            timezonesidkey='Europe/Berlin', username='test@ams.com');
+            timezonesidkey='Europe/Berlin', username='testAmsAdministrationHera2@ams.com');
         insert u;
     }
 
     @isTest
     static void fetchConfigurationsTst(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera2@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 
@@ -79,7 +79,7 @@ public with sharing class HDT_LC_AmsAdministrationTst {
     }
     @isTest
     static void initializeOperation(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera2@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 
@@ -94,7 +94,7 @@ public with sharing class HDT_LC_AmsAdministrationTst {
     }
     @isTest
     static void isOperationPending(){
-        User u = [SELECT Id FROM User WHERE Username = 'test@ams.com'];
+        User u = [SELECT Id FROM User WHERE Username = 'testAmsAdministrationHera2@ams.com'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_AmsAdministration'];
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         insert psa; 

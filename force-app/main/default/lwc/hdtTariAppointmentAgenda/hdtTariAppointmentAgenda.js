@@ -3,9 +3,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import handleSearch from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleSearch';
 import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView';
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
-import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
+//import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import updateCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.updateCase';
 import {equalsIgnoreCase} from 'c/hdtChildOrderProcessDetailsUtl';
+
+import { getRecord } from 'lightning/uiRecordApi';
 
 
 const OBJECT_FIELDS =[
@@ -13,6 +15,7 @@ const OBJECT_FIELDS =[
     'Outcome__c',
     'StartAppointment__c',
     'EndAppointment__c',
+    'FirstAppointmentAvaiable__c',
     'WithdrawalFee__c',
     'ServicePoint__c',
     'CreatedDate',
@@ -69,10 +72,10 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     searchType;
     newDateLabel;
     showSpinner = true;
-    @track fieldsToRetrieve=OBJECT_FIELDS;
+    @track fieldsToRetrieve=OBJECT_FIELDS.map(el=> `Case.${el}`);
     @track isView = false;
 
-    @wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
+    /*@wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
     wireRecord({error,data}){
         console.log(data);
         console.log(this.params);
@@ -92,7 +95,36 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     this.getNewDate();
                 }
         }
+    }*/
+
+    @wire(getRecord, { recordId: '$caseid', fields : '$fieldsToRetrieve'})
+    wireRecord({error,data}){
+        console.log(data);
+        console.log(this.params);
+        console.log(this.caseid);
+        if (error){
+            console.error('status error: ' + error.status);
+            console.error('status body: ' + JSON.stringify(error.body));
+        }
+        else if (data && this.params){
+            this.case = OBJECT_FIELDS.reduce(
+                (theCase, field) => {
+                    theCase[field] = data.fields[field]?.value; 
+                    return theCase;
+                }, {Id : data.id}
+            );
+            //this.case = {...data};
+            this.searchType = this.params.searchType;
+            this.showSpinner = false;
+            this.refreshRecord = false;
+            if(this.params.searchType == 'View'){
+                this.getAppointmentDate();
+            }else{
+                this.getNewDate();
+            }
+        }
     }
+
     
     connectedCallback(){
         
@@ -143,13 +175,15 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     updateCase(caso, refreshPage){
-        updateCase({
-            caso : caso
-        }).then(result =>{
-            console.log(result);
-            if(refreshPage) this.refreshPage(true);
-            this.showSpinner = false;
-        }).catch(error =>{
+        updateCase({ caso : caso }).then(
+        //updateRecord({fields:caso}).then(
+            result =>
+            {
+                console.log(result);
+                if(refreshPage) this.refreshPage(true);
+                this.showSpinner = false;
+            }
+        ).catch(error =>{
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
         });
@@ -245,6 +279,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     handleSearchMethod(wrap){
         this.showSpinner = true;
         handleSearch({
+            theCase : this.case,
             wrap : wrap
         }).then(result =>{
             if(!equalsIgnoreCase(result?.status, 'success')){ 
@@ -264,6 +299,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                         this.hideConfirmButton = true; 
                         this.disableManageButton = false;
                     }else{
+                        if(!this.case.FirstAppointmentAvaiable__c){
+                            this.case.FirstAppointmentAvaiable__c = this.formatDateTime(slots[0].startDate);
+                        }
                         slots.forEach(element => {
                             this.addRecord({
                                 startDate : element.startDate,

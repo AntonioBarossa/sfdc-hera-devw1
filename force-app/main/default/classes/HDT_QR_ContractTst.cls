@@ -30,8 +30,8 @@ public with sharing class HDT_QR_ContractTst {
             HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+            spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SAPContractCode__c = 'SAPCode';
-            spList[0].CommoditySector__c = 'Gas';
             insert spList;
             
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
@@ -90,7 +90,7 @@ public with sharing class HDT_QR_ContractTst {
         System.runAs(u){
  
             Test.startTest();
-            ServicePoint__c sp = [SELECT Id,ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c='testServicePointCode'];
+            ServicePoint__c sp = [SELECT Id, ServicePointCode__c FROM ServicePoint__c];
             
             Contract ct = [SELECT Id, Status FROM Contract WHERE Status = 'Attivo'];
             ct.Status = 'Attivo';
@@ -118,11 +118,12 @@ public with sharing class HDT_QR_ContractTst {
             Test.startTest();
             
             Contract ct = [SELECT Id, Status FROM Contract WHERE Status = 'Attivo'];
-            ct.Status = 'Attivo';
-            update ct;
 
-            String st = [SELECT Id FROM ServicePoint__c WHERE Name='testServicePoint0'].Id;
-            List<String> stringList = new List<String>{st};
+            ServicePoint__c sp = [SELECT Id, ServicePointCode__c FROM ServicePoint__c];
+            List<String> stringList = new List<String>{sp.Id};
+            ct.Status = 'Attivo';
+            ct.ServicePoint__c = sp.Id;
+            update ct;
             
             List<Contract> ctList = contractQr.getSapContractCode(stringList);
  

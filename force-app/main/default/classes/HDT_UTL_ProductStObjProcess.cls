@@ -404,4 +404,36 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         ];
         return productOptionList;
     }
+
+    public static void checkOfferCode(List <Product2> prodsToCheck) {
+        Set<String> prodCodes=new Set<String>();
+        Set<String> prodVersions=new Set<String>();
+
+        for(Product2 p : prodsToCheck){
+                prodCodes.add(p.ProductCode);
+                prodVersions.add(p.Version__c); 
+        }
+
+        List <OfferCode32Admin__c> offerCodes= HDT_QR_OfferCodeAdmin.getOfferCodesByProdVersion(prodCodes, prodVersions);
+
+        Map <String,OfferCode32Admin__c> offCodesMap=new Map <String,OfferCode32Admin__c>();
+
+        for(OfferCode32Admin__c offCode : offerCodes){
+            String key=offCode.OfferProductCode__c+'_'+offCode.OfferProductVersion__c;
+            offCodesMap.put(key, offCode);
+        }
+
+        for(Product2 prod : prodsToCheck){
+            try{
+                if(!offCodesMap.containsKey(prod.ProductCode+'_'+prod.Version__c)){
+                    throw new HDT_UTL_ProductStObjProcesseException('Nessun Codice Offerta 32 Corrispondente a questo Prodotto!');
+                }
+            }
+            catch (Exception ex){
+                prod.adderror('Nessun Codice Offerta 32 Corrispondente a questo Prodotto!');
+            }
+        }  
+    }
+
+    private class HDT_UTL_ProductStObjProcesseException extends Exception {}
 }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comune__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Comune</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BASTIGLIA</fullName>
+                <default>false</default>
+                <label>BASTIGLIA</label>
+            </value>
+            <value>
+                <fullName>BOMPORTO</fullName>
+                <default>false</default>
+                <label>BOMPORTO</label>
+            </value>
+            <value>
+                <fullName>BUDRIO</fullName>
+                <default>false</default>
+                <label>BUDRIO</label>
+            </value>
+            <value>
+                <fullName>CASTELFRANCO EMILIA</fullName>
+                <default>false</default>
+                <label>CASTELFRANCO EMILIA</label>
+            </value>
+            <value>
+                <fullName>CATTOLICA</fullName>
+                <default>false</default>
+                <label>CATTOLICA</label>
+            </value>
+            <value>
+                <fullName>CORIANO</fullName>
+                <default>false</default>
+                <label>CORIANO</label>
+            </value>
+            <value>
+                <fullName>DOZZA</fullName>
+                <default>false</default>
+                <label>DOZZA</label>
+            </value>
+            <value>
+                <fullName>FERRARA</fullName>
+                <default>false</default>
+                <label>FERRARA</label>
+            </value>
+            <value>
+                <fullName>GUIGLIA</fullName>
+                <default>false</default>
+                <label>GUIGLIA</label>
+            </value>
+            <value>
+                <fullName>MARANO SUL PANARO</fullName>
+                <default>false</default>
+                <label>MARANO SUL PANARO</label>
+            </value>
+            <value>
+                <fullName>MISANO ADRIATICO</fullName>
+                <default>false</default>
+                <label>MISANO ADRIATICO</label>
+            </value>
+            <value>
+                <fullName>MONTE SAN PIETRO</fullName>
+                <default>false</default>
+                <label>MONTE SAN PIETRO</label>
+            </value>
+            <value>
+                <fullName>MORCIANO DI ROMAGNA</fullName>
+                <default>false</default>
+                <label>MORCIANO DI ROMAGNA</label>
+            </value>
+            <value>
+                <fullName>MORDANO</fullName>
+                <default>false</default>
+                <label>MORDANO</label>
+            </value>
+            <value>
+                <fullName>SAN CESARIO SUL PANARO</fullName>
+                <default>false</default>
+                <label>SAN CESARIO SUL PANARO</label>
+            </value>
+            <value>
+                <fullName>SAN GIOVANNI IN MARIGNANO</fullName>
+                <default>false</default>
+                <label>SAN GIOVANNI IN MARIGNANO</label>
+            </value>
+            <value>
+                <fullName>SPILAMBERTO</fullName>
+                <default>false</default>
+                <label>SPILAMBERTO</label>
+            </value>
+            <value>
+                <fullName>VIGNOLA</fullName>
+                <default>false</default>
+                <label>VIGNOLA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
