@@ -7595,6 +7595,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.FirstAppointmentAvaiable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.FlowType__c</field>
         <readable>true</readable>
     </fieldPermissions>
