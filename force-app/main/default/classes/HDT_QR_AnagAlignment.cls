@@ -240,6 +240,7 @@ public with sharing class HDT_QR_AnagAlignment {
         Account.BillingState,
         Account.BillingStreetCode__c,
         Account.BillingStreetName__c,
+        Account.BillingStreet,
         Account.BillingStreetNumber__c,
         Account.BillingStreetNumberExtension__c,
         Contact.FirstName,
@@ -255,6 +256,7 @@ public with sharing class HDT_QR_AnagAlignment {
         Contact.MailingState,
         Contact.MailingStreetCode__c,
         Contact.MailingStreetName__c,
+        Contact.MailingStreet,
         Contact.MailingStreetNumber__c,
         Contact.MailingStreetNumberExtension__c 
         FROM AccountContactRelation 

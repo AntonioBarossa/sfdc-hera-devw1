@@ -14,6 +14,7 @@ public with sharing class HDT_UTL_AnagAlignment {
         'BillingState' => 'MailingState',
         'BillingStreetCode__c' => 'MailingStreetCode__c',
         'BillingStreetName__c' => 'MailingStreetName__c',
+        'BillingStreet' => 'MailingStreet',
         'BillingStreetNumber__c' => 'MailingStreetNumber__c',
         'BillingStreetNumberExtension__c' => 'MailingStreetNumber__c'
     };
@@ -23,7 +24,7 @@ public with sharing class HDT_UTL_AnagAlignment {
     {
         List<Contact> contactToAlign = new List<Contact>();
         for(Contact c : contactList){
-            for(String key : accountToContactMap)
+            for(String key : accountToContactMap.keySet())
             {
                 if(oldAccount.get(key) != null && c.get(accountToContactMap.get(key)) != null && oldAccount.get(key) == c.get(accountToContactMap.get(key)))
                 {

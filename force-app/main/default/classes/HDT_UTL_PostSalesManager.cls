@@ -184,8 +184,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 List<AccountContactRelation> acrList = aqr.getContactToAlign(currentCase.AccountId);
                 List<Contact> contactList = new List<Contact>();
                 List<Contact> contactToAlign = new List<Contact>();
+                Account oldAccount = new Account();
                 if(!acrList.isEmpty()){
-                    Account oldAccount = acrList[0].Account;
+                    oldAccount = acrList[0].Account;
                     /* Check dei dati dei contatti andando a considerare quelli con dati fiscali uguali a quelli dell'account */
                     for(AccountContactRelation acr : acrList)
                     {
@@ -214,6 +215,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingState = currentCase.BillingProvince__c;
                 acc.BillingStreetCode__c = currentCase.BillingStreetCode__c;
                 acc.BillingStreetName__c = currentCase.BillingStreetName__c;
+                acc.BillingStreet = currentCase.BillingStreetName__c;
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
                 acc.IsWrongFiscalData__c = false;
