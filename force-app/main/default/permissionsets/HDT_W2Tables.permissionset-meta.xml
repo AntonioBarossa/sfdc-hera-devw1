@@ -31,4 +31,8 @@
         <tab>TermTable__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ImportCustomObjects</name>
+    </userPermissions>
 </PermissionSet>

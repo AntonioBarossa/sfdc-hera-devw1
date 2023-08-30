@@ -3154,6 +3154,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountStatementFilter__c.CustomerMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountStatementFilter__c.IsDigitalMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
