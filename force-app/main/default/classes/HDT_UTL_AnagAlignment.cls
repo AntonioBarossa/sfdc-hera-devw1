@@ -1,6 +1,6 @@
 public with sharing class HDT_UTL_AnagAlignment {
 
-    private static final Map<String,String> accountToContactMap = new Map<String, String>{
+    private static final Map<String,String> ACCOUNT_TO_CONTACT_MAP = new Map<String, String>{
         'FirstName__c' => 'FirstName',
         'LastName__c' => 'LastName',
         'FiscalCode__c' => 'FiscalCode__c',
@@ -24,11 +24,11 @@ public with sharing class HDT_UTL_AnagAlignment {
     {
         List<Contact> contactToAlign = new List<Contact>();
         for(Contact c : contactList){
-            for(String key : accountToContactMap.keySet())
+            for(String key : ACCOUNT_TO_CONTACT_MAP.keySet())
             {
-                if(oldAccount.get(key) != null && c.get(accountToContactMap.get(key)) != null && oldAccount.get(key) == c.get(accountToContactMap.get(key)))
+                if(oldAccount.get(key) != null && c.get(ACCOUNT_TO_CONTACT_MAP.get(key)) != null && oldAccount.get(key) == c.get(ACCOUNT_TO_CONTACT_MAP.get(key)))
                 {
-                    c.put(accountToContactMap.get(key), newAccount.get(key));
+                    c.put(ACCOUNT_TO_CONTACT_MAP.get(key), newAccount.get(key));
                 }
             }
             contactToAlign.add(c);
