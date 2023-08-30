@@ -3,10 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>City__c</columns>
-    <columns>MandatoryAttachments__c</columns>
-    <columns>Cluster__c</columns>
-    <columns>ProcessType__c</columns>
-    <columns>SubProcessType__c</columns>
+    <columns>TypeOperation__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
