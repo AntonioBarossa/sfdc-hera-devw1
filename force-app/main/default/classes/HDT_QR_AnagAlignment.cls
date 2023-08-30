@@ -223,4 +223,43 @@ public with sharing class HDT_QR_AnagAlignment {
                                                                                                 WITH SECURITY_ENFORCED]);
         return listOfAdditionals;
     }
+
+    public List<AccountContactRelation> getContactToAlign (String accountId)
+    {
+        return [SELECT Id,
+        Account.FirstName__c,
+        Account.LastName__c,
+        Account.FiscalCode__c,
+        Account.VatNumber__c,
+        Account.BillingCity,
+        Account.BillingCityCode__c,
+        Account.BillingCountry,
+        Account.BillingIsAddressVerified__c,
+        Account.BillingPlace__c,
+        Account.BillingPostalCode,
+        Account.BillingState,
+        Account.BillingStreetCode__c,
+        Account.BillingStreetName__c,
+        Account.BillingStreet,
+        Account.BillingStreetNumber__c,
+        Account.BillingStreetNumberExtension__c,
+        Contact.FirstName,
+        Contact.LastName,
+        Contact.FiscalCode__c,
+        Contact.VATNumber__c,
+        Contact.MailingCity,
+        Contact.MailingCityCode__c,
+        Contact.MailingCountry,
+        Contact.MailingIsAddressVerified__c,
+        Contact.MailingPlace__c,
+        Contact.MailingPostalCode,
+        Contact.MailingState,
+        Contact.MailingStreetCode__c,
+        Contact.MailingStreetName__c,
+        Contact.MailingStreet,
+        Contact.MailingStreetNumber__c,
+        Contact.MailingStreetNumberExtension__c 
+        FROM AccountContactRelation 
+        WHERE AccountId = :accountId];
+    }
 }

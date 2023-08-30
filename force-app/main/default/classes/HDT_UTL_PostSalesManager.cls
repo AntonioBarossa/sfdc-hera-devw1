@@ -12,6 +12,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     private HDT_QR_Order orderQr = new HDT_QR_Order();
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private HDT_QR_AnagAlignment aqr = new HDT_QR_AnagAlignment();
+    private HDT_UTL_AnagAlignment aUtl = new HDT_UTL_AnagAlignment();
 
     private final Map<String,String> APPOINTMENT_METHOD = new Map<String,String>{
         'Consegna copia chiave GdM' => 'ConsegnaCopiaChiaveGdM',
@@ -178,6 +180,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {
             when 'Modifica Dati Fiscali' {
+                /* Query su ACR per recuperare dati account e contact*/
+                List<AccountContactRelation> acrList = aqr.getContactToAlign(currentCase.AccountId);
+                List<Contact> contactList = new List<Contact>();
+                List<Contact> contactToAlign = new List<Contact>();
+                Account oldAccount = new Account();
+                if(!acrList.isEmpty()){
+                    oldAccount = acrList[0].Account;
+                    /* Check dei dati dei contatti andando a considerare quelli con dati fiscali uguali a quelli dell'account */
+                    for(AccountContactRelation acr : acrList)
+                    {
+                        if(acr.Account?.FiscalCode__c == acr.Contact?.FiscalCode__c && acr.Account?.VatNumber__c == acr.Contact?.VatNumber__c)
+                        {
+                            contactList.add(acr.Contact);
+                        }
+                    }
+                }
+                /* Modifica dei dati del contact */
                 Account acc = new Account();
                 acc.Id = currentCase.AccountId;
                 acc.FirstName__c = currentCase.FirstName__c;
@@ -196,11 +215,20 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingState = currentCase.BillingProvince__c;
                 acc.BillingStreetCode__c = currentCase.BillingStreetCode__c;
                 acc.BillingStreetName__c = currentCase.BillingStreetName__c;
+                acc.BillingStreet = currentCase.BillingStreetName__c;
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
                 acc.IsWrongFiscalData__c = false;
                 objToUpdate.add(acc);
 
+                if(!contactList.isEmpty())
+                {
+                    contactToAlign = aUtl.alignContacts(oldAccount,acc,contactList);
+                    if(!contactToAlign.isEmpty())
+                    {
+                        objToUpdate.addAll(contactToAlign);
+                    }
+                }
                 for ( Case c : caseToUpdate )
                 {
                     if( c.Id != currentCase.Id ){
