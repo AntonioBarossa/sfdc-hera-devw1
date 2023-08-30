@@ -24,7 +24,10 @@ public class HDT_SRV_PostSalesManagerTst {
         insert ordList;
         ordList[0].ParentOrder__c = ordList[1].Id;
         update ordList;
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id);
+        contactList[0].FiscalCode__c = accList[0].FiscalCode__c;
+        contactList[0].VatNumber__c = accList[0].VatNumber__c;
+        insert contactList;
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
         billingProfileList[0].ContractAccountCode__c = 'myCode';
         insert billingProfileList;
