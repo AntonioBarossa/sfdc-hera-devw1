@@ -119,7 +119,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }
         if(responseResults.size()<=0){
-            phase = 'Comunicazione verso Heroku KO';
+            if(currentCase.Phase__c == 'Annullamento - Da inviare'){
+                phase = 'Annullamento - Comunicazione verso Heroku KO';
+            }else{
+                phase = 'Comunicazione verso Heroku KO';
+            }
             errorMessage = 'Errore nella risposta da Heroku';
         }
         if(currentCase.Phase__c  == 'Da Inviare'
