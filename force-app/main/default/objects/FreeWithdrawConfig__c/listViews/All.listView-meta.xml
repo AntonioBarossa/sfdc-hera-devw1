@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Municipality__c</columns>
+    <columns>FreeWithdrawCalculation__c</columns>
+    <columns>ToBePaidWithinMonthsDomestic__c</columns>
+    <columns>ToBePaidWithinMonthsNotDomestic__c</columns>
+    <columns>PayIfIsPrivateAreaDom__c</columns>
+    <columns>PayIfIsPrivateAreaNotDom__c</columns>
+    <columns>ToPayIfVolumeEqualOrHigherDom__c</columns>
+    <columns>ToPayIfVolumeEqualOrHigherNotDom__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

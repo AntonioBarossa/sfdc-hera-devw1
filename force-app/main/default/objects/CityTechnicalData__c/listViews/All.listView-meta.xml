@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Province__c</columns>
+    <columns>TARIManaged__c</columns>
+    <columns>TARIManagingStartDate__c</columns>
+    <columns>TARIManagingEndDate__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
