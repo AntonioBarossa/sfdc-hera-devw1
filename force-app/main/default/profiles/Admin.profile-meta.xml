@@ -4964,6 +4964,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>BillingProfile__c.CustomerMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>BillingProfile__c.InvoicingStreetToponym__c</field>
         <readable>false</readable>
@@ -8346,6 +8351,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.AreaDeclaredTARI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CustomerMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
