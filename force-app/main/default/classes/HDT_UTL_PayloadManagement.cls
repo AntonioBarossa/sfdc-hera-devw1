@@ -51,6 +51,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return calculateCommodityArcZeroTwo(inputs, formParams);
                 }when 'calculatePaymentMethod'{
                     return calculatePaymentMethod(inputs, formParams);
+                }when 'calculateOperationDeclarationInfo'{
+                    return calculateOperationDeclarationInfo(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -1540,7 +1542,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
-
+    private static String calculateOperationDeclarationInfo(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String context = (String) formParams.get('Contesto');
+        String result = '';
+        String declarationInfo = HDT_UTL_DocumentalManagement.getValue(context, 'OperatorDeclarationInfos__c', 0, inputs, formParams);
+        if(String.isNotBlank(declarationInfo))
+        {
+            result = declarationInfo.replace('\n', ' ');
+        }
+        return result;
+    }
     private static String calculatePaymentMethod(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
     {
         String context = (String) formParams.get('Contesto');
