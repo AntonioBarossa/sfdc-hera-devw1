@@ -185,7 +185,10 @@
         <label>Switch Subprocess</label>
         <locationX>248</locationX>
         <locationY>1574</locationY>
-        <defaultConnectorLabel>Niente</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>toastAnnullamento</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>TCP o Niente</defaultConnectorLabel>
         <rules>
             <name>Richieste_Rip_Tari</name>
             <conditionLogic>and</conditionLogic>
@@ -433,6 +436,59 @@
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>toastAnnullamento</name>
+        <label>toastAnnullamentoScreen</label>
+        <locationX>380</locationX>
+        <locationY>1682</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Annullamento_Subflow</targetReference>
+        </connector>
+        <fields>
+            <name>toastAnn</name>
+            <extensionName>c:hdtShowToastForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isBlocking</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Errore</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>error</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Per il seguente comune la Tari risulta non gestita nella data odierna</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>pester</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
