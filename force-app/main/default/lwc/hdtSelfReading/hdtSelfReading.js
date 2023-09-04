@@ -493,7 +493,7 @@ export default class HdtSelfReading extends LightningElement {
                     console.log('lettura comunicata dal cliente: ' + newReadingValue)
                     console.log('lettura selezionata da cruscotto letture: ' + selectedReadingValue);
                     console.log('tipo lettura selezionata da cruscotto letture: ' + tipoLettura);
-                    if (this.isRettificaConsumi === true && newReadingValue > 0 && oldReadingValue >= 0) {  // newReadingValue > 0 && oldReadingValue >= 0 per skippare i registri nascosti
+                    if (this.isRettificaConsumi === true && newReadingValue >= 0 && oldReadingValue >= 0) {  // newReadingValue >= 0 && oldReadingValue >= 0 per skippare i registri nascosti
                         if (selectedReadingValue > 0) {
                             if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
                                 numeroRegistriAlert++;
