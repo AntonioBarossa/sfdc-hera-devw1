@@ -296,6 +296,42 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
 		System.assertEquals('Uso domestico non residente', checkHandleSub.SottotipologiaUso__c , 'testHandleSubTyp FALLITO');
 		Test.stopTest();
     }
+
+    @isTest
+    static void transCodeSiNoConDescrTst(){
+        Test.startTest();
+        HDT_SRV_DataEnrichmentPostSales c = new HDT_SRV_DataEnrichmentPostSales();
+        String prova = c.transCodeSiNoConDescr('0.0000000');
+        System.assertEquals('No - Esente', prova, 'Ok');
+        Test.stopTest();  
+    }
+
+    @isTest
+    static void transCodeDoubleToStringTst(){
+        Test.startTest();
+        HDT_SRV_DataEnrichmentPostSales c = new HDT_SRV_DataEnrichmentPostSales();
+        String prova = c.transCodeDoubleToString('2.0000000');
+        System.assertEquals('Ridotta', prova, 'Ok');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void transCodeSiNoTst(){
+        Test.startTest();
+        HDT_SRV_DataEnrichmentPostSales c = new HDT_SRV_DataEnrichmentPostSales();
+        String prova = c.transCodeSiNo('1');
+        System.assertEquals('Si', prova, 'Ok');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void transcodificaInfoDepurazioneTst(){
+        Test.startTest();
+        HDT_SRV_DataEnrichmentPostSales c = new HDT_SRV_DataEnrichmentPostSales();
+        String prova = c.transcodificaInfoDepurazione('3');
+        System.assertEquals('Utenza temporaneamente non servita', prova, 'Ok');
+        Test.stopTest();
+    }
    
     //FINE Test method per classe HDT_SRV_DataEnrichmentPostSales
   
