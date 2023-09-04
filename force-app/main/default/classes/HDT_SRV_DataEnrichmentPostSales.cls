@@ -3,6 +3,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
     private final Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
         '13V0000000'=>'Hera Comm S.p.A.',
+        '10V0000000'=>'Hera Comm S.p.A.',
         '10V0000160'=>'Hera Comm Marche',
         '11-HERASPA'=>'Marche Multiservizi S.p.A',
         '1200000000'=>'Marche Multiservizi TARI'};
