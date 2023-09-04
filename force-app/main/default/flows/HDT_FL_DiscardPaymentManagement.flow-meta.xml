@@ -4,7 +4,7 @@
         <name>Chiudi_Attivit</name>
         <label>Chiudi Attività</label>
         <locationX>842</locationX>
-        <locationY>1466</locationY>
+        <locationY>1658</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -22,7 +22,7 @@
     <actionCalls>
         <name>Ricalcolo_Importi</name>
         <label>Ricalcolo Importi</label>
-        <locationX>710</locationX>
+        <locationX>644</locationX>
         <locationY>950</locationY>
         <actionName>HDT_SRV_InstallmentPlans</actionName>
         <actionType>apex</actionType>
@@ -65,7 +65,7 @@
     <assignments>
         <name>Assegna_Importo_Rata</name>
         <label>Assegna Importo Rata</label>
-        <locationX>710</locationX>
+        <locationX>644</locationX>
         <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>RefreshPianoRate.InstallmentAmount__c</assignToReference>
@@ -76,6 +76,22 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaRefreshCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Total_Cover</name>
+        <label>Assegna Total Cover</label>
+        <locationX>908</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>getCaseAggiornato.TotalCover__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AmountDifference</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -191,6 +207,31 @@
             <targetReference>Show_Document_Sector</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Comunicazione_Pagamento_0</name>
+        <label>Comunicazione Pagamento</label>
+        <locationX>1040</locationX>
+        <locationY>1058</locationY>
+        <defaultConnector>
+            <targetReference>Chiudi_Attivit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseToWork.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione Pagamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getCaseAggiornato</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Piano_Rateizzazione_0</name>
         <label>Piano Rateizzazione?</label>
@@ -350,6 +391,12 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
+        <name>AmountDifference</name>
+        <dataType>Currency</dataType>
+        <expression>{!getCaseAggiornato.TotalResidue__c} - {!getCaseAggiornato.PaidAmount__c}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>DepositAmount</name>
         <dataType>Number</dataType>
         <expression>IF(ISNULL({!RefreshPianoRate.DepositAmount__c}),0.0,{!RefreshPianoRate.DepositAmount__c})</expression>
@@ -383,9 +430,30 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>getCaseAggiornato</name>
+        <label>getCaseAggiornato</label>
+        <locationX>908</locationX>
+        <locationY>1166</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Total_Cover</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseToWork.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>RefreshPianoRate</name>
         <label>RefreshPianoRate</label>
-        <locationX>710</locationX>
+        <locationX>644</locationX>
         <locationY>1058</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -404,9 +472,19 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>908</locationX>
+        <locationY>1382</locationY>
+        <connector>
+            <targetReference>Chiudi_Attivit</targetReference>
+        </connector>
+        <inputReference>getCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>AggiornaRefreshCase</name>
         <label>AggiornaRefreshCase</label>
-        <locationX>710</locationX>
+        <locationX>644</locationX>
         <locationY>1274</locationY>
         <connector>
             <targetReference>Chiudi_Attivit</targetReference>
@@ -417,7 +495,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>842</locationX>
-        <locationY>1574</locationY>
+        <locationY>1766</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -524,13 +602,13 @@
     <screens>
         <name>EditDocumentSector_0</name>
         <label>EditDocumentSector</label>
-        <locationX>974</locationX>
+        <locationX>1040</locationX>
         <locationY>950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Chiudi_Attivit</targetReference>
+            <targetReference>Comunicazione_Pagamento_0</targetReference>
         </connector>
         <fields>
             <name>Titolo_0</name>
