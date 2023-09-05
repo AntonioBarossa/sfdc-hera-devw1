@@ -3,33 +3,19 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     @TestVisible private static List<Contract> contractToDelete = new List<Contract>();
     @TestVisible private static List<Contract> contractToUpdate = new List<Contract>();
     @TestVisible private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
-    @TestVisible private static List<Sobject> sobjsToUpdateAsync = new List<Sobject>();
-    @TestVisible private static List<SBQQ__Subscription__c> subscriptionToDelete = new List<SBQQ__Subscription__c>();
     private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
     private static Boolean isFinalizerAttached = false;
 
     public class HDT_QBL_Finalizer implements Finalizer {
         List<Contract> contrsToDelete;
-        List<SBQQ__Subscription__c> subsToDelete;
-        List<Sobject> sobjsToUpdate;
 
         @TestVisible
-        HDT_QBL_Finalizer(List<Contract> contrsToDelete, List<SBQQ__Subscription__c> subsToDelete, List<Sobject> sobjsToUpdate){
+        HDT_QBL_Finalizer(List<Contract> contrsToDelete){
             this.contrsToDelete = contrsToDelete;
-            this.subsToDelete = subsToDelete;
-            this.sobjsToUpdate = sobjsToUpdate;
         }
 
         public void execute(FinalizerContext ctx){
             //se queueable success chiamare servizio deda con case
-            if(!this.sobjsToUpdate.isEmpty()){
-                Map<Id, Sobject> removeDuplicates = new Map<Id, Sobject>(this.sobjsToUpdate);
-                HDT_UTL_DatabaseService.updateSObject(removeDuplicates.values());
-            }
-            if(!this.subsToDelete.isEmpty()){
-                Map<Id, SBQQ__Subscription__c> removeDuplicates = new Map<Id, SBQQ__Subscription__c>(this.subsToDelete);
-                HDT_UTL_DatabaseService.deleteSObject(removeDuplicates.values());
-            }
             if(!this.contrsToDelete.isEmpty()){
                 Map<Id, Contract> removeDuplicates = new Map<Id, Contract>(this.contrsToDelete);
                 HDT_UTL_DatabaseService.deleteSObject(removeDuplicates.values());
@@ -96,46 +82,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             if(item == null ){   continue;   }
             if('Ambiente'.equalsIgnoreCase(item?.Order?.Commodity__c) && item?.Order?.EffectiveDate__c!=null){      
                 sub.SBQQ__SubscriptionStartDate__c = item.Order.EffectiveDate__c;
-                if(sub.SBQQ__Quantity__c < 0){
-                    Date effDateMinusOne = item.Order.EffectiveDate__c.addDays(-1);
-                    sub.SBQQ__SubscriptionStartDate__c = effDateMinusOne;
-                    sub.SBQQ__SubscriptionEndDate__c = effDateMinusOne;
-                    sub.SBQQ__TerminatedDate__c = effDateMinusOne;
-                }
             }
-        }
-    }
-
-
-    public static void checkSubsToTerminate(List<SBQQ__Subscription__c> newSubs){
-        Set<Id> contrsId = new Set<Id>();
-        Set<Id> prodsId = new Set<Id>();
-        Map<String, SBQQ__Subscription__c> negativeQuantitySubsToTerminate = new Map<String, SBQQ__Subscription__c>();
-        for(SBQQ__Subscription__c sub : newSubs){
-            if(sub.SBQQ__Quantity__c < 0){
-                contrsId.add(sub.SBQQ__Contract__c);
-                prodsId.add(sub.SBQQ__Product__c);
-                negativeQuantitySubsToTerminate.put(String.valueOf(sub.SBQQ__Contract__c)+String.valueOf(sub.SBQQ__Product__c), sub);
-            }
-        }
-
-        if(contrsId.isEmpty() || prodsId.isEmpty()){        return;         }
-
-        for(SBQQ__Subscription__c relatedSub :  [   SELECT id, SBQQ__Contract__c, SBQQ__Product__c
-                                                    FROM SBQQ__Subscription__c 
-                                                    WHERE SBQQ__Contract__c IN :contrsId
-                                                    AND SBQQ__Product__c IN :prodsId
-                                                    AND SBQQ__Quantity__c > 0
-                                                    WITH SECURITY_ENFORCED
-                                                ]
-        ){
-            SBQQ__Subscription__c negativeSub = negativeQuantitySubsToTerminate.get(String.valueOf(relatedSub.SBQQ__Contract__c)+String.valueOf(relatedSub.SBQQ__Product__c));
-            if(negativeSub == null){        continue;       }
-
-            subscriptionToDelete.add(new SBQQ__Subscription__c(Id=negativeSub.Id));
-            relatedSub.SBQQ__SubscriptionEndDate__c = negativeSub.SBQQ__SubscriptionEndDate__c;
-            relatedSub.SBQQ__TerminatedDate__c = negativeSub.SBQQ__SubscriptionEndDate__c;
-            sobjsToUpdateAsync.add(relatedSub);
         }
     }
 
@@ -440,21 +387,15 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     }
 
     public static void dmlOnAfterInsert(){
-        if(!(contractToDelete.isEmpty() && subscriptionToDelete.isEmpty() && sobjsToUpdateAsync.isEmpty())){
+        if(!contractToDelete.isEmpty()){
             if(System.isQueueable() && !isFinalizerAttached && !Test.isRunningTest()){
-                System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete, subscriptionToDelete, sobjsToUpdateAsync));
+                System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete));
                 //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
                 //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
                 isFinalizerAttached = true;
             }else if(!System.isQueueable()){
-                if(subscriptionToDelete.isEmpty()){
-                    HDT_UTL_DatabaseService.deleteSObject(subscriptionToDelete);
-                    subscriptionToDelete.clear();
-                }
-                if(contractToDelete.isEmpty()){
-                    HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
-                    contractToDelete.clear();
-                }
+                HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+                contractToDelete.clear();
             }
         }
         if(!contractToUpdate.isEmpty()){

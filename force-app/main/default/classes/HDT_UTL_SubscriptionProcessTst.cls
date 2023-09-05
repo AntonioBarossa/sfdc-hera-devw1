@@ -201,7 +201,7 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         //System.assertEquals(true, testResult, 'Subscription non riconciliate');
     }
 
-    @isTest
+    /*@isTest
     static void testFinalizer()
     {
         secondSetup();
@@ -251,6 +251,6 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         insert subList;
         Test.stopTest();
         system.debug('ivaste_final' + [Select Count() From SBQQ__Subscription__c]);
-    }
+    }*/
 
 }
