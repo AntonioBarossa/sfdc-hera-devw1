@@ -187,11 +187,12 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
     
     @AuraEnabled
-    public static CampaignMember updateCampaignMemberSurveyResponse(String campaignMemberId, String surveyResponseId){
+    public static CampaignMember updateCampaignMemberSurveyResponse(String campaignMemberId, String surveyResponseId,String response){
         try {
             CampaignMember cm = new CampaignMember(
             Id = campaignMemberId,
-            SurveyResponse__c = surveyResponseId
+            SurveyResponse__c = surveyResponseId,
+            SurveyResponseTracking__c = response
             );
             campaignMemberSrv.updateRecord(cm);
             return cm;
@@ -577,7 +578,9 @@ public inherited sharing class HDT_LC_CampaignsController {
         try{
             HDT_QR_CampaignMember cmquery = new HDT_QR_CampaignMember();
             CampaignMember cm = cmquery.getRecordById(campaignMemberId);
-            if(cm.Ecid__c != null && cm.Ecid__c != ''){
+            if(cm.Campaign.ObligatorySurvey__c && cm.SurveyResponse__c == null){
+                return System.label.ObligatoryClientSurvey;
+            }else if(cm.Ecid__c != null && cm.Ecid__c != ''){
                 return cm.Ecid__c;
             }else{
                 String response = submitRequest(campaignMemberId);

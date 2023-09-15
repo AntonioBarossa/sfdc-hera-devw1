@@ -5737,6 +5737,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.ObligatorySurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignEasyCIM__c.IdCampaignEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5753,6 +5758,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.IBMUnicaDispensingCompanyGas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.SurveyResponseTracking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

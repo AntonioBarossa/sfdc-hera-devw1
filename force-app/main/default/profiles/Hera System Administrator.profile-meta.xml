@@ -5179,6 +5179,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.ObligatorySurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.PaperCampaignParameter__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5945,6 +5950,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.GenericField8__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.IBMUnicaDispensingCompanyGas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.SurveyResponseTracking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

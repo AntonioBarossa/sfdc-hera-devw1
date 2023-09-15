@@ -3111,6 +3111,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.IBMUnicaDispensingCompanyGas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.SurveyResponseTracking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountStatementFilter__c.Context__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5027,6 +5037,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.ActualCost</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.ObligatorySurvey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

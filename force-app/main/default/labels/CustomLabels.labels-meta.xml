@@ -869,6 +869,13 @@
         <value>Operation not supported on this type of object</value>
     </labels>
     <labels>
+        <fullName>ObligatoryClientSurvey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Survey Cliente Obbligatoria</shortDescription>
+        <value>Per procedere è necessario completare la survey Cliente</value>
+    </labels>
+    <labels>
         <fullName>ProdOptAssociationClose</fullName>
         <language>it</language>
         <protected>false</protected>

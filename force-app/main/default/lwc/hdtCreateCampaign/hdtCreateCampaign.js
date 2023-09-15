@@ -4,6 +4,7 @@ import getItems from '@salesforce/apex/HDT_LC_CampaignMemberAssigmentItem.getIte
 import checkCommercialCodeUniqueness from '@salesforce/apex/HDT_LC_CampaignsController.checkCommercialCodeUniqueness';
 import createCommercialCode from '@salesforce/apex/HDT_LC_CampaignsController.createCommercialCode';
 import getUserRole from '@salesforce/apex/HDT_LC_CampaignsController.getUserRole';
+//import getObligatorySurveyCampaignById from '@salesforce/apex/HDT_LC_CampaignsController.getObligatorySurveyCampaignById';
 import USER_ID from '@salesforce/user/Id';
 export default class HdtCreateCampaign extends LightningElement {
     @api recordId;
@@ -48,6 +49,8 @@ export default class HdtCreateCampaign extends LightningElement {
     @track assignType='';
     @track showcampaignMemberAssignment=false;
     @track showDefaultFinalState=false;
+    @track showObligatorySurvey=false;
+    @track showObligatorySurveyBool=false;
     showCampaignInboundFields=false;
 
     @wire(getUserRole, {
@@ -118,7 +121,6 @@ export default class HdtCreateCampaign extends LightningElement {
         else{
             this.easyRequired=false;
         }
-    
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
            
             //! HRAWRM-686 this.startDateFieldRequired = true; 
@@ -276,8 +278,44 @@ export default class HdtCreateCampaign extends LightningElement {
         let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value;
         this.checkRequiredProcessType(categoryField,this.statusField, event.detail.value); 
         this.checkRequiredShippingMethods(categoryField,event.detail.value,this.statusField);  // Start HRAWRM-621 16/09/2021
+        this.checkObligatorySurvey(event,categoryField,event.detail.value);
         //reset fields
 
+    }
+
+    checkObligatorySurvey(event,category,channel){
+
+        console.log('Category :'+category);
+        console.log('Channel :'+channel);
+        if(category == 'Campagna Outbound' && channel.includes('Telefonico Outbound')){
+            console.log('show survey');
+            this.showObligatorySurvey = true;
+        }
+        //let flowType = this.template.querySelector('.flowType > lightning-input-field').value;
+        let flowType = this.template.querySelector('.flowType > lightning-input-field').value != null ? this.template.querySelector('.flowType > lightning-input-field').value : '';
+        let SurveyCRM = this.template.querySelector('.surveyCRM > lightning-input-field') != null ? this.template.querySelector('.surveyCRM > lightning-input-field').value : null;
+        this.checkObligatorySurveyBool(flowType,SurveyCRM);
+    }
+
+    handleChangeFlowType(event){
+        this.showObligatorySurveyBool = false;
+        let flowType = event.detail.value != null ? event.detail.value : null;
+        let SurveyCRM = this.template.querySelector('.surveyCRM > lightning-input-field') != null ? this.template.querySelector('.surveyCRM > lightning-input-field').value : null;
+        this.checkObligatorySurveyBool(flowType,SurveyCRM);
+    }
+    handleChangeSurveyCRM(event){
+        this.showObligatorySurveyBool = false;
+        let flowType = this.template.querySelector('.flowType > lightning-input-field').value != null ? this.template.querySelector('.flowType > lightning-input-field').value : '';
+        let SurveyCRM = event.detail.value != null ? event.detail.value : null;
+        this.checkObligatorySurveyBool(flowType,SurveyCRM);
+    }
+
+    checkObligatorySurveyBool(flowType,SurveyCRM){
+        console.log('SurveyCRMbool :'+SurveyCRM);
+        console.log('flowType :'+flowType);
+        if((SurveyCRM != null || SurveyCRM != '' ) && (flowType.length !== 0)){
+            this.showObligatorySurveyBool = true;
+        }
     }
 
     handleChangeCodeManagementModel(event) {

@@ -21,6 +21,7 @@ public Inherited Sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
             HDT_UTL_CampaignMember.campaignSuspension(trigger.new, trigger.old);
             createCommercialCode((map<Id,Campaign>)Trigger.newMap,(map<Id,Campaign>)Trigger.oldMap);
             deactivateCampaign(Trigger.new, (Map<Id,Campaign>)Trigger.oldMap);
+            deSelectObligatory(Trigger.new);
         }
 
         @SuppressWarnings('PMD.ApexCRUDViolation')
@@ -94,6 +95,13 @@ public Inherited Sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
             }
             if (!listCommercialCode.isEmpty()) {
                 commercialCodeSrv.createRecords(listCommercialCode);
+            }
+        }
+
+
+        public static void deSelectObligatory(list<Campaign> TriggerNew){
+            for(Campaign c:TriggerNew){
+                if(c.SurveyCRM__c == null && c.flowType__c == null && c.ObligatorySurvey__c) c.ObligatorySurvey__c = false;
             }
         }
     }

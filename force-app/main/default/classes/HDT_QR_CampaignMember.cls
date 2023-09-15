@@ -692,7 +692,9 @@ public inherited sharing class HDT_QR_CampaignMember {
             PhoneNumber__c,
             Ecid__c, 
             LeadId,
-            Campaign.Tipology__c
+            Campaign.Tipology__c,
+            Campaign.ObligatorySurvey__c,
+            SurveyResponse__c
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED

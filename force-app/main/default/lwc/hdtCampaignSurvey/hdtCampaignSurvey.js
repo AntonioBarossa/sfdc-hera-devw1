@@ -196,13 +196,15 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
       responseData['Contact__c'] = this.contactId;
       responseData.SurveyCRM__c = this.surveyId['survey' + index];
       console.log(responseData);
+      var stringResponse = JSON.stringify(responseData);
       saveSurveyResponse({
         responses: responseData,
         campaignId: 'test'
       }).then((response) => {
         console.log(response);
+        console.log('Response :'+stringResponse);
         //update CampaignMemberSurveyResponse
-        updateCampaignMemberSurveyResponse({ campaignMemberId: this.recordId, surveyResponseId: response.Id }).then(data => {
+        updateCampaignMemberSurveyResponse({ campaignMemberId: this.recordId, surveyResponseId: response.Id ,response: stringResponse}).then(data => {
           console.log("ok" + JSON.stringify(data));
           //close the modal
           this.showModal = false; //HRAWRM-544 extra Bolzon

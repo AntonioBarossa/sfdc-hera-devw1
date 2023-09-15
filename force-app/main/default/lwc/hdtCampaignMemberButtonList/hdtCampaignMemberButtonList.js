@@ -2,6 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createNewCase from '@salesforce/apex/HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType';
+import ObligatoryClientSurvey from '@salesforce/label/c.ObligatoryClientSurvey';
 import getCampaignAndAccountByMember from '@salesforce/apex/HDT_LC_CampaignsController.getCampaignAndAccountByMember';
 import getEcid from '@salesforce/apex/HDT_LC_CampaignsController.getEcid';
 import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
@@ -71,11 +72,21 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
                 this.ecid = data;
                 console.log('getEcid this.ecid --> '+this.ecid);
     
-                if(this.ecid != null){
+                if(this.ecid == ObligatoryClientSurvey){
+                    console.log(this.ecid);
+                    const evt = new ShowToastEvent({
+                        title: 'Attenzione!',
+                        message: ObligatoryClientSurvey,
+                        variant: 'warning',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(evt);
+                }
+                else if(this.ecid != null && this.ecid != undefined && this.ecid != ''){
     
-                    console.log('getECID PUNTO 1');
+                    console.log('newSaleClick PUNTO 1');
                     this.launchClickToCall();
-                    console.log('getECID PUNTO 2');
+                    console.log('newSaleClick PUNTO 2');
     
                 }
                 else{
