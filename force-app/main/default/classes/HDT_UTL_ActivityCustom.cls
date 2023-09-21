@@ -360,6 +360,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void changeOwnerCase(List<wrts_prcgvr__Activity__c> triggerNew,Map<id,wrts_prcgvr__Activity__c> triggerOld){
+        map<String,String> caseNewOwner = new map<String,String>();
+        List<Case> caseToUpdate = new List<Case>();
+        for(wrts_prcgvr__Activity__c A:triggerNew){
+            if((A.Type__c == 'In gestione' || A.Type__c == 'Reclamo da Riclassificare') && triggerOld.get(A.id).OwnerId != A.OwnerId) caseNewOwner.put(A.Case__c,A.OwnerId);
+        }
+        for(Case C:[SELECT id,OwnerId FROM Case WHERE id IN: caseNewOwner.keySet()]){
+            if(caseNewOwner.containsKey(C.id) && c.OwnerId != caseNewOwner.get(C.id)){
+                c.OwnerId = caseNewOwner.get(C.id);
+                caseToUpdate.add(C);
+            } 
+        }
+        update caseToUpdate;
+    }
     public static void setConvertCloseStatus(List<wrts_prcgvr__Activity__c> activites){
         List<String> stateToConvert = new List<String>{'completed'};
         Set<String> closedStatus = new Set<String>();

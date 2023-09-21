@@ -90,6 +90,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
         HDT_UTL_ActivityCustomProcess.sendCloseNotification(Trigger.new, Trigger.oldMap);
         HDT_UTL_ActivityCustomProcess.shareRecordAppointmentSelf(Trigger.new, Trigger.oldMap);
+        //CR PAEVOW1_019 Start
+        HDT_UTL_ActivityCustom.changeOwnerCase((List<wrts_prcgvr__Activity__c>) trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
+        //CR PAEVOW1_019 Stop
     }
 
     public override void afterInsert(){
